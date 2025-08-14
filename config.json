@@ -13,6 +13,7 @@
         "Training",
         "Attention",
         "Pipeline",
+        "MOE",
         "Quantization",
         "Speculative Decoding"
     ],
