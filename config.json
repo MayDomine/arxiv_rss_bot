@@ -1,0 +1,33 @@
+{
+    "categories": [
+        "cs.AI",
+        "cs.LG", 
+        "cs.CL",
+        "cs.CV",
+        "cs.NE",
+        "stat.ML"
+    ],
+    "keywords": [
+        "machine learning",
+        "deep learning",
+        "neural network",
+        "transformer",
+        "large language model",
+        "LLM",
+        "GPT",
+        "BERT",
+        "attention mechanism",
+        "reinforcement learning",
+        "computer vision",
+        "natural language processing",
+        "NLP"
+    ],
+    "exclude_keywords": [
+        "survey",
+        "review",
+        "tutorial"
+    ],
+    "max_papers": 30,
+    "days_back": 7,
+    "min_score": 1.0
+} 
