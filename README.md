@@ -4,7 +4,7 @@ This repository automatically fetches and displays relevant papers from arXiv ba
 
 ## 📊 Statistics
 
-- **Last Updated**: 2025-08-14 07:46:30 UTC
+- **Last Updated**: 2025-08-14 11:00:03 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
@@ -22,7 +22,19 @@ Abstract: Transformer-based Large Language Models rely critically on the KV cach
 
 ---
 
-### 2. [Towards Safer Pretraining: Analyzing and Filtering Harmful Content in Webscale datasets for Responsible LLMs](https://arxiv.org/abs/2505.02009)
+### 2. [Cluster Topology-Driven Placement of Experts Reduces Network Traffic in MoE Inference](https://arxiv.org/abs/2508.09229)
+
+**Authors**: Danil Sivtsov, Aleksandr Katrutsa, Ivan Oseledets  
+**Category**: cs.AI  
+**Published**: 2025-08-14  
+**Score**: 5.0
+
+arXiv:2508.09229v1 Announce Type: cross 
+Abstract: Efficient deployment of a pre-trained LLM to a cluster with multiple servers is a critical step for providing fast responses to users' queries. The recent success of Mixture-of-Experts (MoE) LLMs raises the question of how to deploy them efficiently...
+
+---
+
+### 3. [Towards Safer Pretraining: Analyzing and Filtering Harmful Content in Webscale datasets for Responsible LLMs](https://arxiv.org/abs/2505.02009)
 
 **Authors**: Sai Krishna Mendu, Harish Yenala, Aditi Gulati, Shanu Kumar, Parag Agrawal  
 **Category**: cs.CL  
@@ -34,7 +46,7 @@ Abstract: Large language models (LLMs) have become integral to various real-worl
 
 ---
 
-### 3. [A Comprehensive Evaluation framework of Alignment Techniques for LLMs](https://arxiv.org/abs/2508.09937)
+### 4. [A Comprehensive Evaluation framework of Alignment Techniques for LLMs](https://arxiv.org/abs/2508.09937)
 
 **Authors**: Muneeza Azmat, Momin Abbas, Maysa Malfiza Garcia de Macedo, Marcelo Carpinette Grave, Luan Soares de Souza, Tiago Machado, Rogerio A de Paula, Raya Horesh, Yixin Chen, Heloisa Caroline de Souza Pereira Candello, Rebecka Nordenlow, Aminat Adebiyi  
 **Category**: cs.AI  
@@ -46,7 +58,7 @@ Abstract: As Large Language Models (LLMs) become increasingly integrated into re
 
 ---
 
-### 4. [Pivoting Factorization: A Compact Meta Low-Rank Representation of Sparsity for Efficient Inference in Large Language Models](https://arxiv.org/abs/2501.19090)
+### 5. [Pivoting Factorization: A Compact Meta Low-Rank Representation of Sparsity for Efficient Inference in Large Language Models](https://arxiv.org/abs/2501.19090)
 
 **Authors**: Jialin Zhao, Yingtao Zhang, Carlo Vittorio Cannistraci  
 **Category**: cs.LG  
@@ -58,7 +70,7 @@ Abstract: The rapid growth of Large Language Models has driven demand for effect
 
 ---
 
-### 5. [Diffusion LLMs Can Do Faster-Than-AR Inference via Discrete Diffusion Forcing](https://arxiv.org/abs/2508.09192)
+### 6. [Diffusion LLMs Can Do Faster-Than-AR Inference via Discrete Diffusion Forcing](https://arxiv.org/abs/2508.09192)
 
 **Authors**: Xu Wang, Chenkai Xu, Yijie Jin, Jiachun Jin, Hao Zhang, Zhijie Deng  
 **Category**: cs.AI  
@@ -70,7 +82,19 @@ Abstract: Diffusion Large Language Models (dLLMs) have emerged as a promising al
 
 ---
 
-### 6. [Shadow in the Cache: Unveiling and Mitigating Privacy Risks of KV-cache in LLM Inference](https://arxiv.org/abs/2508.09442)
+### 7. [CoMoE: Collaborative Optimization of Expert Aggregation and Offloading for MoE-based LLMs at Edge](https://arxiv.org/abs/2508.09208)
+
+**Authors**: Muqing Li, Ning Li, Xin Yuan, Wenchao Xu, Quan Chen, Song Guo, Haijun Zhang  
+**Category**: cs.AI  
+**Published**: 2025-08-14  
+**Score**: 4.0
+
+arXiv:2508.09208v1 Announce Type: cross 
+Abstract: The proliferation of large language models (LLMs) has driven the adoption of Mixture-of-Experts (MoE) architectures as a promising solution to scale model capacity while controlling computational costs. However, deploying MoE models in resource-cons...
+
+---
+
+### 8. [Shadow in the Cache: Unveiling and Mitigating Privacy Risks of KV-cache in LLM Inference](https://arxiv.org/abs/2508.09442)
 
 **Authors**: Zhifan Luo, Shuo Shao, Su Zhang, Lijing Zhou, Yuke Hu, Chenxu Zhao, Zhihao Liu, Zhan Qin  
 **Category**: cs.AI  
@@ -82,7 +106,7 @@ Abstract: The Key-Value (KV) cache, which stores intermediate attention computat
 
 ---
 
-### 7. [Your Coding Intent is Secretly in the Context and You Should Deliberately Infer It Before Completion](https://arxiv.org/abs/2508.09537)
+### 9. [Your Coding Intent is Secretly in the Context and You Should Deliberately Infer It Before Completion](https://arxiv.org/abs/2508.09537)
 
 **Authors**: Yanzhou Li, Tianlin Li, Yiran Zhang, Shangqing Liu, Aishan Liu, Yang Liu  
 **Category**: cs.AI  
@@ -94,7 +118,7 @@ Abstract: Large Language Models (LLMs) are increasingly used for function comple
 
 ---
 
-### 8. [Beyond Memorization: Assessing Semantic Generalization in Large Language Models Using Phrasal Constructions](https://arxiv.org/abs/2501.04661)
+### 10. [Beyond Memorization: Assessing Semantic Generalization in Large Language Models Using Phrasal Constructions](https://arxiv.org/abs/2501.04661)
 
 **Authors**: Wesley Scivetti, Melissa Torgbi, Austin Blodgett, Mollie Shichman, Taylor Hudson, Claire Bonial, Harish Tayyar Madabushi  
 **Category**: cs.AI  
@@ -106,7 +130,7 @@ Abstract: The web-scale of pretraining data has created an important evaluation 
 
 ---
 
-### 9. [EvoP: Robust LLM Inference via Evolutionary Pruning](https://arxiv.org/abs/2502.14910)
+### 11. [EvoP: Robust LLM Inference via Evolutionary Pruning](https://arxiv.org/abs/2502.14910)
 
 **Authors**: Shangyu Wu, Hongchao Du, Ying Xiong, Shuai Chen, Tei-Wei Kuo, Nan Guan, Chun Jason Xue  
 **Category**: cs.AI  
@@ -118,7 +142,7 @@ Abstract: Large Language Models (LLMs) have achieved remarkable success in natur
 
 ---
 
-### 10. [Poison Once, Control Anywhere: Clean-Text Visual Backdoors in VLM-based Mobile Agents](https://arxiv.org/abs/2506.13205)
+### 12. [Poison Once, Control Anywhere: Clean-Text Visual Backdoors in VLM-based Mobile Agents](https://arxiv.org/abs/2506.13205)
 
 **Authors**: Xuan Wang, Siyuan Liang, Zhe Liu, Yi Yu, Aishan Liu, Yuliang Lu, Xitong Gao, Ee-Chien Chang  
 **Category**: cs.AI  
@@ -130,7 +154,7 @@ Abstract: Mobile agents powered by vision-language models (VLMs) are increasingl
 
 ---
 
-### 11. [Transforming Questions and Documents for Semantically Aligned Retrieval-Augmented Generation](https://arxiv.org/abs/2508.09755)
+### 13. [Transforming Questions and Documents for Semantically Aligned Retrieval-Augmented Generation](https://arxiv.org/abs/2508.09755)
 
 **Authors**: Seokgi Lee  
 **Category**: cs.CL  
@@ -142,7 +166,19 @@ Abstract: We introduce a novel retrieval-augmented generation (RAG) framework ta
 
 ---
 
-### 12. [Stable Diffusion Models are Secretly Good at Visual In-Context Learning](https://arxiv.org/abs/2508.09949)
+### 14. [HierMoE: Accelerating MoE Training with Hierarchical Token Deduplication and Expert Swap](https://arxiv.org/abs/2508.09591)
+
+**Authors**: Wenxiang Lin, Xinglin Pan, Lin Zhang, Shaohuai Shi, Xuan Wang, Xiaowen Chu  
+**Category**: cs.DC  
+**Published**: 2025-08-14  
+**Score**: 4.0
+
+arXiv:2508.09591v1 Announce Type: new 
+Abstract: The sparsely activated mixture-of-experts (MoE) transformer has become a common architecture for large language models (LLMs) due to its sparsity, which requires fewer computational demands while easily scaling the model size. In MoE models, each MoE ...
+
+---
+
+### 15. [Stable Diffusion Models are Secretly Good at Visual In-Context Learning](https://arxiv.org/abs/2508.09949)
 
 **Authors**: Trevine Oorloff, Vishwanath Sindagi, Wele Gedara Chaminda Bandara, Ali Shafahi, Amin Ghiasi, Charan Prakash, Reza Ardekani  
 **Category**: cs.LG  
@@ -154,7 +190,7 @@ Abstract: Large language models (LLM) in natural language processing (NLP) have 
 
 ---
 
-### 13. [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](https://arxiv.org/abs/2405.15481)
+### 16. [Sparse Spectral Training and Inference on Euclidean and Hyperbolic Neural Networks](https://arxiv.org/abs/2405.15481)
 
 **Authors**: Jialin Zhao, Yingtao Zhang, Xinghang Li, Huaping Liu, Carlo Vittorio Cannistraci  
 **Category**: cs.LG  
@@ -166,7 +202,19 @@ Abstract: The growing demands on GPU memory posed by the increasing number of ne
 
 ---
 
-### 14. [Towards Scalable Training for Handwritten Mathematical Expression Recognition](https://arxiv.org/abs/2508.09220)
+### 17. [MoQE: Improve Quantization Model performance via Mixture of Quantization Experts](https://arxiv.org/abs/2508.09204)
+
+**Authors**: Jinhao Zhang, Yunquan Zhang, Boyang Zhang, Zeyu Liu, Daning Cheng  
+**Category**: cs.AI  
+**Published**: 2025-08-14  
+**Score**: 3.5
+
+arXiv:2508.09204v1 Announce Type: cross 
+Abstract: Quantization method plays a crucial role in improving model efficiency and reducing deployment costs, enabling the widespread application of deep learning models on resource-constrained devices. However, the quantization process inevitably introduce...
+
+---
+
+### 18. [Towards Scalable Training for Handwritten Mathematical Expression Recognition](https://arxiv.org/abs/2508.09220)
 
 **Authors**: Haoyang Li, Jiaqing Li, Jialun Cao, Zongyuan Yang, Yongping Xiong  
 **Category**: cs.AI  
@@ -178,19 +226,7 @@ Abstract: Large foundation models have achieved significant performance gains th
 
 ---
 
-### 15. [Cluster Topology-Driven Placement of Experts Reduces Network Traffic in MoE Inference](https://arxiv.org/abs/2508.09229)
-
-**Authors**: Danil Sivtsov, Aleksandr Katrutsa, Ivan Oseledets  
-**Category**: cs.AI  
-**Published**: 2025-08-14  
-**Score**: 3.5
-
-arXiv:2508.09229v1 Announce Type: cross 
-Abstract: Efficient deployment of a pre-trained LLM to a cluster with multiple servers is a critical step for providing fast responses to users' queries. The recent success of Mixture-of-Experts (MoE) LLMs raises the question of how to deploy them efficiently...
-
----
-
-### 16. [Can AI Keep a Secret? Contextual Integrity Verification: A Provable Security Architecture for LLMs](https://arxiv.org/abs/2508.09288)
+### 19. [Can AI Keep a Secret? Contextual Integrity Verification: A Provable Security Architecture for LLMs](https://arxiv.org/abs/2508.09288)
 
 **Authors**: Aayush Gupta  
 **Category**: cs.AI  
@@ -202,7 +238,7 @@ Abstract: Large language models (LLMs) remain acutely vulnerable to prompt injec
 
 ---
 
-### 17. [Beyond Na\"ive Prompting: Strategies for Improved Zero-shot Context-aided Forecasting with LLMs](https://arxiv.org/abs/2508.09904)
+### 20. [Beyond Na\"ive Prompting: Strategies for Improved Zero-shot Context-aided Forecasting with LLMs](https://arxiv.org/abs/2508.09904)
 
 **Authors**: Arjun Ashok, Andrew Robert Williams, Vincent Zhihao Zheng, Irina Rish, Nicolas Chapados, \'Etienne Marcotte, Valentina Zantedeschi, Alexandre Drouin  
 **Category**: cs.AI  
@@ -214,7 +250,7 @@ Abstract: Forecasting in real-world settings requires models to integrate not on
 
 ---
 
-### 18. [GenAI Confessions: Black-box Membership Inference for Generative Image Models](https://arxiv.org/abs/2501.06399)
+### 21. [GenAI Confessions: Black-box Membership Inference for Generative Image Models](https://arxiv.org/abs/2501.06399)
 
 **Authors**: Matyas Bohacek, Hany Farid  
 **Category**: cs.AI  
@@ -226,7 +262,7 @@ Abstract: From a simple text prompt, generative-AI image models can create stunn
 
 ---
 
-### 19. [FT-Transformer: Resilient and Reliable Transformer with End-to-End Fault Tolerant Attention](https://arxiv.org/abs/2504.02211)
+### 22. [FT-Transformer: Resilient and Reliable Transformer with End-to-End Fault Tolerant Attention](https://arxiv.org/abs/2504.02211)
 
 **Authors**: Huangliang Dai, Shixun Wu, Jiajun Huang, Zizhe Jian, Yue Zhu, Haiyang Hu, Zizhong Chen  
 **Category**: cs.AI  
@@ -238,7 +274,7 @@ Abstract: Transformer models rely on High-Performance Computing (HPC) resources 
 
 ---
 
-### 20. [Beyond Ten Turns: Unlocking Long-Horizon Agentic Search with Large-Scale Asynchronous RL](https://arxiv.org/abs/2508.07976)
+### 23. [Beyond Ten Turns: Unlocking Long-Horizon Agentic Search with Large-Scale Asynchronous RL](https://arxiv.org/abs/2508.07976)
 
 **Authors**: Jiaxuan Gao, Wei Fu, Minyang Xie, Shusheng Xu, Chuyi He, Zhiyu Mei, Banghua Zhu, Yi Wu  
 **Category**: cs.AI  
@@ -250,7 +286,7 @@ Abstract: Recent advancements in LLM-based agents have demonstrated remarkable c
 
 ---
 
-### 21. [MLLM-CBench:A Comprehensive Benchmark for Continual Instruction Tuning of Multimodal LLMs with Chain-of-Thought Reasoning Analysis](https://arxiv.org/abs/2508.08275)
+### 24. [MLLM-CBench:A Comprehensive Benchmark for Continual Instruction Tuning of Multimodal LLMs with Chain-of-Thought Reasoning Analysis](https://arxiv.org/abs/2508.08275)
 
 **Authors**: Haiyun Guo, ZhiYan Hou, Yu Chen, Jinghan He, Yandu Sun, Yuzhe Zhou, Shujing Guo, Kuan Zhu, Jinqiao Wang  
 **Category**: cs.AI  
@@ -262,7 +298,7 @@ Abstract: Multimodal large language models (MLLMs) require continual instruction
 
 ---
 
-### 22. [Training-Free Text-Guided Color Editing with Multi-Modal Diffusion Transformer](https://arxiv.org/abs/2508.09131)
+### 25. [Training-Free Text-Guided Color Editing with Multi-Modal Diffusion Transformer](https://arxiv.org/abs/2508.09131)
 
 **Authors**: Zixin Yin, Xili Dai, Ling-Hao Chen, Deyu Zhou, Jianan Wang, Duomin Wang, Gang Yu, Lionel M. Ni, Lei Zhang, Heung-Yeung Shum  
 **Category**: cs.AI  
@@ -274,7 +310,7 @@ Abstract: Text-guided color editing in images and videos is a fundamental yet un
 
 ---
 
-### 23. [The Surprising Effectiveness of Membership Inference with Simple N-Gram Coverage](https://arxiv.org/abs/2508.09603)
+### 26. [The Surprising Effectiveness of Membership Inference with Simple N-Gram Coverage](https://arxiv.org/abs/2508.09603)
 
 **Authors**: Skyler Hallinan, Jaehun Jung, Melanie Sclar, Ximing Lu, Abhilasha Ravichander, Sahana Ramnath, Yejin Choi, Sai Praneeth Karimireddy, Niloofar Mireshghallah, Xiang Ren  
 **Category**: cs.CL  
@@ -286,7 +322,7 @@ Abstract: Membership inference attacks serves as useful tool for fair use of lan
 
 ---
 
-### 24. [Over-Squashing in GNNs and Causal Inference of Rewiring Strategies](https://arxiv.org/abs/2508.09265)
+### 27. [Over-Squashing in GNNs and Causal Inference of Rewiring Strategies](https://arxiv.org/abs/2508.09265)
 
 **Authors**: Danial Saber, Amirali Salehi-Abari  
 **Category**: cs.LG  
@@ -298,7 +334,7 @@ Abstract: Graph neural networks (GNNs) have exhibited state-of-the-art performan
 
 ---
 
-### 25. [Story2Board: A Training-Free Approach for Expressive Storyboard Generation](https://arxiv.org/abs/2508.09983)
+### 28. [Story2Board: A Training-Free Approach for Expressive Storyboard Generation](https://arxiv.org/abs/2508.09983)
 
 **Authors**: David Dinkevich, Matan Levy, Omri Avrahami, Dvir Samuel, Dani Lischinski  
 **Category**: cs.LG  
@@ -310,7 +346,7 @@ Abstract: We present Story2Board, a training-free framework for expressive story
 
 ---
 
-### 26. [Probabilistic Emissivity Retrieval from Hyperspectral Data via Physics-Guided Variational Inference](https://arxiv.org/abs/2508.08291)
+### 29. [Probabilistic Emissivity Retrieval from Hyperspectral Data via Physics-Guided Variational Inference](https://arxiv.org/abs/2508.08291)
 
 **Authors**: Joshua R. Tempelman, Kevin Mitchell, Adam J. Wachtor, Eric B. Flynn  
 **Category**: cs.LG  
@@ -322,7 +358,7 @@ Abstract: Recent research has proven neural networks to be a powerful tool for p
 
 ---
 
-### 27. [Efficient Real-Time Aircraft ETA Prediction via Feature Tokenization Transformer](https://arxiv.org/abs/2508.09144)
+### 30. [Efficient Real-Time Aircraft ETA Prediction via Feature Tokenization Transformer](https://arxiv.org/abs/2508.09144)
 
 **Authors**: Liping Huang, Yicheng Zhang, Yifang Yin, Sheng Zhang, Yi Zhang  
 **Category**: cs.AI  
@@ -334,46 +370,10 @@ Abstract: Estimated time of arrival (ETA) for airborne aircraft in real-time is 
 
 ---
 
-### 28. [To Theoretically Understand Transformer-Based In-Context Learning for Optimizing CSMA](https://arxiv.org/abs/2508.09146)
-
-**Authors**: Shugang Hao, Hongbo Li, Lingjie Duan  
-**Category**: cs.AI  
-**Published**: 2025-08-14  
-**Score**: 3.0
-
-arXiv:2508.09146v1 Announce Type: cross 
-Abstract: The binary exponential backoff scheme is widely used in WiFi 7 and still incurs poor throughput performance under dynamic channel environments. Recent model-based approaches (e.g., non-persistent and $p$-persistent CSMA) simply optimize backoff stra...
-
----
-
-### 29. [Motif 2.6B Technical Report](https://arxiv.org/abs/2508.09148)
-
-**Authors**: Junghwan Lim, Sungmin Lee, Dongseok Kim, Eunhwan Park, Hyunbyung Park, Junhyeok Lee, Wai Ting Cheung, Dahye Choi, Jaeheui Her, Jaeyeon Huh, Hanbin Jung, Changjin Kang, Beomgyu Kim, Jihwan Kim, Minjae Kim, Taehwan Kim, Youngrok Kim, Haesol Lee, Jeesoo Lee, Kungyu Lee, Dongpin Oh, Yeongjae Park, Bokki Ryu, Daewon Suh, Dongjoo Weon  
-**Category**: cs.AI  
-**Published**: 2025-08-14  
-**Score**: 3.0
-
-arXiv:2508.09148v1 Announce Type: cross 
-Abstract: Recent advancements in Large Language Models (LLMs) have revolutionized artificial intelligence, yet developing an effective foundational LLM that balances high performance with computational efficiency remains challenging, especially for emerging r...
-
----
-
-### 30. [Physics-Constrained Fine-Tuning of Flow-Matching Models for Generation and Inverse Problems](https://arxiv.org/abs/2508.09156)
-
-**Authors**: Jan Tauberschmidt, Sophie Fellenz, Sebastian J. Vollmer, Andrew B. Duncan  
-**Category**: cs.AI  
-**Published**: 2025-08-14  
-**Score**: 3.0
-
-arXiv:2508.09156v1 Announce Type: cross 
-Abstract: We present a framework for fine-tuning flow-matching generative models to enforce physical constraints and solve inverse problems in scientific systems. Starting from a model trained on low-fidelity or observational data, we apply a differentiable p...
-
----
-
 ## 🔧 Configuration
 
 This bot is configured to look for papers containing the following keywords:
-- LLM, RL, RLHF, Inference, Training, Attention, Pipeline, Quantization, Speculative Decoding
+- LLM, RL, RLHF, Inference, Training, Attention, Pipeline, MOE, Quantization, Speculative Decoding
 
 ## 📅 Schedule
 
