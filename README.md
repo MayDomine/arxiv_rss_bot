@@ -2,15 +2,9 @@
 
 This repository automatically fetches and displays relevant papers from arXiv based on configured criteria.
 
-## RSS Vercel Deployment [![An example of deployed RSS Server using vercel](https://img.shields.io/badge/Deployed-Example-blue)](https://arxiv-rss-equ1ow2e6-maydomines-projects.vercel.app/)
-
-You can click this to deploy yours 
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
-
 ## 📊 Statistics
 
-- **Last Updated**: 2025-08-14 11:04:11 UTC
+- **Last Updated**: 2025-08-14 11:53:01 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
