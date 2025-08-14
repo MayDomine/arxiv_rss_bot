@@ -50,6 +50,7 @@ class ArxivBot:
     def fetch_arxiv_papers(self) -> List[Dict[str, Any]]:
         """Fetch papers from arXiv RSS feeds for specified categories."""
         all_papers = []
+        seen_papers = set()  # Track seen paper IDs to avoid duplicates during fetching
         
         for category in self.config["categories"]:
             try:
@@ -67,13 +68,28 @@ class ArxivBot:
                 for entry in feed.entries:
                     paper = self.parse_paper_entry(entry, category)
                     if paper:
+                        # Check for duplicates using paper ID
+                        paper_id = paper.get("id", "")
+                        if paper_id and paper_id in seen_papers:
+                            logger.debug(f"Skipping duplicate paper during fetch: {paper_id}")
+                            continue
+                        
+                        # Check for duplicates using title (fallback)
+                        title_normalized = paper.get("title", "").lower().strip()
+                        if title_normalized in seen_papers:
+                            logger.debug(f"Skipping duplicate paper by title during fetch: {title_normalized[:50]}...")
+                            continue
+                        
+                        # Add to seen set and papers list
+                        seen_papers.add(paper_id)
+                        seen_papers.add(title_normalized)
                         all_papers.append(paper)
                         
             except Exception as e:
                 logger.error(f"Error fetching papers from {category}: {e}")
                 continue
         
-        logger.info(f"Fetched {len(all_papers)} papers total")
+        logger.info(f"Fetched {len(all_papers)} unique papers total")
         return all_papers
     
     def parse_paper_entry(self, entry: Any, category: str) -> Dict[str, Any]:
@@ -110,11 +126,29 @@ class ArxivBot:
             return None
     
     def filter_papers(self, papers: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Filter papers based on user-defined conditions."""
+        """Filter papers based on user-defined conditions and remove duplicates."""
         filtered_papers = []
+        seen_papers = set()  # Track seen paper IDs to avoid duplicates
         
         for paper in papers:
             if self.matches_criteria(paper):
+                # Check for duplicates using paper ID
+                paper_id = paper.get("id", "")
+                if paper_id and paper_id in seen_papers:
+                    logger.debug(f"Skipping duplicate paper: {paper_id}")
+                    continue
+                
+                # Check for duplicates using title (fallback)
+                title_normalized = paper.get("title", "").lower().strip()
+                if title_normalized in seen_papers:
+                    logger.debug(f"Skipping duplicate paper by title: {title_normalized[:50]}...")
+                    continue
+                
+                # Add to seen set
+                seen_papers.add(paper_id)
+                seen_papers.add(title_normalized)
+                
+                # Calculate score and add to filtered papers
                 paper["score"] = self.calculate_score(paper)
                 filtered_papers.append(paper)
         
@@ -125,7 +159,7 @@ class ArxivBot:
         max_papers = self.config.get("max_papers", 50)
         filtered_papers = filtered_papers[:max_papers]
         
-        logger.info(f"Filtered to {len(filtered_papers)} papers")
+        logger.info(f"Filtered to {len(filtered_papers)} unique papers (removed {len(papers) - len(filtered_papers)} duplicates)")
         return filtered_papers
     
     def matches_criteria(self, paper: Dict[str, Any]) -> bool:
@@ -297,6 +331,10 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         # Fetch papers
         papers = self.fetch_arxiv_papers()
         
+        # Apply additional deduplication if enabled
+        if self.config.get("enable_deduplication", True):
+            papers = self.deduplicate_papers(papers)
+        
         # Filter papers
         filtered_papers = self.filter_papers(papers)
         
@@ -304,6 +342,64 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         self.update_readme(filtered_papers)
         
         logger.info("arXiv Bot completed successfully!")
+
+    def deduplicate_papers(self, papers: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Remove duplicate papers based on multiple criteria.
+        
+        Args:
+            papers: List of paper dictionaries
+            
+        Returns:
+            List of unique papers
+        """
+        if not papers:
+            return papers
+            
+        unique_papers = []
+        seen_ids = set()
+        seen_titles = set()
+        seen_links = set()
+        
+        for paper in papers:
+            paper_id = paper.get("id", "").strip()
+            title = paper.get("title", "").lower().strip()
+            link = paper.get("link", "").strip()
+            
+            # Skip if we've seen this paper before
+            is_duplicate = False
+            
+            # Check by ID (most reliable)
+            if paper_id and paper_id in seen_ids:
+                logger.debug(f"Skipping duplicate by ID: {paper_id}")
+                is_duplicate = True
+            
+            # Check by title (normalized)
+            elif title and title in seen_titles:
+                logger.debug(f"Skipping duplicate by title: {title[:50]}...")
+                is_duplicate = True
+            
+            # Check by link
+            elif link and link in seen_links:
+                logger.debug(f"Skipping duplicate by link: {link}")
+                is_duplicate = True
+            
+            if not is_duplicate:
+                # Add to tracking sets
+                if paper_id:
+                    seen_ids.add(paper_id)
+                if title:
+                    seen_titles.add(title)
+                if link:
+                    seen_links.add(link)
+                
+                unique_papers.append(paper)
+        
+        removed_count = len(papers) - len(unique_papers)
+        if removed_count > 0:
+            logger.info(f"Removed {removed_count} duplicate papers")
+        
+        return unique_papers
 
 def main():
     """Main entry point."""

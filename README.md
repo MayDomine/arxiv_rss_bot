@@ -7,6 +7,7 @@ This repository automatically fetches and displays relevant papers from arXiv ba
 - **Last Updated**: 2025-08-14 07:37:42 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
+- **Deduplication**: ✅ Enabled (removes duplicate papers across categories)
 
 ## 📚 Recent Papers
 
