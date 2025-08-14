@@ -9,6 +9,7 @@ from arxiv_bot import ArxivBot
 import json
 from datetime import datetime
 import logging
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -174,7 +175,7 @@ def generate_rss_feed(category=None):
             })
         
         # Generate RSS XML
-        feed_url = f"http://localhost:5000/rss/{category}" if category else "http://localhost:5000/rss"
+        feed_url = f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}" if category else f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss"
         
         rss_content = render_template_string(
             RSS_TEMPLATE,
