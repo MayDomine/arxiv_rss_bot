@@ -1,28 +1,22 @@
-name: arXiv Bot Daily Update
+name: Config Update Trigger
 
 on:
   push:
     branches: [ main, master ]
     paths:
       - 'config.json'
-      - 'arxiv_bot.py'
-      - 'CUSTOM_RULES.md'
       - 'example_custom_rules.py'
-      - 'rss_service.py'
-  schedule:
-    # Runs daily at 12:00 UTC
-    - cron: '0 12 * * *'
-  workflow_dispatch:  # Allow manual trigger
+      - 'CUSTOM_RULES.md'
 
 jobs:
-  update-papers:
+  update-on-config-change:
     runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       with:
-        fetch-depth: 0  # Fetch all history for proper git operations
+        fetch-depth: 0
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -34,12 +28,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Test bot functionality
+    - name: Run arXiv Bot with new config
       run: |
-        python test_bot.py
-        
-    - name: Run arXiv Bot
-      run: |
+        echo "🔄 Configuration changed, updating papers..."
         python arxiv_bot.py
         
     - name: Commit and push changes
@@ -47,10 +38,10 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add README.md
-        git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Update papers from arXiv - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+        git diff --quiet && git diff --staged --quiet || git commit -m "⚙️ Update papers with new configuration - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
         git push
         
-    - name: Show updated papers count
+    - name: Show summary
       run: |
-        echo "📊 Papers updated in README.md"
-        grep -c "### [0-9]*\." README.md || echo "No papers found" 
+        echo "✅ Configuration update completed"
+        echo "📊 Check README.md for updated papers" 
