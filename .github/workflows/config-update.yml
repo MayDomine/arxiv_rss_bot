@@ -8,6 +8,10 @@ on:
       - 'example_custom_rules.py'
       - 'CUSTOM_RULES.md'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update-on-config-change:
     runs-on: ubuntu-latest
