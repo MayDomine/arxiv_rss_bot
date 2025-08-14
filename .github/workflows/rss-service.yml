@@ -7,7 +7,7 @@ on:
       - 'rss_service.py'
       - 'requirements.txt'
       - 'config.json'
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:
 
 jobs:
   deploy-rss-service:
