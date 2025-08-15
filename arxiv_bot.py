@@ -7,7 +7,7 @@ Updates README.md with matching papers.
 import feedparser
 import json
 from datetime import datetime, timedelta
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import logging
 
 # Configure logging
@@ -379,7 +379,7 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 
         logger.info("arXiv Bot completed successfully!")
 
-    def deduplicate_papers(self, papers: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def deduplicate_papers(self, papers: Optional[List[Dict[str, Any]]]) -> Optional[List[Dict[str, Any]]]:
         """
         Remove duplicate papers based on multiple criteria.
 
