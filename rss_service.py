@@ -12,7 +12,9 @@ import logging
 import os
 
 # Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
@@ -44,7 +46,8 @@ RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
     </channel>
 </rss>"""
 
-@app.route('/')
+
+@app.route("/")
 def index():
     """Home page with information about the RSS service."""
     return """
@@ -105,39 +108,40 @@ def index():
     </html>
     """
 
-@app.route('/rss')
+
+@app.route("/rss")
 def rss_feed():
     """Main RSS feed endpoint."""
     return generate_rss_feed()
 
-@app.route('/rss/<category>')
+
+@app.route("/rss/<category>")
 def category_rss_feed(category):
     """Category-specific RSS feed endpoint."""
     return generate_rss_feed(category=category)
 
-@app.route('/config')
+
+@app.route("/config")
 def get_config():
     """Return the current configuration as JSON."""
     try:
         bot = ArxivBot()
-        return Response(
-            json.dumps(bot.config, indent=2),
-            mimetype='application/json'
-        )
+        return Response(json.dumps(bot.config, indent=2), mimetype="application/json")
     except Exception as e:
         logger.error(f"Error loading config: {e}")
         return Response(
             json.dumps({"error": "Failed to load configuration"}),
             status=500,
-            mimetype='application/json'
+            mimetype="application/json",
         )
+
 
 def generate_rss_feed(category=None):
     """Generate RSS feed from filtered papers."""
     try:
         # Initialize bot and fetch papers
         bot = ArxivBot()
-        
+
         if category:
             # Filter to specific category
             bot.config["categories"] = [category]
@@ -145,38 +149,46 @@ def generate_rss_feed(category=None):
             feed_description = f"Filtered arXiv papers from {category} category"
         else:
             feed_title = "arXiv Filtered Papers"
-            feed_description = "Papers filtered based on configured keywords and categories"
-        
+            feed_description = (
+                "Papers filtered based on configured keywords and categories"
+            )
+
         # Fetch and filter papers
         papers = bot.fetch_arxiv_papers()
         filtered_papers = bot.filter_papers(papers)
-        
+
         # Prepare papers for RSS
         rss_papers = []
         for paper in filtered_papers:
             # Format authors
             authors_str = ", ".join(paper["authors"]) if paper["authors"] else "Unknown"
-            
+
             # Format date for RSS
             try:
                 pub_date = datetime.strptime(paper["published_date"], "%Y-%m-%d")
                 pub_date_rss = pub_date.strftime("%a, %d %b %Y %H:%M:%S +0000")
             except:
                 pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
-            
-            rss_papers.append({
-                "title": paper["title"],
-                "link": paper["link"],
-                "authors_str": authors_str,
-                "category": paper["category"],
-                "score": paper["score"],
-                "summary": paper["summary"],
-                "pub_date_rss": pub_date_rss
-            })
-        
+
+            rss_papers.append(
+                {
+                    "title": paper["title"],
+                    "link": paper["link"],
+                    "authors_str": authors_str,
+                    "category": paper["category"],
+                    "score": paper["score"],
+                    "summary": paper["summary"],
+                    "pub_date_rss": pub_date_rss,
+                }
+            )
+
         # Generate RSS XML
-        feed_url = f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}" if category else f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss"
-        
+        feed_url = (
+            f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}"
+            if category
+            else f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss"
+        )
+
         rss_content = render_template_string(
             RSS_TEMPLATE,
             feed_title=feed_title,
@@ -184,33 +196,33 @@ def generate_rss_feed(category=None):
             feed_description=feed_description,
             feed_url=feed_url,
             last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
-            papers=rss_papers
+            papers=rss_papers,
         )
-        
+
         logger.info(f"Generated RSS feed with {len(rss_papers)} papers")
-        
+
         return Response(
             rss_content,
-            mimetype='application/rss+xml',
-            headers={'Content-Type': 'application/rss+xml; charset=utf-8'}
+            mimetype="application/rss+xml",
+            headers={"Content-Type": "application/rss+xml; charset=utf-8"},
         )
-        
+
     except Exception as e:
         logger.error(f"Error generating RSS feed: {e}")
         return Response(
-            f"Error generating RSS feed: {str(e)}",
-            status=500,
-            mimetype='text/plain'
+            f"Error generating RSS feed: {str(e)}", status=500, mimetype="text/plain"
         )
 
-@app.route('/health')
+
+@app.route("/health")
 def health_check():
     """Health check endpoint."""
     return Response(
         json.dumps({"status": "healthy", "timestamp": datetime.now().isoformat()}),
-        mimetype='application/json'
+        mimetype="application/json",
     )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     logger.info("Starting arXiv RSS Service...")
-    app.run(host='0.0.0.0', port=1999, debug=True) 
+    app.run(host="0.0.0.0", port=1999, debug=True)
