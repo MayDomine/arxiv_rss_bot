@@ -55,7 +55,7 @@ class ArxivBot:
             "min_score": 0.0,
         }
 
-    def parse_paper_entry(self, entry: Any, category: str) -> Dict[str, Any] | None:
+    def parse_paper_entry(self, entry: Any, category: str) -> Optional[Dict[str, Any]]:
         """Parse a single paper entry from RSS feed."""
         try:
             # Extract paper ID from link
