@@ -181,7 +181,7 @@ def generate_rss_feed(category=None):
                     "pub_date_rss": pub_date_rss,
                 }
             )
-
+        rss_papers = sorted(rss_papers, key = lambda: x: x['score'], reverse=True)
         # Generate RSS XML
         feed_url = (
             f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}"
