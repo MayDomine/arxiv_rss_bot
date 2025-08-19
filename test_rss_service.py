@@ -98,6 +98,29 @@ def test_health_endpoint(base_url):
         if response.status_code == 200:
             health = response.json()
             print(f"✅ Health check passed: {health.get('status', 'Unknown')}")
+            print(f"📅 Last cache update: {health.get('last_cache_update', 'Never')}")
+            print(f"💾 Cache status: {health.get('cache_status', 'Unknown')}")
+            return True
+        else:
+            print(f"❌ Status: {response.status_code}")
+            return False
+
+    except requests.RequestException as e:
+        print(f"❌ Request failed: {e}")
+        return False
+
+
+def test_cache_update_endpoint(base_url):
+    """Test the cache update endpoint."""
+    print(f"\n🔄 Testing cache update endpoint: {base_url}/update-cache")
+
+    try:
+        response = requests.get(f"{base_url}/update-cache", timeout=30)
+
+        if response.status_code == 200:
+            result = response.json()
+            print(f"✅ Cache update status: {result.get('status', 'Unknown')}")
+            print(f"📝 Message: {result.get('message', 'No message')}")
             return True
         else:
             print(f"❌ Status: {response.status_code}")
@@ -117,6 +140,9 @@ def main():
 
     # Test health endpoint
     test_health_endpoint(base_url)
+    
+    # Test cache update endpoint
+    test_cache_update_endpoint(base_url)
 
     # Test config endpoint
     test_config_endpoint(base_url)

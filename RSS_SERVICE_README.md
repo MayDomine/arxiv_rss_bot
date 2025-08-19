@@ -8,7 +8,8 @@ Transform your arXiv bot into a web service that provides RSS feeds for your fil
 - **Multiple Feed Types**: Main feed and category-specific feeds
 - **Web Interface**: Beautiful web page showing available feeds
 - **Easy Deployment**: Support for multiple hosting platforms
-- **Real-time Updates**: Feeds are generated on-demand with latest papers
+- **Static Cache**: Feeds are cached and updated daily at 12:00
+- **Manual Cache Updates**: Ability to manually trigger cache updates
 
 ## 🚀 Quick Start
 
@@ -41,6 +42,16 @@ Once running, you'll have access to these RSS feeds:
 - **ML Papers**: `http://localhost:5000/rss/cs.LG` - Machine Learning papers
 - **NLP Papers**: `http://localhost:5000/rss/cs.CL` - Natural Language Processing papers
 - **CV Papers**: `http://localhost:5000/rss/cs.CV` - Computer Vision papers
+
+## 🔄 Cache System
+
+The RSS service now uses a static cache system that updates daily:
+
+- **Automatic Updates**: Cache refreshes automatically at 12:00 every day
+- **Manual Updates**: Trigger a cache update by visiting `http://localhost:5000/update-cache`
+- **Cache Status**: Check cache status at `http://localhost:5000/health`
+
+This improves performance and reduces load on the arXiv API.
 
 ## 🔧 How to Subscribe
 
@@ -295,4 +306,4 @@ Your RSS reader will now show you the latest relevant papers from arXiv, filtere
 
 ---
 
-*Happy reading! 📚* 
+*Happy reading! 📚*

@@ -35,15 +35,13 @@ jobs:
       run: |
         python test_rss_service.py
         
-    - name: Generate RSS feeds
+    - name: Generate RSS feeds and update cache
       run: |
-        echo "📡 Generating RSS feeds..."
+        echo "📡 Generating RSS feeds and updating cache..."
         python -c "
-        from arxiv_bot import ArxivBot
-        bot = ArxivBot()
-        papers = bot.fetch_arxiv_papers()
-        filtered = bot.filter_papers(papers)
-        print(f'Generated {len(filtered)} papers for RSS feeds')
+        from rss_service import update_rss_cache
+        success = update_rss_cache()
+        print(f'Cache update status: {\'success\' if success else \'failed\'}')
         "
         
     - name: Commit RSS updates
@@ -52,4 +50,4 @@ jobs:
         git config --local user.name "GitHub Action"
         git add .
         git diff --quiet && git diff --staged --quiet || git commit -m "📡 Update RSS service - $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
-        git push 
+        git push
