@@ -182,11 +182,12 @@ def generate_rss_feed(category=None):
                 }
             )
         rss_papers = sorted(rss_papers, key = lambda x: x['score'], reverse=True)
+        base_url = os.environ.get('BASE_URL', 'http://localhost:5000').strip()
         # Generate RSS XML
         feed_url = (
-            f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}"
+            f"{base_url}/rss/{category}"
             if category
-            else f"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss"
+            else f"{base_url}/rss"
         )
 
         rss_content = render_template_string(
