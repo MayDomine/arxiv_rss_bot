@@ -262,7 +262,7 @@ class ArxivBot:
 
 This repository automatically fetches and displays relevant papers from arXiv based on configured criteria.
 
-## RSS Vercel Deployment [![An example of deployed RSS Server using vercel](https://img.shields.io/badge/Deployed-Example-blue)](https://arxiv-rss-bot.vercel.app/)
+## RSS Vercel Deployment [![An example of deployed RSS Server using vercel](https://img.shields.io/badge/Deployed-Example-blue)](https://arxiv.tachicoma.top/)
 
 You can click this to deploy yours 
 
