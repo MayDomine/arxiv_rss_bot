@@ -157,6 +157,11 @@ def update_rss_cache():
         # Fetch and filter papers once
         papers = bot.fetch_arxiv_papers()
         filtered_papers = bot.filter_papers(papers)
+
+        # If no new papers, don't update the cache
+        if not filtered_papers:
+            logger.info("No new papers found. RSS cache not updated.")
+            return True
         
         # Base URL for feed links
         base_url = os.environ.get('BASE_URL', 'http://localhost:5000').strip()
