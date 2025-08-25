@@ -375,7 +375,8 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         filtered_papers = self.filter_papers(papers)
 
         # Update README
-        self.update_readme(filtered_papers)
+        if filtered_papers :
+            self.update_readme(filtered_papers)
 
         logger.info("arXiv Bot completed successfully!")
 
