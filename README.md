@@ -9,369 +9,369 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-08-25 12:54:00 UTC
+- **Last Updated**: 2025-08-26 12:55:13 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [Towards Bridging the Reward-Generation Gap in Direct Alignment Algorithms](https://arxiv.org/abs/2506.09457)
+### 1. [GateTS: Versatile and Efficient Forecasting via Attention-Inspired routed Mixture-of-Experts](https://arxiv.org/abs/2508.17515)
 
-**Authors**: Zeguan Xiao, Yun Chen, Guanhua Chen, Ke Tang  
-**Category**: cs.CL  
-**Published**: 2025-08-25  
+**Authors**: Kyrylo Yemets, Mykola Lukashchuk, Ivan Izonin  
+**Category**: cs.LG  
+**Published**: 2025-08-26  
+**Score**: 6.5
+
+arXiv:2508.17515v1 Announce Type: new 
+Abstract: Accurate univariate forecasting remains a pressing need in real-world systems, such as energy markets, hydrology, retail demand, and IoT monitoring, where signals are often intermittent and horizons span both short- and long-term. While transformers a...
+
+---
+
+### 2. [Dynamic Sparse Attention on Mobile SoCs](https://arxiv.org/abs/2508.16703)
+
+**Authors**: Wangsong Yin, Daliang Xu, Mengwei Xu, Gang Huang, Xuanzhe Liu  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
 **Score**: 6.0
 
-arXiv:2506.09457v2 Announce Type: replace 
-Abstract: Direct Alignment Algorithms (DAAs), such as Direct Preference Optimization (DPO) and Simple Preference Optimization (SimPO), have emerged as efficient alternatives to Reinforcement Learning from Human Feedback (RLHF) algorithms for aligning large ...
+arXiv:2508.16703v1 Announce Type: cross 
+Abstract: On-device running Large Language Models (LLMs) is nowadays a critical enabler towards preserving user privacy. We observe that the attention operator falls back from the special-purpose NPU to the general-purpose CPU/GPU because of quantization sens...
 
 ---
 
-### 2. [SpecExtend: A Drop-in Enhancement for Speculative Decoding of Long Sequences](https://arxiv.org/abs/2505.20776)
+### 3. [SIFThinker: Spatially-Aware Image Focus for Visual Reasoning](https://arxiv.org/abs/2508.06259)
 
-**Authors**: Jungyoub Cha, Hyunjong Kim, Sungzoon Cho  
+**Authors**: Zhangquan Chen, Ruihui Zhao, Chuwei Luo, Mingze Sun, Xinlei Yu, Yangyang Kang, Ruqi Huang  
 **Category**: cs.AI  
-**Published**: 2025-08-25  
+**Published**: 2025-08-26  
+**Score**: 6.0
+
+arXiv:2508.06259v3 Announce Type: replace-cross 
+Abstract: Current multimodal large language models (MLLMs) still face significant challenges in complex visual tasks (e.g., spatial understanding, fine-grained perception). Prior methods have tried to incorporate visual reasoning, however, they fail t...
+
+---
+
+### 4. [Flash Sparse Attention: An Alternative Efficient Implementation of Native Sparse Attention Kernel](https://arxiv.org/abs/2508.18224)
+
+**Authors**: Ran Yan, Youhe Jiang, Binhang Yuan  
+**Category**: cs.DC  
+**Published**: 2025-08-26  
+**Score**: 6.0
+
+arXiv:2508.18224v1 Announce Type: new 
+Abstract: Recent progress in sparse attention mechanisms has demonstrated strong potential for reducing the computational cost of long-context training and inference in large language models (LLMs). Native Sparse Attention (NSA), a state-of-the-art approach, in...
+
+---
+
+### 5. [MoE-Inference-Bench: Performance Evaluation of Mixture of Expert Large Language and Vision Models](https://arxiv.org/abs/2508.17467)
+
+**Authors**: Krishna Teja Chitty-Venkata, Sylvia Howland, Golara Azar, Daria Soboleva, Natalia Vassilieva, Siddhisanket Raskar, Murali Emani, Venkatram Vishwanath  
+**Category**: cs.LG  
+**Published**: 2025-08-26  
+**Score**: 6.0
+
+arXiv:2508.17467v1 Announce Type: new 
+Abstract: Mixture of Experts (MoE) models have enabled the scaling of Large Language Models (LLMs) and Vision Language Models (VLMs) by achieving massive parameter counts while maintaining computational efficiency. However, MoEs introduce several inference-time...
+
+---
+
+### 6. [BudgetThinker: Empowering Budget-aware LLM Reasoning with Control Tokens](https://arxiv.org/abs/2508.17196)
+
+**Authors**: Hao Wen, Xinrui Wu, Yi Sun, Feifei Zhang, Liye Chen, Jie Wang, Yunxin Liu, Ya-Qin Zhang, Yuanchun Li  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
 **Score**: 5.5
 
-arXiv:2505.20776v2 Announce Type: replace-cross 
-Abstract: Speculative decoding is a widely adopted technique for accelerating inference in large language models (LLMs), but its performance degrades on long inputs due to increased attention cost and reduced draft accuracy. We introduce SpecExtend, a...
+arXiv:2508.17196v1 Announce Type: cross 
+Abstract: Recent advancements in Large Language Models (LLMs) have leveraged increased test-time computation to enhance reasoning capabilities, a strategy that, while effective, incurs significant latency and resource costs, limiting their applicability in re...
 
 ---
 
-### 3. [Your Reward Function for RL is Your Best PRM for Search: Unifying RL and Search-Based TTS](https://arxiv.org/abs/2508.14313)
+### 7. [HLLM-Creator: Hierarchical LLM-based Personalized Creative Generation](https://arxiv.org/abs/2508.18118)
 
-**Authors**: Can Jin, Yang Zhou, Qixin Zhang, Hongwu Peng, Di Zhang, Marco Pavone, Ligong Han, Zhang-Wei Hong, Tong Che, Dimitris N. Metaxas  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 5.5
-
-arXiv:2508.14313v2 Announce Type: replace-cross 
-Abstract: Test-time scaling (TTS) for large language models (LLMs) has thus far fallen into two largely separate paradigms: (1) reinforcement learning (RL) methods that optimize sparse outcome-based rewards, yet suffer from instability and low sample ...
-
----
-
-### 4. [Format as a Prior: Quantifying and Analyzing Bias in LLMs for Heterogeneous Data](https://arxiv.org/abs/2508.15793)
-
-**Authors**: Jiacheng Liu, Mayi Xu, Qiankun Pi, Wenli Li, Ming Zhong, Yuanyuan Zhu, Mengchi Liu, Tieyun Qian  
+**Authors**: Junyi Chen, Lu Chi, Siliang Xu, Shiwei Ran, Bingyue Peng, Zehuan Yuan  
 **Category**: cs.CL  
-**Published**: 2025-08-25  
+**Published**: 2025-08-26  
 **Score**: 5.5
 
-arXiv:2508.15793v1 Announce Type: new 
-Abstract: Large Language Models (LLMs) are increasingly employed in applications that require processing information from heterogeneous formats, including text, tables, infoboxes, and knowledge graphs. However, systematic biases toward particular formats may un...
+arXiv:2508.18118v1 Announce Type: cross 
+Abstract: AI-generated content technologies are widely used in content creation. However, current AIGC systems rely heavily on creators' inspiration, rarely generating truly user-personalized content. In real-world applications such as online advertising, a s...
 
 ---
 
-### 5. [DAIQ: Auditing Demographic Attribute Inference from Question in LLMs](https://arxiv.org/abs/2508.15830)
+### 8. [WISCA: A Lightweight Model Transition Method to Improve LLM Training via Weight Scaling](https://arxiv.org/abs/2508.16676)
 
-**Authors**: Srikant Panda, Hitesh Laxmichand Patel, Shahad Al-Khalifa, Amit Agarwal, Hend Al-Khalifa, Sharefah Al-Ghamdi  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 5.0
-
-arXiv:2508.15830v1 Announce Type: cross 
-Abstract: Large Language Models (LLMs) are known to reflect social biases when demographic attributes, such as gender or race, are explicitly present in the input. But even in their absence, these models still infer user identities based solely on question ph...
-
----
-
-### 6. [SpecVLM: Enhancing Speculative Decoding of Video LLMs via Verifier-Guided Token Pruning](https://arxiv.org/abs/2508.16201)
-
-**Authors**: Yicheng Ji, Jun Zhang, Heming Xia, Jinpeng Chen, Lidan Shou, Gang Chen, Huan Li  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 5.0
-
-arXiv:2508.16201v1 Announce Type: cross 
-Abstract: Video large language models (Vid-LLMs) have shown strong capabilities in understanding video content. However, their reliance on dense video token representations introduces substantial memory and computational overhead in both prefilling and decodi...
-
----
-
-### 7. [Hydra: A 1.6B-Parameter State-Space Language Model with Sparse Attention, Mixture-of-Experts, and Memory](https://arxiv.org/abs/2508.15099)
-
-**Authors**: Siddharth Chaudhary, Bennett Browning  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 5.0
-
-arXiv:2508.15099v2 Announce Type: replace-cross 
-Abstract: We present Hydra as an architectural proposal for hybrid long-context language models that combine conditional computation, long-context memory mechanisms, and sparse mixture-of-experts within an approximately 1.6B parameter design envelope....
-
----
-
-### 8. [SurfaceLogicKV: Surface and Logic Attention Behaviors are All You Need for Robust KV Cache Compression](https://arxiv.org/abs/2508.15806)
-
-**Authors**: Mengjie Li, William J. Song  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.5
-
-arXiv:2508.15806v1 Announce Type: cross 
-Abstract: The increasing input sequence length in Large Language Models (LLMs) puts significant pressure on key-value (KV) cache storage, making efficient inference challenging. Explicitly distinguishing attention behavior into our self-defined surface memori...
-
----
-
-### 9. [Sparse but Wrong: Incorrect L0 Leads to Incorrect Features in Sparse Autoencoders](https://arxiv.org/abs/2508.16560)
-
-**Authors**: David Chanin, Adri\`a Garriga-Alonso  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.5
-
-arXiv:2508.16560v1 Announce Type: cross 
-Abstract: Sparse Autoencoders (SAEs) extract features from LLM internal activations, meant to correspond to single concepts. A core SAE training hyperparameter is L0: how many features should fire per token on average. Existing work compares SAE algorithms us...
-
----
-
-### 10. [Dynamically Adaptive Reasoning via LLM-Guided MCTS for Efficient and Context-Aware KGQA](https://arxiv.org/abs/2508.00719)
-
-**Authors**: Yingxu Wang, Shiqi Fan, Mengzhu Wang, Siyang Gao, Siwei Liu, Nan Yin  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.5
-
-arXiv:2508.00719v2 Announce Type: replace-cross 
-Abstract: Knowledge Graph Question Answering (KGQA) aims to interpret natural language queries and perform structured reasoning over knowledge graphs by leveraging their relational and semantic structures to retrieve accurate answers. Recent KGQA meth...
-
----
-
-### 11. [Psyche-R1: Towards Reliable Psychological LLMs through Unified Empathy, Expertise, and Reasoning](https://arxiv.org/abs/2508.10848)
-
-**Authors**: Chongyuan Dai, Jinpeng Hu, Hongchang Shi, Zhuo Li, Xun Yang, Meng Wang  
+**Authors**: Jiacheng Li, Jianchao Tan, Zhidong Yang, Pingwei Sun, Feiye Huo, Jiayu Qin, Yerui Sun, Yuchen Xie, Xunliang Cai, Xiangyu Zhang, Maoxin He, Guangming Tan, Weile Jia, Tong Zhao  
 **Category**: cs.CL  
-**Published**: 2025-08-25  
-**Score**: 4.5
+**Published**: 2025-08-26  
+**Score**: 5.0
 
-arXiv:2508.10848v2 Announce Type: replace 
-Abstract: Amidst a shortage of qualified mental health professionals, the integration of large language models (LLMs) into psychological applications offers a promising way to alleviate the growing burden of mental health disorders. Recent reasoning-augment...
+arXiv:2508.16676v1 Announce Type: cross 
+Abstract: Transformer architecture gradually dominates the LLM field. Recent advances in training optimization for Transformer-based large language models (LLMs) primarily focus on architectural modifications or optimizer adjustments. However, these approache...
 
 ---
 
-### 12. [TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill \& Decode Inference](https://arxiv.org/abs/2508.15881)
+### 9. [AdaptiveK Sparse Autoencoders: Dynamic Sparsity Allocation for Interpretable LLM Representations](https://arxiv.org/abs/2508.17320)
+
+**Authors**: Yifei Yao, Mengnan Du  
+**Category**: cs.LG  
+**Published**: 2025-08-26  
+**Score**: 5.0
+
+arXiv:2508.17320v1 Announce Type: new 
+Abstract: Understanding the internal representations of large language models (LLMs) remains a central challenge for interpretability research. Sparse autoencoders (SAEs) offer a promising solution by decomposing activations into interpretable features, but exi...
+
+---
+
+### 10. [EyeMulator: Improving Code Language Models by Mimicking Human Visual Attention](https://arxiv.org/abs/2508.16771)
+
+**Authors**: Yifan Zhang, Chen Huang, Yueke Zhang, Jiahao Zhang, Toby Jia-Jun Li, Collin McMillan, Kevin Leach, Yu Huang  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.5
+
+arXiv:2508.16771v1 Announce Type: cross 
+Abstract: Code language models (so-called CodeLLMs) are now commonplace in software development. As a general rule, CodeLLMs are trained by dividing training examples into input tokens and then learn importance of those tokens in a process called machine atte...
+
+---
+
+### 11. [DiscussLLM: Teaching Large Language Models When to Speak](https://arxiv.org/abs/2508.18167)
+
+**Authors**: Deep Anil Patel, Iain Melvin, Christopher Malon, Martin Renqiang Min  
+**Category**: cs.CL  
+**Published**: 2025-08-26  
+**Score**: 4.5
+
+arXiv:2508.18167v1 Announce Type: new 
+Abstract: Large Language Models (LLMs) have demonstrated remarkable capabilities in understanding and generating human-like text, yet they largely operate as reactive agents, responding only when directly prompted. This passivity creates an "awareness gap," lim...
+
+---
+
+### 12. [AdapSNE: Adaptive Fireworks-Optimized and Entropy-Guided Dataset Sampling for Edge DNN Training](https://arxiv.org/abs/2508.16647)
+
+**Authors**: Boran Zhao, Hetian Liu, Zihang Yuan, Li Zhu, Fan Yang, Lina Xie Tian Xia, Wenzhe Zhao, Pengju Ren  
+**Category**: cs.LG  
+**Published**: 2025-08-26  
+**Score**: 4.5
+
+arXiv:2508.16647v1 Announce Type: new 
+Abstract: Training deep neural networks (DNNs) directly on edge devices has attracted increasing attention, as it offers promising solutions to challenges such as domain adaptation and privacy preservation. However, conventional DNN training typically requires ...
+
+---
+
+### 13. [Deep Learning with Self-Attention and Enhanced Preprocessing for Precise Diagnosis of Acute Lymphoblastic Leukemia from Bone Marrow Smears in Hemato-Oncology](https://arxiv.org/abs/2508.17216)
+
+**Authors**: Md. Maruf, Md. Mahbubul Haque, Bishowjit Paul  
+**Category**: cs.LG  
+**Published**: 2025-08-26  
+**Score**: 4.5
+
+arXiv:2508.17216v1 Announce Type: cross 
+Abstract: Acute lymphoblastic leukemia (ALL) is a prevalent hematological malignancy in both pediatric and adult populations. Early and accurate detection with precise subtyping is essential for guiding therapy. Conventional workflows are complex, time-consum...
+
+---
+
+### 14. [Large Language Models as Universal Predictors? An Empirical Study on Small Tabular Datasets](https://arxiv.org/abs/2508.17391)
+
+**Authors**: Nikolaos Pavlidis, Vasilis Perifanis, Symeon Symeonidis, Pavlos S. Efraimidis  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.17391v1 Announce Type: new 
+Abstract: Large Language Models (LLMs), originally developed for natural language processing (NLP), have demonstrated the potential to generalize across modalities and domains. With their in-context learning (ICL) capabilities, LLMs can perform predictive tasks...
+
+---
+
+### 15. [TradingGroup: A Multi-Agent Trading System with Self-Reflection and Data-Synthesis](https://arxiv.org/abs/2508.17565)
+
+**Authors**: Feng Tian, Flora D. Salim, Hao Xue  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.17565v1 Announce Type: new 
+Abstract: Recent advancements in large language models (LLMs) have enabled powerful agent-based applications in finance, particularly for sentiment analysis, financial report comprehension, and stock forecasting. However, existing systems often lack inter-agent...
+
+---
+
+### 16. [Bridging Foundation Models and Efficient Architectures: A Modular Brain Imaging Framework with Local Masking and Pretrained Representation Learning](https://arxiv.org/abs/2508.16597)
+
+**Authors**: Yanwen Wang, Xinglin Zhao, Yijin Song, Xiaobo Liu, Yanrong Hao, Rui Cao, Xin Wen  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.16597v1 Announce Type: cross 
+Abstract: Functional connectivity (FC) derived from resting-state fMRI plays a critical role in personalized predictions such as age and cognitive performance. However, applying foundation models(FM) to fMRI data remains challenging due to its high dimensiona...
+
+---
+
+### 17. [Systematic Characterization of LLM Quantization: A Performance, Energy, and Quality Perspective](https://arxiv.org/abs/2508.16712)
+
+**Authors**: Tianyao Shi, Yi Ding  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.16712v1 Announce Type: cross 
+Abstract: Large language models (LLMs) have demonstrated remarkable capabilities across diverse domains, but their heavy resource demands make quantization-reducing precision to lower-bit formats-critical for efficient serving. While many quantization methods...
+
+---
+
+### 18. [Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model](https://arxiv.org/abs/2508.16947)
+
+**Authors**: Fan Ding, Xuewen Luo, Hwa Hui Tew, Ruturaj Reddy, Xikun Wang, Junn Yong Loo  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.16947v1 Announce Type: cross 
+Abstract: Recent advances in motion planning for autonomous driving have led to models capable of generating high-quality trajectories. However, most existing planners tend to fix their policy after supervised training, leading to consistent but rigid driving...
+
+---
+
+### 19. [Type-Compliant Adaptation Cascades: Adapting Programmatic LM Workflows to Data](https://arxiv.org/abs/2508.18244)
+
+**Authors**: Chu-Cheng Lin, Daiyi Peng, Yifeng Lu, Ming Zhang, Eugene Ie  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.18244v1 Announce Type: cross 
+Abstract: Reliably composing Large Language Models (LLMs) for complex, multi-step workflows remains a significant challenge. The dominant paradigm-optimizing discrete prompts in a pipeline-is notoriously brittle and struggles to enforce the formal compliance ...
+
+---
+
+### 20. [Efficient Pain Recognition via Respiration Signals: A Single Cross-Attention Transformer Multi-Window Fusion Pipeline](https://arxiv.org/abs/2507.21886)
+
+**Authors**: Stefanos Gkikas, Ioannis Kyprakis, Manolis Tsiknakis  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2507.21886v5 Announce Type: replace 
+Abstract: Pain is a complex condition that affects a large portion of the population. Accurate and consistent evaluation is essential for individuals experiencing pain and supports the development of effective and advanced management strategies. Automatic p...
+
+---
+
+### 21. [Head-Specific Intervention Can Induce Misaligned AI Coordination in Large Language Models](https://arxiv.org/abs/2502.05945)
+
+**Authors**: Paul Darm, Annalisa Riccardi  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2502.05945v3 Announce Type: replace-cross 
+Abstract: Robust alignment guardrails for large language models (LLMs) are becoming increasingly important with their widespread application. In contrast to previous studies, we demonstrate that inference-time activation interventions can bypass safet...
+
+---
+
+### 22. [ICQuant: Index Coding enables Low-bit LLM Quantization](https://arxiv.org/abs/2505.00850)
+
+**Authors**: Xinlin Li, Osama Hanna, Christina Fragouli, Suhas Diggavi  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2505.00850v2 Announce Type: replace-cross 
+Abstract: The rapid deployment of Large Language Models (LLMs) highlights the need for efficient low-bit post-training quantization (PTQ), due to their high memory costs. A key challenge in weight quantization is the presence of outliers, which inflat...
+
+---
+
+### 23. [Rethinking Gating Mechanism in Sparse MoE: Handling Arbitrary Modality Inputs with Confidence-Guided Gate](https://arxiv.org/abs/2505.19525)
+
+**Authors**: Liangwei Nathan Zheng, Wei Emma Zhang, Mingyu Guo, Miao Xu, Olaf Maennel, Weitong Chen  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2505.19525v2 Announce Type: replace-cross 
+Abstract: Effectively managing missing modalities is a fundamental challenge in real-world multimodal learning scenarios, where data incompleteness often results from systematic collection errors or sensor failures. Sparse Mixture-of-Experts (SMoE) ar...
+
+---
+
+### 24. [Fine-Grained Safety Neurons with Training-Free Continual Projection to Reduce LLM Fine Tuning Risks](https://arxiv.org/abs/2508.09190)
+
+**Authors**: Bing Han, Feifei Zhao, Dongcheng Zhao, Guobin Shen, Ping Wu, Yu Shi, Yi Zeng  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.09190v3 Announce Type: replace-cross 
+Abstract: Fine-tuning as service injects domain-specific knowledge into large language models (LLMs), while challenging the original alignment mechanisms and introducing safety risks. A series of defense strategies have been proposed for the alignment...
+
+---
+
+### 25. [CURE: Critical-Token-Guided Re-Concatenation for Entropy-Collapse Prevention](https://arxiv.org/abs/2508.11016)
+
+**Authors**: Qingbin Li, Rongkun Xue, Jie Wang, Ming Zhou, Zhi Li, Xiaofeng Ji, Yongqi Wang, Miao Liu, Zheming Yang, Minghui Qiu, Jing Yang  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.11016v2 Announce Type: replace-cross 
+Abstract: Recent advances in Reinforcement Learning with Verified Reward (RLVR) have driven the emergence of more sophisticated cognitive behaviors in large language models (LLMs), thereby enhancing their reasoning capabilities. However, in prior RLVR...
+
+---
+
+### 26. [High-Throughput Low-Cost Segmentation of Brightfield Microscopy Live Cell Images](https://arxiv.org/abs/2508.14106)
+
+**Authors**: Surajit Das, Gourav Roy, Pavel Zun  
+**Category**: cs.AI  
+**Published**: 2025-08-26  
+**Score**: 4.0
+
+arXiv:2508.14106v2 Announce Type: replace-cross 
+Abstract: Live cell culture is crucial in biomedical studies for analyzing cell properties and dynamics in vitro. This study focuses on segmenting unstained live cells imaged with bright-field microscopy. While many segmentation approaches exist for m...
+
+---
+
+### 27. [TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill and Decode Inference](https://arxiv.org/abs/2508.15881)
 
 **Authors**: Xiaojuan Tang, Fanxu Meng, Pingzhi Tang, Yuxuan Wang, Di Yin, Xing Sun, Muhan Zhang  
 **Category**: cs.AI  
-**Published**: 2025-08-25  
+**Published**: 2025-08-26  
 **Score**: 4.0
 
-arXiv:2508.15881v1 Announce Type: cross 
-Abstract: Multi-Head Latent Attention (MLA), introduced in DeepSeek-V2, compresses key-value states into a low-rank latent vector, caching only this vector to reduce memory. In tensor parallelism (TP), however, attention heads are computed across multiple dev...
+arXiv:2508.15881v2 Announce Type: replace-cross 
+Abstract: Multi-Head Latent Attention (MLA), introduced in DeepSeek-V2, compresses key-value states into a low-rank latent vector, caching only this vector to reduce memory. In tensor parallelism (TP), however, attention heads are computed across mult...
 
 ---
 
-### 13. [Time Series Based Network Intrusion Detection using MTF-Aided Transformer](https://arxiv.org/abs/2508.16035)
+### 28. [KL-Regularised Q-Learning: A Token-level Action-Value perspective on Online RLHF](https://arxiv.org/abs/2508.17000)
 
-**Authors**: Poorvi Joshi (National University of Singapore), Mohan Gurusamy (National University of Singapore)  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.16035v1 Announce Type: cross 
-Abstract: This paper introduces a novel approach to time series classification using a Markov Transition Field (MTF)-aided Transformer model, specifically designed for Software-Defined Networks (SDNs). The proposed model integrates the temporal dependency mod...
-
----
-
-### 14. [Exploiting Information Redundancy in Attention Maps for Extreme Quantization of Vision Transformers](https://arxiv.org/abs/2508.16311)
-
-**Authors**: Lucas Maisonnave, Karim Haroun, Tom Pegeot  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.16311v1 Announce Type: cross 
-Abstract: Transformer models rely on Multi-Head Self-Attention (MHSA) mechanisms, where each attention head contributes to the final representation. However, their computational complexity and high memory demands due to MHSA hinders their deployment at the ed...
-
----
-
-### 15. [Retrieval Enhanced Feedback via In-context Neural Error-book](https://arxiv.org/abs/2508.16313)
-
-**Authors**: Jongyeop Hyun, Bumsoo Kim  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.16313v1 Announce Type: cross 
-Abstract: Recent advancements in Large Language Models (LLMs) have significantly improved reasoning capabilities, with in-context learning (ICL) emerging as a key technique for adaptation without retraining. While previous works have focused on leveraging cor...
-
----
-
-### 16. [RL Is Neither a Panacea Nor a Mirage: Understanding Supervised vs. Reinforcement Learning Fine-Tuning for LLMs](https://arxiv.org/abs/2508.16546)
-
-**Authors**: Hangzhan Jin, Sicheng Lv, Sifan Wu, Mohammad Hamdaqa  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.16546v1 Announce Type: cross 
-Abstract: Training large language models (LLMs) from scratch is increasingly impractical, making post-training methods such as supervised fine-tuning (SFT) and reinforcement-learning fine-tuning (RL-FT, e.g., PPO) central to modern practice. Using an out-of-d...
-
----
-
-### 17. [MCP-Guard: A Defense Framework for Model Context Protocol Integrity in Large Language Model Applications](https://arxiv.org/abs/2508.10991)
-
-**Authors**: Wenpeng Xing, Zhonghao Qi, Yupeng Qin, Yilin Li, Caini Chang, Jiahui Yu, Changting Lin, Zhenzhen Xie, Meng Han  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.10991v2 Announce Type: replace-cross 
-Abstract: The integration of Large Language Models (LLMs) with external tools via protocols such as the Model Context Protocol (MCP) introduces critical security vulnerabilities, including prompt injection, data exfiltration, and other threats. To cou...
-
----
-
-### 18. [A Probabilistic Inference Scaling Theory for LLM Self-Correction](https://arxiv.org/abs/2508.16456)
-
-**Authors**: Zhe Yang, Yichang Zhang, Yudong Wang, Ziyao Xu, Junyang Lin, Zhifang Sui  
+**Authors**: Jason R Brown, Lennie Wells, Edward James Young, Sergio Bacallado  
 **Category**: cs.CL  
-**Published**: 2025-08-25  
+**Published**: 2025-08-26  
 **Score**: 4.0
 
-arXiv:2508.16456v1 Announce Type: new 
-Abstract: Large Language Models (LLMs) have demonstrated the capability to refine their generated answers through self-correction, enabling continuous performance improvement over multiple rounds. However, the mechanisms underlying how and why accuracy evolves ...
+arXiv:2508.17000v1 Announce Type: new 
+Abstract: Proximal Policy Optimisation (PPO) is an established and effective policy gradient algorithm used for Language Model Reinforcement Learning from Human Feedback (LM-RLHF). PPO performs well empirically but has a heuristic motivation and handles the KL-...
 
 ---
 
-### 19. [Transforming Causality: Transformer-Based Temporal Causal Discovery with Prior Knowledge Integration](https://arxiv.org/abs/2508.15928)
+### 29. [ILRe: Intermediate Layer Retrieval for Context Compression in Causal Language Models](https://arxiv.org/abs/2508.17892)
 
-**Authors**: Jihua Huang, Yi Yao, Ajay Divakaran  
-**Category**: cs.LG  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2508.15928v1 Announce Type: new 
-Abstract: We introduce a novel framework for temporal causal discovery and inference that addresses two key challenges: complex nonlinear dependencies and spurious correlations. Our approach employs a multi-layer Transformer-based time-series forecaster to capt...
-
----
-
-### 20. [Decentralized Low-Rank Fine-Tuning of Large Language Models](https://arxiv.org/abs/2501.15361)
-
-**Authors**: Sajjad Ghiasvand, Mahnoosh Alizadeh, Ramtin Pedarsani  
-**Category**: cs.LG  
-**Published**: 2025-08-25  
-**Score**: 4.0
-
-arXiv:2501.15361v5 Announce Type: replace 
-Abstract: While parameter-efficient fine-tuning (PEFT) techniques like Low-Rank Adaptation (LoRA) offer computationally efficient adaptations of Large Language Models (LLMs), their practical deployment often assumes centralized data and training environment...
-
----
-
-### 21. [LingVarBench: Benchmarking LLM for Automated Named Entity Recognition in Structured Synthetic Spoken Transcriptions](https://arxiv.org/abs/2508.15801)
-
-**Authors**: Seyedali Mohammadi, Manas Paldhe, Amit Chhabra  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.15801v1 Announce Type: cross 
-Abstract: Phone call transcript labeling is prohibitively expensive (approximately 2 USD per minute) due to privacy regulations, consent requirements, and manual annotation costs requiring 3 hours of expert time per hour of audio. Existing extraction methods ...
-
----
-
-### 22. [User-Assistant Bias in LLMs](https://arxiv.org/abs/2508.15815)
-
-**Authors**: Xu Pan, Jingxuan Fan, Zidi Xiong, Ely Hahami, Jorin Overwiening, Ziqian Xie  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.15815v1 Announce Type: cross 
-Abstract: Large language models (LLMs) can bias towards relying on their own or the user's information in chat history, leading to overly stubborn or agreeable behaviors in multi-turn conversations. In this paper, we formalize this model characteristic as use...
-
----
-
-### 23. [Who's Asking? Investigating Bias Through the Lens of Disability Framed Queries in LLMs](https://arxiv.org/abs/2508.15831)
-
-**Authors**: Srikant Panda, Vishnu Hari, Kalpana Panda, Amit Agarwal, Hitesh Laxmichand Patel  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.15831v1 Announce Type: cross 
-Abstract: Large Language Models (LLMs) routinely infer users demographic traits from phrasing alone, which can result in biased responses, even when no explicit demographic information is provided. The role of disability cues in shaping these inferences remai...
-
----
-
-### 24. [Coarse-to-Fine Personalized LLM Impressions for Streamlined Radiology Reports](https://arxiv.org/abs/2508.15845)
-
-**Authors**: Chengbo Sun, Hui Yi Leong, Lei Li  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.15845v1 Announce Type: cross 
-Abstract: The manual creation of the "Impression" section in radiology reports is a primary driver of radiologist burnout. To address this challenge, we propose a coarse-to-fine framework that leverages open-source large language models (LLMs) to automaticall...
-
----
-
-### 25. [CARFT: Boosting LLM Reasoning via Contrastive Learning with Annotated Chain-of-Thought-based Reinforced Fine-Tuning](https://arxiv.org/abs/2508.15868)
-
-**Authors**: Wenqiao Zhu, Ji Liu, Rongjuncheng Zhang, Haipang Wu, Yulun Zhang  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.15868v1 Announce Type: cross 
-Abstract: Reasoning capability plays a significantly critical role in the the broad applications of Large Language Models (LLMs). To enhance the reasoning performance of LLMs, diverse Reinforcement Learning (RL)-based fine-tuning approaches have been proposed...
-
----
-
-### 26. [Top-Theta Attention: Sparsifying Transformers by Compensated Thresholding](https://arxiv.org/abs/2502.08363)
-
-**Authors**: Konstantin Berestizshevsky, Renzo Andri, Lukas Cavigelli  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2502.08363v2 Announce Type: replace-cross 
-Abstract: We present Top-Theta (Top-$\theta$) Attention, a training-free method for sparsifying transformer attention during inference. Our key insight is that static, per-head thresholds can be calibrated to retain the desired constant number of sign...
-
----
-
-### 27. [A Simple "Try Again" Can Elicit Multi-Turn LLM Reasoning](https://arxiv.org/abs/2507.14295)
-
-**Authors**: Licheng Liu, Zihan Wang, Linjie Li, Chenwei Xu, Yiping Lu, Han Liu, Avirup Sil, Manling Li  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2507.14295v2 Announce Type: replace-cross 
-Abstract: Multi-turn problem solving is critical yet challenging for Large Reasoning Models (LRMs) to reflect on their reasoning and revise from feedback. Existing Reinforcement Learning (RL) methods train large reasoning models on a single-turn parad...
-
----
-
-### 28. [Towards Scalable Training for Handwritten Mathematical Expression Recognition](https://arxiv.org/abs/2508.09220)
-
-**Authors**: Haoyang Li, Jiaqing Li, Jialun Cao, Zongyuan Yang, Yongping Xiong  
-**Category**: cs.AI  
-**Published**: 2025-08-25  
-**Score**: 3.5
-
-arXiv:2508.09220v2 Announce Type: replace-cross 
-Abstract: Large foundation models have achieved significant performance gains through scalable training on massive datasets. However, the field of \textbf{H}andwritten \textbf{M}athematical \textbf{E}xpression \textbf{R}ecognition (HMER) has been impe...
-
----
-
-### 29. [Z-Pruner: Post-Training Pruning of Large Language Models for Efficiency without Retraining](https://arxiv.org/abs/2508.15828)
-
-**Authors**: Samiul Basir Bhuiyan, Md. Sazzad Hossain Adib, Mohammed Aman Bhuiyan, Muhammad Rafsan Kabir, Moshiur Farazi, Shafin Rahman, Nabeel Mohammed  
+**Authors**: Manlai Liang, Mandi Liu, Jiangzhou Ji, Huaijun Li, Haobo Yang, Yaohan He, Jinlong Li  
 **Category**: cs.CL  
-**Published**: 2025-08-25  
-**Score**: 3.5
+**Published**: 2025-08-26  
+**Score**: 4.0
 
-arXiv:2508.15828v1 Announce Type: cross 
-Abstract: Large language models (LLMs) have rapidly advanced in recent years, achieving remarkable performance across a wide range of natural language processing tasks. However, this progress has come at the cost of increasingly large model sizes, which pose ...
+arXiv:2508.17892v1 Announce Type: new 
+Abstract: Large Language Models (LLMs) have demonstrated success across many benchmarks. However, they still exhibit limitations in long-context scenarios, primarily due to their short effective context length, quadratic computational complexity, and high memor...
 
 ---
 
-### 30. [AgentFly: Fine-tuning LLM Agents without Fine-tuning LLMs](https://arxiv.org/abs/2508.16153)
+### 30. [DPad: Efficient Diffusion Language Models with Suffix Dropout](https://arxiv.org/abs/2508.14148)
 
-**Authors**: Huichi Zhou, Yihang Chen, Siyuan Guo, Xue Yan, Kin Hei Lee, Zihan Wang, Ka Yiu Lee, Guchun Zhang, Kun Shao, Linyi Yang, Jun Wang  
+**Authors**: Xinhua Chen, Sitao Huang, Cong Guo, Chiyue Wei, Yintao He, Jianyi Zhang, Hai "Helen" Li, Yiran Chen  
 **Category**: cs.CL  
-**Published**: 2025-08-25  
-**Score**: 3.5
+**Published**: 2025-08-26  
+**Score**: 4.0
 
-arXiv:2508.16153v1 Announce Type: cross 
-Abstract: In this paper, we introduce a novel learning paradigm for adaptive Large Language Model (LLM) agents that eliminates the need for fine-tuning the underlying LLMs. Existing approaches are often either rigid, relying on static, handcrafted reflection ...
+arXiv:2508.14148v2 Announce Type: replace 
+Abstract: Diffusion-based Large Language Models (dLLMs) parallelize text generation by framing decoding as a denoising process, but suffer from high computational overhead since they predict all future suffix tokens at each step while retaining only a small...
 
 ---
 
