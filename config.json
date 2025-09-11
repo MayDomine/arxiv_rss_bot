@@ -44,7 +44,7 @@
     ],
     "max_papers": 30,
     "days_back": 7,
-    "min_score": 1.0,
+    "min_score": 2.5,
     "enable_deduplication": true,
     "deduplication_methods": ["id", "title", "link"]
 } 
