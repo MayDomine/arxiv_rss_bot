@@ -24,7 +24,7 @@
         "Distributed",
         "Kernel",
         "Decode",
-        "Decoding"
+        "Decoding",
         "Prefill",
         "Throughput",
         "Fast",
