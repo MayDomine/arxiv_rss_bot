@@ -9,616 +9,376 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-09-11 03:19:17 UTC
-- **Total Papers Found**: 50
-- **Categories Monitored**: cs.AI, cs.LG, cs.CL, cs.CV
+- **Last Updated**: 2025-09-11 03:23:04 UTC
+- **Total Papers Found**: 30
+- **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [TractGraphFormer: Anatomically Informed Hybrid Graph CNN-Transformer Network for Interpretable Sex and Age Prediction from Diffusion MRI Tractography](https://arxiv.org/abs/2407.08883)
+### 1. [DistFlow: A Fully Distributed RL Framework for Scalable and Efficient LLM Post-Training](https://arxiv.org/abs/2507.13833)
 
-**Authors**: Yuqian Chen, Fan Zhang, Meng Wang, Leo R. Zekelman, Suheyla Cetin-Karayumak, Tengfei Xue, Chaoyi Zhang, Yang Song, Jarrett Rushmore, Nikos Makris, Yogesh Rathi, Weidong Cai, Lauren J. O'Donnell  
-**Category**: cs.CV  
+**Authors**: Zhixin Wang, Tianyi Zhou, Liming Liu, Ao Li, Jiarui Hu, Dian Yang, Yinhui Lu, Jinlong Hou, Siyuan Feng, Yuan Cheng, Yuan Qi  
+**Category**: cs.DC  
 **Published**: 2025-09-10  
-**Score**: 4.5
+**Score**: 12.5
 
-arXiv:2407.08883v2 Announce Type: replace 
-Abstract: The relationship between brain connections and non-imaging phenotypes is increasingly studied using deep neural networks. However, the local and global properties of brain white matter networks are often overlooked in convolutional network design....
+arXiv:2507.13833v3 Announce Type: replace 
+Abstract: Reinforcement learning (RL) has become the pivotal post-training technique for large language model (LLM). Effectively scaling reinforcement learning is now the key to unlocking advanced reasoning capabilities and ensuring safe, goal-aligned behav...
 
 ---
 
-### 2. [Transformer-Based Approach to Optimal Sensor Placement for Structural Health Monitoring of Probe Cards](https://arxiv.org/abs/2509.07603)
+### 2. [Dovetail: A CPU/GPU Heterogeneous Speculative Decoding for LLM inference](https://arxiv.org/abs/2412.18934)
 
-**Authors**: Mehdi Bejani, Marco Mauri, Daniele Acconcia, Simone Todaro, Stefano Mariani  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 3.5
-
-arXiv:2509.07603v1 Announce Type: cross 
-Abstract: This paper presents an innovative Transformer-based deep learning strategy for optimizing the placement of sensors aiming at structural health monitoring of semiconductor probe cards. Failures in probe cards, including substrate cracks and loosened ...
-
----
-
-### 3. [Benchmarking Vision Transformers and CNNs for Thermal Photovoltaic Fault Detection with Explainable AI Validation](https://arxiv.org/abs/2509.07039)
-
-**Authors**: Serra Aksoy  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 3.5
-
-arXiv:2509.07039v1 Announce Type: new 
-Abstract: Artificial intelligence deployment for automated photovoltaic (PV) monitoring faces interpretability barriers that limit adoption in energy infrastructure applications. While deep learning achieves high accuracy in thermal fault detection, validation ...
-
----
-
-### 4. [Towards explainable decision support using hybrid neural models for logistic terminal automation](https://arxiv.org/abs/2509.07577)
-
-**Authors**: Riccardo DElia, Alberto Termine, Francesco Flammini  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 3.0
-
-arXiv:2509.07577v1 Announce Type: new 
-Abstract: The integration of Deep Learning (DL) in System Dynamics (SD) modeling for transportation logistics offers significant advantages in scalability and predictive accuracy. However, these gains are often offset by the loss of explainability and causal re...
-
----
-
-### 5. [Riemannian Batch Normalization: A Gyro Approach](https://arxiv.org/abs/2509.07115)
-
-**Authors**: Ziheng Chen, Xiao-Jun Wu, Nicu Sebe  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 3.0
-
-arXiv:2509.07115v1 Announce Type: cross 
-Abstract: Normalization layers are crucial for deep learning, but their Euclidean formulations are inadequate for data on manifolds. On the other hand, many Riemannian manifolds in machine learning admit gyro-structures, enabling principled extensions of Eucl...
-
----
-
-### 6. [Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning](https://arxiv.org/abs/2509.07879)
-
-**Authors**: Daniel DeAlcala, Aythami Morales, Julian Fierrez, Gonzalo Mancera, Ruben Tolosana, Javier Ortega-Garcia  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 3.0
-
-arXiv:2509.07879v1 Announce Type: cross 
-Abstract: Active Membership Inference Test (aMINT) is a method designed to detect whether given data were used during the training of machine learning models. In Active MINT, we propose a novel multitask learning process that involves training simultaneously ...
-
----
-
-### 7. [MSRFormer: Road Network Representation Learning using Multi-scale Feature Fusion of Heterogeneous Spatial Interactions](https://arxiv.org/abs/2509.05685)
-
-**Authors**: Jian Yang, Jiahui Wu, Li Fang, Hongchao Fan, Bianying Zhang, Huijie Zhao, Guangyi Yang, Rui Xin, Xiong You  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 3.0
-
-arXiv:2509.05685v2 Announce Type: replace 
-Abstract: Transforming road network data into vector representations using deep learning has proven effective for road network analysis. However, urban road networks' heterogeneous and hierarchical nature poses challenges for accurate representation learnin...
-
----
-
-### 8. [Neural Proxies for Sound Synthesizers: Learning Perceptually Informed Preset Representations](https://arxiv.org/abs/2509.07635)
-
-**Authors**: Paolo Combes, Stefan Weinzierl, Klaus Obermayer  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 3.0
-
-arXiv:2509.07635v1 Announce Type: cross 
-Abstract: Deep learning appears as an appealing solution for Automatic Synthesizer Programming (ASP), which aims to assist musicians and sound designers in programming sound synthesizers. However, integrating software synthesizers into training pipelines is c...
-
----
-
-### 9. [A Hybrid CNN-LSTM Deep Learning Model for Intrusion Detection in Smart Grid](https://arxiv.org/abs/2509.07208)
-
-**Authors**: Abdulhakim Alsaiari, Mohammad Ilyas  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07208v1 Announce Type: new 
-Abstract: The evolution of the traditional power grid into the "smart grid" has resulted in a fundamental shift in energy management, which allows the integration of renewable energy sources with modern communication technology. However, this interconnection ha...
-
----
-
-### 10. [BDPM: A Machine Learning-Based Feature Extractor for Parkinson's Disease Classification via Gut Microbiota Analysis](https://arxiv.org/abs/2509.07723)
-
-**Authors**: Bo Yu, Zhixiu Hua, Bo Zhao  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07723v1 Announce Type: new 
-Abstract: Background: Parkinson's disease remains a major neurodegenerative disorder with high misdiagnosis rates, primarily due to reliance on clinical rating scales. Recent studies have demonstrated a strong association between gut microbiota and Parkinson's ...
-
----
-
-### 11. [1 bit is all we need: binary normalized neural networks](https://arxiv.org/abs/2509.07025)
-
-**Authors**: Eduardo Lobo Lustoda Cabral, Paulo Pirozelli, Larissa Driemeier  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07025v1 Announce Type: cross 
-Abstract: The increasing size of large neural network models, specifically language models and foundational image models, poses deployment challenges, prompting efforts to reduce memory requirements and enhance computational efficiency. These efforts are crit...
-
----
-
-### 12. [Evaluation of Machine Learning Reconstruction Techniques for Accelerated Brain MRI Scans](https://arxiv.org/abs/2509.07193)
-
-**Authors**: Jonathan I. Mandel, Shivaprakash Hiremath, Hedyeh Keshtgar, Timothy Scholl, Sadegh Raeisi  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07193v1 Announce Type: cross 
-Abstract: This retrospective-prospective study evaluated whether a deep learning-based MRI reconstruction algorithm can preserve diagnostic quality in brain MRI scans accelerated up to fourfold, using both public and prospective clinical data. The study inclu...
-
----
-
-### 13. [A transformer-based generative model for planetary systems](https://arxiv.org/abs/2509.07226)
-
-**Authors**: Yann Alibert, Jeanne Davoult, Sara Marques  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07226v1 Announce Type: cross 
-Abstract: Numerical calculations of planetary system formation are very demanding in terms of computing power. These synthetic planetary systems can however provide access to correlations, as predicted in a given numerical framework, between the properties of...
-
----
-
-### 14. [Spectral and Rhythm Feature Performance Evaluation for Category and Class Level Audio Classification with Deep Convolutional Neural Networks](https://arxiv.org/abs/2509.07756)
-
-**Authors**: Friedrich Wolf-Monheim  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07756v1 Announce Type: cross 
-Abstract: Next to decision tree and k-nearest neighbours algorithms deep convolutional neural networks (CNNs) are widely used to classify audio data in many domains like music, speech or environmental sounds. To train a specific CNN various spectral and rhyth...
-
----
-
-### 15. [HodgeFormer: Transformers for Learnable Operators on Triangular Meshes through Data-Driven Hodge Matrices](https://arxiv.org/abs/2509.01839)
-
-**Authors**: Akis Nousias, Stavros Nousias  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.01839v3 Announce Type: replace-cross 
-Abstract: Currently, prominent Transformer architectures applied on graphs and meshes for shape analysis tasks employ traditional attention layers that heavily utilize spectral features requiring costly eigenvalue decomposition-based methods. To encod...
-
----
-
-### 16. [Physics-Guided Diffusion Transformer with Spherical Harmonic Posterior Sampling for High-Fidelity Angular Super-Resolution in Diffusion MRI](https://arxiv.org/abs/2509.07020)
-
-**Authors**: Mu Nan, Taohui Xiao, Ruoyou Wu, Shoujun Yu, Ye Li, Hairong Zheng, Shanshan Wang  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07020v1 Announce Type: cross 
-Abstract: Diffusion MRI (dMRI) angular super-resolution (ASR) aims to reconstruct high-angular-resolution (HAR) signals from limited low-angular-resolution (LAR) data without prolonging scan time. However, existing methods are limited in recovering fine-grain...
-
----
-
-### 17. [TGLF-SINN: Deep Learning Surrogate Model for Accelerating Turbulent Transport Modeling in Fusion](https://arxiv.org/abs/2509.07024)
-
-**Authors**: Yadi Cao, Futian Zhang, Wesley Liu, Tom Neiser, Orso Meneghini, Lawson Fuller, Sterling Smith, Raffi Nazikian, Brian Sammuli, Rose Yu  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.07024v1 Announce Type: cross 
-Abstract: The Trapped Gyro-Landau Fluid (TGLF) model provides fast, accurate predictions of turbulent transport in tokamaks, but whole device simulations requiring thousands of evaluations remain computationally expensive. Neural network (NN) surrogates offer...
-
----
-
-### 18. [Improved Physics-informed neural networks loss function regularization with a variance-based term](https://arxiv.org/abs/2412.13993)
-
-**Authors**: John M. Hanna, Hugues Talbot, Irene E. Vignon-Clementel  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2412.13993v3 Announce Type: replace-cross 
-Abstract: In machine learning and statistical modeling, the mean square or absolute error is commonly used as an error metric, also called a "loss function." While effective in reducing the average error, this approach may fail to address localized ou...
-
----
-
-### 19. [Efficient Deep Learning-based Forward Solvers for Brain Tumor Growth Models](https://arxiv.org/abs/2501.08226)
-
-**Authors**: Zeineb Haouari, Jonas Weidner, Yeray Martin-Ruisanchez, Ivan Ezhov, Aswathi Varma, Daniel Rueckert, Bjoern Menze, Benedikt Wiestler  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2501.08226v2 Announce Type: replace-cross 
-Abstract: Glioblastoma, a highly aggressive brain tumor, poses major challenges due to its poor prognosis and high morbidity rates. Partial differential equation-based models offer promising potential to enhance therapeutic outcomes by simulating pati...
-
----
-
-### 20. [Wild Refitting for Model-Free Excess Risk Evaluation of Opaque Machine Learning Models under Bregman Loss](https://arxiv.org/abs/2509.02476)
-
-**Authors**: Haichen Hu, David Simchi-Levi  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 2.5
-
-arXiv:2509.02476v4 Announce Type: replace-cross 
-Abstract: We study the problem of evaluating the excess risk of classical penalized empirical risk minimization (ERM) with Bregman losses. We show that by leveraging the recently proposed wild refitting procedure (Wainwright, 2025), one can efficientl...
-
----
-
-### 21. [Neurocognitive Modeling for Text Generation: Deep Learning Architecture for EEG Data](https://arxiv.org/abs/2509.07202)
-
-**Authors**: Khushiyant  
+**Authors**: Libo Zhang, Zhaoning Zhang, Baizhou Xu, Rui Li, Zhiliang Tian, Songzhu Mei, Dongsheng Li  
 **Category**: cs.CL  
 **Published**: 2025-09-10  
-**Score**: 2.5
+**Score**: 11.0
 
-arXiv:2509.07202v1 Announce Type: cross 
-Abstract: Text generating capabilities have undergone a substantial transformation with the introduction of large language models (LLMs). Electroencephalography (EEG)-based text production is still difficult, though, because it requires a lot of data and proc...
+arXiv:2412.18934v2 Announce Type: replace 
+Abstract: With the continuous advancement in the performance of large language models (LLMs), their demand for computational resources and memory has significantly increased, which poses major challenges for efficient inference on consumer-grade devices and...
 
 ---
 
-### 22. [A multi-task neural network for atypical mitosis recognition under domain shift](https://arxiv.org/abs/2508.21035)
+### 3. [DuoServe-MoE: Dual-Phase Expert Prefetch and Cache Scheduling for Efficient MoE LLM Inference](https://arxiv.org/abs/2509.07379)
 
-**Authors**: Gennaro Percannella, Mattia Sarno, Francesco Tortorella, Mario Vento  
-**Category**: cs.CV  
+**Authors**: Yuning Zhang, Grant Pinkert, Nan Yang, Yanli Li, Dong Yuan  
+**Category**: cs.DC  
 **Published**: 2025-09-10  
-**Score**: 2.5
+**Score**: 11.0
 
-arXiv:2508.21035v3 Announce Type: replace-cross 
-Abstract: Recognizing atypical mitotic figures in histopathology images allows physicians to correctly assess tumor aggressiveness. Although machine learning models could be exploited for automatically performing such a task, under domain shift these ...
+arXiv:2509.07379v1 Announce Type: new 
+Abstract: Large Language Models (LLMs) have demonstrated impressive performance across a wide range of deep learning tasks. Mixture of Experts (MoE) further enhances their capabilities by increasing model width through sparsely activated expert branches, which ...
 
 ---
 
-### 23. [From Eigenmodes to Proofs: Integrating Graph Spectral Operators with Symbolic Interpretable Reasoning](https://arxiv.org/abs/2509.07017)
+### 4. [RLFactory: A Plug-and-Play Reinforcement Learning Post-Training Framework for LLM Multi-Turn Tool-Use](https://arxiv.org/abs/2509.06980)
+
+**Authors**: Jiajun Chai, Guojun Yin, Zekun Xu, Chuhuai Yue, Yi Jia, Siyu Xia, Xiaohan Wang, Jiwen Jiang, Xiaoguang Li, Chengqi Dong, Hang He, Wei Lin  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 9.0
+
+arXiv:2509.06980v1 Announce Type: cross 
+Abstract: Large language models excel at basic reasoning but struggle with tasks that require interaction with external tools. We present RLFactory, a plug-and-play reinforcement learning post-training framework for multi-round tool use. RLFactory tackles (i)...
+
+---
+
+### 5. [Can SSD-Mamba2 Unlock Reinforcement Learning for End-to-End Motion Control?](https://arxiv.org/abs/2509.07593)
+
+**Authors**: Gavin Tao, Yinuo Wang, Jinzhao Zhou  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 9.0
+
+arXiv:2509.07593v1 Announce Type: cross 
+Abstract: End-to-end reinforcement learning for motion control promises unified perception-action policies that scale across embodiments and tasks, yet most deployed controllers are either blind (proprioception-only) or rely on fusion backbones with unfavorab...
+
+---
+
+### 6. [MEMOIR: Lifelong Model Editing with Minimal Overwrite and Informed Retention for LLMs](https://arxiv.org/abs/2506.07899)
+
+**Authors**: Ke Wang, Yiming Qin, Nikolaos Dimitriadis, Alessandro Favero, Pascal Frossard  
+**Category**: cs.CL  
+**Published**: 2025-09-10  
+**Score**: 8.5
+
+arXiv:2506.07899v2 Announce Type: replace 
+Abstract: Language models deployed in real-world systems often require post-hoc updates to incorporate new or corrected knowledge. However, editing such models efficiently and reliably-without retraining or forgetting previous information-remains a major ch...
+
+---
+
+### 7. [End-to-End Efficiency in Keyword Spotting: A System-Level Approach for Embedded Microcontrollers](https://arxiv.org/abs/2509.07051)
+
+**Authors**: Pietro Bartoli, Tommaso Bondini, Christian Veronesi, Andrea Giudici, Niccol\`o Antonello, Franco Zappa  
+**Category**: cs.LG  
+**Published**: 2025-09-10  
+**Score**: 8.5
+
+arXiv:2509.07051v1 Announce Type: cross 
+Abstract: Keyword spotting (KWS) is a key enabling technology for hands-free interaction in embedded and IoT devices, where stringent memory and energy constraints challenge the deployment of AI-enabeld devices. In this work, we systematically evaluate and co...
+
+---
+
+### 8. [From Eigenmodes to Proofs: Integrating Graph Spectral Operators with Symbolic Interpretable Reasoning](https://arxiv.org/abs/2509.07017)
 
 **Authors**: Andrew Kiruluta, Priscilla Burity  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 8.0
 
 arXiv:2509.07017v1 Announce Type: new 
 Abstract: We introduce Spectral NSR, a fully spectral neuro-symbolic reasoning framework that embeds logical rules as spectral templates and performs inference directly in the graph spectral domain. By leveraging graph signal processing (GSP) and frequency-sele...
 
 ---
 
-### 24. [ALICE: An Interpretable Neural Architecture for Generalization in Substitution Ciphers](https://arxiv.org/abs/2509.07282)
+### 9. [Astra: A Multi-Agent System for GPU Kernel Performance Optimization](https://arxiv.org/abs/2509.07506)
 
-**Authors**: Jeff Shen, Lindsay Smith  
+**Authors**: Anjiang Wei, Tianran Sun, Yogesh Seenichamy, Hang Song, Anne Ouyang, Azalia Mirhoseini, Ke Wang, Alex Aiken  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 8.0
 
-arXiv:2509.07282v1 Announce Type: cross 
-Abstract: We present cryptogram solving as an ideal testbed for studying neural network generalization in combinatorially complex domains. In this task, models must decrypt text encoded with substitution ciphers, choosing from 26! possible mappings without ex...
+arXiv:2509.07506v1 Announce Type: cross 
+Abstract: GPU kernel optimization has long been a central challenge at the intersection of high-performance computing and machine learning. Efficient kernels are crucial for accelerating large language model (LLM) training and serving, yet attaining high perf...
 
 ---
 
-### 25. [Word2Spike: Poisson Rate Coding for Associative Memories and Neuromorphic Algorithms](https://arxiv.org/abs/2509.07361)
+### 10. [FedTeddi: Temporal Drift and Divergence Aware Scheduling for Timely Federated Edge Learning](https://arxiv.org/abs/2509.07342)
 
-**Authors**: Archit Kalra, Midhun Sadanand  
-**Category**: cs.AI  
+**Authors**: Yuxuan Bai, Yuxuan Sun, Tan Chen, Wei Chen, Sheng Zhou, Zhisheng Niu  
+**Category**: cs.DC  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 8.0
 
-arXiv:2509.07361v1 Announce Type: cross 
-Abstract: Spiking neural networks offer a promising path toward energy-efficient, brain-like associative memory. This paper introduces Word2Spike, a novel rate coding mechanism that combines continuous word embeddings and neuromorphic architectures. We develo...
+arXiv:2509.07342v1 Announce Type: cross 
+Abstract: Federated edge learning (FEEL) enables collaborative model training across distributed clients over wireless networks without exposing raw data. While most existing studies assume static datasets, in real-world scenarios clients may continuously col...
 
 ---
 
-### 26. [XSRD-Net: EXplainable Stroke Relapse Detection](https://arxiv.org/abs/2509.07772)
+### 11. [Scaled Block Vecchia Approximation for High-Dimensional Gaussian Process Emulation on GPUs](https://arxiv.org/abs/2504.12004)
 
-**Authors**: Christian Gapp, Elias Tappeiner, Martin Welk, Karl Fritscher, Stephanie Mangesius, Constantin Eisenschink, Philipp Deisl, Michael Knoflach, Astrid E. Grams, Elke R. Gizewski, Rainer Schubert  
-**Category**: cs.AI  
+**Authors**: Qilong Pan, Sameh Abdulah, Mustafa Abduljabbar, Hatem Ltaief, Andreas Herten, Mathis Bode, Matthew Pratola, Arindam Fadikar, Marc G. Genton, David E. Keyes, Ying Sun  
+**Category**: cs.DC  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 8.0
 
-arXiv:2509.07772v1 Announce Type: cross 
-Abstract: Stroke is the second most frequent cause of death world wide with an annual mortality of around 5.5 million. Recurrence rates of stroke are between 5 and 25% in the first year. As mortality rates for relapses are extraordinarily high (40%) it is of ...
+arXiv:2504.12004v2 Announce Type: replace 
+Abstract: Emulating computationally intensive scientific simulations is crucial for enabling uncertainty quantification, optimization, and informed decision-making at scale. Gaussian Processes (GPs) offer a flexible and data-efficient foundation for statist...
 
 ---
 
-### 27. [VINP: Variational Bayesian Inference with Neural Speech Prior for Joint ASR-Effective Speech Dereverberation and Blind RIR Identification](https://arxiv.org/abs/2502.07205)
+### 12. [Accelerating Local AI on Consumer GPUs: A Hardware-Aware Dynamic Strategy for YOLOv10s](https://arxiv.org/abs/2509.07928)
 
-**Authors**: Pengyu Wang, Ying Fang, Xiaofei Li  
+**Authors**: Mahmudul Islam Masum, Miad Islam, Arif I. Sarwat  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 7.5
 
-arXiv:2502.07205v3 Announce Type: replace-cross 
-Abstract: Reverberant speech, denoting the speech signal degraded by reverberation, contains crucial knowledge of both anechoic source speech and room impulse response (RIR). This work proposes a variational Bayesian inference (VBI) framework with neu...
+arXiv:2509.07928v1 Announce Type: cross 
+Abstract: As local AI grows in popularity, there is a critical gap between the benchmark performance of object detectors and their practical viability on consumer-grade hardware. While models like YOLOv10s promise real-time speeds, these metrics are typically...
 
 ---
 
-### 28. [Involution and BSConv Multi-Depth Distillation Network for Lightweight Image Super-Resolution](https://arxiv.org/abs/2503.14779)
+### 13. [TokenSelect: Efficient Long-Context Inference and Length Extrapolation for LLMs via Dynamic Token-Level KV Cache Selection](https://arxiv.org/abs/2411.02886)
 
-**Authors**: Akram Khatami-Rizi, Ahmad Mahmoudi-Aznaveh  
+**Authors**: Wei Wu, Zhuoshi Pan, Chao Wang, Liyi Chen, Yunchu Bai, Tianfu Wang, Kun Fu, Zheng Wang, Hui Xiong  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 7.5
 
-arXiv:2503.14779v2 Announce Type: replace-cross 
-Abstract: Single-image super-resolution (SISR) is a fundamental problem in computer vision that aims to reconstruct high-resolution (HR) images from low-resolution (LR) inputs. Although convolutional neural networks (CNNs) have achieved substantial ad...
+arXiv:2411.02886v3 Announce Type: replace-cross 
+Abstract: Rapid advances in Large Language Models (LLMs) have spurred demand for processing extended context sequences in contemporary applications. However, this progress faces two challenges: performance degradation due to sequence lengths out-of-di...
 
 ---
 
-### 29. [Synthetic Data Generation with Lorenzetti for Time Series Anomaly Detection in High-Energy Physics Calorimeters](https://arxiv.org/abs/2509.07451)
+### 14. [veScale: Consistent and Efficient Tensor Programming with Eager-Mode SPMD](https://arxiv.org/abs/2509.07003)
 
-**Authors**: Laura Boggia, Bogdan Malaescu  
+**Authors**: Youjie Li, Cheng Wan, Zhiqi Lin, Hongyu Zhu, Jiacheng Yang, Ziang Song, Xinyi Di, Jiawei Wu, Huiyao Shu, Wenlei Bao, Yanghua Peng, Haibin Lin, Li-Wen Chang  
+**Category**: cs.DC  
+**Published**: 2025-09-10  
+**Score**: 7.5
+
+arXiv:2509.07003v1 Announce Type: cross 
+Abstract: Large Language Models (LLMs) have scaled rapidly in size and complexity, requiring increasingly intricate parallelism for distributed training, such as 3D parallelism. This sophistication motivates a shift toward simpler, more debuggable programming...
+
+---
+
+### 15. [K2-Think: A Parameter-Efficient Reasoning System](https://arxiv.org/abs/2509.07604)
+
+**Authors**: Zhoujun Cheng, Richard Fan, Shibo Hao, Taylor W. Killian, Haonan Li, Suqi Sun, Hector Ren, Alexander Moreno, Daqian Zhang, Tianjun Zhong, Yuxin Xiong, Yuanzhe Hu, Yutao Xie, Xudong Han, Yuqi Wang, Varad Pimpalkhute, Yonghao Zhuang, Aaryamonvikram Singh, Xuezhi Liang, Anze Xie, Jianshu She, Desai Fan, Chengqian Gao, Liqun Ma, Mikhail Yurochkin, John Maggs, Xuezhe Ma, Guowei He, Zhiting Hu, Zhengzhong Liu, Eric P. Xing  
 **Category**: cs.LG  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 7.5
 
-arXiv:2509.07451v1 Announce Type: cross 
-Abstract: Anomaly detection in multivariate time series is crucial to ensure the quality of data coming from a physics experiment. Accurately identifying the moments when unexpected errors or defects occur is essential, yet challenging due to scarce labels, u...
+arXiv:2509.07604v1 Announce Type: new 
+Abstract: K2-Think is a reasoning system that achieves state-of-the-art performance with a 32B parameter model, matching or surpassing much larger models like GPT-OSS 120B and DeepSeek v3.1. Built on the Qwen2.5 base model, our system shows that smaller models ...
 
 ---
 
-### 30. [RINO: Renormalization Group Invariance with No Labels](https://arxiv.org/abs/2509.07486)
+### 16. [M1: Towards Scalable Test-Time Compute with Mamba Reasoning Models](https://arxiv.org/abs/2504.10449)
 
-**Authors**: Zichun Hao, Raghav Kansal, Abhijith Gandrakota, Chang Sun, Ngadiuba Jennifer, Javier Duarte, Maria Spiropulu  
+**Authors**: Junxiong Wang, Wen-Ding Li, Daniele Paliotta, Daniel Ritter, Alexander M. Rush, Tri Dao  
 **Category**: cs.LG  
 **Published**: 2025-09-10  
-**Score**: 2.0
+**Score**: 7.5
 
-arXiv:2509.07486v1 Announce Type: cross 
-Abstract: A common challenge with supervised machine learning (ML) in high energy physics (HEP) is the reliance on simulations for labeled data, which can often mismodel the underlying collision or detector response. To help mitigate this problem of domain sh...
-
----
-
-### 31. [Beyond Motion Cues and Structural Sparsity: Revisiting Small Moving Target Detection](https://arxiv.org/abs/2509.07654)
-
-**Authors**: Guoyi Zhang, Siyang Chen, Guangsheng Xu, Zhihua Shen, Han Wang, Xiaohu Zhang  
-**Category**: cs.CV  
-**Published**: 2025-09-10  
-**Score**: 2.0
-
-arXiv:2509.07654v1 Announce Type: new 
-Abstract: Small moving target detection is crucial for many defense applications but remains highly challenging due to low signal-to-noise ratios, ambiguous visual cues, and cluttered backgrounds. In this work, we propose a novel deep learning framework that di...
+arXiv:2504.10449v3 Announce Type: replace 
+Abstract: Effective reasoning is crucial to solving complex mathematical problems. Recent large language models (LLMs) have boosted performance by scaling test-time computation through long chain-of-thought reasoning. However, transformer-based models are i...
 
 ---
 
-### 32. [Feature Space Analysis by Guided Diffusion Model](https://arxiv.org/abs/2509.07936)
+### 17. [VoltanaLLM: Feedback-Driven Frequency Control and State-Space Routing for Energy-Efficient LLM Serving](https://arxiv.org/abs/2509.04827)
 
-**Authors**: Kimiaki Shirahama, Miki Yanobu, Kaduki Yamashita, Miho Ohsaki  
-**Category**: cs.CV  
-**Published**: 2025-09-10  
-**Score**: 2.0
-
-arXiv:2509.07936v1 Announce Type: new 
-Abstract: One of the key issues in Deep Neural Networks (DNNs) is the black-box nature of their internal feature extraction process. Targeting vision-related domains, this paper focuses on analysing the feature space of a DNN by proposing a decoder that can gen...
-
----
-
-### 33. [GCRPNet: Graph-Enhanced Contextual and Regional Perception Network for Salient Object Detection in Optical Remote Sensing Images](https://arxiv.org/abs/2508.10542)
-
-**Authors**: Mengyu Ren, Yutong Li, Hua Li, Runmin Cong, Sam Kwong  
-**Category**: cs.CV  
-**Published**: 2025-09-10  
-**Score**: 2.0
-
-arXiv:2508.10542v3 Announce Type: replace 
-Abstract: Salient object detection (SOD) in optical remote sensing images (ORSIs) faces numerous challenges, including significant variations in target scales and low contrast between targets and the background. Existing methods based on vision transformers...
-
----
-
-### 34. [Deep Learning-based Techniques for Integrated Sensing and Communication Systems: State-of-the-Art, Challenges, and Opportunities](https://arxiv.org/abs/2509.06968)
-
-**Authors**: Murat Temiz, Yongwei Zhang, Yanwei Fu, Chi Zhang, Chenfeng Meng, Orhan Kaplan, Christos Masouros  
+**Authors**: Jiahuan Yu (University of Illinois Urbana-Champaign), Aryan Taneja (University of Illinois Urbana-Champaign), Junfeng Lin (Tsinghua University), Minjia Zhang (University of Illinois Urbana-Champaign)  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 7.0
 
-arXiv:2509.06968v1 Announce Type: cross 
-Abstract: This article comprehensively reviews recent developments and research on deep learning-based (DL-based) techniques for integrated sensing and communication (ISAC) systems. ISAC, which combines sensing and communication functionalities, is regarded a...
+arXiv:2509.04827v1 Announce Type: cross 
+Abstract: Modern Large Language Model (LLM) serving systems increasingly support interactive applications, like real-time chat assistants, code generation tools, and agentic workflows. However, the soaring energy cost of LLM inference presents a growing chall...
 
 ---
 
-### 35. [Impact of Neuron Models on Spiking Neural Networks performance. A Complexity Based Classification Approach](https://arxiv.org/abs/2509.06970)
+### 18. [Competitive Audio-Language Models with Data-Efficient Single-Stage Training on Public Data](https://arxiv.org/abs/2509.07526)
 
-**Authors**: Zofia Rudnicka, Janusz Szczepanski, Agnieszka Pregowska  
+**Authors**: Gokul Karthik Kumar, Rishabh Saraf, Ludovick Lepauloux, Abdul Muneer, Billel Mokeddem, Hakim Hacid  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 7.0
 
-arXiv:2509.06970v1 Announce Type: cross 
-Abstract: This study explores how the selection of neuron models and learning rules impacts the classification performance of Spiking Neural Networks (SNNs), with a focus on applications in bio-signal processing. We compare biologically inspired neuron models...
+arXiv:2509.07526v1 Announce Type: cross 
+Abstract: Large language models (LLMs) have transformed NLP, yet their integration with audio remains underexplored -- despite audio's centrality to human communication. We introduce Falcon3-Audio, a family of Audio-Language Models (ALMs) built on instruction...
 
 ---
 
-### 36. [Toward Reproducible Cross-Backend Compatibility for Deep Learning: A Configuration-First Framework with Three-Tier Verification](https://arxiv.org/abs/2509.06977)
+### 19. [Towards Generalized Routing: Model and Agent Orchestration for Adaptive and Efficient Inference](https://arxiv.org/abs/2509.07571)
 
-**Authors**: Zehua Li  
+**Authors**: Xiyu Guo, Shan Wang, Chunfang Ji, Xuefeng Zhao, Wenhao Xi, Yaoyao Liu, Qinglan Li, Chao Deng, Junlan Feng  
 **Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 7.0
 
-arXiv:2509.06977v1 Announce Type: cross 
-Abstract: This paper presents a configuration-first framework for evaluating cross-backend compatibility in deep learning systems deployed on CPU, GPU, and compiled runtimes. The framework decouples experiments from code using YAML, supports both library and ...
-
----
-
-### 37. [Exploring Over-stationarization in Deep Learning-based Bus/Tram Arrival Time Prediction: Analysis and Non-stationary Effect Recovery](https://arxiv.org/abs/2509.06979)
-
-**Authors**: Zirui Li, Bin Yang, Meng Wang  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.06979v1 Announce Type: cross 
-Abstract: Arrival time prediction (ATP) of public transport vehicles is essential in improving passenger experience and supporting traffic management. Deep learning has demonstrated outstanding performance in ATP due to its ability to model non-linear and tem...
+arXiv:2509.07571v1 Announce Type: cross 
+Abstract: The rapid advancement of large language models (LLMs) and domain-specific AI agents has greatly expanded the ecosystem of AI-powered services. User queries, however, are highly diverse and often span multiple domains and task types, resulting in a c...
 
 ---
 
-### 38. [Measuring Uncertainty in Transformer Circuits with Effective Information Consistency](https://arxiv.org/abs/2509.07149)
+### 20. [Learning to Upsample and Upmix Audio in the Latent Domain](https://arxiv.org/abs/2506.00681)
 
-**Authors**: Anatoly A. Krasnovsky  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07149v1 Announce Type: cross 
-Abstract: Mechanistic interpretability has identified functional subgraphs within large language models (LLMs), known as Transformer Circuits (TCs), that appear to implement specific algorithms. Yet we lack a formal, single-pass way to quantify when an active...
-
----
-
-### 39. [Breaking the Conventional Forward-Backward Tie in Neural Networks: Activation Functions](https://arxiv.org/abs/2509.07236)
-
-**Authors**: Luigi Troiano, Francesco Gissi, Vincenzo Benedetto, Genny Tortora  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07236v1 Announce Type: cross 
-Abstract: Gradient-based neural network training traditionally enforces symmetry between forward and backward propagation, requiring activation functions to be differentiable (or sub-differentiable) and strictly monotonic in certain regions to prevent flat gr...
-
----
-
-### 40. [SBS: Enhancing Parameter-Efficiency of Neural Representations for Neural Networks via Spectral Bias Suppression](https://arxiv.org/abs/2509.07373)
-
-**Authors**: Qihu Xie, Yuan Li, Yi Kang  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07373v1 Announce Type: cross 
-Abstract: Implicit neural representations have recently been extended to represent convolutional neural network weights via neural representation for neural networks, offering promising parameter compression benefits. However, standard multi-layer perceptrons...
-
----
-
-### 41. [Forecasting Russian Equipment Losses Using Time Series and Deep Learning Models](https://arxiv.org/abs/2509.07813)
-
-**Authors**: Jonathan Teagan  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07813v1 Announce Type: cross 
-Abstract: This study applies a range of forecasting techniques,including ARIMA, Prophet, Long Short Term Memory networks (LSTM), Temporal Convolutional Networks (TCN), and XGBoost, to model and predict Russian equipment losses during the ongoing war in Ukrain...
-
----
-
-### 42. [Deep Learning-Based Burned Area Mapping Using Bi-Temporal Siamese Networks and AlphaEarth Foundation Datasets](https://arxiv.org/abs/2509.07852)
-
-**Authors**: Seyd Teymoor Seydi  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07852v1 Announce Type: cross 
-Abstract: Accurate and timely mapping of burned areas is crucial for environmental monitoring, disaster management, and assessment of climate change. This study presents a novel approach to automated burned area mapping using the AlphaEArth dataset combined w...
-
----
-
-### 43. [Comparative Analysis of Lightweight Deep Learning Models for Memory-Constrained Devices](https://arxiv.org/abs/2505.03303)
-
-**Authors**: Tasnim Shahriar  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2505.03303v2 Announce Type: replace-cross 
-Abstract: This paper presents a comprehensive evaluation of lightweight deep learning models for image classification, emphasizing their suitability for deployment in resource-constrained environments such as low-memory devices. Five state-of-the-art ...
-
----
-
-### 44. [Ultra-Low-Latency Spiking Neural Networks with Temporal-Dependent Integrate-and-Fire Neuron Model for Objects Detection](https://arxiv.org/abs/2508.20392)
-
-**Authors**: Chengjun Zhang, Yuhao Zhang, Jie Yang, Mohamad Sawan  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2508.20392v2 Announce Type: replace-cross 
-Abstract: Spiking Neural Networks (SNNs), inspired by the brain, are characterized by minimal power consumption and swift inference capabilities on neuromorphic hardware, and have been widely applied to various visual perception tasks. Current ANN-SNN...
-
----
-
-### 45. [Barycentric Neural Networks and Length-Weighted Persistent Entropy Loss: A Green Geometric and Topological Framework for Function Approximation](https://arxiv.org/abs/2509.06694)
-
-**Authors**: Victor Toscano-Duran, Rocio Gonzalez-Diaz, Miguel A. Guti\'errez-Naranjo  
-**Category**: cs.AI  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.06694v2 Announce Type: replace-cross 
-Abstract: While it is well-established that artificial neural networks are universal approximators for continuous functions on compact domains, many modern approaches rely on deep or overparameterized architectures that incur high computational costs....
-
----
-
-### 46. [uGMM-NN: Univariate Gaussian Mixture Model Neural Network](https://arxiv.org/abs/2509.07569)
-
-**Authors**: Zakeria Sharif Ali  
+**Authors**: Dimitrios Bralios, Paris Smaragdis, Jonah Casebeer  
 **Category**: cs.LG  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 7.0
 
-arXiv:2509.07569v1 Announce Type: new 
-Abstract: This paper introduces the Univariate Gaussian Mixture Model Neural Network (uGMM-NN), a novel neural architecture that embeds probabilistic reasoning directly into the computational units of deep networks. Unlike traditional neurons, which apply weigh...
-
----
-
-### 47. [Homogenization with Guaranteed Bounds via Primal-Dual Physically Informed Neural Networks](https://arxiv.org/abs/2509.07579)
-
-**Authors**: Liya Gaynutdinova, Martin Do\v{s}k\'a\v{r}, Ond\v{r}ej Roko\v{s}, Ivana Pultarov\'a  
-**Category**: cs.LG  
-**Published**: 2025-09-10  
-**Score**: 1.5
-
-arXiv:2509.07579v1 Announce Type: new 
-Abstract: Physics-informed neural networks (PINNs) have shown promise in solving partial differential equations (PDEs) relevant to multiscale modeling, but they often fail when applied to materials with discontinuous coefficients, such as media with piecewise c...
+arXiv:2506.00681v2 Announce Type: replace-cross 
+Abstract: Neural audio autoencoders create compact latent representations that preserve perceptually important information, serving as the foundation for both modern audio compression systems and generation approaches like next-token prediction and la...
 
 ---
 
-### 48. [Graph-based Integrated Gradients for Explaining Graph Neural Networks](https://arxiv.org/abs/2509.07648)
+### 21. [CARE: Decoding Time Safety Alignment via Rollback and Introspection Intervention](https://arxiv.org/abs/2509.06982)
 
-**Authors**: Lachlan Simpson, Kyle Millar, Adriel Cheng, Cheng-Chew Lim, Hong Gunn Chew  
-**Category**: cs.LG  
+**Authors**: Xiaomeng Hu, Fei Huang, Chenhan Yuan, Junyang Lin, Tsung-Yi Ho  
+**Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 6.5
 
-arXiv:2509.07648v1 Announce Type: new 
-Abstract: Integrated Gradients (IG) is a common explainability technique to address the black-box problem of neural networks. Integrated gradients assumes continuous data. Graphs are discrete structures making IG ill-suited to graphs. In this work, we introduce...
+arXiv:2509.06982v1 Announce Type: cross 
+Abstract: As large language models (LLMs) are increasingly deployed in real-world applications, ensuring the safety of their outputs during decoding has become a critical challenge. However, existing decoding-time interventions, such as Contrastive Decoding, ...
 
 ---
 
-### 49. [A Survey of Graph Neural Networks for Drug Discovery: Recent Developments and Challenges](https://arxiv.org/abs/2509.07887)
+### 22. [1 bit is all we need: binary normalized neural networks](https://arxiv.org/abs/2509.07025)
 
-**Authors**: Katherine Berry, Liang Cheng  
-**Category**: cs.LG  
+**Authors**: Eduardo Lobo Lustoda Cabral, Paulo Pirozelli, Larissa Driemeier  
+**Category**: cs.AI  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 6.5
 
-arXiv:2509.07887v1 Announce Type: new 
-Abstract: Graph Neural Networks (GNNs) have gained traction in the complex domain of drug discovery because of their ability to process graph-structured data such as drug molecule models. This approach has resulted in a myriad of methods and models in published...
+arXiv:2509.07025v1 Announce Type: cross 
+Abstract: The increasing size of large neural network models, specifically language models and foundational image models, poses deployment challenges, prompting efforts to reduce memory requirements and enhance computational efficiency. These efforts are crit...
 
 ---
 
-### 50. [Toric geometry of ReLU neural networks](https://arxiv.org/abs/2509.05894)
+### 23. [IP-Basis PINNs: Efficient Multi-Query Inverse Parameter Estimation](https://arxiv.org/abs/2509.07245)
 
-**Authors**: Yaoying Fu  
+**Authors**: Shalev Manor, Mohammad Kohandel  
 **Category**: cs.LG  
 **Published**: 2025-09-10  
-**Score**: 1.5
+**Score**: 6.5
 
-arXiv:2509.05894v1 Announce Type: cross 
-Abstract: Given a continuous finitely piecewise linear function $f:\mathbb{R}^{n_0} \to \mathbb{R}$ and a fixed architecture $(n_0,\ldots,n_k;1)$ of feedforward ReLU neural networks, the exact function realization problem is to determine when some network wit...
+arXiv:2509.07245v1 Announce Type: new 
+Abstract: Solving inverse problems with Physics-Informed Neural Networks (PINNs) is computationally expensive for multi-query scenarios, as each new set of observed data requires a new, expensive training procedure. We present Inverse-Parameter Basis PINNs (IP-...
+
+---
+
+### 24. [Small Open Models Achieve Near Parity with Large Models in Low Resource Literary Translation at a Fraction of the Cost](https://arxiv.org/abs/2509.07829)
+
+**Authors**: Mihai Nadas, Laura Diosan, Andreea Tomescu, Andrei Piscoran  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2509.07829v1 Announce Type: cross 
+Abstract: Literary translation has recently gained attention as a distinct and complex task in machine translation research. However, the translation by small open models remains an open problem. We contribute to this ongoing research by introducing TINYFABUL...
+
+---
+
+### 25. [AI-SearchPlanner: Modular Agentic Search via Pareto-Optimal Multi-Objective Reinforcement Learning](https://arxiv.org/abs/2508.20368)
+
+**Authors**: Lang Mei, Zhihan Yang, Chong Chen  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2508.20368v3 Announce Type: replace 
+Abstract: Recent studies have explored integrating Large Language Models (LLMs) with search engines to leverage both the LLMs' internal pre-trained knowledge and external information. Specially, reinforcement learning (RL) has emerged as a promising paradig...
+
+---
+
+### 26. [Research on Conversational Recommender System Considering Consumer Types](https://arxiv.org/abs/2508.13209)
+
+**Authors**: Yaying Luo, Hui Fang, Zhu Sun  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2508.13209v2 Announce Type: replace-cross 
+Abstract: Conversational Recommender Systems (CRS) provide personalized services through multi-turn interactions, yet most existing methods overlook users' heterogeneous decision-making styles and knowledge levels, which constrains both accuracy and e...
+
+---
+
+### 27. [zkLoRA: Fine-Tuning Large Language Models with Verifiable Security via Zero-Knowledge Proofs](https://arxiv.org/abs/2508.21393)
+
+**Authors**: Guofu Liao, Taotao Wang, Shengli Zhang, Jiqun Zhang, Shi Long, Dacheng Tao  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2508.21393v2 Announce Type: replace-cross 
+Abstract: Fine-tuning large language models (LLMs) is crucial for adapting them to specific tasks, yet it remains computationally demanding and raises concerns about correctness and privacy, particularly in untrusted environments. Although parameter-e...
+
+---
+
+### 28. [What Fundamental Structure in Reward Functions Enables Efficient Sparse-Reward Learning?](https://arxiv.org/abs/2509.03790)
+
+**Authors**: Ibne Farabi Shihab, Sanjeda Akter, Anuj Sharma  
+**Category**: cs.AI  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2509.03790v2 Announce Type: replace-cross 
+Abstract: Sparse-reward reinforcement learning (RL) remains fundamentally hard: without structure, any agent needs $\Omega(|\mathcal{S}||\mathcal{A}|/p)$ samples to recover rewards. We introduce Policy-Aware Matrix Completion (PAMC) as a first concret...
+
+---
+
+### 29. [Pierce the Mists, Greet the Sky: Decipher Knowledge Overshadowing via Knowledge Circuit Analysis](https://arxiv.org/abs/2505.14406)
+
+**Authors**: Haoming Huang, Yibo Yan, Jiahao Huo, Xin Zou, Xinfeng Li, Kun Wang, Xuming Hu  
+**Category**: cs.CL  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2505.14406v4 Announce Type: replace 
+Abstract: Large Language Models (LLMs), despite their remarkable capabilities, are hampered by hallucinations. A particularly challenging variant, knowledge overshadowing, occurs when one piece of activated knowledge inadvertently masks another relevant pie...
+
+---
+
+### 30. [MoE-Compression: How the Compression Error of Experts Affects the Inference Accuracy of MoE Model?](https://arxiv.org/abs/2509.07727)
+
+**Authors**: Songkai Ma, Zhaorui Zhang, Sheng Di, Benben Liu, Xiaodong Yu, Xiaoyi Lu, Dan Wang  
+**Category**: cs.DC  
+**Published**: 2025-09-10  
+**Score**: 6.0
+
+arXiv:2509.07727v1 Announce Type: cross 
+Abstract: With the widespread application of Mixture of Experts (MoE) reasoning models in the field of LLM learning, efficiently serving MoE models under limited GPU memory constraints has emerged as a significant challenge. Offloading the non-activated exper...
 
 ---
 
 ## 🔧 Configuration
 
 This bot is configured to look for papers containing the following keywords:
-- machine learning, deep learning, neural network, transformer
+- LLM, RL, RLHF, Inference, Training, Attention, Pipeline, MOE, Sparse, Quantization, Speculative, Efficient, Efficiency, Framework, Parallel, Distributed, Kernel, Decode, Decoding, Prefill, Throughput, Fast, Network, Hardware, Cluster, FP8, FP4, Optimization, Scalable, Communication
 
 ## 📅 Schedule
 
