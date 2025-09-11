@@ -9,7 +9,7 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-09-11 03:16:21 UTC
+- **Last Updated**: 2025-09-11 03:19:17 UTC
 - **Total Papers Found**: 50
 - **Categories Monitored**: cs.AI, cs.LG, cs.CL, cs.CV
 
