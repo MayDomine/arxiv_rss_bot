@@ -16,7 +16,26 @@
         "MOE",
         "Sparse",
         "Quantization",
-        "Speculative Decoding"
+        "Speculative",
+        "Efficient",
+        "Efficiency",
+        "Framework",
+        "Parallel",
+        "Distributed",
+        "Kernel",
+        "Decode",
+        "Decoding"
+        "Prefill",
+        "Throughput",
+        "Fast",
+        "Network",
+        "Hardware",
+        "Cluster",
+        "FP8",
+        "FP4",
+        "Optimization",
+        "Scalable",
+        "Communication"
     ],
     "exclude_keywords": [
         "survey",
