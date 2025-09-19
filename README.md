@@ -9,369 +9,369 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-09-18 12:50:43 UTC
+- **Last Updated**: 2025-09-19 12:50:45 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [Large Language Model-Empowered Decision Transformer for UAV-Enabled Data Collection](https://arxiv.org/abs/2509.13934)
+### 1. [Low-rank surrogate modeling and stochastic zero-order optimization for training of neural networks with black-box layers](https://arxiv.org/abs/2509.15113)
 
-**Authors**: Zhixion Chen, Jiangzhou Wang, and Hyundong Shin, Arumugam Nallanathan  
+**Authors**: Andrei Chertkov, Artem Basharin, Mikhail Saygin, Evgeny Frolov, Stanislav Straupe, Ivan Oseledets  
 **Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
+**Score**: 11.5
+
+arXiv:2509.15113v1 Announce Type: new 
+Abstract: The growing demand for energy-efficient, high-performance AI systems has led to increased attention on alternative computing platforms (e.g., photonic, neuromorphic) due to their potential to accelerate learning and inference. However, integrating suc...
+
+---
+
+### 2. [Towards Robust Agentic CUDA Kernel Benchmarking, Verification, and Optimization](https://arxiv.org/abs/2509.14279)
+
+**Authors**: Robert Tjarko Lange, Qi Sun, Aaditya Prasad, Maxence Faldor, Yujin Tang, David Ha  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
 **Score**: 10.0
 
-arXiv:2509.13934v1 Announce Type: cross 
-Abstract: The deployment of unmanned aerial vehicles (UAVs) for reliable and energy-efficient data collection from spatially distributed devices holds great promise in supporting diverse Internet of Things (IoT) applications. Nevertheless, the limited enduran...
+arXiv:2509.14279v1 Announce Type: cross 
+Abstract: Recent advances in large language models (LLMs) demonstrate their effectiveness in scaling test-time compute for software engineering tasks. However, these approaches often focus on high-level solutions, with limited attention to optimizing low-leve...
 
 ---
 
-### 2. [EdgeProfiler: A Fast Profiling Framework for Lightweight LLMs on Edge Using Analytical Model](https://arxiv.org/abs/2506.09061)
+### 3. [A1: Asynchronous Test-Time Scaling via Conformal Prediction](https://arxiv.org/abs/2509.15148)
 
-**Authors**: Alyssa Pinnock, Shakya Jayakody, Kawsher A Roxy, Md Rubel Ahmed  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
+**Authors**: Jing Xiong, Qiujiang Chen, Fanghua Ye, Zhongwei Wan, Chuanyang Zheng, Chenyang Zhao, Hui Shen, Alexander Hanbo Li, Chaofan Tao, Haochen Tan, Haoli Bai, Lifeng Shang, Lingpeng Kong, Ngai Wong  
+**Category**: cs.CL  
+**Published**: 2025-09-19  
+**Score**: 10.0
+
+arXiv:2509.15148v1 Announce Type: new 
+Abstract: Large language models (LLMs) benefit from test-time scaling, but existing methods face significant challenges, including severe synchronization overhead, memory bottlenecks, and latency, especially during speculative decoding with long reasoning chain...
+
+---
+
+### 4. [LEED: A Highly Efficient and Scalable LLM-Empowered Expert Demonstrations Framework for Multi-Agent Reinforcement Learning](https://arxiv.org/abs/2509.14680)
+
+**Authors**: Tianyang Duan, Zongyuan Zhang, Songxiao Guo, Dong Huang, Yuanye Zhao, Zheng Lin, Zihan Fang, Dianxin Luan, Heming Cui, Yong Cui  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 10.0
+
+arXiv:2509.14680v1 Announce Type: cross 
+Abstract: Multi-agent reinforcement learning (MARL) holds substantial promise for intelligent decision-making in complex environments. However, it suffers from a coordination and scalability bottleneck as the number of agents increases. To address these issue...
+
+---
+
+### 5. [{\lambda}Scale: Enabling Fast Scaling for Serverless Large Language Model Inference](https://arxiv.org/abs/2502.09922)
+
+**Authors**: Minchen Yu, Rui Yang, Chaobo Jia, Zhaoyuan Su, Sheng Yao, Tingfeng Lan, Yuchen Yang, Yue Cheng, Wei Wang, Ao Wang, Ruichuan Chen  
+**Category**: cs.DC  
+**Published**: 2025-09-19  
 **Score**: 9.5
 
-arXiv:2506.09061v3 Announce Type: replace-cross 
-Abstract: This paper introduces EdgeProfiler, a fast profiling framework designed for evaluating lightweight Large Language Models (LLMs) on edge systems. While LLMs offer remarkable capabilities in natural language understanding and generation, their...
+arXiv:2502.09922v2 Announce Type: replace 
+Abstract: Serverless computing has emerged as a compelling solution for cloud-based model inference. However, as modern large language models (LLMs) continue to grow in size, existing serverless platforms often face substantial model startup overhead. This ...
 
 ---
 
-### 3. [A Universal Banach--Bregman Framework for Stochastic Iterations: Unifying Stochastic Mirror Descent, Learning and LLM Training](https://arxiv.org/abs/2509.14216)
+### 6. [The Energy-Efficient Hierarchical Neural Network with Fast FPGA-Based Incremental Learning](https://arxiv.org/abs/2509.15097)
 
-**Authors**: Johnny R. Zhang (Independent Researcher), Xiaomei Mi (University of Manchester), Gaoyuan Du (Amazon), Qianyi Sun (Microsoft), Shiqi Wang (Meta), Jiaxuan Li (Amazon), Wenhua Zhou (Independent Researcher)  
+**Authors**: Mohammad Saleh Vahdatpour, Huaiyuan Chu, Yanqing Zhang  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 9.5
+
+arXiv:2509.15097v1 Announce Type: new 
+Abstract: The rising computational and energy demands of deep learning, particularly in large-scale architectures such as foundation models and large language models (LLMs), pose significant challenges to sustainability. Traditional gradient-based training meth...
+
+---
+
+### 7. [Cost-Performance Analysis: A Comparative Study of CPU-Based Serverless and GPU-Based Training Architectures](https://arxiv.org/abs/2509.14920)
+
+**Authors**: Amine Barrak, Fabio Petrillo, Fehmi Jaafar  
+**Category**: cs.DC  
+**Published**: 2025-09-19  
+**Score**: 9.0
+
+arXiv:2509.14920v1 Announce Type: new 
+Abstract: The field of distributed machine learning (ML) faces increasing demands for scalable and cost-effective training solutions, particularly in the context of large, complex models. Serverless computing has emerged as a promising paradigm to address these...
+
+---
+
+### 8. [FAWN: A MultiEncoder Fusion-Attention Wave Network for Integrated Sensing and Communication Indoor Scene Inference](https://arxiv.org/abs/2509.14968)
+
+**Authors**: Carlos Barroso-Fern\'andez, Alejandro Calvillo-Fernandez, Antonio de la Oliva, Carlos J. Bernardos  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 9.0
+
+arXiv:2509.14968v1 Announce Type: new 
+Abstract: The upcoming generations of wireless technologies promise an era where everything is interconnected and intelligent. As the need for intelligence grows, networks must learn to better understand the physical world. However, deploying dedicated hardware...
+
+---
+
+### 9. [MaRVIn: A Cross-Layer Mixed-Precision RISC-V Framework for DNN Inference, from ISA Extension to Hardware Acceleration](https://arxiv.org/abs/2509.15187)
+
+**Authors**: Giorgos Armeniakos, Alexis Maras, Sotirios Xydis, Dimitrios Soudris  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 8.5
+
+arXiv:2509.15187v1 Announce Type: new 
+Abstract: The evolution of quantization and mixed-precision techniques has unlocked new possibilities for enhancing the speed and energy efficiency of NNs. Several recent studies indicate that adapting precision levels across different parameters can maintain a...
+
+---
+
+### 10. [SparseDoctor: Towards Efficient Chat Doctor with Mixture of Experts Enhanced Large Language Models](https://arxiv.org/abs/2509.14269)
+
+**Authors**: Zhang Jianbin, Yulin Zhu, Wai Lun Lo, Richard Tai-Chiu Hsung, Harris Sik-Ho Tsang, Kai Zhou  
 **Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 8.5
-
-arXiv:2509.14216v1 Announce Type: cross 
-Abstract: Stochastic optimization powers the scalability of modern artificial intelligence, spanning machine learning, deep learning, reinforcement learning, and large language model training. Yet, existing theory remains largely confined to Hilbert spaces, r...
-
----
-
-### 4. [Mitigating Attention Hacking in Preference-Based Reward Modeling via Interaction Distillation](https://arxiv.org/abs/2508.02618)
-
-**Authors**: Jianxiang Zang, Meiling Ning, Shihan Dou, Jiazheng Zhang, Tao Gui, Qi Zhang, Xuanjing Huang  
-**Category**: cs.CL  
-**Published**: 2025-09-18  
-**Score**: 8.5
-
-arXiv:2508.02618v2 Announce Type: replace 
-Abstract: The reward model (RM), as the core component of reinforcement learning from human feedback (RLHF) for large language models (LLMs), responsible for providing reward signals to generated responses. However, mainstream preference modeling in RM is i...
-
----
-
-### 5. [Physics-based deep kernel learning for parameter estimation in high dimensional PDEs](https://arxiv.org/abs/2509.14054)
-
-**Authors**: Weihao Yan, Christoph Brune, Mengwu Guo  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
-**Score**: 8.5
-
-arXiv:2509.14054v1 Announce Type: cross 
-Abstract: Inferring parameters of high-dimensional partial differential equations (PDEs) poses significant computational and inferential challenges, primarily due to the curse of dimensionality and the inherent limitations of traditional numerical methods. Th...
-
----
-
-### 6. [Pseudo-Asynchronous Local SGD: Robust and Efficient Data-Parallel Training](https://arxiv.org/abs/2504.18454)
-
-**Authors**: Hiroki Naganuma, Xinzhi Zhang, Man-Chung Yue, Ioannis Mitliagkas, Philipp A. Witte, Russell J. Hewett, Yin Tat Lee  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
-**Score**: 8.5
-
-arXiv:2504.18454v2 Announce Type: replace 
-Abstract: Following AI scaling trends, frontier models continue to grow in size and continue to be trained on larger datasets. Training these models requires huge investments in exascale computational resources, which has in turn driven developtment of dist...
-
----
-
-### 7. [RF-LSCM: Pushing Radiance Fields to Multi-Domain Localized Statistical Channel Modeling for Cellular Network Optimization](https://arxiv.org/abs/2509.13686)
-
-**Authors**: Bingsheng Peng, Shutao Zhang, Xi Zheng, Ye Xue, Xinyu Qin, Tsung-Hui Chang  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 8.0
 
-arXiv:2509.13686v1 Announce Type: new 
-Abstract: Accurate localized wireless channel modeling is a cornerstone of cellular network optimization, enabling reliable prediction of network performance during parameter tuning. Localized statistical channel modeling (LSCM) is the state-of-the-art channel ...
+arXiv:2509.14269v1 Announce Type: cross 
+Abstract: Large language models (LLMs) have achieved great success in medical question answering and clinical decision-making, promoting the efficiency and popularization of the personalized virtual doctor in society. However, the traditional fine-tuning stra...
 
 ---
 
-### 8. [MIRA: Empowering One-Touch AI Services on Smartphones with MLLM-based Instruction Recommendation](https://arxiv.org/abs/2509.13773)
+### 11. [TITAN: A Trajectory-Informed Technique for Adaptive Parameter Freezing in Large-Scale VQE](https://arxiv.org/abs/2509.15193)
 
-**Authors**: Zhipeng Bian, Jieming Zhu, Xuyang Xie, Quanyu Dai, Zhou Zhao, Zhenhua Dong  
+**Authors**: Yifeng Peng, Xinyi Li, Samuel Yen-Chi Chen, Kaining Zhang, Zhiding Liang, Ying Wang, Yuxuan Du  
 **Category**: cs.AI  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
+**Score**: 8.0
+
+arXiv:2509.15193v1 Announce Type: cross 
+Abstract: Variational quantum Eigensolver (VQE) is a leading candidate for harnessing quantum computers to advance quantum chemistry and materials simulations, yet its training efficiency deteriorates rapidly for large Hamiltonians. Two issues underlie this b...
+
+---
+
+### 12. [Unified Crew Planning and Replanning Optimization in Multi-Line Metro Systems Considering Workforce Heterogeneity](https://arxiv.org/abs/2509.14251)
+
+**Authors**: Qihang Chen  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
 **Score**: 7.5
 
-arXiv:2509.13773v1 Announce Type: new 
-Abstract: The rapid advancement of generative AI technologies is driving the integration of diverse AI-powered services into smartphones, transforming how users interact with their devices. To simplify access to predefined AI services, this paper introduces MIR...
+arXiv:2509.14251v1 Announce Type: new 
+Abstract: Metro crew planning is a key component of smart city development as it directly impacts the operational efficiency and service reliability of public transportation. With the rapid expansion of metro networks, effective multi-line scheduling and emerge...
 
 ---
 
-### 9. [CoPL: Collaborative Preference Learning for Personalizing LLMs](https://arxiv.org/abs/2503.01658)
+### 13. [Communication Efficient Split Learning of ViTs with Attention-based Double Compression](https://arxiv.org/abs/2509.15058)
 
-**Authors**: Youngbin Choi, Seunghyuk Cho, Minjong Lee, MoonJeong Park, Yesong Ko, Jungseul Ok, Dongwoo Kim  
+**Authors**: Federico Alvetreti, Jary Pomponi, Paolo Di Lorenzo, Simone Scardapane  
 **Category**: cs.AI  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 7.5
 
-arXiv:2503.01658v2 Announce Type: replace-cross 
-Abstract: Personalizing large language models (LLMs) is important for aligning outputs with diverse user preferences, yet existing methods struggle with flexibility and generalization. We propose CoPL (Collaborative Preference Learning), a graph-based...
+arXiv:2509.15058v1 Announce Type: cross 
+Abstract: This paper proposes a novel communication-efficient Split Learning (SL) framework, named Attention-based Double Compression (ADC), which reduces the communication overhead required for transmitting intermediate Vision Transformers activations during...
 
 ---
 
-### 10. [Re-purposing SAM into Efficient Visual Projectors for MLLM-Based Referring Image Segmentation](https://arxiv.org/abs/2509.13676)
+### 14. [LiMuon: Light and Fast Muon Optimizer for Large Models](https://arxiv.org/abs/2509.14562)
 
-**Authors**: Xiaobo Yang, Xiaojin Gong  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 7.0
-
-arXiv:2509.13676v1 Announce Type: cross 
-Abstract: Recently, Referring Image Segmentation (RIS) frameworks that pair the Multimodal Large Language Model (MLLM) with the Segment Anything Model (SAM) have achieved impressive results. However, adapting MLLM to segmentation is computationally intensive,...
-
----
-
-### 11. [Comprehensive Evaluation of CNN-Based Audio Tagging Models on Resource-Constrained Devices](https://arxiv.org/abs/2509.14049)
-
-**Authors**: Jordi Grau-Haro, Ruben Ribes-Serrano, Javier Naranjo-Alcazar, Marta Garcia-Ballesteros, Pedro Zuccarello  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 7.0
-
-arXiv:2509.14049v1 Announce Type: cross 
-Abstract: Convolutional Neural Networks (CNNs) have demonstrated exceptional performance in audio tagging tasks. However, deploying these models on resource-constrained devices like the Raspberry Pi poses challenges related to computational efficiency and the...
-
----
-
-### 12. [Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization](https://arxiv.org/abs/2507.20923)
-
-**Authors**: Minh Hieu Ha, Hung Phan, Tung Duy Doan, Tung Dao, Dao Tran, Huynh Thi Thanh Binh  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 7.0
-
-arXiv:2507.20923v2 Announce Type: replace-cross 
-Abstract: Multi-objective combinatorial optimization problems (MOCOP) frequently arise in practical applications that require the simultaneous optimization of conflicting objectives. Although traditional evolutionary algorithms can be effective, they ...
-
----
-
-### 13. [NIRVANA: Structured pruning reimagined for large language models compression](https://arxiv.org/abs/2509.14230)
-
-**Authors**: Mengting Ai, Tianxin Wei, Sirui Chen, Jingrui He  
+**Authors**: Feihu Huang, Yuning Luo, Songcan Chen  
 **Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
+**Score**: 7.5
+
+arXiv:2509.14562v1 Announce Type: new 
+Abstract: Large models recently are widely applied in artificial intelligence, so efficient training of large models has received widespread attention. More recently, a useful Muon optimizer is specifically designed for matrix-structured parameters of large mod...
+
+---
+
+### 15. [Evolution of Kernels: Automated RISC-V Kernel Optimization with Large Language Models](https://arxiv.org/abs/2509.14265)
+
+**Authors**: Siyuan Chen, Zhichao Lu, Qingfu Zhang  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
 **Score**: 7.0
 
-arXiv:2509.14230v1 Announce Type: new 
-Abstract: Structured pruning of large language models (LLMs) offers substantial efficiency improvements by removing entire hidden units, yet current approaches often suffer from significant performance degradation, particularly in zero-shot settings, and necess...
+arXiv:2509.14265v1 Announce Type: cross 
+Abstract: Automated kernel design is critical for overcoming software ecosystem barriers in emerging hardware platforms like RISC-V. While large language models (LLMs) have shown promise for automated kernel optimization, demonstrating success in CUDA domains...
 
 ---
 
-### 14. [Modernizing Facebook Scoped Search: Keyword and Embedding Hybrid Retrieval with LLM Evaluation](https://arxiv.org/abs/2509.13603)
+### 16. [Attention Beyond Neighborhoods: Reviving Transformer for Graph Clustering](https://arxiv.org/abs/2509.15024)
 
-**Authors**: Yongye Su, Zeya Zhang, Jane Kou, Cheng Ju, Shubhojeet Sarkar, Yamin Wang, Ji Liu, Shengbo Guo  
+**Authors**: Xuanting Xie, Bingheng Li, Erlin Pan, Rui Hou, Wenyu Chen, Zhao Kang  
 **Category**: cs.AI  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.15024v1 Announce Type: cross 
+Abstract: Attention mechanisms have become a cornerstone in modern neural networks, driving breakthroughs across diverse domains. However, their application to graph structured data, where capturing topological connections is essential, remains underexplored ...
+
+---
+
+### 17. [SMARTER: A Data-efficient Framework to Improve Toxicity Detection with Explanation via Self-augmenting Large Language Models](https://arxiv.org/abs/2509.15174)
+
+**Authors**: Huy Nghiem, Advik Sachdeva, Hal Daum\'e III  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.15174v1 Announce Type: cross 
+Abstract: WARNING: This paper contains examples of offensive materials. Toxic content has become pervasive on social media platforms. We introduce SMARTER, a data-efficient two-stage framework for explainable content moderation using Large Language Models (LL...
+
+---
+
+### 18. [Fast and Fluent Diffusion Language Models via Convolutional Decoding and Rejective Fine-tuning](https://arxiv.org/abs/2509.15188)
+
+**Authors**: Yeongbin Seo, Dongha Lee, Jaehyung Kim, Jinyoung Yeo  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.15188v1 Announce Type: cross 
+Abstract: Autoregressive (AR) language models generate text one token at a time, which limits their inference speed. Diffusion-based language models offer a promising alternative, as they can decode multiple tokens in parallel. However, we identify a key bott...
+
+---
+
+### 19. [LNE-Blocking: An Efficient Framework for Contamination Mitigation Evaluation on Large Language Models](https://arxiv.org/abs/2509.15218)
+
+**Authors**: Ruijie Hou, Yueyang Jiao, Hanxu Hu, Yingming Li, Wai Lam, Huajian Zhang, Hongyuan Lu  
+**Category**: cs.CL  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.15218v1 Announce Type: new 
+Abstract: The problem of data contamination is now almost inevitable during the development of large language models (LLMs), with the training data commonly integrating those evaluation benchmarks even unintentionally. This problem subsequently makes it hard to...
+
+---
+
+### 20. [Towards Privacy-Preserving and Heterogeneity-aware Split Federated Learning via Probabilistic Masking](https://arxiv.org/abs/2509.14603)
+
+**Authors**: Xingchen Wang, Feijie Wu, Chenglin Miao, Tianchun Li, Haoyu Hu, Qiming Cao, Jing Gao, Lu Su  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.14603v1 Announce Type: new 
+Abstract: Split Federated Learning (SFL) has emerged as an efficient alternative to traditional Federated Learning (FL) by reducing client-side computation through model partitioning. However, exchanging of intermediate activations and model updates introduces ...
+
+---
+
+### 21. [Adaptive LoRA Experts Allocation and Selection for Federated Fine-Tuning](https://arxiv.org/abs/2509.15087)
+
+**Authors**: Lei Wang, Jieming Bian, Letian Zhang, Jie Xu  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2509.15087v1 Announce Type: new 
+Abstract: Large Language Models (LLMs) have demonstrated impressive capabilities across various tasks, but fine-tuning them for domain-specific applications often requires substantial domain-specific data that may be distributed across multiple organizations. F...
+
+---
+
+### 22. [Scalable Interconnect Learning in Boolean Networks](https://arxiv.org/abs/2507.02585)
+
+**Authors**: Fabian Kresse, Emily Yu, Christoph H. Lampert  
+**Category**: cs.LG  
+**Published**: 2025-09-19  
+**Score**: 7.0
+
+arXiv:2507.02585v2 Announce Type: replace 
+Abstract: Learned Differentiable Boolean Logic Networks (DBNs) already deliver efficient inference on resource-constrained hardware. We extend them with a trainable, differentiable interconnect whose parameter count remains constant as input width grows, al...
+
+---
+
+### 23. [DetectAnyLLM: Towards Generalizable and Robust Detection of Machine-Generated Text Across Domains and Models](https://arxiv.org/abs/2509.14268)
+
+**Authors**: Jiachen Fu, Chun-Le Guo, Chongyi Li  
+**Category**: cs.AI  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13603v1 Announce Type: cross 
-Abstract: Beyond general web-scale search, social network search uniquely enables users to retrieve information and discover potential connections within their social context. We introduce a framework of modernized Facebook Group Scoped Search by blending tra...
+arXiv:2509.14268v1 Announce Type: cross 
+Abstract: The rapid advancement of large language models (LLMs) has drawn urgent attention to the task of machine-generated text detection (MGTD). However, existing approaches struggle in complex real-world scenarios: zero-shot detectors rely heavily on scori...
 
 ---
 
-### 15. [Deep Lookup Network](https://arxiv.org/abs/2509.13662)
+### 24. [TDRM: Smooth Reward Models with Temporal Difference for LLM RL and Inference](https://arxiv.org/abs/2509.15110)
 
-**Authors**: Yulan Guo, Longguang Wang, Wendong Mao, Xiaoyu Dong, Yingqian Wang, Li Liu, Wei An  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
+**Authors**: Dan Zhang, Min Cai, Jonathan Li, Ziniu Hu, Yisong Yue, Yuxiao Dong, Jie Tang  
+**Category**: cs.CL  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13662v1 Announce Type: cross 
-Abstract: Convolutional neural networks are constructed with massive operations with different types and are highly computationally intensive. Among these operations, multiplication operation is higher in computational complexity and usually requires {more} e...
+arXiv:2509.15110v1 Announce Type: cross 
+Abstract: Reward models are central to both reinforcement learning (RL) with language models and inference-time verification. However, existing reward models often lack temporal consistency, leading to ineffective policy updates and unstable RL training. We i...
 
 ---
 
-### 16. [Slim-SC: Thought Pruning for Efficient Scaling with Self-Consistency](https://arxiv.org/abs/2509.13990)
+### 25. [Fast Multipole Attention: A Scalable Multilevel Attention Mechanism for Text and Images](https://arxiv.org/abs/2310.11960)
 
-**Authors**: Colin Hong, Xu Guo, Anand Chaanan Singh, Esha Choukse, Dmitrii Ustiugov  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
+**Authors**: Yanming Kang, Giang Tran, Hans De Sterck  
+**Category**: cs.CL  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13990v1 Announce Type: cross 
-Abstract: Recently, Test-Time Scaling (TTS) has gained increasing attention for improving LLM reasoning performance at test time without retraining the model. A notable TTS technique is Self-Consistency (SC), which generates multiple reasoning chains in paral...
+arXiv:2310.11960v4 Announce Type: replace 
+Abstract: While Transformer networks benefit from a global receptive field, their quadratic cost relative to sequence length restricts their application to long sequences and high-resolution inputs. We introduce Fast Multipole Attention (FMA), a divide-and-...
 
 ---
 
-### 17. [Evolution Meets Diffusion: Efficient Neural Architecture Generation](https://arxiv.org/abs/2504.17827)
+### 26. [Scaling Hybrid Quantum-HPC Applications with the Quantum Framework](https://arxiv.org/abs/2509.14470)
 
-**Authors**: Bingye Zhou, Caiyang Yu  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 6.5
-
-arXiv:2504.17827v4 Announce Type: replace-cross 
-Abstract: Neural Architecture Search (NAS) has gained widespread attention for its transformative potential in deep learning model design. However, the vast and complex search space of NAS leads to significant computational and time costs. Neural Arch...
-
----
-
-### 18. [Federated Learning for Deforestation Detection: A Distributed Approach with Satellite Imagery](https://arxiv.org/abs/2509.13631)
-
-**Authors**: Yuvraj Dutta, Aaditya Sikder, Basabdatta Palit  
+**Authors**: Srikar Chundury, Amir Shehata, Seongmin Kim, Muralikrishnan Gopalakrishnan Meena, Chao Lu, Kalyana Gottiparthi, Eduardo Antonio Coello Perez, Frank Mueller, In-Saeng Suh  
 **Category**: cs.DC  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13631v1 Announce Type: cross 
-Abstract: Accurate identification of deforestation from satellite images is essential in order to understand the geographical situation of an area. This paper introduces a new distributed approach to identify as well as locate deforestation across different c...
+arXiv:2509.14470v1 Announce Type: cross 
+Abstract: Hybrid quantum-high performance computing (Q-HPC) workflows are emerging as a key strategy for running quantum applications at scale in current noisy intermediate-scale quantum (NISQ) devices. These workflows must operate seamlessly across diverse s...
 
 ---
 
-### 19. [An Analysis of Optimizer Choice on Energy Efficiency and Performance in Neural Network Training](https://arxiv.org/abs/2509.13516)
+### 27. [HD3C: Efficient Medical Data Classification for Embedded Devices](https://arxiv.org/abs/2509.14617)
 
-**Authors**: Tom Almog  
+**Authors**: Jianglan Wei, Zhenyu Zhang, Pengcheng Wang, Mingjie Zeng, Zhigang Zeng  
 **Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13516v1 Announce Type: new 
-Abstract: As machine learning models grow increasingly complex and computationally demanding, understanding the environmental impact of training decisions becomes critical for sustainable AI development. This paper presents a comprehensive empirical study inves...
+arXiv:2509.14617v1 Announce Type: new 
+Abstract: Energy-efficient medical data classification is essential for modern disease screening, particularly in home and field healthcare where embedded devices are prevalent. While deep learning models achieve state-of-the-art accuracy, their substantial ene...
 
 ---
 
-### 20. [Learning Nonlinear Responses in PET Bottle Buckling with a Hybrid DeepONet-Transolver Framework](https://arxiv.org/abs/2509.13520)
+### 28. [Improving Internet Traffic Matrix Prediction via Time Series Clustering](https://arxiv.org/abs/2509.15072)
 
-**Authors**: Varun Kumar, Jing Bi, Cyril Ngo Ngoc, Victor Oancea, George Em Karniadakis  
+**Authors**: Martha Cash, Alexander Wyglinski  
 **Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13520v1 Announce Type: new 
-Abstract: Neural surrogates and operator networks for solving partial differential equation (PDE) problems have attracted significant research interest in recent years. However, most existing approaches are limited in their ability to generalize solutions acros...
+arXiv:2509.15072v1 Announce Type: new 
+Abstract: We present a novel framework that leverages time series clustering to improve internet traffic matrix (TM) prediction using deep learning (DL) models. Traffic flows within a TM often exhibit diverse temporal behaviors, which can hinder prediction accu...
 
 ---
 
-### 21. [An End-to-End Differentiable, Graph Neural Network-Embedded Pore Network Model for Permeability Prediction](https://arxiv.org/abs/2509.13841)
-
-**Authors**: Qingqi Zhao, Heng Xiao  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
-**Score**: 6.5
-
-arXiv:2509.13841v1 Announce Type: new 
-Abstract: Accurate prediction of permeability in porous media is essential for modeling subsurface flow. While pure data-driven models offer computational efficiency, they often lack generalization across scales and do not incorporate explicit physical constrai...
-
----
-
-### 22. [Exploring the Relationship between Brain Hemisphere States and Frequency Bands through Deep Learning Optimization Techniques](https://arxiv.org/abs/2509.14078)
-
-**Authors**: Robiul Islam, Dmitry I. Ignatov, Karl Kaberg, Roman Nabatchikov  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
-**Score**: 6.5
-
-arXiv:2509.14078v1 Announce Type: new 
-Abstract: This study investigates classifier performance across EEG frequency bands using various optimizers and evaluates efficient class prediction for the left and right hemispheres. Three neural network architectures - a deep dense network, a shallow three-...
-
----
-
-### 23. [DRDT3: Diffusion-Refined Decision Test-Time Training Model](https://arxiv.org/abs/2501.06718)
-
-**Authors**: Xingshuai Huang, Di Wu, Benoit Boulet  
-**Category**: cs.LG  
-**Published**: 2025-09-18  
-**Score**: 6.5
-
-arXiv:2501.06718v2 Announce Type: replace 
-Abstract: Decision Transformer (DT), a trajectory modelling method, has shown competitive performance compared to traditional offline reinforcement learning (RL) approaches on various classic control tasks. However, it struggles to learn optimal policies fr...
-
----
-
-### 24. [HAM: Hierarchical Adapter Merging for Scalable Continual Learning](https://arxiv.org/abs/2509.13211)
+### 29. [HAM: Hierarchical Adapter Merging for Scalable Continual Learning](https://arxiv.org/abs/2509.13211)
 
 **Authors**: Eric Nuertey Coleman, Luigi Quarantiello, Samrat Mukherjee, Julio Hurtado, Vincenzo Lomonaco  
 **Category**: cs.LG  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 6.5
 
-arXiv:2509.13211v2 Announce Type: replace 
+arXiv:2509.13211v3 Announce Type: replace 
 Abstract: Continual learning is an essential capability of human cognition, yet it poses significant challenges for current deep learning models. The primary issue is that new knowledge can interfere with previously learned information, causing the model to...
 
 ---
 
-### 25. [THOR: Tool-Integrated Hierarchical Optimization via RL for Mathematical Reasoning](https://arxiv.org/abs/2509.13761)
+### 30. [SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models](https://arxiv.org/abs/2509.14270)
 
-**Authors**: Qikai Chang, Zhenrong Zhang, Pengfei Hu, Jiefeng Ma, Yicheng Pan, Jianshu Zhang, Jun Du, Quan Liu, Jianqing Gao  
+**Authors**: Karan Dua, Puneet Mittal, Ranjeet Gupta, Hitesh Laxmichand Patel  
 **Category**: cs.AI  
-**Published**: 2025-09-18  
+**Published**: 2025-09-19  
 **Score**: 6.0
 
-arXiv:2509.13761v1 Announce Type: new 
-Abstract: Large Language Models (LLMs) have made remarkable progress in mathematical reasoning, but still continue to struggle with high-precision tasks like numerical computation and formal symbolic manipulation. Integrating external tools has emerged as a pro...
-
----
-
-### 26. [Explainable AI-Enhanced Supervisory Control for High-Precision Spacecraft Formation](https://arxiv.org/abs/2509.13331)
-
-**Authors**: Reza Pirayeshshirazinezhad  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 6.0
-
-arXiv:2509.13331v1 Announce Type: cross 
-Abstract: We use artificial intelligence (AI) and supervisory adaptive control systems to plan and optimize the mission of precise spacecraft formation. Machine learning and robust control enhance the efficiency of spacecraft precision formation of the Virtua...
-
----
-
-### 27. [A reduced-order derivative-informed neural operator for subsurface fluid-flow](https://arxiv.org/abs/2509.13620)
-
-**Authors**: Jeongjin (Jayjay),  Park, Grant Bruer, Huseyin Tuna Erdinc, Abhinav Prakash Gahlot, Felix J. Herrmann  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 6.0
-
-arXiv:2509.13620v1 Announce Type: cross 
-Abstract: Neural operators have emerged as cost-effective surrogates for expensive fluid-flow simulators, particularly in computationally intensive tasks such as permeability inversion from time-lapse seismic data, and uncertainty quantification. In these app...
-
----
-
-### 28. [Where Do Tokens Go? Understanding Pruning Behaviors in STEP at High Resolutions](https://arxiv.org/abs/2509.14165)
-
-**Authors**: Michal Szczepanski, Martyna Poreba, Karim Haroun  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 6.0
-
-arXiv:2509.14165v1 Announce Type: cross 
-Abstract: Vision Transformers (ViTs) achieve state-of-the-art performance in semantic segmentation but are hindered by high computational and memory costs. To address this, we propose STEP (SuperToken and Early-Pruning), a hybrid token-reduction framework tha...
-
----
-
-### 29. [Direct Video-Based Spatiotemporal Deep Learning for Cattle Lameness Detection](https://arxiv.org/abs/2504.16404)
-
-**Authors**: Md Fahimuzzman Sohan, Raid Alzubi, Hadeel Alzoubi, Eid Albalawi, A. H. Abdul Hafez  
-**Category**: cs.AI  
-**Published**: 2025-09-18  
-**Score**: 6.0
-
-arXiv:2504.16404v3 Announce Type: replace-cross 
-Abstract: Cattle lameness is a prevalent health problem in livestock farming, often resulting from hoof injuries or infections, and severely impacts animal welfare and productivity. Early and accurate detection is critical for minimizing economic loss...
-
----
-
-### 30. [DSPC: Dual-Stage Progressive Compression Framework for Efficient Long-Context Reasoning](https://arxiv.org/abs/2509.13723)
-
-**Authors**: Yaxin Gao, Yao Lu, Zongfei Zhang, Jiaqi Nie, Shanqing Yu, Qi Xuan  
-**Category**: cs.CL  
-**Published**: 2025-09-18  
-**Score**: 6.0
-
-arXiv:2509.13723v1 Announce Type: new 
-Abstract: Large language models (LLMs) have achieved remarkable success in many natural language processing (NLP) tasks. To achieve more accurate output, the prompts used to drive LLMs have become increasingly longer, which incurs higher computational costs. To...
+arXiv:2509.14270v1 Announce Type: cross 
+Abstract: High-quality Text-to-Speech (TTS) model training requires extensive and diverse text and speech data. It is challenging to procure such data from real sources due to issues of domain specificity, licensing, and scalability. Large language models (LL...
 
 ---
 
