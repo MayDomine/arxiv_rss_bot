@@ -9,305 +9,305 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-10-14 12:54:45 UTC
+- **Last Updated**: 2025-10-15 12:54:33 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [dInfer: An Efficient Inference Framework for Diffusion Language Models](https://arxiv.org/abs/2510.08666)
+### 1. [LLMEasyQuant: Scalable Quantization for Parallel and Distributed LLM Inference](https://arxiv.org/abs/2406.19657)
 
-**Authors**: Yuxin Ma, Lun Du, Lanning Wei, Kun Chen, Qian Xu, Kangyu Wang, Guofeng Feng, Guoshan Lu, Lin Liu, Xiaojing Qi, Xinyuan Zhang, Zhen Tao, Haibo Feng, Ziyun Jiang, Ying Xu, Zenan Huang, Yihong Zhuang, Haokai Xu, Jiaqi Hu, Zhenzhong Lan, Junbo Zhao, Jianguo Li, Da Zheng  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
-**Score**: 12.5
+**Authors**: Dong Liu, Yanxuan Yu  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
+**Score**: 14.0
 
-arXiv:2510.08666v2 Announce Type: replace-cross 
-Abstract: Diffusion-based large language models (dLLMs) have emerged as a promising alternative to autoregressive (AR) LLMs, leveraging denoising-based generation to enable inherent parallelism. Even more and more open-sourced dLLM models emerge, yet ...
+arXiv:2406.19657v5 Announce Type: replace 
+Abstract: As large language models (LLMs) grow in size and deployment scale, quantization has become an essential technique for reducing memory footprint and improving inference efficiency. However, existing quantization toolkits often lack transparency, fl...
 
 ---
 
-### 2. [Automated Evolutionary Optimization for Resource-Efficient Neural Network Training](https://arxiv.org/abs/2510.09566)
+### 2. [ACCO: Accumulate While You Communicate for Communication-Overlapped Sharded LLM Training](https://arxiv.org/abs/2406.02613)
 
-**Authors**: Ilia Revin, Leon Strelkov, Vadim A. Potemkin, Ivan Kireev, Andrey Savchenko  
-**Category**: cs.LG  
-**Published**: 2025-10-13  
+**Authors**: Adel Nabli (MLIA, Mila), Louis Fournier (MLIA), Pierre Erbacher (MLIA), Louis Serrano (MLIA), Eugene Belilovsky (Mila), Edouard Oyallon (MLIA)  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 13.0
+
+arXiv:2406.02613v3 Announce Type: replace-cross 
+Abstract: Training LLMs relies on distributed implementations using multiple GPUs to compute gradients in parallel with sharded optimizers. However, synchronizing gradients in data parallel setups introduces communication overhead that grows with the ...
+
+---
+
+### 3. [Laminar: A Scalable Asynchronous RL Post-Training Framework](https://arxiv.org/abs/2510.12633)
+
+**Authors**: Guangming Sheng, Yuxuan Tong, Borui Wan, Wang Zhang, Chaobo Jia, Xibin Wu, Yuqi Wu, Xiang Li, Chi Zhang, Yanghua Peng, Haibin Lin, Xin Liu, Chuan Wu  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
 **Score**: 12.0
 
-arXiv:2510.09566v1 Announce Type: new 
-Abstract: There are many critical challenges in optimizing neural network models, including distributed computing, compression techniques, and efficient training, regardless of their application to specific tasks. Solving such problems is crucial because the ne...
+arXiv:2510.12633v1 Announce Type: cross 
+Abstract: Reinforcement learning (RL) post-training for Large Language Models (LLMs) is now scaling to large clusters and running for extended durations to enhance model reasoning performance. However, the scalability of existing RL frameworks is limited, as ...
 
 ---
 
-### 3. [Efficient Onboard Vision-Language Inference in UAV-Enabled Low-Altitude Economy Networks via LLM-Enhanced Optimization](https://arxiv.org/abs/2510.10028)
+### 4. [Efficient Onboard Vision-Language Inference in UAV-Enabled Low-Altitude Economy Networks via LLM-Enhanced Optimization](https://arxiv.org/abs/2510.10028)
 
 **Authors**: Yang Li, Ruichen Zhang, Yinqiu Liu, Guangyuan Liu, Dusit Niyato, Abbas Jamalipour, Xianbin Wang, Dong In Kim  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
-**Score**: 11.5
-
-arXiv:2510.10028v1 Announce Type: cross 
-Abstract: The rapid advancement of Low-Altitude Economy Networks (LAENets) has enabled a variety of applications, including aerial surveillance, environmental sensing, and semantic data collection. To support these scenarios, unmanned aerial vehicles (UAVs) e...
-
----
-
-### 4. [Slim Scheduler: A Runtime-Aware RL and Scheduler System for Efficient CNN Inference](https://arxiv.org/abs/2510.09018)
-
-**Authors**: Ian Harshbarger, Calvin Chidambaram  
 **Category**: cs.LG  
-**Published**: 2025-10-13  
+**Published**: 2025-10-15  
 **Score**: 11.5
 
-arXiv:2510.09018v1 Announce Type: new 
-Abstract: Most neural network scheduling research focuses on optimizing static, end-to-end models of fixed width, overlooking dynamic approaches that adapt to heterogeneous hardware and fluctuating runtime conditions. We present Slim Scheduler, a hybrid schedul...
+arXiv:2510.10028v1 Announce Type: new 
+Abstract: The rapid advancement of Low-Altitude Economy Networks (LAENets) has enabled a variety of applications, including aerial surveillance, environmental sensing, and semantic data collection. To support these scenarios, unmanned aerial vehicles (UAVs) equ...
 
 ---
 
 ### 5. [AnyBCQ: Hardware Efficient Flexible Binary-Coded Quantization for Multi-Precision LLMs](https://arxiv.org/abs/2510.10467)
 
 **Authors**: Gunho Park, Jeongin Bae, Beomseok Kwon, Byeongwook Kim, Se Jung Kwon, Dongsoo Lee  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 11.0
 
-arXiv:2510.10467v1 Announce Type: cross 
-Abstract: The deployment of large language models (LLMs) is increasingly constrained by memory and latency bottlenecks, motivating the need for quantization techniques that flexibly balance accuracy and efficiency. Recent work has introduced multi-precision m...
+arXiv:2510.10467v1 Announce Type: new 
+Abstract: The deployment of large language models (LLMs) is increasingly constrained by memory and latency bottlenecks, motivating the need for quantization techniques that flexibly balance accuracy and efficiency. Recent work has introduced multi-precision mod...
 
 ---
 
 ### 6. [QeRL: Beyond Efficiency -- Quantization-enhanced Reinforcement Learning for LLMs](https://arxiv.org/abs/2510.11696)
 
 **Authors**: Wei Huang, Yi Ge, Shuai Yang, Yicheng Xiao, Huizi Mao, Yujun Lin, Hanrong Ye, Sifei Liu, Ka Chun Cheung, Hongxu Yin, Yao Lu, Xiaojuan Qi, Song Han, Yukang Chen  
-**Category**: cs.CL  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 11.0
 
-arXiv:2510.11696v1 Announce Type: cross 
-Abstract: We propose QeRL, a Quantization-enhanced Reinforcement Learning framework for large language models (LLMs). While RL is essential for LLMs' reasoning capabilities, it is resource-intensive, requiring substantial GPU memory and long rollout durations...
+arXiv:2510.11696v1 Announce Type: new 
+Abstract: We propose QeRL, a Quantization-enhanced Reinforcement Learning framework for large language models (LLMs). While RL is essential for LLMs' reasoning capabilities, it is resource-intensive, requiring substantial GPU memory and long rollout durations. ...
 
 ---
 
-### 7. [SP-MoE: Speculative Decoding and Prefetching for Accelerating MoE-based Model Inference](https://arxiv.org/abs/2510.10302)
-
-**Authors**: Liangkun Chen, Zijian Wen, Tian Wu, Xiaoxi Zhang, Chuan Wu  
-**Category**: cs.DC  
-**Published**: 2025-10-14  
-**Score**: 11.0
-
-arXiv:2510.10302v1 Announce Type: new 
-Abstract: The Mixture-of-Experts (MoE) architecture has been widely adopted in large language models (LLMs) to reduce computation cost through model sparsity. Employing speculative decoding (SD) can further accelerate MoE inference by drafting multiple tokens p...
-
----
-
-### 8. [FSA: An Alternative Efficient Implementation of Native Sparse Attention Kernel](https://arxiv.org/abs/2508.18224)
+### 7. [FSA: An Alternative Efficient Implementation of Native Sparse Attention Kernel](https://arxiv.org/abs/2508.18224)
 
 **Authors**: Ran Yan, Youhe Jiang, Zhuoming Chen, Haohui Mai, Beidi Chen, Binhang Yuan  
-**Category**: cs.DC  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 11.0
 
-arXiv:2508.18224v2 Announce Type: replace 
-Abstract: Recent advance in sparse attention mechanisms has demonstrated strong potential for reducing the computational cost of long-context training and inference in large language models (LLMs). Native Sparse Attention (NSA), one state-of-the-art approac...
+arXiv:2508.18224v2 Announce Type: replace-cross 
+Abstract: Recent advance in sparse attention mechanisms has demonstrated strong potential for reducing the computational cost of long-context training and inference in large language models (LLMs). Native Sparse Attention (NSA), one state-of-the-art a...
 
 ---
 
-### 9. [Layout-Aware Parsing Meets Efficient LLMs: A Unified, Scalable Framework for Resume Information Extraction and Evaluation](https://arxiv.org/abs/2510.09722)
+### 8. [LMCache: An Efficient KV Cache Layer for Enterprise-Scale LLM Inference](https://arxiv.org/abs/2510.09665)
 
-**Authors**: Fanwei Zhu, Jinke Yu, Zulong Chen, Ying Zhou, Junhao Ji, Zhibo Yang, Yuxue Zhang, Haoyuan Hu, Zhenghao Liu  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
-**Score**: 10.0
+**Authors**: Yihua Cheng, Yuhan Liu, Jiayi Yao, Yuwei An, Xiaokun Chen, Shaoting Feng, Yuyang Huang, Samuel Shen, Kuntai Du, Junchen Jiang  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
+**Score**: 10.5
 
-arXiv:2510.09722v1 Announce Type: cross 
-Abstract: Automated resume information extraction is critical for scaling talent acquisition, yet its real-world deployment faces three major challenges: the extreme heterogeneity of resume layouts and content, the high cost and latency of large language mode...
+arXiv:2510.09665v1 Announce Type: new 
+Abstract: Today's LLM inference systems treat individual engines and queries independently for simplicity, but this causes significant resource inefficiencies. While there are proposals to avoid redundant computation by reusing KV caches across queries and to i...
 
 ---
 
-### 10. [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](https://arxiv.org/abs/2510.10207)
+### 9. [Adaptive Dual Reasoner: Large Reasoning Models Can Think Efficiently by Hybrid Reasoning](https://arxiv.org/abs/2510.10207)
 
 **Authors**: Yujian Zhang, Keyu Chen, Zhifeng Shen, Ruizhi Qiao, Xing Sun  
 **Category**: cs.AI  
-**Published**: 2025-10-14  
+**Published**: 2025-10-15  
 **Score**: 9.5
 
-arXiv:2510.10207v1 Announce Type: new 
-Abstract: Although Long Reasoning Models (LRMs) have achieved superior performance on various reasoning scenarios, they often suffer from increased computational costs and inference latency caused by overthinking. To address these limitations, we propose Adapti...
+arXiv:2510.10207v2 Announce Type: replace 
+Abstract: Although Long Reasoning Models (LRMs) have achieved superior performance on various reasoning scenarios, they often suffer from increased computational costs and inference latency caused by overthinking. To address these limitations, we propose Ad...
 
 ---
 
-### 11. [Conformal Sparsification for Bandwidth-Efficient Edge-Cloud Speculative Decoding](https://arxiv.org/abs/2510.09942)
+### 10. [Conformal Sparsification for Bandwidth-Efficient Edge-Cloud Speculative Decoding](https://arxiv.org/abs/2510.09942)
 
 **Authors**: Payel Bhattacharjee, Fengwei Tian, Meiyu Zhong, Guangyi Zhang, Osvaldo Simeone, Ravi Tandon  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 9.5
 
-arXiv:2510.09942v1 Announce Type: cross 
-Abstract: Edge-cloud speculative decoding (SD) accelerates inference by having a cloud-based large language model (LLM) that verifies draft tokens generated by a resource-constrained small language model (SLM) at the edge. A central bottleneck is the limited ...
+arXiv:2510.09942v1 Announce Type: new 
+Abstract: Edge-cloud speculative decoding (SD) accelerates inference by having a cloud-based large language model (LLM) that verifies draft tokens generated by a resource-constrained small language model (SLM) at the edge. A central bottleneck is the limited ba...
 
 ---
 
-### 12. [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](https://arxiv.org/abs/2503.07680)
+### 11. [Efficient In-Memory Acceleration of Sparse Block Diagonal LLMs](https://arxiv.org/abs/2510.11192)
+
+**Authors**: Jo\~ao Paulo Cardoso de Lima, Marc Dietrich, Jeronimo Castrillon, Asif Ali Khan  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
+**Score**: 9.5
+
+arXiv:2510.11192v1 Announce Type: cross 
+Abstract: Structured sparsity enables deploying large language models (LLMs) on resource-constrained systems. Approaches like dense-to-sparse fine-tuning are particularly compelling, achieving remarkable structured sparsity by reducing the model size by over ...
+
+---
+
+### 12. [Asymmetric Proximal Policy Optimization: mini-critics boost LLM reasoning](https://arxiv.org/abs/2510.01656)
+
+**Authors**: Jiashun Liu, Johan Obando-Ceron, Han Lu, Yancheng He, Weixun Wang, Wenbo Su, Bo Zheng, Pablo Samuel Castro, Aaron Courville, Ling Pan  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 9.0
+
+arXiv:2510.01656v2 Announce Type: replace-cross 
+Abstract: Most recent RL for LLMs (RL4LLM) methods avoid explicit critics, replacing them with average advantage baselines. This shift is largely pragmatic: conventional value functions are computationally expensive to train at LLM scale and often fai...
+
+---
+
+### 13. [Task-Aware Reduction for Scalable LLM-Database Systems](https://arxiv.org/abs/2510.11813)
+
+**Authors**: Marcus Emmanuel Barnes, Taher A. Ghaleb, Safwat Hassan  
+**Category**: cs.CL  
+**Published**: 2025-10-15  
+**Score**: 9.0
+
+arXiv:2510.11813v1 Announce Type: cross 
+Abstract: Large Language Models (LLMs) are increasingly applied to data-intensive workflows, from database querying to developer observability. Yet the effectiveness of these systems is constrained by the volume, verbosity, and noise of real-world text-rich d...
+
+---
+
+### 14. [Hierarchical Balance Packing: Towards Efficient Supervised Fine-tuning for Long-Context LLM](https://arxiv.org/abs/2503.07680)
 
 **Authors**: Yongqiang Yao, Jingru Tan, Kaihuan Liang, Feizhao Zhang, Jiahao Hu, Shuo Wu, Yazhe Niu, Ruihao Gong, Dahua Lin, Ningyi Xu  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 9.0
 
-arXiv:2503.07680v3 Announce Type: replace-cross 
-Abstract: Training Long-Context Large Language Models (LLMs) is challenging, as hybrid training with long-context and short-context data often leads to workload imbalances. Existing works mainly use data packing to alleviate this issue, but fail to co...
+arXiv:2503.07680v3 Announce Type: replace 
+Abstract: Training Long-Context Large Language Models (LLMs) is challenging, as hybrid training with long-context and short-context data often leads to workload imbalances. Existing works mainly use data packing to alleviate this issue, but fail to consider...
 
 ---
 
-### 13. [Preserving LLM Capabilities through Calibration Data Curation: From Analysis to Optimization](https://arxiv.org/abs/2510.10618)
-
-**Authors**: Bowei He, Lihao Yin, Huiling Zhen, Shuqi Liu, Han Wu, Xiaokun Zhang, Mingxuan Yuan, Chen Ma  
-**Category**: cs.CL  
-**Published**: 2025-10-14  
-**Score**: 9.0
-
-arXiv:2510.10618v1 Announce Type: new 
-Abstract: Post-training compression has been a widely employed approach to scale down large language model (LLM) and facilitate efficient inference. In various proposed compression methods, including pruning and quantization, calibration data plays a vital role...
-
----
-
-### 14. [TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](https://arxiv.org/abs/2505.15692)
+### 15. [TemplateRL: Structured Template-Guided Reinforcement Learning for LLM Reasoning](https://arxiv.org/abs/2505.15692)
 
 **Authors**: Jinyang Wu, Chonghua Liao, Mingkuan Feng, Shuai Zhang, Zhengqi Wen, Haoran Luo, Ling Yang, Huazhe Xu, Jianhua Tao  
-**Category**: cs.CL  
-**Published**: 2025-10-14  
-**Score**: 9.0
-
-arXiv:2505.15692v3 Announce Type: replace 
-Abstract: Reinforcement learning (RL) has emerged as an effective paradigm for enhancing model reasoning. However, existing RL methods like GRPO often rely on unstructured self-sampling to fit scalar rewards, often producing inefficient rollouts that fail t...
-
----
-
-### 15. [Partition Generative Modeling: Masked Modeling Without Masks](https://arxiv.org/abs/2505.18883)
-
-**Authors**: Justin Deschenaux, Lan Tran, Caglar Gulcehre  
 **Category**: cs.LG  
-**Published**: 2025-10-13  
+**Published**: 2025-10-15  
 **Score**: 9.0
 
-arXiv:2505.18883v2 Announce Type: replace 
-Abstract: Masked generative models (MGMs) are widely used to capture complex data and enable faster generation than autoregressive models (AR) through parallel decoding. However, MGMs typically operate on fixed-length inputs, which can be inefficient: early...
+arXiv:2505.15692v3 Announce Type: replace-cross 
+Abstract: Reinforcement learning (RL) has emerged as an effective paradigm for enhancing model reasoning. However, existing RL methods like GRPO often rely on unstructured self-sampling to fit scalar rewards, often producing inefficient rollouts that ...
 
 ---
 
-### 16. [Communication-Efficient Distributed Training for Collaborative Flat Optima Recovery in Deep Learning](https://arxiv.org/abs/2507.20424)
+### 16. [MoEs Are Stronger than You Think: Hyper-Parallel Inference Scaling with RoE](https://arxiv.org/abs/2509.17238)
 
-**Authors**: Tolga Dimlioglu, Anna Choromanska  
-**Category**: cs.LG  
-**Published**: 2025-10-13  
-**Score**: 9.0
-
-arXiv:2507.20424v2 Announce Type: replace 
-Abstract: We study centralized distributed data parallel training of deep neural networks (DNNs), aiming to improve the trade-off between communication efficiency and model performance of the local gradient methods. To this end, we revisit the flat-minima h...
-
----
-
-### 17. [LLM-Empowered Agentic MAC Protocols: A Dynamic Stackelberg Game Approach](https://arxiv.org/abs/2510.10895)
-
-**Authors**: Renxuan Tan, Rongpeng Li, Fei Wang, Chenghui Peng, Shaoyun Wu, Zhifeng Zhao, Honggang Zhang  
+**Authors**: Soheil Zibakhsh, Mohammad Samragh, Kumari Nishu, Lauren Hannah, Arnav Kundu, Minsik Cho  
 **Category**: cs.AI  
-**Published**: 2025-10-14  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2510.10895v1 Announce Type: new 
-Abstract: Medium Access Control (MAC) protocols, essential for wireless networks, are typically manually configured. While deep reinforcement learning (DRL)-based protocols enhance task-specified network performance, they suffer from poor generalizability and r...
+arXiv:2509.17238v2 Announce Type: replace 
+Abstract: The generation quality of large language models (LLMs) is often improved by utilizing inference-time sequence-level scaling methods (e.g., Chain-of-Thought). We introduce hyper-parallel scaling, a complementary framework that improves prediction q...
 
 ---
 
-### 18. [ParaCook: On Time-Efficient Planning for Multi-Agent Systems](https://arxiv.org/abs/2510.11608)
+### 17. [Diffusion Language Models Know the Answer Before Decoding](https://arxiv.org/abs/2508.19982)
 
-**Authors**: Shiqi Zhang, Xinbei Ma, Yunqing Xu, Zouying Cao, Pengrui Lu, Haobo Yuan, Tiancheng Shen, Zhuosheng Zhang, Hai Zhao, Ming-Hsuan Yang  
+**Authors**: Pengxiang Li, Yefan Zhou, Dilxat Muhtar, Lu Yin, Shilin Yan, Li Shen, Yi Liang, Soroush Vosoughi, Shiwei Liu  
 **Category**: cs.AI  
-**Published**: 2025-10-14  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2510.11608v1 Announce Type: new 
-Abstract: Large Language Models (LLMs) exhibit strong reasoning abilities for planning long-horizon, real-world tasks, yet existing agent benchmarks focus on task completion while neglecting time efficiency in parallel and asynchronous operations. To address th...
+arXiv:2508.19982v3 Announce Type: replace-cross 
+Abstract: Diffusion language models (DLMs) have recently emerged as an alternative to autoregressive approaches, offering parallel sequence generation and flexible token orders. However, their inference remains slower than that of autoregressive model...
+
+---
+
+### 18. [AndesVL Technical Report: An Efficient Mobile-side Multimodal Large Language Model](https://arxiv.org/abs/2510.11496)
+
+**Authors**: Zhiwei Jin, Xiaohui Song, Nan Wang, Yafei Liu, Chao Li, Xin Li, Ruichen Wang, Zhihao Li, Qi Qi, Long Cheng, Dongze Hao, Quanlong Zheng, Yanhao Zhang, Haobo Ji, Jian Ma, Zhitong Zheng, Zhenyi Lin, Haolin Deng, Xin Zou, Xiaojie Yin, Ruilin Wang, Liankai Cai, Haijing Liu, Yuqing Qiu, Ke Chen, Zixian Li, Chi Xie, Huafei Li, Chenxing Li, Chuangchuang Wang, Kai Tang, Zhiguang Zhu, Kai Tang, Wenmei Gao, Rui Wang, Jun Wu, Chao Liu, Qin Xie, Chen Chen, Haonan Lu  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 8.5
+
+arXiv:2510.11496v2 Announce Type: replace-cross 
+Abstract: In recent years, while cloud-based MLLMs such as QwenVL, InternVL, GPT-4o, Gemini, and Claude Sonnet have demonstrated outstanding performance with enormous model sizes reaching hundreds of billions of parameters, they significantly surpass ...
 
 ---
 
 ### 19. [Understanding Sampler Stochasticity in Training Diffusion Models for RLHF](https://arxiv.org/abs/2510.10767)
 
 **Authors**: Jiayuan Sheng, Hanyang Zhao, Haoxian Chen, David D. Yao, Wenpin Tang  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2510.10767v1 Announce Type: cross 
-Abstract: Reinforcement Learning from Human Feedback (RLHF) is increasingly used to fine-tune diffusion models, but a key challenge arises from the mismatch between stochastic samplers used during training and deterministic samplers used during inference. In ...
+arXiv:2510.10767v1 Announce Type: new 
+Abstract: Reinforcement Learning from Human Feedback (RLHF) is increasingly used to fine-tune diffusion models, but a key challenge arises from the mismatch between stochastic samplers used during training and deterministic samplers used during inference. In pr...
 
 ---
 
 ### 20. [LouisKV: Efficient KV Cache Retrieval for Long Input-Output Sequences](https://arxiv.org/abs/2510.11292)
 
 **Authors**: Wenbo Wu, Qingyi Si, Xiurui Pan, Ye Wang, Jie Zhang  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2510.11292v1 Announce Type: cross 
-Abstract: While Key-Value (KV) cache succeeds in reducing redundant computations in auto-regressive models, it introduces significant memory overhead, limiting its practical deployment in long-sequence scenarios. Existing KV retrieval methods mitigate this by...
+arXiv:2510.11292v1 Announce Type: new 
+Abstract: While Key-Value (KV) cache succeeds in reducing redundant computations in auto-regressive models, it introduces significant memory overhead, limiting its practical deployment in long-sequence scenarios. Existing KV retrieval methods mitigate this by d...
 
 ---
 
-### 21. [ChipGPT: How far are we from natural language hardware design](https://arxiv.org/abs/2305.14019)
-
-**Authors**: Kaiyan Chang, Ying Wang, Haimeng Ren, Mengdi Wang, Shengwen Liang, Yinhe Han, Huawei Li, Xiaowei Li  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
-**Score**: 8.5
-
-arXiv:2305.14019v4 Announce Type: replace 
-Abstract: As large language models (LLMs) like ChatGPT exhibited unprecedented machine intelligence, it also shows great performance in assisting hardware engineers to realize higher-efficiency logic design via natural language interaction. To estimate the ...
-
----
-
-### 22. [Can Prompt Difficulty be Online Predicted for Accelerating RL Finetuning of Reasoning Models?](https://arxiv.org/abs/2507.04632)
-
-**Authors**: Yun Qu, Qi Wang, Yixiu Mao, Vincent Tao Hu, Bj\"orn Ommer, Xiangyang Ji  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
-**Score**: 8.5
-
-arXiv:2507.04632v4 Announce Type: replace 
-Abstract: Recent advances have witnessed the effectiveness of reinforcement learning (RL) finetuning in enhancing the reasoning capabilities of large language models (LLMs). The optimization process often requires numerous iterations to achieve satisfactory...
-
----
-
-### 23. [Neuralink: Fast LLM Inference on Smartphones with Neuron Co-Activation Linking](https://arxiv.org/abs/2410.19274)
+### 21. [Neuralink: Fast LLM Inference on Smartphones with Neuron Co-Activation Linking](https://arxiv.org/abs/2410.19274)
 
 **Authors**: Tuowei Wang, Ruwen Fan, Minxing Huang, Zixu Hao, Kun Li, Ting Cao, Youyou Lu, Yaoxue Zhang, Ju Ren  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2410.19274v3 Announce Type: replace-cross 
-Abstract: Large Language Models (LLMs) have achieved remarkable success across various domains, yet deploying them on mobile devices remains an arduous challenge due to their extensive computational and memory demands. While lightweight LLMs have been...
+arXiv:2410.19274v3 Announce Type: replace 
+Abstract: Large Language Models (LLMs) have achieved remarkable success across various domains, yet deploying them on mobile devices remains an arduous challenge due to their extensive computational and memory demands. While lightweight LLMs have been devel...
 
 ---
 
-### 24. [Communication-Efficient Diffusion Denoising Parallelization via Reuse-then-Predict Mechanism](https://arxiv.org/abs/2505.14741)
+### 22. [Communication-Efficient Diffusion Denoising Parallelization via Reuse-then-Predict Mechanism](https://arxiv.org/abs/2505.14741)
 
 **Authors**: Kunyun Wang, Bohan Li, Kai Yu, Minyi Guo, Jieru Zhao  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
-arXiv:2505.14741v2 Announce Type: replace-cross 
-Abstract: Diffusion models have emerged as a powerful class of generative models across various modalities, including image, video, and audio synthesis. However, their deployment is often limited by significant inference latency, primarily due to the ...
+arXiv:2505.14741v2 Announce Type: replace 
+Abstract: Diffusion models have emerged as a powerful class of generative models across various modalities, including image, video, and audio synthesis. However, their deployment is often limited by significant inference latency, primarily due to the inhere...
+
+---
+
+### 23. [Saten: Sparse Augmented Tensor Networks for Post-Training Compression of Large Language Models](https://arxiv.org/abs/2505.14871)
+
+**Authors**: Ryan Solgi, Kai Zhen, Rupak Vignesh Swaminathan, Nathan Susanj, Athanasios Mouchtaris, Siegfried Kunzmann, Zheng Zhang  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
+**Score**: 8.5
+
+arXiv:2505.14871v2 Announce Type: replace-cross 
+Abstract: The efficient implementation of large language models (LLMs) is crucial for deployment on resource-constrained devices. Low-rank tensor compression techniques, such as tensor-train (TT) networks, have been widely studied for over-parameteriz...
+
+---
+
+### 24. [Can Prompt Difficulty be Online Predicted for Accelerating RL Finetuning of Reasoning Models?](https://arxiv.org/abs/2507.04632)
+
+**Authors**: Yun Qu, Qi Wang, Yixiu Mao, Vincent Tao Hu, Bj\"orn Ommer, Xiangyang Ji  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
+**Score**: 8.5
+
+arXiv:2507.04632v4 Announce Type: replace-cross 
+Abstract: Recent advances have witnessed the effectiveness of reinforcement learning (RL) finetuning in enhancing the reasoning capabilities of large language models (LLMs). The optimization process often requires numerous iterations to achieve satisf...
 
 ---
 
 ### 25. [REFRAG: Rethinking RAG based Decoding](https://arxiv.org/abs/2509.01092)
 
 **Authors**: Xiaoqiang Lin, Aritra Ghosh, Bryan Kian Hsiang Low, Anshumali Shrivastava, Vijai Mohan  
-**Category**: cs.AI  
-**Published**: 2025-10-14  
+**Category**: cs.LG  
+**Published**: 2025-10-15  
 **Score**: 8.5
 
 arXiv:2509.01092v2 Announce Type: replace-cross 
@@ -315,63 +315,63 @@ Abstract: Large Language Models (LLMs) have demonstrated remarkable capabilities
 
 ---
 
-### 26. [RECON: Reasoning with Condensation for Efficient Retrieval-Augmented Generation](https://arxiv.org/abs/2510.10448)
+### 26. [EmboMatrix: A Scalable Training-Ground for Embodied Decision-Making](https://arxiv.org/abs/2510.12072)
 
-**Authors**: Zhichao Xu, Minheng Wang, Yawei Wang, Wenqian Ye, Yuntao Du, Yunpu Ma, Yijun Tian  
+**Authors**: Zixing Lei, Sheng Yin, Yichen Xiong, Yuanzhuo Ding, Wenhao Huang, Yuxi Wei, Qingyao Xu, Yiming Li, Weixin Li, Yunhong Wang, Siheng Chen  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 8.0
+
+arXiv:2510.12072v1 Announce Type: new 
+Abstract: Embodied decision-making enables agents to translate high-level goals into executable actions through continuous interactions within the physical world, forming a cornerstone of general-purpose embodied intelligence. Large language models (LLMs), with...
+
+---
+
+### 27. [AwareCompiler: Agentic Context-Aware Compiler Optimization via a Synergistic Knowledge-Data Driven Framework](https://arxiv.org/abs/2510.11759)
+
+**Authors**: Hongyu Lin, Haolin Pan, Haoran Luo, Yuchen Li, Kaichun Yao, Libo Zhang, Mingjie Xing, Yanjun Wu  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 8.0
+
+arXiv:2510.11759v1 Announce Type: cross 
+Abstract: Compiler optimization is crucial for enhancing program performance by transforming the sequence of optimization passes while maintaining correctness. Despite the promising potential of large language models (LLMs)-based agent for software optimizati...
+
+---
+
+### 28. [DE3S: Dual-Enhanced Soft-Sparse-Shape Learning for Medical Early Time-Series Classification](https://arxiv.org/abs/2510.12214)
+
+**Authors**: Tao Xie, Zexi Tan, Haoyi Xiao, Binbin Sun, Yiqun Zhang  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 8.0
+
+arXiv:2510.12214v1 Announce Type: cross 
+Abstract: Early time-series classification (ETSC) in medical applications is crucial for time-sensitive scenarios such as sepsis prediction in intensive care units (ICUs), where a large number of deaths are caused by delayed prediction. ETSC can significantly...
+
+---
+
+### 29. [TISDiSS: A Training-Time and Inference-Time Scalable Framework for Discriminative Source Separation](https://arxiv.org/abs/2509.15666)
+
+**Authors**: Yongsheng Feng, Yuetonghui Xu, Jiehui Luo, Hongjia Liu, Xiaobing Li, Feng Yu, Wei Li  
+**Category**: cs.AI  
+**Published**: 2025-10-15  
+**Score**: 8.0
+
+arXiv:2509.15666v3 Announce Type: replace-cross 
+Abstract: Source separation is a fundamental task in speech, music, and audio processing, and it also provides cleaner and larger data for training generative models. However, improving separation performance in practice often depends on increasingly ...
+
+---
+
+### 30. [MoBiLE: Efficient Mixture-of-Experts Inference on Consumer GPU with Mixture of Big Little Experts](https://arxiv.org/abs/2510.12357)
+
+**Authors**: Yushu Zhao, Yubin Qin, Yang Wang, Xiaolong Yang, Huiming Han, Shaojun Wei, Yang Hu, Shouyi Yin  
 **Category**: cs.CL  
-**Published**: 2025-10-14  
-**Score**: 8.5
+**Published**: 2025-10-15  
+**Score**: 8.0
 
-arXiv:2510.10448v1 Announce Type: new 
-Abstract: Retrieval-augmented generation (RAG) systems trained using reinforcement learning (RL) with reasoning are hampered by inefficient context management, where long, noisy retrieved documents increase costs and degrade performance. We introduce RECON (REa...
-
----
-
-### 27. [Bhasha-Rupantarika: Algorithm-Hardware Co-design approach for Multilingual Neural Machine Translation](https://arxiv.org/abs/2510.10676)
-
-**Authors**: Mukul Lokhande, Tanushree Dewangan, Mohd Sharik Mansoori, Tejas Chaudhari, Akarsh J., Damayanti Lokhande, Adam Teman, Santosh Kumar Vishvakarma  
-**Category**: cs.CL  
-**Published**: 2025-10-14  
-**Score**: 8.5
-
-arXiv:2510.10676v1 Announce Type: cross 
-Abstract: This paper introduces Bhasha-Rupantarika, a light and efficient multilingual translation system tailored through algorithm-hardware codesign for resource-limited settings. The method investigates model deployment at sub-octet precision levels (FP8, ...
-
----
-
-### 28. [Saten: Sparse Augmented Tensor Networks for Post-Training Compression of Large Language Models](https://arxiv.org/abs/2505.14871)
-
-**Authors**: Ryan Solgi, Kai Zhen, Rupak Vignesh Swaminathan, Nathan Susanj, Athanasios Mouchtaris, Siegfried Kunzmann, Zheng Zhang  
-**Category**: cs.CL  
-**Published**: 2025-10-14  
-**Score**: 8.5
-
-arXiv:2505.14871v2 Announce Type: replace 
-Abstract: The efficient implementation of large language models (LLMs) is crucial for deployment on resource-constrained devices. Low-rank tensor compression techniques, such as tensor-train (TT) networks, have been widely studied for over-parameterized neu...
-
----
-
-### 29. [Efficient Resource-Constrained Training of Vision Transformers via Subspace Optimization](https://arxiv.org/abs/2510.09160)
-
-**Authors**: Le-Trung Nguyen, Enzo Tartaglione, Van-Tam Nguyen  
-**Category**: cs.LG  
-**Published**: 2025-10-13  
-**Score**: 8.5
-
-arXiv:2510.09160v1 Announce Type: new 
-Abstract: As AI increasingly shapes daily life, energy consumption and data privacy have become pressing concerns. On-device learning trains models directly on edge devices, cutting energy consumption and safeguarding data privacy. However, the expanding scale ...
-
----
-
-### 30. [The Enduring Dominance of Deep Neural Networks: A Critical Analysis of the Fundamental Limitations of Quantum Machine Learning and Spiking Neural Networks](https://arxiv.org/abs/2510.08591)
-
-**Authors**: Takehiro Ishikawa  
-**Category**: cs.LG  
-**Published**: 2025-10-13  
-**Score**: 8.5
-
-arXiv:2510.08591v1 Announce Type: cross 
-Abstract: Recent advancements in QML and SNNs have generated considerable excitement, promising exponential speedups and brain-like energy efficiency to revolutionize AI. However, this paper argues that they are unlikely to displace DNNs in the near term. QML...
+arXiv:2510.12357v1 Announce Type: new 
+Abstract: Mixture-of-Experts (MoE) models have recently demonstrated exceptional performance across a diverse range of applications. The principle of sparse activation in MoE models facilitates an offloading strategy, wherein active experts are maintained in GP...
 
 ---
 
