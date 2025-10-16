@@ -357,9 +357,9 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 **Authors**: {authors_str}  
 **Category**: {paper['category']}  
 **Published**: {paper['published_date']}  
-**Score**: {paper['score']:.1f}
-**Type**: {paper['type']}
-**ArXiv ID**: {paper['arxiv_id']}
+**Score**: {paper['score']:.1f}  
+**Type**: {paper['type']}  
+**ArXiv ID**: {paper['arxiv_id']}  
 
 {paper['summary'][:300]}{'...' if len(paper['summary']) > 300 else ''}
 
