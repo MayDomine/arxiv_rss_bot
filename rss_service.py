@@ -48,6 +48,8 @@ RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
                 <strong>Authors:</strong> {{paper.authors_str}}<br/>
                 <strong>Category:</strong> {{paper.category}}<br/>
                 <strong>Score:</strong> {{paper.score}}<br/>
+                <strong>Type:</strong> {{paper.type}}<br/>
+                <strong>Arxiv ID:</strong> {{paper.arxiv_id}}<br/>
                 <strong>Abstract:</strong> {{paper.summary}}
             ]]></description>
         </item>
