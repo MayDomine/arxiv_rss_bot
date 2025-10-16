@@ -9,6 +9,7 @@ import json
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import logging
+import re
 
 # Configure logging
 logging.basicConfig(
@@ -55,6 +56,26 @@ class ArxivBot:
             "min_score": 0.0,
         }
 
+    def parse_paper_summary(self, summary: str) -> Optional[Tuple[str, str, str]]:
+        """
+        Parse the summary of a paperself. 
+        arXiv:${arxiv_number} Announce Type: ${Type} Abstract: ${abstract}
+        """
+        pattern = r"arXiv:(\S+)\s+Announce\s+Type:\s+(\S+)\s+Abstract:\s+(.+)"
+        match = re.match(pattern, summary)
+        
+        if match:
+            try:
+                arxiv_number = match.group(1)
+                announce_type = match.group(2)
+                abstract = match.group(3)
+                return arxiv_number, announce_type, abstract
+            except Exception as e:
+                return None, None, summary
+        else:
+            return None, None, summary
+
+
     def parse_paper_entry(self, entry: Any, category: str) -> Optional[Dict[str, Any]]:
         """Parse a single paper entry from RSS feed."""
         try:
@@ -67,6 +88,7 @@ class ArxivBot:
             # Check if paper is within the specified time range
             days_back = self.config.get("days_back", 7)
             cutoff_date = datetime.now() - timedelta(days=days_back)
+            arxiv_id, pub_type, summary = self.parse_paper_summary(entry.summary)
 
             if pub_date < cutoff_date:
                 return None
@@ -79,7 +101,9 @@ class ArxivBot:
                     if hasattr(entry, "authors")
                     else []
                 ),
-                "summary": entry.summary,
+                "type": pub_type,
+                "arxiv_id": arxiv_id,
+                "summary": summary,
                 "category": category,
                 "published_date": pub_date.strftime("%Y-%m-%d"),
                 "link": entry.link,
@@ -334,6 +358,8 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 **Category**: {paper['category']}  
 **Published**: {paper['published_date']}  
 **Score**: {paper['score']:.1f}
+**Type**: {paper['type']}
+**ArXiv ID**: {paper['arxiv_id']}
 
 {paper['summary'][:300]}{'...' if len(paper['summary']) > 300 else ''}
 
