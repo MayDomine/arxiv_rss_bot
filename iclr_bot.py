@@ -14,6 +14,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
+from tqdm import tqdm
 
 import requests  # type: ignore
 
@@ -22,6 +23,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+high_score_keywords = ["Sparse Attention", "Speculative", "Reinforcement"]
 
 
 OPENREVIEW_API = os.environ.get("OPENREVIEW_API", "https://api2.openreview.net")
@@ -237,11 +239,20 @@ class ICLRBot:
             if keyword.lower() in text_to_check:
                 score += 1.0
 
+        for keyword in high_score_keywords:
+            if keyword.lower() in text_to_check:
+                score += 10
+
+
         # Bonus for title matches
         title_lower = paper.title.lower()
         for keyword in keywords:
             if keyword.lower() in title_lower:
                 score += 0.5
+
+        for keyword in high_score_keywords:
+            if keyword.lower() in title_lower:
+                score += 20
 
         return score
 
@@ -271,13 +282,12 @@ class ICLRBot:
     ) -> List[Dict[str, Any]]:
         """Fetch all notes for a specific domain."""
         notes: List[Dict[str, Any]] = []
-        current_offset = 0
         page_size = 1000  # Use larger page size to minimize requests
 
         try:
             url = f"{OPENREVIEW_API}/notes"
 
-            while True:
+            for current_offset in tqdm(range(0, self.max_papers, page_size)):
                 params = {
                     "content.venueid": f"{domain}/Submission",
                     "domain": domain,
@@ -305,8 +315,6 @@ class ICLRBot:
                 if len(chunk) < page_size:
                     # This was the last page
                     break
-
-                current_offset += page_size
 
                 # Respect max_papers limit
                 if self.max_papers and len(notes) >= self.max_papers:
@@ -345,7 +353,7 @@ class ICLRBot:
 
         logger.info("Fetching ICLR %s submissions from OpenReview...", self.year)
         # For testing, limit to first 2000 papers to avoid timeout
-        self.max_papers = 2000
+        self.max_papers = 20000
         submissions = self._fetch_notes(self.conference_domain)
 
         logger.info("Fetched %d submissions", len(submissions))
