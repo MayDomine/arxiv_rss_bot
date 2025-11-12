@@ -565,7 +565,7 @@ class ICLRBot:
         if self.config.get("fetch_ratings", True) and filtered_papers:
             # Sort by some criteria (we'll use paper number as proxy for submission order)
             # Papers with higher numbers might be more recent and potentially rated
-            sorted_papers = sorted(filtered_papers, key=lambda p: p.paper_number or 0, reverse=True)
+            sorted_papers = sorted(filtered_papers, key=lambda p: getattr(p, 'score', 0), reverse=True)
             top_papers = sorted_papers[:100]
 
             logger.info("Fetching ratings for top 100 filtered papers...")
