@@ -460,24 +460,40 @@ def update_iclr_cache():
             logger.warning("ICLR cache could not be populated.")
             return False
 
-        base_url = os.environ.get("BASE_URL", "http://localhost:5000").strip()
+        # Filter and sort papers for RSS feed (top 100 by rating)
+        filtered_papers = []
+        for paper_dict in cache_payload:
+            # Convert dict back to ICLRPaper-like object for filtering
+            class PaperLike:
+                def __init__(self, d):
+                    self.title = d.get('title', '')
+                    self.abstract = d.get('abstract', '')
+
+            paper_like = PaperLike(paper_dict)
+            if bot.matches_criteria(paper_like):
+                filtered_papers.append(paper_dict)
+
+        # Sort by average rating and take top 100
+        rss_papers = sorted(filtered_papers, key=lambda p: (p.get('average_rating') or 0), reverse=True)[:100]
+
+        base_url = os.environ.get("BASE_URL", "http://localhost:1999").strip()  # Fixed port
         year = bot.year
-        rss_payload = build_iclr_rss_payload(cache_payload, year, base_url)
+        rss_payload = build_iclr_rss_payload(rss_papers, year, base_url)
 
         iclr_cache["content"] = render_template_string(
             ICLR_RSS_TEMPLATE,
-            feed_title=f"ICLR {year} Highlighted Papers",
+            feed_title=f"ICLR {year} Filtered Papers",
             feed_link="https://openreview.net",
-            feed_description=f"ICLR {year} papers aggregated from OpenReview with review statistics.",
+            feed_description=f"ICLR {year} papers filtered by keywords from OpenReview with review statistics.",
             feed_url=f"{base_url}/rss/iclr",
             last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
-            papers=rss_payload,
+            papers=rss_payload["papers"],  # Pass the papers list directly
             year=year,
         )
-        iclr_cache["papers"] = cache_payload
+        iclr_cache["papers"] = rss_papers  # Store filtered papers
         iclr_cache["last_update"] = datetime.now()
 
-        logger.info("ICLR cache updated with %d papers", len(cache_payload))
+        logger.info("ICLR cache updated with %d filtered papers (from %d total)", len(rss_papers), len(cache_payload))
         return True
     except Exception as exc:
         logger.error("Failed to update ICLR cache: %s", exc)
