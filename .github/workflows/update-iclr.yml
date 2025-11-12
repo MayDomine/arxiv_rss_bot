@@ -1,0 +1,44 @@
+name: Update ICLR Papers
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  update:
+    if: github.event_name == 'workflow_dispatch' || github.run_number == 1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Update ICLR cache and README
+        run: python -m iclr_bot
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add iclr/README.md iclr/iclr_cache.json
+          git commit -m "Update ICLR papers"
+
+      - name: Push changes
+        if: github.event_name == 'workflow_dispatch' || github.run_number == 1
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+

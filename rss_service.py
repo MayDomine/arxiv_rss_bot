@@ -7,6 +7,7 @@ Implements a static cache that updates daily at 12:00.
 
 from flask import Flask, Response, render_template_string
 from arxiv_bot import ArxivBot
+from iclr_bot import ICLRBot
 import json
 from datetime import datetime
 import logging
@@ -27,6 +28,13 @@ app = Flask(__name__)
 rss_cache = {}
 # Last update timestamp
 last_update_time = None
+
+# ICLR cache
+iclr_cache = {
+    "content": None,
+    "papers": [],
+    "last_update": None,
+}
 
 # RSS template
 RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
@@ -51,6 +59,33 @@ RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
                 <strong>Type:</strong> {{paper.type}}<br/>
                 <strong>Arxiv ID:</strong> {{paper.arxiv_id}}<br/>
                 <strong>Abstract:</strong> {{paper.summary}}
+            ]]></description>
+        </item>
+        {% endfor %}
+    </channel>
+</rss>"""
+
+ICLR_RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>ICLR {{year}} Highlighted Papers</title>
+        <link>https://openreview.net</link>
+        <description>ICLR {{year}} papers aggregated from OpenReview with review statistics.</description>
+        <language>en-us</language>
+        <lastBuildDate>{{last_build_date}}</lastBuildDate>
+        <atom:link href="{{feed_url}}" rel="self" type="application/rss+xml" />
+        {% for paper in papers %}
+        <item>
+            <title>{{paper.title}}</title>
+            <link>{{paper.link}}</link>
+            <guid>{{paper.link}}</guid>
+            <pubDate>{{paper.pub_date}}</pubDate>
+            <description><![CDATA[
+                <strong>Authors:</strong> {{paper.authors}}<br/>
+                <strong>Average Rating:</strong> {{paper.average_rating}}<br/>
+                <strong>Review Count:</strong> {{paper.rating_count}}<br/>
+                <strong>Decision:</strong> {{paper.decision}}<br/>
+                <strong>Abstract:</strong> {{paper.abstract}}
             ]]></description>
         </item>
         {% endfor %}
@@ -83,6 +118,7 @@ def index():
             <p><a href="/rss/cs.LG" class="rss-link">🧠 ML Papers</a> - Machine Learning papers</p>
             <p><a href="/rss/cs.CL" class="rss-link">💬 NLP Papers</a> - Natural Language Processing papers</p>
             <p><a href="/rss/cs.CV" class="rss-link">👁️ CV Papers</a> - Computer Vision papers</p>
+            <p><a href="/rss/iclr" class="rss-link">📑 ICLR 2026 Papers</a> - Highlighted OpenReview papers</p>
         </div>
         
         <div class="info">
@@ -366,6 +402,136 @@ def manual_update_cache():
             "message": "Cache updated successfully" if success else "Failed to update cache"
         }),
         mimetype="application/json",
+    )
+
+
+def build_iclr_rss_payload(papers, year: int, base_url: str):
+    """Prepare structured data for the ICLR RSS template."""
+    rss_papers = []
+    for paper in papers:
+        pub_date = paper.get("submission_date")
+        if pub_date:
+            try:
+                pub_date_dt = datetime.fromisoformat(pub_date.replace("Z", "+00:00"))
+                pub_date_rss = pub_date_dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
+            except ValueError:
+                pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
+        else:
+            pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
+
+        rss_papers.append(
+            {
+                "title": paper.get("title"),
+                "link": paper.get("forum_link"),
+                "authors": ", ".join(paper.get("authors", [])) or "Unknown",
+                "average_rating": (
+                    f"{paper.get('average_rating'):.2f}"
+                    if isinstance(paper.get("average_rating"), (int, float))
+                    else "N/A"
+                ),
+                "rating_count": paper.get("rating_count", 0),
+                "decision": paper.get("decision") or "Pending",
+                "abstract": (paper.get("abstract") or "")[:500],
+                "pub_date": pub_date_rss,
+            }
+        )
+
+    return {
+        "feed_url": f"{base_url}/rss/iclr",
+        "papers": rss_papers,
+        "year": year,
+    }
+
+
+def update_iclr_cache():
+    """Fetch ICLR papers and regenerate cache/README."""
+    global iclr_cache
+
+    try:
+        logger.info("Updating ICLR cache...")
+        bot = ICLRBot()
+        papers = bot.run()
+        cache_payload = bot.load_cached_papers()
+
+        if not cache_payload and papers:
+            cache_payload = [paper.to_dict() for paper in papers]
+
+        if not cache_payload:
+            logger.warning("ICLR cache could not be populated.")
+            return False
+
+        base_url = os.environ.get("BASE_URL", "http://localhost:5000").strip()
+        year = bot.year
+        rss_payload = build_iclr_rss_payload(cache_payload, year, base_url)
+
+        iclr_cache["content"] = render_template_string(
+            ICLR_RSS_TEMPLATE,
+            feed_title=f"ICLR {year} Highlighted Papers",
+            feed_link="https://openreview.net",
+            feed_description=f"ICLR {year} papers aggregated from OpenReview with review statistics.",
+            feed_url=f"{base_url}/rss/iclr",
+            last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
+            papers=rss_payload,
+            year=year,
+        )
+        iclr_cache["papers"] = cache_payload
+        iclr_cache["last_update"] = datetime.now()
+
+        logger.info("ICLR cache updated with %d papers", len(cache_payload))
+        return True
+    except Exception as exc:
+        logger.error("Failed to update ICLR cache: %s", exc)
+        return False
+
+
+@app.route("/rss/iclr")
+def iclr_rss_feed():
+    """Serve the ICLR RSS feed."""
+    global iclr_cache
+
+    if not iclr_cache.get("content"):
+        logger.info("ICLR cache empty, triggering update.")
+        update_iclr_cache()
+
+    if not iclr_cache.get("content"):
+        return Response(
+            json.dumps(
+                {
+                    "status": "error",
+                    "message": "ICLR cache is empty. Trigger /update-iclr-cache first.",
+                }
+            ),
+            status=503,
+            mimetype="application/json",
+        )
+
+    return Response(
+        iclr_cache["content"],
+        mimetype="application/rss+xml",
+        headers={"Content-Type": "application/rss+xml; charset=utf-8"},
+    )
+
+
+@app.route("/update-iclr-cache")
+def manual_update_iclr_cache():
+    """Manually trigger the ICLR cache and README refresh."""
+    success = update_iclr_cache()
+    status = "success" if success else "error"
+    return Response(
+        json.dumps(
+            {
+                "status": status,
+                "timestamp": datetime.now().isoformat(),
+                "message": "ICLR cache updated successfully"
+                if success
+                else "Failed to update ICLR cache",
+                "last_update": iclr_cache.get("last_update").isoformat()
+                if iclr_cache.get("last_update")
+                else None,
+            }
+        ),
+        mimetype="application/json",
+        status=200 if success else 500,
     )
 
 

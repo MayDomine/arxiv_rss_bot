@@ -23,7 +23,7 @@ pip install -r requirements.txt
 python rss_service.py
 
 # Open in browser
-open http://localhost:5000
+open http://localhost:1999
 ```
 
 ### 2. Test the Service
@@ -37,19 +37,21 @@ python test_rss_service.py
 
 Once running, you'll have access to these RSS feeds:
 
-- **Main Feed**: `http://localhost:5000/rss` - All filtered papers
-- **AI Papers**: `http://localhost:5000/rss/cs.AI` - Computer Science AI papers
-- **ML Papers**: `http://localhost:5000/rss/cs.LG` - Machine Learning papers
-- **NLP Papers**: `http://localhost:5000/rss/cs.CL` - Natural Language Processing papers
-- **CV Papers**: `http://localhost:5000/rss/cs.CV` - Computer Vision papers
+- **Main Feed**: `http://localhost:1999/rss` - All filtered papers
+- **AI Papers**: `http://localhost:1999/rss/cs.AI` - Computer Science AI papers
+- **ML Papers**: `http://localhost:1999/rss/cs.LG` - Machine Learning papers
+- **NLP Papers**: `http://localhost:1999/rss/cs.CL` - Natural Language Processing papers
+- **CV Papers**: `http://localhost:1999/rss/cs.CV` - Computer Vision papers
+- **ICLR 2026 Papers**: `http://localhost:1999/rss/iclr` - Highlighted ICLR submissions from OpenReview
 
 ## 🔄 Cache System
 
 The RSS service now uses a static cache system that updates daily:
 
 - **Automatic Updates**: Cache refreshes automatically at 12:00 every day
-- **Manual Updates**: Trigger a cache update by visiting `http://localhost:5000/update-cache`
-- **Cache Status**: Check cache status at `http://localhost:5000/health`
+- **Manual Updates**: Trigger a cache update by visiting `http://localhost:1999/update-cache`
+- **ICLR Refresh**: Pull the latest ICLR data via `http://localhost:1999/update-iclr-cache`
+- **Cache Status**: Check cache status at `http://localhost:1999/health`
 
 This improves performance and reduces load on the arXiv API.
 
@@ -170,8 +172,10 @@ The RSS service uses the same `config.json` as your arXiv bot:
 - `GET /` - Web interface with feed links
 - `GET /rss` - Main RSS feed
 - `GET /rss/{category}` - Category-specific RSS feed
+- `GET /rss/iclr` - ICLR 2026 feed with OpenReview ratings
 - `GET /config` - Current configuration (JSON)
 - `GET /health` - Health check endpoint
+- `GET /update-iclr-cache` - Manually refresh the cached ICLR data and README
 
 ## 🔄 Integration with GitHub Actions
 
@@ -223,10 +227,10 @@ You can integrate the RSS service with your existing GitHub Actions workflow:
 python test_rss_service.py
 
 # Test with curl
-curl -H "Accept: application/rss+xml" http://localhost:5000/rss
+curl -H "Accept: application/rss+xml" http://localhost:1999/rss
 
 # Validate RSS format
-curl http://localhost:5000/rss | xmllint --format -
+curl http://localhost:1999/rss | xmllint --format -
 ```
 
 ## 🎯 Advanced Usage
