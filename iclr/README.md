@@ -1,515 +1,515 @@
 # ICLR 2026 Papers 📚
 
-- **Last Updated**: 2025-11-12 10:43:10 UTC
+- **Last Updated**: 2025-11-12 11:13:00 UTC
 - **Total Filtered Papers**: 18375
-- **Papers with Ratings**: 499
+- **Papers with Ratings**: 500
 - **Total Submissions**: (cached)
 
 Click any title to view the full discussion on OpenReview.
 
 **Configuration**: Filtered by keywords ['LLM', 'RL', 'RLHF', 'Inference', 'Training', 'Attention', 'Pipeline', 'MOE', 'Sparse', 'Quantization', 'Speculative', 'Efficient', 'Efficiency', 'Framework', 'Parallel', 'Distributed', 'Kernel', 'Decode', 'Decoding', 'Prefill', 'Throughput', 'Fast', 'Network', 'Hardware', 'Cluster', 'FP8', 'FP4', 'Optimization', 'Scalable', 'Communication']
 
-> Showing top 500 papers (out of 18375 matching), sorted by keyword relevance score. 499 papers have review ratings.
+> Showing top 500 papers (out of 18375 matching), sorted by keyword relevance score. 500 papers have review ratings.
 
-| # | Title | Avg Rating | Reviews | Decision | OpenReview |
+| # | Title | Ratings |Avg Rating | Reviews | Decision |
 | --- | --- | --- | --- | --- | --- |
-| 1 | [SPEC-RL: Accelerating On-Policy Reinforcement Learning via Speculative Rollouts](https://openreview.net/forum?id=YFNHJrFFvO) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=YFNHJrFFvO) |
-| 2 | [Learning To Draft: Adaptive Speculative Decoding with Reinforcement Learning](https://openreview.net/forum?id=IK9cbzzXLt) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=IK9cbzzXLt) |
-| 3 | [SpSCO: A Speculative Sampling Approach to Neural Combinatorial Optimization](https://openreview.net/forum?id=pBySAuS5H5) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=pBySAuS5H5) |
-| 4 | [FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](https://openreview.net/forum?id=zuGt6TYYtS) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=zuGt6TYYtS) |
-| 5 | [Dynamic Speculative Agent Planning](https://openreview.net/forum?id=YZ5k2dVj6O) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=YZ5k2dVj6O) |
-| 6 | [SPECS: Faster Test-Time Scaling through Speculative Drafts and Dynamic Switching](https://openreview.net/forum?id=5XixaecZ8W) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=5XixaecZ8W) |
-| 7 | [Sandbox-RL: Scalable Multi-LLMs Optimization through Sandbox-Based Reinforcement Learning](https://openreview.net/forum?id=0pFcKF2li1) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=0pFcKF2li1) |
-| 8 | [SALE : Low-bit Estimation for Efficient Sparse Attention in Long-context LLM Prefilling](https://openreview.net/forum?id=yTeDQeuKKz) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=yTeDQeuKKz) |
-| 9 | [STAR: Speculative Decoding with Searchable Drafting and Target-Aware Refinement for Multimodal Generation](https://openreview.net/forum?id=pMdKnxkFRw) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=pMdKnxkFRw) |
-| 10 | [PureKV: Plug-and-Play KV Cache Optimization with Spatial-Temporal Sparse Attention for Vision-Language Large Models](https://openreview.net/forum?id=XtpVQ21bcY) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=XtpVQ21bcY) |
-| 11 | [Fed-Energy: Federated Reinforcement Learning for Scalable and Energy-Efficient Large-Scale Code Optimization](https://openreview.net/forum?id=APawIJjJlP) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=APawIJjJlP) |
-| 12 | [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](https://openreview.net/forum?id=ZQ9uqllSts) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ZQ9uqllSts) |
-| 13 | [FOLD: Fast Correct Speculative Decoding](https://openreview.net/forum?id=zm35dmBdok) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=zm35dmBdok) |
-| 14 | [Hierarchical Speculative Decoding through Training-Free Slim-Verifier](https://openreview.net/forum?id=9UsWULey9J) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=9UsWULey9J) |
-| 15 | [Optimized Early-Exit Based Speculative Decoding via Pipeline Parallelism](https://openreview.net/forum?id=6ezbdRe90k) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=6ezbdRe90k) |
-| 16 | [SpecExtend: A Drop-in Enhancement for Speculative Decoding of Long Sequences](https://openreview.net/forum?id=170GODIkgT) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=170GODIkgT) |
-| 17 | [Tactic: Adaptive Sparse Attention with Clustering and Distribution Fitting for Long-Context LLMs](https://openreview.net/forum?id=tJod11fK1A) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=tJod11fK1A) |
-| 18 | [FSA: An Alternative Efficient Implementation of Native Sparse Attention Kernel](https://openreview.net/forum?id=c5mdo1hWrs) | 7.33 | 3 | Pending | [Link](https://openreview.net/forum?id=c5mdo1hWrs) |
-| 19 | [QeRL: Beyond Efficiency - Quantization-enhanced Reinforcement Learning for LLMs](https://openreview.net/forum?id=zw8zxMJJlm) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zw8zxMJJlm) |
-| 20 | [Speculative Actions: A Lossless Framework for Faster AI Agents](https://openreview.net/forum?id=P0GOk5wslg) | 7.50 | 4 | Pending | [Link](https://openreview.net/forum?id=P0GOk5wslg) |
-| 21 | [Training-Free Native Sparse Attention for KV Cache Compression](https://openreview.net/forum?id=sQjYtFSEuZ) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=sQjYtFSEuZ) |
-| 22 | [Think Before You Accept: Semantic Reflective Verification for Faster Speculative Decoding](https://openreview.net/forum?id=GkMxEQlWyU) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=GkMxEQlWyU) |
-| 23 | [DiFFPO: Training Diffusion LLMs to Reason Fast and Furious via Reinforcement Learning](https://openreview.net/forum?id=ckUU5XySLn) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ckUU5XySLn) |
-| 24 | [Evolving Sparsity: Leveraging Token Importance Dynamics for Efficient LLM Decoding with Sparse Attention](https://openreview.net/forum?id=YPjcyMzhE2) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=YPjcyMzhE2) |
-| 25 | [Sparse Topology Pairwise Scoring for Large-Scale Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=5IqvMNQaUg) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=5IqvMNQaUg) |
-| 26 | [HiSpec: Hierarchical Speculative Decoding for LLMs](https://openreview.net/forum?id=CYGI23WQjI) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=CYGI23WQjI) |
-| 27 | [HoVer: Holistic Verification for Semantic-Aware Speculative Generation](https://openreview.net/forum?id=GQlF9F8HAs) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=GQlF9F8HAs) |
-| 28 | [SpecVLM: Fast Speculative Decoding in Vision-Language Models](https://openreview.net/forum?id=lkMh48jItD) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=lkMh48jItD) |
-| 29 | [Less Is More: Fast and Accurate Reasoning with Cross-Head Unified Sparse Attention](https://openreview.net/forum?id=3iwDzfIk60) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=3iwDzfIk60) |
-| 30 | [Mirror Speculative Decoding: Breaking the Serial Barrier in LLM Inference](https://openreview.net/forum?id=ZAY8HKg5ZK) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=ZAY8HKg5ZK) |
-| 31 | [Batch Speculative Decoding Done Right](https://openreview.net/forum?id=eM51kSFkoG) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=eM51kSFkoG) |
-| 32 | [Learning to Reason over Continuous Tokens with Reinforcement Learning](https://openreview.net/forum?id=lebJ6wz1vj) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=lebJ6wz1vj) |
-| 33 | [GHPO: Adaptive Guidance for Stable and Efficient LLM Reinforcement Learning](https://openreview.net/forum?id=6RQsAQEUib) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=6RQsAQEUib) |
-| 34 | [TornadoAttention: Hardware-Efficient Sparse Attention via Fine-Grained Spatio-Temporal Permutation for Video Generation](https://openreview.net/forum?id=fx3Ht2gYTR) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=fx3Ht2gYTR) |
-| 35 | [Scaling Up, Speeding Up: A Benchmark of Speculative Decoding for Efficient LLM Test-Time Scaling](https://openreview.net/forum?id=DjOmnwX4wJ) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=DjOmnwX4wJ) |
-| 36 | [RESA: Bringing Back What Sparse Attention Ignores with Residual Estimation](https://openreview.net/forum?id=ktcq26hMCH) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ktcq26hMCH) |
-| 37 | [QuRL: Low-Precision Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=eG0bpCwdKn) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=eG0bpCwdKn) |
-| 38 | [Dynamic Incremental Code Embeddings (DICE):  A Real-Time Communication Protocol for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=lFaLBotlag) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=lFaLBotlag) |
-| 39 | [DISTRIBUTED MULTI-AGENT DEEP REINFORCEMENT LEARNING](https://openreview.net/forum?id=fotzssBy3o) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=fotzssBy3o) |
-| 40 | [DSA: Efficient Inference For Video Generation Models via Distributed Sparse Attention](https://openreview.net/forum?id=1ZmdfDzGE1) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=1ZmdfDzGE1) |
-| 41 | [Zero-Shot Cross-Domain Dialogue State Tracking with Small LLMs: Learning to Think through Reinforcement Learning](https://openreview.net/forum?id=SLLZPhnEz6) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=SLLZPhnEz6) |
-| 42 | [RepSpec: Structural Re-parameterized Draft Model Training for Speculative Decoding](https://openreview.net/forum?id=bqEi97qzzz) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=bqEi97qzzz) |
-| 43 | [Self-Speculative Decoding Accelerates Lossless Inference in Any-Order and Any-Subset Autoregressive Models](https://openreview.net/forum?id=hZnibTOke7) | 6.67 | 3 | Pending | [Link](https://openreview.net/forum?id=hZnibTOke7) |
-| 44 | [Not All Rollouts are Useful: Down-Sampling Rollouts in LLM Reinforcement Learning](https://openreview.net/forum?id=lXDg6quPKT) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=lXDg6quPKT) |
-| 45 | [BLADE: Block-Sparse Attention Meets Step Distillation for Efficient Video Generation](https://openreview.net/forum?id=O9J20MsmRl) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=O9J20MsmRl) |
-| 46 | [RAST-MoE-RL: A Regime-Aware Spatio-Temporal MoE Framework for Deep Reinforcement Learning in Ride-Hailing](https://openreview.net/forum?id=xQRAo9YUQ3) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=xQRAo9YUQ3) |
-| 47 | [Rectified Sparse Attention for Efficient Long-Sequence Generation](https://openreview.net/forum?id=mtg9P13kOc) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=mtg9P13kOc) |
-| 48 | [Bridging Draft Policy Misalignment: Group Tree Optimization  for Speculative Decoding](https://openreview.net/forum?id=dwPdYFqVWO) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=dwPdYFqVWO) |
-| 49 | [Holistic Token Efficient in Speculative Decoding: Post-use & Pre-cut](https://openreview.net/forum?id=ELhSQC3BJE) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ELhSQC3BJE) |
-| 50 | [MobileWizard: A Data-Efficient GUI Agent with Structured Reasoning and Progressive Reinforcement Learning](https://openreview.net/forum?id=Aobvdp3XmP) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Aobvdp3XmP) |
-| 51 | [ARC-Decode: Risk-Bounded Acceptance for Sampling-Based Speculative Decoding](https://openreview.net/forum?id=jhJjW2DFKD) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=jhJjW2DFKD) |
-| 52 | [ProxyAttn: Guided Sparse Attention via Representative Heads](https://openreview.net/forum?id=m3HXHQYmZu) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=m3HXHQYmZu) |
-| 53 | [Designing Observation and Action Models for Efficient Reinforcement Learning with LLMs](https://openreview.net/forum?id=v1tTJN2svr) | 4.80 | 5 | Pending | [Link](https://openreview.net/forum?id=v1tTJN2svr) |
-| 54 | [SALF & TALF: Optimized Loss Function and Drafting for Tree-based Speculative Decoding](https://openreview.net/forum?id=3V559xWIWc) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=3V559xWIWc) |
-| 55 | [InferSpec: Adaptive Inference-Time Compute with Ensemble Verifier-Guided Speculative Decoding for Efficient Reasoning](https://openreview.net/forum?id=sxeAVcWpNu) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=sxeAVcWpNu) |
-| 56 | [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](https://openreview.net/forum?id=iIvPuXoDs1) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=iIvPuXoDs1) |
-| 57 | [RACER: Retrieval-Augmented Contextual Rapid Speculative Decoding](https://openreview.net/forum?id=i8SjqQQOVt) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=i8SjqQQOVt) |
-| 58 | [Self Speculative Decoding for Diffusion Large Language Model](https://openreview.net/forum?id=rKJ7A30lQQ) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=rKJ7A30lQQ) |
-| 59 | [HSA: Head-wise Sparse Attention for Efficient and Accurate Long-context Inference](https://openreview.net/forum?id=WytruI9uM3) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=WytruI9uM3) |
-| 60 | [APRIL: Active Partial Rollouts in Reinforcement Learning to Tame Long-tail Generation](https://openreview.net/forum?id=0viCNELbrf) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=0viCNELbrf) |
-| 61 | [DyCodeExplainer: Explainable Dynamic Graph Attention for Multi-Agent Reinforcement Learning in Collaborative Coding](https://openreview.net/forum?id=U7pWkp90qA) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=U7pWkp90qA) |
-| 62 | [Rethinking the High-Throughput LLM Inference: An Opportunity for Speculative Decoding](https://openreview.net/forum?id=59OJOgKLzN) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=59OJOgKLzN) |
-| 63 | [PD-FS:Surrogate-Enhanced Physical Data-Driven Framework for Rapid Deep Reinforcement Learning Control](https://openreview.net/forum?id=ZL5sLJBMrV) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ZL5sLJBMrV) |
-| 64 | [Aligning Draft and Target in Speculative Decoding: A CoT-Aware and SR-Guided Mixed Framework](https://openreview.net/forum?id=bKau2NNrji) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=bKau2NNrji) |
-| 65 | [Draft, Verify, \& Improve: Toward Training-Aware Speculative Decoding](https://openreview.net/forum?id=CwvY6TXLxr) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=CwvY6TXLxr) |
-| 66 | [SparseSkeleton: Prefill sparse attention by decomposition](https://openreview.net/forum?id=Y5kgP4x20k) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=Y5kgP4x20k) |
-| 67 | [GRIT: Graph-Biased Transformers for Hardware-Aware Quantum Layout via Reinforcement Learning Search](https://openreview.net/forum?id=gck2KraCk7) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=gck2KraCk7) |
-| 68 | [Spiking Decision Making Bottleneck for Offline Reinforcement Learning With Spiking Neural Networks](https://openreview.net/forum?id=1n10BIjgQx) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=1n10BIjgQx) |
-| 69 | [Mixture of Sparse Attention: Content-Based Learnable Sparse Attention via MoEs](https://openreview.net/forum?id=FlAdTTRnWY) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=FlAdTTRnWY) |
-| 70 | [Aligning Frozen LLMs by Reinforcement Learning: An Iterative Reweight-then-Optimize Approach](https://openreview.net/forum?id=cQR0d0CnH9) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=cQR0d0CnH9) |
-| 71 | [SpecBranch: Speculative Decoding via Hybrid Drafting and Rollback-Aware Branch Parallelism](https://openreview.net/forum?id=BrnlCSqO6n) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=BrnlCSqO6n) |
-| 72 | [Rethinking the Role of Dynamic Sparse Training for Scalable Deep Reinforcement Learning](https://openreview.net/forum?id=k7NhBrsjwn) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=k7NhBrsjwn) |
-| 73 | [Reinforcement Unlearning via Group Relative Policy Optimization](https://openreview.net/forum?id=BjWwqPE7mk) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=BjWwqPE7mk) |
-| 74 | [Retrospective Sparse Attention for Efficient Long-Context Generation](https://openreview.net/forum?id=Ql0G1Zsobn) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Ql0G1Zsobn) |
-| 75 | [Make It Efficient: Dynamic Sparse Attention for Autoregressive Image Generation](https://openreview.net/forum?id=fBbJHLjhBU) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=fBbJHLjhBU) |
-| 76 | [AUTOTRITON: Automatic Triton Programming with Reinforcement Learning in LLMs](https://openreview.net/forum?id=8m6yY1ULKh) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=8m6yY1ULKh) |
-| 77 | [Training-Free Loosely Speculative Decoding: Accepting Semantically Correct Drafts Beyond Exact Match](https://openreview.net/forum?id=JjoTg34YiU) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=JjoTg34YiU) |
-| 78 | [CaRe-BN: Precise Moving Statistics for Stabilizing Spiking Neural Networks in Reinforcement Learning](https://openreview.net/forum?id=AaZVrbElhC) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=AaZVrbElhC) |
-| 79 | [From Scarcity to Efficiency: Preference-Guided Learning for Sparse-Reward Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7ei1uOYUY0) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=7ei1uOYUY0) |
-| 80 | [Stabilizing Off-Policy Reinforcement Learning for LLMs via Balanced Policy Optimization with Adaptive Clipping](https://openreview.net/forum?id=jIeJJqG7dz) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=jIeJJqG7dz) |
-| 81 | [PoLi-RL: A Point-to-List Reinforcement Learning Framework for Conditional Semantic Textual Similarity](https://openreview.net/forum?id=sLcRCH1U68) | 6.00 | 3 | Pending | [Link](https://openreview.net/forum?id=sLcRCH1U68) |
-| 82 | [AdaCoT: Pareto-Optimal Adaptive Chain-of-Thought Triggering via Reinforcement Learning](https://openreview.net/forum?id=6SAdRgSugm) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=6SAdRgSugm) |
-| 83 | [AgentRL: Scaling Agentic Reinforcement Learning with a Multi-Turn, Multi-Task Framework](https://openreview.net/forum?id=zq3vAmuUk9) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=zq3vAmuUk9) |
-| 84 | [SimpleVLA-RL: Scaling VLA Training via Reinforcement Learning](https://openreview.net/forum?id=TQhSodCM4r) | 7.00 | 4 | Pending | [Link](https://openreview.net/forum?id=TQhSodCM4r) |
-| 85 | [LLM-Assisted Reinforcement Learning for Distributed Scheduling](https://openreview.net/forum?id=Ikjxsa5RHD) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Ikjxsa5RHD) |
-| 86 | [LogitSpec: Accelerating Retrieval-based Speculative Decoding via Next Next Token Speculation](https://openreview.net/forum?id=I9f5NdjBvK) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=I9f5NdjBvK) |
-| 87 | [Bingo: Boosting Efficient Reasoning of LLMs via Dynamic and Significance-based Reinforcement Learning](https://openreview.net/forum?id=nrUsCBW3oT) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=nrUsCBW3oT) |
-| 88 | [FLASH: Latent-Aware Semi-Autoregressive Speculative Decoding for Multimodal Tasks](https://openreview.net/forum?id=yyqbLqLhGl) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=yyqbLqLhGl) |
-| 89 | [ConvRec-R1: Training LLM-based Conversational Recommender Systems with Reinforcement Learning](https://openreview.net/forum?id=Xgw2D9cALS) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Xgw2D9cALS) |
-| 90 | [TriSpec: Ternary Speculative Decoding via Lightweight Proxy Verification](https://openreview.net/forum?id=yhhgkkiQe5) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=yhhgkkiQe5) |
-| 91 | [Dynamic Mask Attention: End-to-End Trainable Content-aware Sparse Attention](https://openreview.net/forum?id=vrBZs2UL5n) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=vrBZs2UL5n) |
-| 92 | [Scaling Behaviors of LLM Reinforcement Learning Post-Training: An Empirical Study in Mathematical Reasoning](https://openreview.net/forum?id=KBut2YCZ4g) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=KBut2YCZ4g) |
-| 93 | [Adamas: Hadamard Sparse Attention for Efficient Long-context Inference](https://openreview.net/forum?id=C9p44r7o3z) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=C9p44r7o3z) |
-| 94 | [Flatter Tokens are More Valuable for Speculative Draft Model Training](https://openreview.net/forum?id=wgGJE6Z1B3) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=wgGJE6Z1B3) |
-| 95 | [DiffuSpec: Unlocking Diffusion Language Models for Speculative Decoding](https://openreview.net/forum?id=u2pAPZZCmN) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=u2pAPZZCmN) |
-| 96 | [BRAIN: Boltzmann Reinforcement For Analog Ising Networks](https://openreview.net/forum?id=XthfAAfnVd) | 2.00 | 3 | Pending | [Link](https://openreview.net/forum?id=XthfAAfnVd) |
-| 97 | [STEP-VQ: Sequence-model Agnostic Frame-level Inference with VQ-VAE for Model-based Reinforcement Learning](https://openreview.net/forum?id=aBgX5jCTcd) | 2.00 | 3 | Pending | [Link](https://openreview.net/forum?id=aBgX5jCTcd) |
-| 98 | [WebSailor-V2: Bridging the Chasm to Proprietary Agents via Synthetic Data and Scalable Reinforcement Learning](https://openreview.net/forum?id=HuP16O5SJf) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=HuP16O5SJf) |
-| 99 | [TACLer: Tailored Curriculum Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=SBOX9XlACW) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=SBOX9XlACW) |
-| 100 | [Accelerating Large Language Model Inference via Speculative Decoding with Progressive Tree Drafting](https://openreview.net/forum?id=iW4lyuOQ0J) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=iW4lyuOQ0J) |
-| 101 | [Bootstrapping Language and Numerical Feedback for Reinforcement Learning in LLMs](https://openreview.net/forum?id=K9GxQKEJzS) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=K9GxQKEJzS) |
-| 102 | [INTRA: Interleaved Non-contiguous Token spaRse Attention](https://openreview.net/forum?id=hqqhBFhR8k) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=hqqhBFhR8k) |
-| 103 | [When Speculation Spills Secrets: Side Channels via Speculative Decoding in LLMs](https://openreview.net/forum?id=zq40cmz1JD) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zq40cmz1JD) |
-| 104 | [Efficient Reinforcement Finetuning via Adaptive Curriculum Learning](https://openreview.net/forum?id=z0yJLFueGC) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=z0yJLFueGC) |
-| 105 | [Training Hybrid Deep Quantum Neural Network for Efficient Reinforcement Learning](https://openreview.net/forum?id=GObHf7syOA) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=GObHf7syOA) |
-| 106 | [SelfJudge: Faster Speculative Decoding via Self-Supervised Judge Verification](https://openreview.net/forum?id=Np9HKxRMcG) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=Np9HKxRMcG) |
-| 107 | [DeepSearch: Overcome the Bottleneck of Reinforcement Learning with Verifiable Rewards via Monte Carlo Tree Search](https://openreview.net/forum?id=Kx0G6v2c2S) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=Kx0G6v2c2S) |
-| 108 | [Entropy-Aware Speculative Decoding Toward Improved LLM Reasoning](https://openreview.net/forum?id=pPa5mIFj5p) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=pPa5mIFj5p) |
-| 109 | [BlockSpec: Blockwise Speculative Decoding for Diffusion LLMs](https://openreview.net/forum?id=hmAviop5rm) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=hmAviop5rm) |
-| 110 | [EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs](https://openreview.net/forum?id=qQzY7SLpEV) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qQzY7SLpEV) |
-| 111 | [Efficient and Transferable Agentic Knowledge Graph RAG via Reinforcement Learning](https://openreview.net/forum?id=vyb4S7dbSx) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=vyb4S7dbSx) |
-| 112 | [ComputerRL: Scaling End-to-End Online Reinforcement Learning for Computer Use Agents](https://openreview.net/forum?id=oEVfNf0w4B) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=oEVfNf0w4B) |
-| 113 | [Taming Masked Diffusion Language Models via Consistency Trajectory Reinforcement Learning with Fewer Decoding Step](https://openreview.net/forum?id=GRzwN5iuIh) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=GRzwN5iuIh) |
-| 114 | [RL4SBDD: Reinforcement Learning for Preference Alignment in Structure-based Drug Design](https://openreview.net/forum?id=dWEQpTkr1v) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=dWEQpTkr1v) |
-| 115 | [Max-Speedup Speculative Sampling: A Generic Tree Construction Principle](https://openreview.net/forum?id=oGPeI321sI) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=oGPeI321sI) |
-| 116 | [WirelessMathLM: Teaching Mathematical Reasoning for LLMs in Wireless Communications with Reinforcement Learning](https://openreview.net/forum?id=BuoOt8CE5K) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=BuoOt8CE5K) |
-| 117 | [ProteinZero: Self-Improving Protein Generation via Online Reinforcement Learning](https://openreview.net/forum?id=7fn75St2Ee) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=7fn75St2Ee) |
-| 118 | [TraPO: A Semi-Supervised Reinforcement Learning Framework for Boosting LLM Reasoning](https://openreview.net/forum?id=3K1y4KbWAx) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=3K1y4KbWAx) |
-| 119 | [IFDECORATOR: Wrapping Instruction Following Reinforcement Learning with Verifiable Rewards](https://openreview.net/forum?id=wdY1VxgHK6) | 4.80 | 5 | Pending | [Link](https://openreview.net/forum?id=wdY1VxgHK6) |
-| 120 | [BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning](https://openreview.net/forum?id=rQXBw8fn3Z) | 4.40 | 5 | Pending | [Link](https://openreview.net/forum?id=rQXBw8fn3Z) |
-| 121 | [Measure Once, Mask Once: Delta Refined Block Sparse Attention](https://openreview.net/forum?id=5HzrYMUlRd) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=5HzrYMUlRd) |
-| 122 | [MARS: Optimizing Dual-System Deep Research via Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=abxVxyXNhW) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=abxVxyXNhW) |
-| 123 | [ERA: Transforming VLMs into Embodied Agents via Embodied Prior Learning and Online Reinforcement Learning](https://openreview.net/forum?id=hqFNqVQEUd) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=hqFNqVQEUd) |
-| 124 | [WETAP: Speculative Decoding with Width-Entropy Tree and Adaptive Pruning for LLMs Inference Acceleration](https://openreview.net/forum?id=Cae9he70Th) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Cae9he70Th) |
-| 125 | [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=E6keG5QDct) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=E6keG5QDct) |
-| 126 | [Conserving Fitness Evaluation in Evolutionary Algorithms with Reinforcement Learning](https://openreview.net/forum?id=v1yVNFntqE) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=v1yVNFntqE) |
-| 127 | [SeqRL: Sequence-Attentive Reinforcement Learning for LLM Jailbreaking](https://openreview.net/forum?id=KdI9luPqaB) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=KdI9luPqaB) |
-| 128 | [Global Resolution: Optimal Multi-Draft Speculative Sampling via Convex Optimization](https://openreview.net/forum?id=gpsczXOsHn) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=gpsczXOsHn) |
-| 129 | [FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](https://openreview.net/forum?id=gv8R88PVEG) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=gv8R88PVEG) |
-| 130 | [Iterative Refinement of Flow Policies in Probability Space for Online Reinforcement Learning](https://openreview.net/forum?id=qf9c1rQoXG) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=qf9c1rQoXG) |
-| 131 | [Meta-Reinforcement Learning for Compiler Optimization: A Kernel-Embedded CompilerLLM with Verified Assumptions and Practical Guarantees](https://openreview.net/forum?id=yhYy69cyHR) | 1.33 | 3 | Pending | [Link](https://openreview.net/forum?id=yhYy69cyHR) |
-| 132 | [DEAGLE: Token Tree with Dynamic Depth Will Further Benefit the Speculative Decoding](https://openreview.net/forum?id=eZRPb52ccA) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=eZRPb52ccA) |
-| 133 | [Guided Speculative Inference for Efficient Test-Time Alignment of LLMs](https://openreview.net/forum?id=miNzDqDENd) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=miNzDqDENd) |
-| 134 | [Mind the budget: Accelerating Deep Reinforcement Learning using Early Exit Neural Networks](https://openreview.net/forum?id=dgZBENfrMu) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=dgZBENfrMu) |
-| 135 | [Break the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](https://openreview.net/forum?id=HA8vzzT6Ax) | 6.67 | 6 | Pending | [Link](https://openreview.net/forum?id=HA8vzzT6Ax) |
-| 136 | [Asynchronous Policy Gradient Aggregation for Efficient Distributed Reinforcement Learning](https://openreview.net/forum?id=SitVEPYv6W) | 6.00 | 3 | Pending | [Link](https://openreview.net/forum?id=SitVEPYv6W) |
-| 137 | [Making Offline Model-Based Reinforcement Learning Work on Real Robots](https://openreview.net/forum?id=rbNOhbdQ0v) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=rbNOhbdQ0v) |
-| 138 | [Reflective Reinforcement Tool Learning](https://openreview.net/forum?id=1PRZhOM0vk) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=1PRZhOM0vk) |
-| 139 | [MC-SJD : Maximal Coupling Speculative Jacobi Decoding for Autoregressive Visual Generation Acceleration](https://openreview.net/forum?id=7a95PGL0Up) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=7a95PGL0Up) |
-| 140 | [Knowledge-Level Consistency Reinforcement Learning: Dual-Fact Alignment for Long-Form Factuality](https://openreview.net/forum?id=Q04RwdeN9z) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Q04RwdeN9z) |
-| 141 | [Curriculum-Based Termination Critic for Scalable Program Decomposition in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=Q40JCBKW1q) | 2.40 | 5 | Pending | [Link](https://openreview.net/forum?id=Q40JCBKW1q) |
-| 142 | [Reframing attention as a reinforcement learning problem for causal discovery](https://openreview.net/forum?id=fY4proGNFD) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=fY4proGNFD) |
-| 143 | [ProofAug+: Boosting Reinforcement Learning for LLM Theorem Provers with Conditioned Proof Repair](https://openreview.net/forum?id=V0w5LmwWoD) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=V0w5LmwWoD) |
-| 144 | [Learning to Think in Blocks: A Prior-Guided Reinforcement Learning Framework for RAG](https://openreview.net/forum?id=VRBKiWBPKZ) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=VRBKiWBPKZ) |
-| 145 | [SimuAgent: An LLM-Based Simulink Modeling Assistant Enhanced with Reinforcement Learning](https://openreview.net/forum?id=mMB3Y1ERqi) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=mMB3Y1ERqi) |
-| 146 | [Expressive Value Learning for Scalable Offline Reinforcement Learning](https://openreview.net/forum?id=Hze2lxCX6D) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Hze2lxCX6D) |
-| 147 | [CCR: A Continuous Composite Reward for Efficient Reinforcement Learning-Based Jailbreak Attacks](https://openreview.net/forum?id=LSZ0adCum7) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=LSZ0adCum7) |
-| 148 | [Speculative Sampling for Parametric Temporal Point Processes](https://openreview.net/forum?id=UXCXjRSx0T) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=UXCXjRSx0T) |
-| 149 | [EffComp: Efficient Prompt Compression via Hybrid Reinforcement & Supervised Learning](https://openreview.net/forum?id=qSKDBVXhHJ) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qSKDBVXhHJ) |
-| 150 | [SKARL: Provably Scalable Kernel Mean Field Reinforcement Learning for Variable-Size Multi-Agent Systems](https://openreview.net/forum?id=VJZ56DDkin) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=VJZ56DDkin) |
-| 151 | [Generative Trajectory Planning in Dynamic Environments: A Joint Diffusion and Reinforcement Learning Framework](https://openreview.net/forum?id=MKM8iEaowV) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=MKM8iEaowV) |
-| 152 | [When should I search more: Adaptive Complex Query Optimization with Reinforcement Learning](https://openreview.net/forum?id=dMb4jh5Jk0) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=dMb4jh5Jk0) |
-| 153 | [Hierarchical Gradient-Informed Reinforcement Learning for Scalable and Partially Observable Dynamic Resource Allocation](https://openreview.net/forum?id=vhuLW3SK5w) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=vhuLW3SK5w) |
-| 154 | [TACO: Think-Answer Consistency for Optimized Long-Chain Reasoning and Efficient Data Learning via Reinforcement Learning in LVLMs](https://openreview.net/forum?id=tKPHgfjcu4) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=tKPHgfjcu4) |
-| 155 | [RoRecomp: Enhancing Reasoning Efficiency via Rollout Response Recomposition in Reinforcement Learning](https://openreview.net/forum?id=l9MqBHCb91) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=l9MqBHCb91) |
-| 156 | [RePAIR: A Rule-based Process-Adaptive Reinforcement for Large Language Model Training](https://openreview.net/forum?id=r4PjSs01MZ) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=r4PjSs01MZ) |
-| 157 | [CUDA-L1: Improving CUDA Optimization via  Contrastive Reinforcement Learning](https://openreview.net/forum?id=igZItUbY6n) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=igZItUbY6n) |
-| 158 | [Not-a-Bandit: Provably No-Regret Drafter Selection in Speculative Decoding for LLMs](https://openreview.net/forum?id=JMmljf895g) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=JMmljf895g) |
-| 159 | [Greedy Multi-Path Block Verification for Faster Decoding in Speculative Sampling](https://openreview.net/forum?id=sqZP2BlxRu) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=sqZP2BlxRu) |
-| 160 | [Hierarchical Routers for Efficient Top-k Retrieval in Sparse Attention](https://openreview.net/forum?id=QjyLNKm9mx) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=QjyLNKm9mx) |
-| 161 | [SkillEvo: An Experience Learning Framework with  Reinforcement Learning for Skill Evolution](https://openreview.net/forum?id=S1cIE9pe3k) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=S1cIE9pe3k) |
-| 162 | [Inference-Time Alignment Control for Diffusion Models with Reinforcement Learning Guidance](https://openreview.net/forum?id=9mucoWbieo) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=9mucoWbieo) |
-| 163 | [Probing to Refine: Reinforcement Distillation of LLM Reasoners via Explanatory Inversion](https://openreview.net/forum?id=rkIw2GqYEt) | 5.67 | 6 | Pending | [Link](https://openreview.net/forum?id=rkIw2GqYEt) |
-| 164 | [SuperRL: Reinforcement Learning with Supervision to Boost Language Model Reasoning](https://openreview.net/forum?id=IjMfTINVcq) | 4.80 | 5 | Pending | [Link](https://openreview.net/forum?id=IjMfTINVcq) |
-| 165 | [Reinforcement Learning Agents in Quantum Code Discovery with Argmax-Preserving Quantization](https://openreview.net/forum?id=jI57OAExtD) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=jI57OAExtD) |
-| 166 | [HIRL-GAN：Hierarchical Mask-Guided Inpainting via GAN and Reinforcement Learning for Urban Occlusion Removal](https://openreview.net/forum?id=tNOA2JMEhT) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=tNOA2JMEhT) |
-| 167 | [Stabilizing MoE Reinforcement Learning by Aligning Training and Inference Routers](https://openreview.net/forum?id=6LORvHYkV3) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=6LORvHYkV3) |
-| 168 | [Policy-Driven World Model Adaptation for Robust Offline Model-based Reinforcement Learning](https://openreview.net/forum?id=30I17s8gjs) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=30I17s8gjs) |
-| 169 | [Agent²: An Agent-Generates-Agent Framework for Reinforcement Learning Automation](https://openreview.net/forum?id=nwXCmnZ35w) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=nwXCmnZ35w) |
-| 170 | [Reinforcement Learning with Verifiable Rewards Implicitly Incentivizes Correct Reasoning in Base LLMs](https://openreview.net/forum?id=jGbRWwIidy) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=jGbRWwIidy) |
-| 171 | [ViRL-TSC: Enhancing Reinforcement Learning with Vision-Language Models for Context-Aware Traffic Signal Control](https://openreview.net/forum?id=36xNdrIUXa) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=36xNdrIUXa) |
-| 172 | [PilotRAG: Teaching LLMs Multi-Turn Hybrid RAG via Reinforcement Learning](https://openreview.net/forum?id=GpHG7VwbIY) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=GpHG7VwbIY) |
-| 173 | [MUA-RL: Multi-turn User-interacting Agent Reinforcement Learning for agentic tool use](https://openreview.net/forum?id=BtU29vylui) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=BtU29vylui) |
-| 174 | [Enhancing Vision-Language Reasoning via Reinforcement Learning with Scalable Multimodal QA Synthesis](https://openreview.net/forum?id=pe3Fx0awUx) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=pe3Fx0awUx) |
-| 175 | [Spatiotemporal Forecasting as Planning: A Model-Based Reinforcement Learning Approach with Generative World Models](https://openreview.net/forum?id=ASPC2Ut0CB) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ASPC2Ut0CB) |
-| 176 | [SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning](https://openreview.net/forum?id=t85Ni0LwjC) | 4.40 | 5 | Pending | [Link](https://openreview.net/forum?id=t85Ni0LwjC) |
-| 177 | [Advancing Sparse Attention in Spiking Neural Networks via Spike-Timing-Based Prioritization](https://openreview.net/forum?id=sL0NpgJRMs) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=sL0NpgJRMs) |
-| 178 | [SSRL: Self-Search Reinforcement Learning](https://openreview.net/forum?id=WgRyl6fzLx) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=WgRyl6fzLx) |
-| 179 | [READ: End-to-End Autonomous Driving Made Safer with Efficient Reinforcement Learning](https://openreview.net/forum?id=UOYkiemcUP) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=UOYkiemcUP) |
-| 180 | [Reinforcement Learning for Heterogeneous DAG Scheduling with Weighted Cross-Attention](https://openreview.net/forum?id=MwuSvrthXq) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=MwuSvrthXq) |
-| 181 | [EFRame: Deeper Reasoning via Exploration-Filter-Replay Reinforcement Learning Framework](https://openreview.net/forum?id=AIKURJjxXT) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=AIKURJjxXT) |
-| 182 | [CapRL: Stimulating Dense Image Caption Capabilities via Reinforcement Learning](https://openreview.net/forum?id=JLelnhqXaC) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=JLelnhqXaC) |
-| 183 | [Self-Guided Process Reward Optimization with Redefined Step-wise Advantage for Process Reinforcement Learning](https://openreview.net/forum?id=pFuxtzaC3K) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=pFuxtzaC3K) |
-| 184 | [Towards High Data Efficiency in Reinforcement Learning with Verifiable Reward](https://openreview.net/forum?id=sruA4AZmZI) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=sruA4AZmZI) |
-| 185 | [Reinforcement Learning for Versatile Video Reasoning Capabilities in Base Multimodal LLMs](https://openreview.net/forum?id=b3mk8XrH9N) | 3.20 | 5 | Pending | [Link](https://openreview.net/forum?id=b3mk8XrH9N) |
-| 186 | [SWIRL: A Staged Workflow for Interleaved Reinforcement Learning in Mobile GUI Control](https://openreview.net/forum?id=HfRJDTBuSr) | 3.60 | 5 | Pending | [Link](https://openreview.net/forum?id=HfRJDTBuSr) |
-| 187 | [RewardMap: Tackling Sparse Rewards in Fine-grained Visual Reasoning via Multi-Stage Reinforcement Learning](https://openreview.net/forum?id=iRVbPxHNrX) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=iRVbPxHNrX) |
-| 188 | [Zero-Shot Visual Generalization in Model-Based Reinforcement Learning via Latent Consistency](https://openreview.net/forum?id=CoxruEzsd2) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=CoxruEzsd2) |
-| 189 | [Sparse Attention Adaptation for Long Reasoning](https://openreview.net/forum?id=c5BOcHM6J8) | 5.20 | 5 | Pending | [Link](https://openreview.net/forum?id=c5BOcHM6J8) |
-| 190 | [Tailored Primitive Initialization is the Secret Key to Reinforcement Learning](https://openreview.net/forum?id=1tWqSvoeBd) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=1tWqSvoeBd) |
-| 191 | [BFM-Zero: A Promptable Behavioral Foundation Model for Humanoid Control Using Unsupervised Reinforcement Learning](https://openreview.net/forum?id=jkhl2oI0g5) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=jkhl2oI0g5) |
-| 192 | [Teacher-Student Multi-Agent Reinforcement Learning Framework for AutoML Pipeline Construction](https://openreview.net/forum?id=yhqCTAFy0O) | 1.60 | 5 | Pending | [Link](https://openreview.net/forum?id=yhqCTAFy0O) |
-| 193 | [Test-time Offline Reinforcement Learning on Goal-related Experience](https://openreview.net/forum?id=Nyjvjgh6jW) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Nyjvjgh6jW) |
-| 194 | [Agentic Reinforcement Learning with Implicit Step Rewards](https://openreview.net/forum?id=ooROvpmxMV) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ooROvpmxMV) |
-| 195 | [Dynamic Causal Influence Learning in Cooperative Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=Wo9fI4QZGP) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Wo9fI4QZGP) |
-| 196 | [Surrogate Signals from Format and Length: Reinforcement Learning for Solving Mathematical Problems without Ground Truth Answers](https://openreview.net/forum?id=FxGCfnJswW) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=FxGCfnJswW) |
-| 197 | [C2T: Classifier-based Token Tree Construction in Speculative Decoding](https://openreview.net/forum?id=8pX8He3Yyg) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=8pX8He3Yyg) |
-| 198 | [Subgoal-Guided Reward Shaping: Improving Preference-Based Offline Reinforcement Learning via Conditional VAEs](https://openreview.net/forum?id=5T1vMQldr8) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=5T1vMQldr8) |
-| 199 | [Not All Thoughts are Generated Equal: Efficient LLM Reasoning via Synergizing-Oriented Multi-Turn Reinforcement Learning](https://openreview.net/forum?id=HhmuDEH80X) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=HhmuDEH80X) |
-| 200 | [LGR2: Language Guided Reward Relabeling for Accelerating Hierarchical Reinforcement Learning](https://openreview.net/forum?id=YjlepjYxAd) | 2.80 | 5 | Pending | [Link](https://openreview.net/forum?id=YjlepjYxAd) |
-| 201 | [Dynamic Optimizations of LLM Ensembles with Two-Stage Reinforcement Learning Agents](https://openreview.net/forum?id=mhalNLINnn) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=mhalNLINnn) |
-| 202 | [SCRIBES: Web-Scale Script-Based Semi-Structured Data Extraction with Reinforcement Learning](https://openreview.net/forum?id=gQSnEIA3Z3) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=gQSnEIA3Z3) |
-| 203 | [Self-Supervised Diffusion Model Sampling With Reinforcement Learning](https://openreview.net/forum?id=aATVaBx01a) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=aATVaBx01a) |
-| 204 | [PosS: Position Specialist Generates Better Draft for Speculative Decoding](https://openreview.net/forum?id=xaA5tlCHDi) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=xaA5tlCHDi) |
-| 205 | [Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](https://openreview.net/forum?id=U6z5Y1htbe) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=U6z5Y1htbe) |
-| 206 | [Cactus: Accelerating Auto-Regressive Decoding with Constrained Acceptance Speculative Sampling](https://openreview.net/forum?id=lpUIkCAy9p) | 4.80 | 5 | Pending | [Link](https://openreview.net/forum?id=lpUIkCAy9p) |
-| 207 | [Control Reinforcement Learning: Interpretable Token-Level Steering of LLMs via Sparse Autoencoder Features](https://openreview.net/forum?id=jiPrwmMb2e) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=jiPrwmMb2e) |
-| 208 | [Advancing Autonomous VLM Agents via Variational Subgoal-Conditioned Reinforcement Learning](https://openreview.net/forum?id=Ba1R0hXD4N) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=Ba1R0hXD4N) |
-| 209 | [The Disparate Impacts of Speculative Decoding](https://openreview.net/forum?id=2hOQcn5QUA) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=2hOQcn5QUA) |
-| 210 | [Process Reinforcement through Implicit Rewards](https://openreview.net/forum?id=CmyqMn3HeJ) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=CmyqMn3HeJ) |
-| 211 | [Towards Optimism-Pessimism Trade-off in Model-based Offline-to-Online Reinforcement Learning](https://openreview.net/forum?id=odsl3gqVSX) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=odsl3gqVSX) |
-| 212 | [Progra: Progress-Aware Reinforcement Learning for Multi-Turn Function Calling](https://openreview.net/forum?id=6dopJjgtdE) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=6dopJjgtdE) |
-| 213 | [FASA: FREQUENCY-AWARE SPARSE ATTENTION](https://openreview.net/forum?id=FnSgecCEwg) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=FnSgecCEwg) |
-| 214 | [SPaRFT: Self-Paced Reinforcement Fine-Tuning for Large Language Models](https://openreview.net/forum?id=u9pQM2B59U) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=u9pQM2B59U) |
-| 215 | [SpecTr-GBV: Multi-Draft Block Verification Accelerating Speculative Decoding](https://openreview.net/forum?id=5FAUpLjndj) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=5FAUpLjndj) |
-| 216 | [Surprise-Modulated Meta-Advantages in Reinforcement Learning: Towards Language-Neutral Post-Training for Code LLMs](https://openreview.net/forum?id=kcQGDAnTZM) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=kcQGDAnTZM) |
-| 217 | [Learning to Reason About Code Insecurity: Composite-Reinforcement Fine-Tuning for Cognitive Alignment](https://openreview.net/forum?id=LygvJQPPJ2) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=LygvJQPPJ2) |
-| 218 | [GALAX: Graph-Augmented Language Model for Explainable Reinforcement-Guided Subgraph Reasoning in Precision Medicine](https://openreview.net/forum?id=ADFXCeYXvR) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ADFXCeYXvR) |
-| 219 | [MaxCode: A Max-Reward Reinforcement Learning Framework for Automated Code Optimization](https://openreview.net/forum?id=E4RYoWcbl2) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=E4RYoWcbl2) |
-| 220 | [LaSeR: Reinforcement Learning with Last-Token Self-Rewarding](https://openreview.net/forum?id=1OhgEmix20) | 5.20 | 5 | Pending | [Link](https://openreview.net/forum?id=1OhgEmix20) |
-| 221 | [Speculative Speculative Decoding](https://openreview.net/forum?id=aL1Wnml9Ef) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=aL1Wnml9Ef) |
-| 222 | [vAttention: Verified Sparse Attention via Sampling](https://openreview.net/forum?id=zzTDulLys0) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zzTDulLys0) |
-| 223 | [CMDPO: Centered Mirror Descent Policy Optimization for Stable and Efficient Reinforcement Learning](https://openreview.net/forum?id=OaijL8iG5G) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=OaijL8iG5G) |
-| 224 | [Constrained Reinforcement Learning using Bender’s Decomposition and Exact Constraint Satisfaction](https://openreview.net/forum?id=KJ3zkHzsKm) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=KJ3zkHzsKm) |
-| 225 | [Alpha-RF: Automated RF-Filter-Circuit Design with Neural Simulator and Reinforcement Learning](https://openreview.net/forum?id=4pQAHzsFlv) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=4pQAHzsFlv) |
-| 226 | [EECE: Ensemble-based Epistemic and Cooperative Exploration for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=EfsV41FTRQ) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=EfsV41FTRQ) |
-| 227 | [MasHost Builds It All: Autonomous Multi-Agent System Directed by Reinforcement Learning](https://openreview.net/forum?id=AIbKudcDs8) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=AIbKudcDs8) |
-| 228 | [AI-SearchPlanner: Modular Agentic Search via Pareto-Optimal Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=DMUZOwlDEz) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=DMUZOwlDEz) |
-| 229 | [DLER: Doing Length pEnalty Right — Incentivizing More Intelligence per Token via Reinforcement Learning](https://openreview.net/forum?id=gxkOfdaaMA) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=gxkOfdaaMA) |
-| 230 | [Unsupervised Reinforcement Learning with Verifiable Rewards via First Repeat Criterion](https://openreview.net/forum?id=l4noTuvYMP) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=l4noTuvYMP) |
-| 231 | [Stable Planning through Aligned Representations in Model-Based Reinforcement Learning](https://openreview.net/forum?id=wdBqDf3BZs) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=wdBqDf3BZs) |
-| 232 | [ScaleMoE: Mixture-of-Experts for Scalable Continuous Control in Actor–Critic Reinforcement Learning](https://openreview.net/forum?id=xWOTN66DQm) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=xWOTN66DQm) |
-| 233 | [CARL: Constraint-Aware Reinforcement Learning for Planning with LLMs](https://openreview.net/forum?id=5MOGAO0YXd) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=5MOGAO0YXd) |
-| 234 | [Collaborative Device-Cloud LLM Inference through Reinforcement Learning](https://openreview.net/forum?id=SwHnok3JtD) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=SwHnok3JtD) |
-| 235 | [Efficient On-Policy Reinforcement Learning via Exploration of Sparse Parameter Space](https://openreview.net/forum?id=y09blHAYKj) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=y09blHAYKj) |
-| 236 | [PilotRL: Training Language Model Agents via Global Planning-Guided Progressive Reinforcement Learning](https://openreview.net/forum?id=eB7zqVh300) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=eB7zqVh300) |
-| 237 | [Mitigating Forgetting Between Supervised and Reinforcement Learning Yields Stronger Reasoners](https://openreview.net/forum?id=HHx5KFnj8P) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=HHx5KFnj8P) |
-| 238 | [From Supervision to Exploration: What Does Protein Language Model Learn During Reinforcement Learning?](https://openreview.net/forum?id=2CPHv8mWS4) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=2CPHv8mWS4) |
-| 239 | [Generalization in Online Reinforcement Learning for Mobile Agents](https://openreview.net/forum?id=INoDyme6wS) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=INoDyme6wS) |
-| 240 | [Object-Centric World Models from Few-Shot Annotations for Sample-Efficient Reinforcement Learning](https://openreview.net/forum?id=qmEyJadwHA) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=qmEyJadwHA) |
-| 241 | [CVeDRL: An Efficient Code Verifier via Difficulty-aware Reinforcement Learning](https://openreview.net/forum?id=F7O3S4wo61) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=F7O3S4wo61) |
-| 242 | [Harnessing the Power of Reinforcement Learning for Language-Model-Based Information Retriever via Query-Document Co-Augmentation](https://openreview.net/forum?id=6UDRtcScwO) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=6UDRtcScwO) |
-| 243 | [TROLL: Trust Regions Improve Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=X9D5MVpPJ9) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=X9D5MVpPJ9) |
-| 244 | [Round-trip Reinforcement Learning: Self-Consistent Training for Better Chemical LLMs](https://openreview.net/forum?id=8YlFBmNYVV) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=8YlFBmNYVV) |
-| 245 | [Taming the Judge: Deconflicting AI Feedback for Stable Reinforcement Learning](https://openreview.net/forum?id=yeKgUkFRsF) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=yeKgUkFRsF) |
-| 246 | [Reinforcement Reward Model with Policy Feedback](https://openreview.net/forum?id=I9P0Yu73if) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=I9P0Yu73if) |
-| 247 | [Neural Predictor-Corrector: Solving Homotopy Problems with Reinforcement Learning](https://openreview.net/forum?id=x6iodYWNty) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=x6iodYWNty) |
-| 248 | [SparseD: Sparse Attention for Diffusion Language Models](https://openreview.net/forum?id=dwbrZtYP04) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=dwbrZtYP04) |
-| 249 | [FlashOmni: A Unified Sparse Attention Engine for Diffusion Transformers](https://openreview.net/forum?id=HljnvKxGRo) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=HljnvKxGRo) |
-| 250 | [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](https://openreview.net/forum?id=X7oBvgAeuh) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=X7oBvgAeuh) |
-| 251 | [MemSearcher: Training LLMs to Reason, Search and Manage Memory via End-to-End Reinforcement Learning](https://openreview.net/forum?id=EWIAx3NgvA) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=EWIAx3NgvA) |
-| 252 | [Learn the Ropes, Then Trust the Wins: Self-imitation with Progressive Exploration for Agentic Reinforcement Learning](https://openreview.net/forum?id=Kssko33Ekq) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Kssko33Ekq) |
-| 253 | [Cross-Modal Syntax-NL Attention for Multi-Agent Reinforcement Learning in Collaborative Coding](https://openreview.net/forum?id=5sEj8EL8J4) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=5sEj8EL8J4) |
-| 254 | [RLAR: An Agentic Reward System for Multi-task Reinforcement Learning on Large Language Models](https://openreview.net/forum?id=fJ6tVqIYVU) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=fJ6tVqIYVU) |
-| 255 | [Pretraining in Actor-Critic Reinforcement Learning for Robot Motion Control](https://openreview.net/forum?id=2vBAf3J0uD) | 3.60 | 5 | Pending | [Link](https://openreview.net/forum?id=2vBAf3J0uD) |
-| 256 | [Shared Dynamic Model-Aligned Hypernetworks for Zero-Shot Generalization in Contextual Reinforcement Learning](https://openreview.net/forum?id=mUrw5WixTx) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=mUrw5WixTx) |
-| 257 | [Boosting Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](https://openreview.net/forum?id=AXNRILww9c) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=AXNRILww9c) |
-| 258 | [ReMix: Reinforcement Routing for Mixtures of LoRAs in LLM Finetuning](https://openreview.net/forum?id=zNqc0li5Dl) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zNqc0li5Dl) |
-| 259 | [HarnessLLM: Automatic Testing Harness Generation via Reinforcement Learning](https://openreview.net/forum?id=44C65zgF2G) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=44C65zgF2G) |
-| 260 | [Reinforcement Learning Improves Traversal of Hierarchical Knowledge in LLMs](https://openreview.net/forum?id=OferBmc2zT) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=OferBmc2zT) |
-| 261 | [LACONIC: Length-Aware Constrained Reinforcement Learning for LLM](https://openreview.net/forum?id=Q038RrNkwv) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=Q038RrNkwv) |
-| 262 | [Contrastive Inverse Reinforcement Learning for Highway Driving Behavior Optimization](https://openreview.net/forum?id=IzhW8cS1K1) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=IzhW8cS1K1) |
-| 263 | [Stealthy Backdoor Attack in Reinforcement Learning via Bi-level Optimization](https://openreview.net/forum?id=YM23GVqQqj) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=YM23GVqQqj) |
-| 264 | [Hybrid Reinforcement: when reward is sparse, better to be dense](https://openreview.net/forum?id=0CajQNVKyB) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=0CajQNVKyB) |
-| 265 | [Scalable Constrained Multi-Agent Reinforcement Learning via State Augmentation and Consensus for Separable Dynamics](https://openreview.net/forum?id=CAMU0mOR7p) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=CAMU0mOR7p) |
-| 266 | [GuirlVG: Incentivize GUI Visual Grounding via Empirical Exploration on Reinforcement Learning](https://openreview.net/forum?id=zrH2A1upAo) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zrH2A1upAo) |
-| 267 | [Improving Causal Inference Robustness via Reinforcement-guided Diffusion Models](https://openreview.net/forum?id=OQ37q5JEtQ) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=OQ37q5JEtQ) |
-| 268 | [Black-Box Combinatorial Optimization with Order-Invariant Reinforcement Learning](https://openreview.net/forum?id=EKqBgn6bea) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=EKqBgn6bea) |
-| 269 | [Goal-Guided Efficient Exploration via Large Language Model in Reinforcement Learning](https://openreview.net/forum?id=Xs1CrA1kZQ) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Xs1CrA1kZQ) |
-| 270 | [Beyond Parallel Corpora: Unlocking Autonomous Machine Translation via Autocritical Reinforcement Learning](https://openreview.net/forum?id=a60YWVnVoo) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=a60YWVnVoo) |
-| 271 | [VLA-RFT: Vision-Language-Action Reinforcement Fine-Tuning with Verified Rewards in World Simulators](https://openreview.net/forum?id=Jaut99EHeu) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Jaut99EHeu) |
-| 272 | [Breaking Training Bottlenecks: Effective Reinforcement Learning for Modern Coding Models](https://openreview.net/forum?id=ryosylfHX2) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ryosylfHX2) |
-| 273 | [RL of Thoughts: Navigating LLM Reasoning with Inference-time Reinforcement Learning](https://openreview.net/forum?id=Dw034qKrP5) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Dw034qKrP5) |
-| 274 | [J1: Incentivizing Thinking in LLM-as-a-Judge via Reinforcement Learning](https://openreview.net/forum?id=dnJEHl6DI1) | 6.67 | 3 | Pending | [Link](https://openreview.net/forum?id=dnJEHl6DI1) |
-| 275 | [$\mu$P for RL: Mitigating Feature Inconsistencies During Reinforcement Learning](https://openreview.net/forum?id=Wuy631kHwH) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Wuy631kHwH) |
-| 276 | [Curriculum-RLAIF: Curriculum Alignment with Reinforcement Learning from AI Feedback](https://openreview.net/forum?id=drKf5JmqnH) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=drKf5JmqnH) |
-| 277 | [RLBenchNet: Benchmarking Neural Architectures with PPO Across Reinforcement Learning Tasks](https://openreview.net/forum?id=3u5Ti1CfzE) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=3u5Ti1CfzE) |
-| 278 | [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](https://openreview.net/forum?id=AoTHU2OmS6) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=AoTHU2OmS6) |
-| 279 | [RL$^2$eak: Reinforcement Learning Enhanced Prompt Leakage Attack in Multi-tenant Large Language Model Services](https://openreview.net/forum?id=LmGSD6CedJ) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=LmGSD6CedJ) |
-| 280 | [CORectifier: Hierarchical Trajectory Rectifications Boost Reinforcement Learning for Combinatorial Optimization](https://openreview.net/forum?id=xniQIl8oTw) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=xniQIl8oTw) |
-| 281 | [RLPIR: Reinforcement Learning with Prefix and Intrinsic Reward](https://openreview.net/forum?id=3jrWUqoItt) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=3jrWUqoItt) |
-| 282 | [Autonomous Urban Region Representation with LLM-informed Reinforcement Learning](https://openreview.net/forum?id=M34Eyawzm5) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=M34Eyawzm5) |
-| 283 | [Value Shaping: Bias Reduction in Bellman Error for Deep Reinforcement Learning](https://openreview.net/forum?id=pye62xAoi4) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=pye62xAoi4) |
-| 284 | [Verl-Tool: Towards Holistic Agentic Reinforcement Learning with Tool Use](https://openreview.net/forum?id=oWFtI0cNsE) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=oWFtI0cNsE) |
-| 285 | [Guided Sampling in Reinforcement Learning for LLM Reasoning](https://openreview.net/forum?id=oXgxHVTqcm) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=oXgxHVTqcm) |
-| 286 | [Evolution Strategies at Scale: LLM Fine-Tuning Beyond Reinforcement Learning](https://openreview.net/forum?id=1zqmmcjvdN) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=1zqmmcjvdN) |
-| 287 | [BroRL: Scaling Reinforcement Learning via Broadened Exploration](https://openreview.net/forum?id=YwEh20x8ud) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=YwEh20x8ud) |
-| 288 | [Parallel-R1: Towards Parallel Thinking via Reinforcement Learning](https://openreview.net/forum?id=wOmjeBN6hP) | 6.00 | 7 | Pending | [Link](https://openreview.net/forum?id=wOmjeBN6hP) |
-| 289 | [RLTime: Reinforcement Learning-Based Feature Attribution for Interpretable Time Series Models](https://openreview.net/forum?id=cg4BxldVRg) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=cg4BxldVRg) |
-| 290 | [Cog-Rethinker: Hierarchical Metacognitive Reinforcement Learning for LLM Reasoning](https://openreview.net/forum?id=94TUKl42Gm) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=94TUKl42Gm) |
-| 291 | [Mixture-of-World Models: Scaling Multi-Task Reinforcement Learning with Modular Latent Dynamics](https://openreview.net/forum?id=qUQARlAx5y) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qUQARlAx5y) |
-| 292 | [The Art of Scaling Reinforcement Learning Compute for LLMs](https://openreview.net/forum?id=FMjeC9Msws) | 7.50 | 4 | Pending | [Link](https://openreview.net/forum?id=FMjeC9Msws) |
-| 293 | [Let it Calm: Exploratory Annealed Decoding for Verifiable Reinforcement Learning](https://openreview.net/forum?id=GQqZrmqQNe) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=GQqZrmqQNe) |
-| 294 | [DeepTravel: An End-to-End Agentic Reinforcement Learning Framework for Autonomous Travel Planning Agents](https://openreview.net/forum?id=fXhTKS4Gpd) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=fXhTKS4Gpd) |
-| 295 | [SAC Flow: Sample-Efficient Reinforcement Learning of Flow-Based Policies via Velocity-Reparameterized Sequential Modeling](https://openreview.net/forum?id=zZvWj4JrYj) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=zZvWj4JrYj) |
-| 296 | [FOE-RL: Flexible Online Reinforcement Learning for Efficient Inference in Large Language Models](https://openreview.net/forum?id=Z2SRrwSS9O) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Z2SRrwSS9O) |
-| 297 | [On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting](https://openreview.net/forum?id=dCm9bBrk5d) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=dCm9bBrk5d) |
-| 298 | [SpecExit: Accelerating Large Reasoning Model via Speculative Exit](https://openreview.net/forum?id=OTaUT4J1d4) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=OTaUT4J1d4) |
-| 299 | [Interpretable Intrinsic Cues for Efficient Reinforcement Learning with Large Language Models](https://openreview.net/forum?id=GWvZQsMLfl) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=GWvZQsMLfl) |
-| 300 | [MultiCrafter: High-Fidelity Multi-Subject Generation via Spatially Disentangled Attention and Identity-Aware Reinforcement Learning](https://openreview.net/forum?id=9XZcqgdzrS) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=9XZcqgdzrS) |
-| 301 | [Efficient Multi-Step Reinforcement Learning with Expectation-Maximization Bootstrapping](https://openreview.net/forum?id=qfkTRsPqFB) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=qfkTRsPqFB) |
-| 302 | [Inverse Reinforcement Learning with Dynamic Reward Scaling for LLM Alignment](https://openreview.net/forum?id=K0Zh6mzTzc) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=K0Zh6mzTzc) |
-| 303 | [XQC: Well-conditioned Optimization Accelerates Deep Reinforcement Learning](https://openreview.net/forum?id=tx1ZvypKqS) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=tx1ZvypKqS) |
-| 304 | [ACTIVE-o3 : Empowering MLLMs with Active Perception via Pure Reinforcement Learning](https://openreview.net/forum?id=1QaTq2NXD6) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=1QaTq2NXD6) |
-| 305 | [Knowledge-to-Verification: Unlocking Reinforcement Learning with Verifiable Rewards for LLMs in Knowledge-Intensive Domains](https://openreview.net/forum?id=EVS7SeKBqI) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=EVS7SeKBqI) |
-| 306 | [Mastering Sparse CUDA Generation through Pretrained Models and Deep Reinforcement Learning](https://openreview.net/forum?id=VdLEaGPYWT) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=VdLEaGPYWT) |
-| 307 | [Coefficients-Preserving Sampling for Reinforcement Learning with Flow Matching](https://openreview.net/forum?id=SoHZapVUPE) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=SoHZapVUPE) |
-| 308 | [Revolutionizing Reinforcement Learning Framework for Diffusion Large Language Models](https://openreview.net/forum?id=KNAyc9DMe3) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=KNAyc9DMe3) |
-| 309 | [GEPO: Group Expectation Policy Optimization for Stable Heterogeneous Reinforcement Learning](https://openreview.net/forum?id=movNwgQtDt) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=movNwgQtDt) |
-| 310 | [Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment](https://openreview.net/forum?id=1G7WIw1fu8) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=1G7WIw1fu8) |
-| 311 | [Compositional HyperModules for Few-Shot Code Adaptation in Meta-Reinforcement Learning](https://openreview.net/forum?id=NWoHQbALl4) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=NWoHQbALl4) |
-| 312 | [TAROT: Test-Driven and Capability-Adaptive Curriculum Reinforcement Fine-Tuning for Code Generation](https://openreview.net/forum?id=62DZyNWRgv) | 3.67 | 6 | Pending | [Link](https://openreview.net/forum?id=62DZyNWRgv) |
-| 313 | [Dynamic Role-Graph Reinforcement Learning for Multi-Agent Collaborative Coding Systems](https://openreview.net/forum?id=95bwpkVPuR) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=95bwpkVPuR) |
-| 314 | [AlgoForge: Specializing Code Generation Agents through Collaborative Reinforcement Learning](https://openreview.net/forum?id=KwqbtKeaRl) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=KwqbtKeaRl) |
-| 315 | [Beyond English-Centric Training: How Reinforcement Learning Improves Cross-Lingual Reasoning in LLMs](https://openreview.net/forum?id=hdrG6SaTcA) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=hdrG6SaTcA) |
-| 316 | [Peeking inside the Black-Box: Reinforcement Learning for Explainable and Accurate Relation Extraction](https://openreview.net/forum?id=Cvwu959bOs) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Cvwu959bOs) |
-| 317 | [Swap-guided Preference Learning for Personalized Reinforcement Learning from Human Feedback](https://openreview.net/forum?id=nc28mSbyVG) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=nc28mSbyVG) |
-| 318 | [Learning in Context, Guided by Choice:  A Reward-Free Paradigm for Reinforcement Learning with Transformers](https://openreview.net/forum?id=UsHtbJPFoP) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=UsHtbJPFoP) |
-| 319 | [Explore Data Left Behind in Reinforcement Learning for Reasoning Language Models](https://openreview.net/forum?id=BOsuSLbD8L) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=BOsuSLbD8L) |
-| 320 | [Trajectory Generation with Conservative Value Guidance for Offline Reinforcement Learning](https://openreview.net/forum?id=eTThjhjzwZ) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=eTThjhjzwZ) |
-| 321 | [Inverse Reinforcement Learning Using Just Classification and a Few Regressions](https://openreview.net/forum?id=4iWwif5C9U) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=4iWwif5C9U) |
-| 322 | [Architectural Inductive Biases Can Be Enough for State Abstraction in Deep Reinforcement Learning](https://openreview.net/forum?id=DbrefyDn8R) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=DbrefyDn8R) |
-| 323 | [h1: Bootstrapping Models to Reason over Longer Horizons via Reinforcement Learning](https://openreview.net/forum?id=SP7W06tphZ) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=SP7W06tphZ) |
-| 324 | [RFS: Reinforcement learning with Residual flow steering for dexterous manipulation](https://openreview.net/forum?id=Kt9tJeOwjy) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Kt9tJeOwjy) |
-| 325 | [EXPO: Stable Reinforcement Learning with Expressive Policies](https://openreview.net/forum?id=aFjSjkB6CV) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=aFjSjkB6CV) |
-| 326 | [Positive Transfer of Prior Knowledge in Deep Reinforcement Learning via Reward Shaping](https://openreview.net/forum?id=jS7l8oPBlj) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=jS7l8oPBlj) |
-| 327 | [LLE-MORL: Locally Linear Extrapolation of Policies for Efficient Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=qPUQMLRBsT) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qPUQMLRBsT) |
-| 328 | [Parameter-Efficient Reinforcement Learning using Prefix Optimization](https://openreview.net/forum?id=SLhLUdlaqc) | N/A | 0 | Pending | [Link](https://openreview.net/forum?id=SLhLUdlaqc) |
-| 329 | [Reinforcement Learning with Discrete Diffusion Policies for Combinatorial Action Spaces](https://openreview.net/forum?id=tM34PZf8W9) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=tM34PZf8W9) |
-| 330 | [CPMöbius: Iterative Coach–Player Reasoning for Data-Free Reinforcement Learning](https://openreview.net/forum?id=jC63F5aXpe) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=jC63F5aXpe) |
-| 331 | [X-Pruner: An Adaptive Pruning Method with Self-Compensation Driven by Reinforcement Learning for Language Models](https://openreview.net/forum?id=uYOofVezYt) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=uYOofVezYt) |
-| 332 | [LLM-Guided Communication for Cooperative Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=JH1mMoGtyl) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=JH1mMoGtyl) |
-| 333 | [Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments](https://openreview.net/forum?id=dRDcVyobhH) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=dRDcVyobhH) |
-| 334 | [Fleming-R1: Toward Expert-Level Medical Reasoning via Reinforcement Learning](https://openreview.net/forum?id=LSxWHNHpGf) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=LSxWHNHpGf) |
-| 335 | [Language Agents for Hypothesis-driven Clinical Decision Making with Reinforcement Learning](https://openreview.net/forum?id=7vHUQCMAzG) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=7vHUQCMAzG) |
-| 336 | [Reinforcement-Guided Subtask Decomposition for Unified Vision-Language Learning](https://openreview.net/forum?id=8IWDK1I6j0) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=8IWDK1I6j0) |
-| 337 | [Strict Subgoal Execution: Reliable Long-Horizon Planning in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=cMpOvMuyYa) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=cMpOvMuyYa) |
-| 338 | [Evo-PI: Scaling Medical Reasoning via Evolving Principle-Guided Reinforcement Learning](https://openreview.net/forum?id=oagI3xi3Yc) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=oagI3xi3Yc) |
-| 339 | [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](https://openreview.net/forum?id=gRdEcs0qdd) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=gRdEcs0qdd) |
-| 340 | [Video-Thinker: Sparking "Thinking with Videos" via Reinforcement Learning](https://openreview.net/forum?id=ofNbGPV6Ve) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ofNbGPV6Ve) |
-| 341 | [Overcoming Joint Intractability with Lossless Hierarchical Speculative Decoding](https://openreview.net/forum?id=LaVrNaBNwM) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=LaVrNaBNwM) |
-| 342 | [A Constrained Bi-level Optimization Framework for Constrained Reinforcement Learning from Human Feedback](https://openreview.net/forum?id=QOPlh31RTZ) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=QOPlh31RTZ) |
-| 343 | [Anchor-Guided Behavior Cloning with Offline Reinforcement Learning for Robust Autonomous Driving](https://openreview.net/forum?id=RbsLsTYi4H) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=RbsLsTYi4H) |
-| 344 | [Toward Neural Streaming Scheduling: A Memory-Augmented Reinforcement Learning Model with Critical Structure Encoding](https://openreview.net/forum?id=rnrENwgDsn) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=rnrENwgDsn) |
-| 345 | [AgentPO: Enhancing Multi-Agent Collaboration via Reinforcement Learning](https://openreview.net/forum?id=5L8uyzjn2l) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=5L8uyzjn2l) |
-| 346 | [Agentic-KGR: Co-evolutionary Knowledge Graph Construction through Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7qQ50LrRn5) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=7qQ50LrRn5) |
-| 347 | [CARTS: Cooperative Reinforcement Learning for Traffic Signal Control and Carbon Emission Reduction](https://openreview.net/forum?id=7E6dg4HIIW) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=7E6dg4HIIW) |
-| 348 | [Mitigating Hallucinations in Large Language Models via Hybrid Reinforcement Learning](https://openreview.net/forum?id=4t51qDeEq7) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=4t51qDeEq7) |
-| 349 | [How reinforcement learning after next-token prediction facilitates learning](https://openreview.net/forum?id=CTGpC7xWHM) | 6.00 | 3 | Pending | [Link](https://openreview.net/forum?id=CTGpC7xWHM) |
-| 350 | [Sample-efficient Reinforcement Learning by Warm-starting with LLMs](https://openreview.net/forum?id=jKcHPxRvk9) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=jKcHPxRvk9) |
-| 351 | [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7N0ugLE17t) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=7N0ugLE17t) |
-| 352 | [Overton Pluralistic Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=BzeVZ63hh4) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=BzeVZ63hh4) |
-| 353 | [MCPlanner: Multi-Scale Consistency Planning for Offline Reinforcement Learning](https://openreview.net/forum?id=P5heo2n6Vq) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=P5heo2n6Vq) |
-| 354 | [Legal-Gated Attention Networks: Enforcing Action Legality as a Structural Inductive Bias in Deep Reinforcement Learning](https://openreview.net/forum?id=aMgYP4lh0d) | 2.40 | 5 | Pending | [Link](https://openreview.net/forum?id=aMgYP4lh0d) |
-| 355 | [The Best of N Worlds: Aligning Reinforcement Learning with Best-of-N Sampling via max@k Optimization](https://openreview.net/forum?id=BmkOKYfbmV) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=BmkOKYfbmV) |
-| 356 | [AlphaAlign: Incentivizing Safety Alignment with Extremely Simplified Reinforcement Learning](https://openreview.net/forum?id=2XNb1JUKW3) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=2XNb1JUKW3) |
-| 357 | [Adversarial Test Case Generation via Reinforcement Learning Extends Scaling Laws](https://openreview.net/forum?id=tTZGP1d1A8) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=tTZGP1d1A8) |
-| 358 | [Chasing Moving Targets with Online Self-Play Reinforcement Learning for Safer Language Models](https://openreview.net/forum?id=VqQ1DXEeyo) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=VqQ1DXEeyo) |
-| 359 | [Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data](https://openreview.net/forum?id=oBXfPyi47m) | 8.00 | 4 | Pending | [Link](https://openreview.net/forum?id=oBXfPyi47m) |
-| 360 | [On the Suboptimality of Semi-Markov Decision Process in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=wH2KwMOojc) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=wH2KwMOojc) |
-| 361 | [Reinforcement Learning for Symbolic Graphics Code with Visual Feedback](https://openreview.net/forum?id=HkpqT07shd) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=HkpqT07shd) |
-| 362 | [Federated Recommendation with Reinforcement Learning based Knowledge Distillation](https://openreview.net/forum?id=Qlk5I6TI2D) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=Qlk5I6TI2D) |
-| 363 | [Tagging the Thought: Unlocking Personalization Reasoning via Reinforcement Learning](https://openreview.net/forum?id=aM9cmVV0fK) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=aM9cmVV0fK) |
-| 364 | [VIPO: Value Function Inconsistency Penalized Offline Reinforcement Learning](https://openreview.net/forum?id=DoF6K8DDyz) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=DoF6K8DDyz) |
-| 365 | [VideoZoomer: Reinforcement-Learned Temporal Focusing for Long Video Reasoning](https://openreview.net/forum?id=ARHCFvgx6G) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ARHCFvgx6G) |
-| 366 | [Doctor-R1: Mastering Clinical Inquiry with Experiential Agentic Reinforcement Learning](https://openreview.net/forum?id=vQGHTyL0Jw) | 5.20 | 5 | Pending | [Link](https://openreview.net/forum?id=vQGHTyL0Jw) |
-| 367 | [On Predictability of Reinforcement Learning Dynamics for Large Language Models](https://openreview.net/forum?id=SdHmA6BYVJ) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=SdHmA6BYVJ) |
-| 368 | [HAMMER: Hamiltonian Curiosity Augmented Large Language Model Reinforcement](https://openreview.net/forum?id=OfIPPocM4H) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=OfIPPocM4H) |
-| 369 | [CORE: Concept-Oriented Reinforcement for Bridging the Definition–Application Gap in Mathematical Reasoning](https://openreview.net/forum?id=pRSRiXdpkm) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=pRSRiXdpkm) |
-| 370 | [Token Hidden Reward: Steering Exploration-Exploitation in Group Relative Deep Reinforcement Learning](https://openreview.net/forum?id=htQDmHvva6) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=htQDmHvva6) |
-| 371 | [Learning from Less: Guiding Deep Reinforcement Learning with Differentiable Symbolic Planning](https://openreview.net/forum?id=eVWGZTVLea) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=eVWGZTVLea) |
-| 372 | [Towards Faithful and Controllable Personalization via Critique-Post-Edit Reinforcement Learning](https://openreview.net/forum?id=y2P0h8Bxm8) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=y2P0h8Bxm8) |
-| 373 | [A$^2$Search: Ambiguity-Aware Question Answering with Reinforcement Learning](https://openreview.net/forum?id=3CPzUWIoNf) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=3CPzUWIoNf) |
-| 374 | [Learning Interpretable Options by Identifying Reward Diffusion Bottlenecks in Reinforcement Learning](https://openreview.net/forum?id=FYx7NQHhGS) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=FYx7NQHhGS) |
-| 375 | [QRIM: Quantum Robust Inner Minimization for Reinforcement Learning](https://openreview.net/forum?id=YKOMMh2pSg) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=YKOMMh2pSg) |
-| 376 | [Continuous Speculative Decoding for Autoregressive Image Generation](https://openreview.net/forum?id=KGgSlCGwB0) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=KGgSlCGwB0) |
-| 377 | [Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](https://openreview.net/forum?id=KhEjFE1QvQ) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=KhEjFE1QvQ) |
-| 378 | [One-Step Flow Q-Learning: Addressing the Diffusion Policy Bottleneck in Offline Reinforcement Learning](https://openreview.net/forum?id=60VgwdzxDM) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=60VgwdzxDM) |
-| 379 | [Self-Rewarding Rubric-Based Reinforcement Learning for Open-Ended Reasoning](https://openreview.net/forum?id=2x9Dat4PBO) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=2x9Dat4PBO) |
-| 380 | [$\mathbf{T^3}$: Reducing Belief Deviation in Reinforcement Learning for Active Reasoning](https://openreview.net/forum?id=r8hzDA3pUY) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=r8hzDA3pUY) |
-| 381 | [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for Reinforcement Learning of Open-ended Generation](https://openreview.net/forum?id=ZumVIktGbt) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ZumVIktGbt) |
-| 382 | [UserRL: Training Interactive User-Centric Agent via Reinforcement Learning](https://openreview.net/forum?id=kjCzhKVzEJ) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=kjCzhKVzEJ) |
-| 383 | [Generalizing Beyond Suboptimality: Offline Reinforcement Learning Learns Effective Scheduling through Random Solutions](https://openreview.net/forum?id=IdsRzAAkB2) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=IdsRzAAkB2) |
-| 384 | [RL Is a Hammer and LLMs Are Nails: A Simple Reinforcement Learning Recipe for Strong Prompt Injection](https://openreview.net/forum?id=VTyL1y4Lab) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=VTyL1y4Lab) |
-| 385 | [GAR: Generative Adversarial Reinforcement Learning for Formal Theorem Proving](https://openreview.net/forum?id=1MUZsrJxi9) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=1MUZsrJxi9) |
-| 386 | [Reinforcement Learning with Inverse Rewards for World Model Post-training](https://openreview.net/forum?id=n5dkjiplv4) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=n5dkjiplv4) |
-| 387 | [SPELL: Self-Play Reinforcement Learning for evolving Long-Context Language Models](https://openreview.net/forum?id=83F6YF4Hz6) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=83F6YF4Hz6) |
-| 388 | [Alleviating Forgetfulness of Linear Attention by Hybrid Sparse Attention and Contextualized Learnable Token Eviction](https://openreview.net/forum?id=ioeOm5tFDM) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ioeOm5tFDM) |
-| 389 | [Latent-Space Reinforcement Learning for Image Segmentation](https://openreview.net/forum?id=0MeCArRu5K) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=0MeCArRu5K) |
-| 390 | [Bridging the performance-gap between target-free and target-based reinforcement learning](https://openreview.net/forum?id=ltcxS7JE0c) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ltcxS7JE0c) |
-| 391 | [CRPA: Curriculum-driven Reinforcement Pre-Alignment for Domain-Adaptive Vision-Language Models](https://openreview.net/forum?id=3rZh4QeNyt) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=3rZh4QeNyt) |
-| 392 | [Glance and Focus Reinforcement for Pan-cancer Screening](https://openreview.net/forum?id=qsSIBK6nJX) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qsSIBK6nJX) |
-| 393 | [Improving Online Reinforcement Learning via Behavior Prior Distillation](https://openreview.net/forum?id=s5XJibyXlZ) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=s5XJibyXlZ) |
-| 394 | [RRVF: Visual Reinforcement Learning with Reasoning, Rendering, and Visual Feedback](https://openreview.net/forum?id=5qfX9zJDi2) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=5qfX9zJDi2) |
-| 395 | [Long-Context Generalization with Sparse Attention](https://openreview.net/forum?id=PsB6Lynznk) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=PsB6Lynznk) |
-| 396 | [Self-Exploring Language Models for Explainable Link Forecasting on Temporal Graphs via Reinforcement Learning](https://openreview.net/forum?id=AB3jM3iMaW) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=AB3jM3iMaW) |
-| 397 | [Multi-Policy Pareto Front Tracking Based Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=K3E05Agd6W) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=K3E05Agd6W) |
-| 398 | [Stackelberg Coupling of Online Representation  Learning and Reinforcement Learning](https://openreview.net/forum?id=cFzPNWC9Qb) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=cFzPNWC9Qb) |
-| 399 | [Blending Supervised and Reinforcement Fine-Tuning with Prefix Sampling](https://openreview.net/forum?id=FOBmN3oAKm) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=FOBmN3oAKm) |
-| 400 | [Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](https://openreview.net/forum?id=7BiQwV9Sic) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=7BiQwV9Sic) |
-| 401 | [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](https://openreview.net/forum?id=iHqdSQk6qc) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=iHqdSQk6qc) |
-| 402 | [The Choice of Divergence: A Neglected Key to Mitigating Diversity Collapse in Reinforcement Learning with Verifiable Reward](https://openreview.net/forum?id=xPEsxcO7F7) | 5.60 | 5 | Pending | [Link](https://openreview.net/forum?id=xPEsxcO7F7) |
-| 403 | [TTRV: Test-Time Reinforcement Learning for Vision Language Models](https://openreview.net/forum?id=lPf7qAXMAk) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=lPf7qAXMAk) |
-| 404 | [DisCo: Reinforcement with Diversity Constraints for Multi-Human Generation](https://openreview.net/forum?id=WSoBhpZpdD) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=WSoBhpZpdD) |
-| 405 | [MARFT: Multi-Agent Reinforcement Fine-Tuning](https://openreview.net/forum?id=Yu1ZsRlqeK) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Yu1ZsRlqeK) |
-| 406 | [Quality-Preserving Auto-Regressive Mesh Generation Acceleration via Multi-Head Speculative Decoding](https://openreview.net/forum?id=7s68UdT65x) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=7s68UdT65x) |
-| 407 | [Pref-GRPO: Pairwise Preference Reward-based GRPO for Stable Text-to-Image Reinforcement Learning](https://openreview.net/forum?id=rUDEPUZAvL) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=rUDEPUZAvL) |
-| 408 | [Expert or not? Assessing data quality in offline reinforcement learning](https://openreview.net/forum?id=QCNv7tbuFA) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=QCNv7tbuFA) |
-| 409 | [Incentivizing LLM Reasoning via Reinforcement Learning with Functional Monte Carlo Tree Search](https://openreview.net/forum?id=lHbhzxiVI9) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=lHbhzxiVI9) |
-| 410 | [SRFT: A Single-Stage Method with Supervised and Reinforcement Fine-Tuning for Reasoning](https://openreview.net/forum?id=n6E0r6kQWQ) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=n6E0r6kQWQ) |
-| 411 | [GUI-Shift: Enhancing VLM-Based GUI Agents through Self-supervised Reinforcement Learning](https://openreview.net/forum?id=NakMHPljT7) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=NakMHPljT7) |
-| 412 | [ALDEN: Reinforcement Learning for Active Navigation and Evidence Gathering in Long Documents](https://openreview.net/forum?id=CRWd9MgCl2) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=CRWd9MgCl2) |
-| 413 | [VideoNSA: Native Sparse Attention Scales Video Understanding](https://openreview.net/forum?id=zA2LbsUMDd) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=zA2LbsUMDd) |
-| 414 | [Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment](https://openreview.net/forum?id=DkHt2K1g2Y) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=DkHt2K1g2Y) |
-| 415 | [WebGen-R1: Incentivizing LLMs to Generate Functional and Aesthetic Websites with Reinforcement Learning](https://openreview.net/forum?id=Zzf6ExJZXj) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Zzf6ExJZXj) |
-| 416 | [Formal-Lagrangian Policy Optimization for Safe Reinforcement Learning in Code Generation with Differentiable Verification](https://openreview.net/forum?id=w7jkX7FfZ5) | 1.33 | 3 | Pending | [Link](https://openreview.net/forum?id=w7jkX7FfZ5) |
-| 417 | [Reinforcement Learning Fine-Tuning Enhances Activation Intensity and Diversity in the Internal Circuitry of LLMs](https://openreview.net/forum?id=tzS9roOTdj) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=tzS9roOTdj) |
-| 418 | [Enough is as good as a feast: A Comprehensive Analysis of How Reinforcement Learning Mitigates Task Conflicts in LLMs](https://openreview.net/forum?id=N4l4Jp50R4) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=N4l4Jp50R4) |
-| 419 | [Polyglot-R1: Reinforcement Learning for Multilingual Multi-Perspective Reasoning in LLMs](https://openreview.net/forum?id=yOxb03ThcW) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=yOxb03ThcW) |
-| 420 | [Exploration for Deployment-Efficient Reinforcement Learning Agents](https://openreview.net/forum?id=BN4vhB5IRy) | 3.20 | 5 | Pending | [Link](https://openreview.net/forum?id=BN4vhB5IRy) |
-| 421 | [RTLSeek: Boosting the LLM-Based RTL Generation with Diversity-Oriented Reinforcement Learning](https://openreview.net/forum?id=qO7g1dToiO) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=qO7g1dToiO) |
-| 422 | [Just Enough Thinking: Efficient Reasoning with Adaptive Length Penalties Reinforcement Learning](https://openreview.net/forum?id=QY5tl8AhlT) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=QY5tl8AhlT) |
-| 423 | [Learning Communication in Offline Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=NZSsN8cL0r) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=NZSsN8cL0r) |
-| 424 | [Policy Transfer for Improved Sample Efficiency in Goal-Conditioned Reinforcement Learning](https://openreview.net/forum?id=YXxjnq9HwR) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=YXxjnq9HwR) |
-| 425 | [Reward Is Enough: LLMs Are In-Context Reinforcement Learners](https://openreview.net/forum?id=keCXNHOe4W) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=keCXNHOe4W) |
-| 426 | [FrameMind: Frame-Interleaved Chain-of-Thought for Video Reasoning via Reinforcement Learning](https://openreview.net/forum?id=veHx4mmc9K) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=veHx4mmc9K) |
-| 427 | [Carbon- and System-Aware LoRA Scaling for On-Device LLMs via Hierarchical Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=gRXnaH3hDo) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=gRXnaH3hDo) |
-| 428 | [IncentRL: Bayesian Adaptation of Preference Gaps in Reinforcement Learning](https://openreview.net/forum?id=5o0zF03RP9) | 0.50 | 4 | Pending | [Link](https://openreview.net/forum?id=5o0zF03RP9) |
-| 429 | [Inference-based Rewards for Reinforcement Learning](https://openreview.net/forum?id=omnybNZPv1) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=omnybNZPv1) |
-| 430 | [AstRL: Analog and Mixed-Signal Circuit Synthesis with Deep Reinforcement Learning](https://openreview.net/forum?id=Iz5YEMgdYe) | 2.00 | 1 | Pending | [Link](https://openreview.net/forum?id=Iz5YEMgdYe) |
-| 431 | [Contextual Latent World Models for Offline Meta Reinforcement Learning](https://openreview.net/forum?id=c4D7NJGC6D) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=c4D7NJGC6D) |
-| 432 | [STRuCT-LLM: Unifying Tabular and Graph Reasoning with Reinforcement Learning for Semantic Parsing](https://openreview.net/forum?id=xZDoGrMTGI) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=xZDoGrMTGI) |
-| 433 | [RAPID: An Efficient Reinforcement Learning Algorithm for Small Language Models](https://openreview.net/forum?id=qwfXfdto89) | 1.50 | 4 | Pending | [Link](https://openreview.net/forum?id=qwfXfdto89) |
-| 434 | [Decision Pre-Trained Transformer is a Scalable In-Context Reinforcement Learner](https://openreview.net/forum?id=t6roJiPN6Y) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=t6roJiPN6Y) |
-| 435 | [Plan Then Action: High-Level Planning Guidance Reinforcement Learning  for LLM Reasoning](https://openreview.net/forum?id=YfJdLI8daz) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=YfJdLI8daz) |
-| 436 | [Generative Adversarial Optimization: Dual-Reward Reinforcement Learning for Mathematics Reasoning](https://openreview.net/forum?id=Ccu21bGqRv) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=Ccu21bGqRv) |
-| 437 | [Offline Reinforcement Learning Through Trajectory Clustering and Lower Bound Penalisation](https://openreview.net/forum?id=DOL96nnJpm) | 4.40 | 5 | Pending | [Link](https://openreview.net/forum?id=DOL96nnJpm) |
-| 438 | [Improving Black-Box LLMs with Feedback Reinforcement Learning](https://openreview.net/forum?id=Cr3CWfN7jB) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=Cr3CWfN7jB) |
-| 439 | [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](https://openreview.net/forum?id=omVhYvyTPJ) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=omVhYvyTPJ) |
-| 440 | [Selective Expert Guidance for Effective and Diverse Exploration in Reinforcement Learning of LLMs](https://openreview.net/forum?id=axlFycAkoL) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=axlFycAkoL) |
-| 441 | [SIREN: Subgraph Isomorphism via Reinforcement Enhanced Graph Neural Networks](https://openreview.net/forum?id=vGxKB0b0uI) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=vGxKB0b0uI) |
-| 442 | [DeepTheorem: Advancing LLM Reasoning for Theorem Proving Through Natural Language and Reinforcement Learning](https://openreview.net/forum?id=0OUkySEAf0) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=0OUkySEAf0) |
-| 443 | [FAuNO: Semi-Asynchronous Federated Reinforcement Learning Framework for Task Offloading in Edge Systems](https://openreview.net/forum?id=398L0TTKiG) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=398L0TTKiG) |
-| 444 | [IN-RIL: Interleaved Reinforcement and Imitation Learning for Policy Fine-Tuning](https://openreview.net/forum?id=32lhWShxy8) | 3.00 | 4 | Pending | [Link](https://openreview.net/forum?id=32lhWShxy8) |
-| 445 | [Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning](https://openreview.net/forum?id=KJvHnl3kUv) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=KJvHnl3kUv) |
-| 446 | [RTG: Reverse Trajectory Generation for Reinforcement Learning Under Sparse Reward](https://openreview.net/forum?id=V54Is8qvjZ) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=V54Is8qvjZ) |
-| 447 | [ViaRL: Adaptive Temporal Grounding via Visual Iterated Amplification Reinforcement Learning](https://openreview.net/forum?id=G0ettIR8yv) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=G0ettIR8yv) |
-| 448 | [SIRI: Scaling Iterative Reinforcement Learning with Interleaved Compression](https://openreview.net/forum?id=TgoOdFMIJb) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=TgoOdFMIJb) |
-| 449 | [OPRIDE: Efficient Offline Preference-based Reinforcement Learning via In-Dataset Exploration](https://openreview.net/forum?id=QLDHukpozh) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=QLDHukpozh) |
-| 450 | [MIRA: Memory-Integrated Reinforcement Learning Agent  with Limited LLM Guidance](https://openreview.net/forum?id=oWagByDNPc) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=oWagByDNPc) |
-| 451 | [MobileGUI-RL: Advancing Mobile GUI Agent through Reinforcement Learning in Online Environment](https://openreview.net/forum?id=LrXGarwVO8) | 3.60 | 5 | Pending | [Link](https://openreview.net/forum?id=LrXGarwVO8) |
-| 452 | [Interleaved Reasoning for Large Language Models via Reinforcement Learning](https://openreview.net/forum?id=DIWdk9Zo7g) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=DIWdk9Zo7g) |
-| 453 | [Graph-R1: Towards Agentic GraphRAG Framework via End-to-end Reinforcement Learning](https://openreview.net/forum?id=PkwJjGJ7aN) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=PkwJjGJ7aN) |
-| 454 | [Evolutionary Multi-Agent Reinforcement Learning for Crisis-Aware Demographic Policy Optimization](https://openreview.net/forum?id=OJf6hePdN7) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=OJf6hePdN7) |
-| 455 | [Sample-Efficient Online Distributionally Robust Reinforcement Learning via General Function Approximation](https://openreview.net/forum?id=71iwUe98cI) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=71iwUe98cI) |
-| 456 | [Detecting Data Contamination from Reinforcement Learning Post-training for Large Language Models](https://openreview.net/forum?id=EjiJmiA6ea) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=EjiJmiA6ea) |
-| 457 | [FiRL : Finslerian Reinforcement Learning for Risk-Aware Anisotropic Locomotion](https://openreview.net/forum?id=YCHE8YOqyx) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=YCHE8YOqyx) |
-| 458 | [Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](https://openreview.net/forum?id=loNTDX3wTn) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=loNTDX3wTn) |
-| 459 | [Preference Conditioned Multi-Objective Reinforcement Learning: Decomposed, Diversity-Driven Policy Optimization](https://openreview.net/forum?id=iH7mSOTR4q) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=iH7mSOTR4q) |
-| 460 | [TaskForce: Cooperative Multi-agent Reinforcement Learning for Multi-task Optimization](https://openreview.net/forum?id=iTslNNPfep) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=iTslNNPfep) |
-| 461 | [Human-in-the-Loop Policy Optimization for Preference-Based Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=PRHNKeaZpP) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=PRHNKeaZpP) |
-| 462 | [GRACE: A Language Model Framework for Explainable Inverse Reinforcement Learning](https://openreview.net/forum?id=uW9FoHBuoQ) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=uW9FoHBuoQ) |
-| 463 | [R1-Reward: Training Multimodal Reward Model Through Stable Reinforcement Learning](https://openreview.net/forum?id=4Ewgw9M2xE) | 6.50 | 4 | Pending | [Link](https://openreview.net/forum?id=4Ewgw9M2xE) |
-| 464 | [SPEAR: Structured Pruning for Spiking Neural Networks via Synaptic Operation Estimation and Reinforcement Learning](https://openreview.net/forum?id=Wo8hTwoYcm) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=Wo8hTwoYcm) |
-| 465 | [Writing-RL: Advancing Long-form Writing via Adaptive Curriculum Reinforcement Learning](https://openreview.net/forum?id=4srk2cxr30) | 4.40 | 5 | Pending | [Link](https://openreview.net/forum?id=4srk2cxr30) |
-| 466 | [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](https://openreview.net/forum?id=HBOLN5m3qg) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=HBOLN5m3qg) |
-| 467 | [ReasonIE: better LLMs for Scientific Information Extraction with reinforcement learning and data augmentation](https://openreview.net/forum?id=qkxIeGjeSu) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=qkxIeGjeSu) |
-| 468 | [One RL to See Them All: Visual Triple Unified Reinforcement Learning](https://openreview.net/forum?id=MwR1Uihush) | 4.00 | 5 | Pending | [Link](https://openreview.net/forum?id=MwR1Uihush) |
-| 469 | [Generalizable Multilevel Graph Optimization via Reinforcement-Guided Diffusion from Simple Subproblems](https://openreview.net/forum?id=uhP8VQzWkz) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=uhP8VQzWkz) |
-| 470 | [Towards Efficient Online Exploration for Reinforcement Learning with Human Feedback](https://openreview.net/forum?id=oGpnoXtA6G) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=oGpnoXtA6G) |
-| 471 | [POLO: Preference-Guided Multi-Turn Reinforcement Learning for Lead Optimization](https://openreview.net/forum?id=BAOO9H0ehZ) | 3.33 | 3 | Pending | [Link](https://openreview.net/forum?id=BAOO9H0ehZ) |
-| 472 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](https://openreview.net/forum?id=5rXN5knHKW) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=5rXN5knHKW) |
-| 473 | [Self-Speculative Masked Diffusions](https://openreview.net/forum?id=ogMTEtHO6M) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=ogMTEtHO6M) |
-| 474 | [FRL-SAGE: Stackelberg Game-Theoretic Defense Against Adaptive Adversaries in Federated Reinforcement Learning](https://openreview.net/forum?id=Jq0KN0lgtM) | 2.00 | 5 | Pending | [Link](https://openreview.net/forum?id=Jq0KN0lgtM) |
-| 475 | [CoT-Space: A Theoretical Framework for Internal Slow-Thinking via Reinforcement Learning](https://openreview.net/forum?id=4DJ62eO2T2) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=4DJ62eO2T2) |
-| 476 | [AGE-MORL: Agent-Guided Evolutionary Control for Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=lxPe6S5E7k) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=lxPe6S5E7k) |
-| 477 | [VCRL: Variance-based Curriculum Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=FBhWTuMTYA) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=FBhWTuMTYA) |
-| 478 | [ReconDreamer-RL: Enhancing Reinforcement Learning via Diffusion-based Scene Reconstruction](https://openreview.net/forum?id=cEAOqt6guL) | 5.50 | 4 | Pending | [Link](https://openreview.net/forum?id=cEAOqt6guL) |
-| 479 | [MARS-SQL: A Multi-Agent Reinforcement Learning Framework for Text-to-SQL](https://openreview.net/forum?id=EURAfiUpVJ) | 4.00 | 3 | Pending | [Link](https://openreview.net/forum?id=EURAfiUpVJ) |
-| 480 | [No Prompt Left Behind: Exploiting Zero-Variance Prompts in LLM Reinforcement Learning via Entropy-Guided Advantage Shaping](https://openreview.net/forum?id=kiXFIESZKv) | 6.00 | 3 | Pending | [Link](https://openreview.net/forum?id=kiXFIESZKv) |
-| 481 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](https://openreview.net/forum?id=NlkykTqAId) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=NlkykTqAId) |
-| 482 | [Star-Corrector: A Multi-Turn Interactive Reinforcement Learning Framework for Lean4 Theorem Correction](https://openreview.net/forum?id=nXJmbeMHDQ) | 2.50 | 4 | Pending | [Link](https://openreview.net/forum?id=nXJmbeMHDQ) |
-| 483 | [DeRL: Diverse‑Exploration Reinforcement Learning for Large Language Models Improves Mathematical Reasoning](https://openreview.net/forum?id=ZIYYeTkZQ4) | 2.67 | 3 | Pending | [Link](https://openreview.net/forum?id=ZIYYeTkZQ4) |
-| 484 | [RewardCode: Training Generalist Code Reward Model via Pairwise Reinforcement Learning](https://openreview.net/forum?id=zpsYG8fYc8) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=zpsYG8fYc8) |
-| 485 | [Refining Hybrid Genetic Search for CVRP via Reinforcement Learning-Finetuned LLM](https://openreview.net/forum?id=aITKXFeivk) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=aITKXFeivk) |
-| 486 | [ADORA: Training Reasoning Models with Dynamic Advantage Estimation on Reinforcement Learning](https://openreview.net/forum?id=ly09ZBzSOc) | 3.50 | 4 | Pending | [Link](https://openreview.net/forum?id=ly09ZBzSOc) |
-| 487 | [STRONGER TOGETHER: ON-POLICY REINFORCEMENT LEARNING FOR COLLABORATIVE LLMS](https://openreview.net/forum?id=IdF6JqXWzx) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=IdF6JqXWzx) |
-| 488 | [Ego to World: Collaborative Spatial Reasoning in Embodied Systems via Reinforcement Learning](https://openreview.net/forum?id=G7vF4FYtOk) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=G7vF4FYtOk) |
-| 489 | [Belief-Based Offline Reinforcement Learning for Delay-Robust Policy Optimization](https://openreview.net/forum?id=3C1U86DcW4) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=3C1U86DcW4) |
-| 490 | [Shop-R1: Rewarding LLMs to Simulate Human Behavior in Online Shopping via Reinforcement Learning](https://openreview.net/forum?id=fkIePp9YEO) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=fkIePp9YEO) |
-| 491 | [AIGID-RFT: Reinforcement Fine-Tuning Multimodal LLMs for AI-Generated Image Detection](https://openreview.net/forum?id=5WJzbZZeh1) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=5WJzbZZeh1) |
-| 492 | [Tree Search for LLM Agent Reinforcement Learning](https://openreview.net/forum?id=ZpQwAFhU13) | 5.33 | 3 | Pending | [Link](https://openreview.net/forum?id=ZpQwAFhU13) |
-| 493 | [Policy Likelihood-based Query Sampling and Critic-Exploited Reset for Efficient Preference-based Reinforcement Learning](https://openreview.net/forum?id=ITeuGb2bYg) | 6.67 | 3 | Pending | [Link](https://openreview.net/forum?id=ITeuGb2bYg) |
-| 494 | [FM-IRL: Flow-Matching for Reward Modeling and Policy Regularization in Reinforcement Learning](https://openreview.net/forum?id=EJjq0o3iQk) | 4.00 | 4 | Pending | [Link](https://openreview.net/forum?id=EJjq0o3iQk) |
-| 495 | [Breaking the Exploration Bottleneck: Rubric-Scaffolded Reinforcement Learning for General LLM Reasoning](https://openreview.net/forum?id=5doZa7g4XL) | 5.00 | 4 | Pending | [Link](https://openreview.net/forum?id=5doZa7g4XL) |
-| 496 | [DVLA-RL: Dual-Level Vision–Language Alignment with Reinforcement Learning Gating for Few-Shot Learning](https://openreview.net/forum?id=2ix1K6zPRf) | 4.67 | 3 | Pending | [Link](https://openreview.net/forum?id=2ix1K6zPRf) |
-| 497 | [MobileRL: Online Agentic Reinforcement Learning for Mobile GUI Agents](https://openreview.net/forum?id=C3F0G9nXhl) | 4.50 | 4 | Pending | [Link](https://openreview.net/forum?id=C3F0G9nXhl) |
-| 498 | [Learning What Reinforcement Learning Can't: Interleaved Online Fine-Tuning for Hardest Questions](https://openreview.net/forum?id=LzCBLrNoyM) | 6.00 | 4 | Pending | [Link](https://openreview.net/forum?id=LzCBLrNoyM) |
-| 499 | [Contrastive Code Graph Embeddings for Reinforcement Learning-Based Automated Code Refactoring](https://openreview.net/forum?id=0xHWd4CUaX) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=0xHWd4CUaX) |
-| 500 | [Dynamic Trust Region Adaptation for \\ Human-in-the-Loop Reinforcement Learning \\ in Code Refinement](https://openreview.net/forum?id=FPBtaGBv81) | 2.00 | 4 | Pending | [Link](https://openreview.net/forum?id=FPBtaGBv81) |
+| 1 | [SPEC-RL: Accelerating On-Policy Reinforcement Learning via Speculative Rollouts](https://openreview.net/forum?id=YFNHJrFFvO) | **2,2,4** | **2.67** | 3 | Pending | 
+| 2 | [Learning To Draft: Adaptive Speculative Decoding with Reinforcement Learning](https://openreview.net/forum?id=IK9cbzzXLt) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 3 | [SpSCO: A Speculative Sampling Approach to Neural Combinatorial Optimization](https://openreview.net/forum?id=pBySAuS5H5) | **2,6,6,2** | **4.00** | 4 | Pending | 
+| 4 | [FastGRPO: Accelerating Policy Optimization via Concurrency-aware Speculative Decoding and Online Draft Learning](https://openreview.net/forum?id=zuGt6TYYtS) | **6,6,2** | **4.67** | 3 | Pending | 
+| 5 | [Dynamic Speculative Agent Planning](https://openreview.net/forum?id=YZ5k2dVj6O) | **6,6,6,4** | **5.50** | 4 | Pending | 
+| 6 | [SPECS: Faster Test-Time Scaling through Speculative Drafts and Dynamic Switching](https://openreview.net/forum?id=5XixaecZ8W) | **4,4,4** | **4.00** | 3 | Pending | 
+| 7 | [Sandbox-RL: Scalable Multi-LLMs Optimization through Sandbox-Based Reinforcement Learning](https://openreview.net/forum?id=0pFcKF2li1) | **2,2,4** | **2.67** | 3 | Pending | 
+| 8 | [SALE : Low-bit Estimation for Efficient Sparse Attention in Long-context LLM Prefilling](https://openreview.net/forum?id=yTeDQeuKKz) | **4,4,4** | **4.00** | 3 | Pending | 
+| 9 | [STAR: Speculative Decoding with Searchable Drafting and Target-Aware Refinement for Multimodal Generation](https://openreview.net/forum?id=pMdKnxkFRw) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 10 | [PureKV: Plug-and-Play KV Cache Optimization with Spatial-Temporal Sparse Attention for Vision-Language Large Models](https://openreview.net/forum?id=XtpVQ21bcY) | **4,6,4,2** | **4.00** | 4 | Pending | 
+| 11 | [Fed-Energy: Federated Reinforcement Learning for Scalable and Energy-Efficient Large-Scale Code Optimization](https://openreview.net/forum?id=APawIJjJlP) | **2,2,4** | **2.67** | 3 | Pending | 
+| 12 | [Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs](https://openreview.net/forum?id=ZQ9uqllSts) | **4,2,4,6** | **4.00** | 4 | Pending | 
+| 13 | [FOLD: Fast Correct Speculative Decoding](https://openreview.net/forum?id=zm35dmBdok) | **4,4,2** | **3.33** | 3 | Pending | 
+| 14 | [Hierarchical Speculative Decoding through Training-Free Slim-Verifier](https://openreview.net/forum?id=9UsWULey9J) | **4,2,2** | **2.67** | 3 | Pending | 
+| 15 | [Optimized Early-Exit Based Speculative Decoding via Pipeline Parallelism](https://openreview.net/forum?id=6ezbdRe90k) | **2,4,6,4** | **4.00** | 4 | Pending | 
+| 16 | [SpecExtend: A Drop-in Enhancement for Speculative Decoding of Long Sequences](https://openreview.net/forum?id=170GODIkgT) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 17 | [Tactic: Adaptive Sparse Attention with Clustering and Distribution Fitting for Long-Context LLMs](https://openreview.net/forum?id=tJod11fK1A) | **4,4,6,6** | **5.00** | 4 | Pending | 
+| 18 | [FSA: An Alternative Efficient Implementation of Native Sparse Attention Kernel](https://openreview.net/forum?id=c5mdo1hWrs) | **8,8,6** | **7.33** | 3 | Pending | 
+| 19 | [QeRL: Beyond Efficiency - Quantization-enhanced Reinforcement Learning for LLMs](https://openreview.net/forum?id=zw8zxMJJlm) | **6,8,4,6** | **6.00** | 4 | Pending | 
+| 20 | [Speculative Actions: A Lossless Framework for Faster AI Agents](https://openreview.net/forum?id=P0GOk5wslg) | **8,10,6,6** | **7.50** | 4 | Pending | 
+| 21 | [Training-Free Native Sparse Attention for KV Cache Compression](https://openreview.net/forum?id=sQjYtFSEuZ) | **2,4,8,2** | **4.00** | 4 | Pending | 
+| 22 | [Think Before You Accept: Semantic Reflective Verification for Faster Speculative Decoding](https://openreview.net/forum?id=GkMxEQlWyU) | **4,6,4** | **4.67** | 3 | Pending | 
+| 23 | [DiFFPO: Training Diffusion LLMs to Reason Fast and Furious via Reinforcement Learning](https://openreview.net/forum?id=ckUU5XySLn) | **2,6,4,4** | **4.00** | 4 | Pending | 
+| 24 | [Evolving Sparsity: Leveraging Token Importance Dynamics for Efficient LLM Decoding with Sparse Attention](https://openreview.net/forum?id=YPjcyMzhE2) | **4,6,2,4** | **4.00** | 4 | Pending | 
+| 25 | [Sparse Topology Pairwise Scoring for Large-Scale Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=5IqvMNQaUg) | **4,4,6,6** | **5.00** | 4 | Pending | 
+| 26 | [HiSpec: Hierarchical Speculative Decoding for LLMs](https://openreview.net/forum?id=CYGI23WQjI) | **4,4,4** | **4.00** | 3 | Pending | 
+| 27 | [HoVer: Holistic Verification for Semantic-Aware Speculative Generation](https://openreview.net/forum?id=GQlF9F8HAs) | **2,4,4** | **3.33** | 3 | Pending | 
+| 28 | [SpecVLM: Fast Speculative Decoding in Vision-Language Models](https://openreview.net/forum?id=lkMh48jItD) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 29 | [Less Is More: Fast and Accurate Reasoning with Cross-Head Unified Sparse Attention](https://openreview.net/forum?id=3iwDzfIk60) | **6,4,4,6** | **5.00** | 4 | Pending | 
+| 30 | [Mirror Speculative Decoding: Breaking the Serial Barrier in LLM Inference](https://openreview.net/forum?id=ZAY8HKg5ZK) | **6,6,4** | **5.33** | 3 | Pending | 
+| 31 | [Batch Speculative Decoding Done Right](https://openreview.net/forum?id=eM51kSFkoG) | **8,2,4** | **4.67** | 3 | Pending | 
+| 32 | [Learning to Reason over Continuous Tokens with Reinforcement Learning](https://openreview.net/forum?id=lebJ6wz1vj) | **6,6,2,8** | **5.50** | 4 | Pending | 
+| 33 | [GHPO: Adaptive Guidance for Stable and Efficient LLM Reinforcement Learning](https://openreview.net/forum?id=6RQsAQEUib) | **6,2,2,6** | **4.00** | 4 | Pending | 
+| 34 | [TornadoAttention: Hardware-Efficient Sparse Attention via Fine-Grained Spatio-Temporal Permutation for Video Generation](https://openreview.net/forum?id=fx3Ht2gYTR) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 35 | [Scaling Up, Speeding Up: A Benchmark of Speculative Decoding for Efficient LLM Test-Time Scaling](https://openreview.net/forum?id=DjOmnwX4wJ) | **6,6,4,4** | **5.00** | 4 | Pending | 
+| 36 | [RESA: Bringing Back What Sparse Attention Ignores with Residual Estimation](https://openreview.net/forum?id=ktcq26hMCH) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 37 | [QuRL: Low-Precision Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=eG0bpCwdKn) | **6,4,6** | **5.33** | 3 | Pending | 
+| 38 | [Dynamic Incremental Code Embeddings (DICE):  A Real-Time Communication Protocol for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=lFaLBotlag) | **4,2,4** | **3.33** | 3 | Pending | 
+| 39 | [DISTRIBUTED MULTI-AGENT DEEP REINFORCEMENT LEARNING](https://openreview.net/forum?id=fotzssBy3o) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 40 | [DSA: Efficient Inference For Video Generation Models via Distributed Sparse Attention](https://openreview.net/forum?id=1ZmdfDzGE1) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 41 | [Zero-Shot Cross-Domain Dialogue State Tracking with Small LLMs: Learning to Think through Reinforcement Learning](https://openreview.net/forum?id=SLLZPhnEz6) | **4,6,4,2** | **4.00** | 4 | Pending | 
+| 42 | [RepSpec: Structural Re-parameterized Draft Model Training for Speculative Decoding](https://openreview.net/forum?id=bqEi97qzzz) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 43 | [Self-Speculative Decoding Accelerates Lossless Inference in Any-Order and Any-Subset Autoregressive Models](https://openreview.net/forum?id=hZnibTOke7) | **8,4,8** | **6.67** | 3 | Pending | 
+| 44 | [Not All Rollouts are Useful: Down-Sampling Rollouts in LLM Reinforcement Learning](https://openreview.net/forum?id=lXDg6quPKT) | **6,2,6,2** | **4.00** | 4 | Pending | 
+| 45 | [BLADE: Block-Sparse Attention Meets Step Distillation for Efficient Video Generation](https://openreview.net/forum?id=O9J20MsmRl) | **6,6,6,4** | **5.50** | 4 | Pending | 
+| 46 | [RAST-MoE-RL: A Regime-Aware Spatio-Temporal MoE Framework for Deep Reinforcement Learning in Ride-Hailing](https://openreview.net/forum?id=xQRAo9YUQ3) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 47 | [Rectified Sparse Attention for Efficient Long-Sequence Generation](https://openreview.net/forum?id=mtg9P13kOc) | **6,2,4,6** | **4.50** | 4 | Pending | 
+| 48 | [Bridging Draft Policy Misalignment: Group Tree Optimization  for Speculative Decoding](https://openreview.net/forum?id=dwPdYFqVWO) | **8,6,6,2** | **5.50** | 4 | Pending | 
+| 49 | [Holistic Token Efficient in Speculative Decoding: Post-use & Pre-cut](https://openreview.net/forum?id=ELhSQC3BJE) | **6,2,4,6** | **4.50** | 4 | Pending | 
+| 50 | [MobileWizard: A Data-Efficient GUI Agent with Structured Reasoning and Progressive Reinforcement Learning](https://openreview.net/forum?id=Aobvdp3XmP) | **6,6,2,2** | **4.00** | 4 | Pending | 
+| 51 | [ARC-Decode: Risk-Bounded Acceptance for Sampling-Based Speculative Decoding](https://openreview.net/forum?id=jhJjW2DFKD) | **4,6,4,0** | **3.50** | 4 | Pending | 
+| 52 | [ProxyAttn: Guided Sparse Attention via Representative Heads](https://openreview.net/forum?id=m3HXHQYmZu) | **6,8,6,6** | **6.50** | 4 | Pending | 
+| 53 | [Designing Observation and Action Models for Efficient Reinforcement Learning with LLMs](https://openreview.net/forum?id=v1tTJN2svr) | **6,4,4,6,4** | **4.80** | 5 | Pending | 
+| 54 | [SALF & TALF: Optimized Loss Function and Drafting for Tree-based Speculative Decoding](https://openreview.net/forum?id=3V559xWIWc) | **2,6,6,4** | **4.50** | 4 | Pending | 
+| 55 | [InferSpec: Adaptive Inference-Time Compute with Ensemble Verifier-Guided Speculative Decoding for Efficient Reasoning](https://openreview.net/forum?id=sxeAVcWpNu) | **4,4,4** | **4.00** | 3 | Pending | 
+| 56 | [Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning](https://openreview.net/forum?id=iIvPuXoDs1) | **2,8,6** | **5.33** | 3 | Pending | 
+| 57 | [RACER: Retrieval-Augmented Contextual Rapid Speculative Decoding](https://openreview.net/forum?id=i8SjqQQOVt) | **6,2,2,4** | **3.50** | 4 | Pending | 
+| 58 | [Self Speculative Decoding for Diffusion Large Language Model](https://openreview.net/forum?id=rKJ7A30lQQ) | **4,6,2,2** | **3.50** | 4 | Pending | 
+| 59 | [HSA: Head-wise Sparse Attention for Efficient and Accurate Long-context Inference](https://openreview.net/forum?id=WytruI9uM3) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 60 | [APRIL: Active Partial Rollouts in Reinforcement Learning to Tame Long-tail Generation](https://openreview.net/forum?id=0viCNELbrf) | **2,6,2,4** | **3.50** | 4 | Pending | 
+| 61 | [DyCodeExplainer: Explainable Dynamic Graph Attention for Multi-Agent Reinforcement Learning in Collaborative Coding](https://openreview.net/forum?id=U7pWkp90qA) | **2,6,0,2** | **2.50** | 4 | Pending | 
+| 62 | [Rethinking the High-Throughput LLM Inference: An Opportunity for Speculative Decoding](https://openreview.net/forum?id=59OJOgKLzN) | **4,4,4,8** | **5.00** | 4 | Pending | 
+| 63 | [PD-FS:Surrogate-Enhanced Physical Data-Driven Framework for Rapid Deep Reinforcement Learning Control](https://openreview.net/forum?id=ZL5sLJBMrV) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 64 | [Aligning Draft and Target in Speculative Decoding: A CoT-Aware and SR-Guided Mixed Framework](https://openreview.net/forum?id=bKau2NNrji) | **4,4,0,2** | **2.50** | 4 | Pending | 
+| 65 | [Draft, Verify, \& Improve: Toward Training-Aware Speculative Decoding](https://openreview.net/forum?id=CwvY6TXLxr) | **2,6,6,4** | **4.50** | 4 | Pending | 
+| 66 | [SparseSkeleton: Prefill sparse attention by decomposition](https://openreview.net/forum?id=Y5kgP4x20k) | **4,2,2** | **2.67** | 3 | Pending | 
+| 67 | [GRIT: Graph-Biased Transformers for Hardware-Aware Quantum Layout via Reinforcement Learning Search](https://openreview.net/forum?id=gck2KraCk7) | **2,4,2,2** | **2.50** | 4 | Pending | 
+| 68 | [Spiking Decision Making Bottleneck for Offline Reinforcement Learning With Spiking Neural Networks](https://openreview.net/forum?id=1n10BIjgQx) | **4,0,8,4** | **4.00** | 4 | Pending | 
+| 69 | [Mixture of Sparse Attention: Content-Based Learnable Sparse Attention via MoEs](https://openreview.net/forum?id=FlAdTTRnWY) | **2,2,4** | **2.67** | 3 | Pending | 
+| 70 | [Aligning Frozen LLMs by Reinforcement Learning: An Iterative Reweight-then-Optimize Approach](https://openreview.net/forum?id=cQR0d0CnH9) | **4,4,6,4** | **4.50** | 4 | Pending | 
+| 71 | [SpecBranch: Speculative Decoding via Hybrid Drafting and Rollback-Aware Branch Parallelism](https://openreview.net/forum?id=BrnlCSqO6n) | **6,6,4,8** | **6.00** | 4 | Pending | 
+| 72 | [Rethinking the Role of Dynamic Sparse Training for Scalable Deep Reinforcement Learning](https://openreview.net/forum?id=k7NhBrsjwn) | **6,4,2,4** | **4.00** | 4 | Pending | 
+| 73 | [Reinforcement Unlearning via Group Relative Policy Optimization](https://openreview.net/forum?id=BjWwqPE7mk) | **4,2,6,6** | **4.50** | 4 | Pending | 
+| 74 | [Retrospective Sparse Attention for Efficient Long-Context Generation](https://openreview.net/forum?id=Ql0G1Zsobn) | **6,8,2,6** | **5.50** | 4 | Pending | 
+| 75 | [Make It Efficient: Dynamic Sparse Attention for Autoregressive Image Generation](https://openreview.net/forum?id=fBbJHLjhBU) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 76 | [AUTOTRITON: Automatic Triton Programming with Reinforcement Learning in LLMs](https://openreview.net/forum?id=8m6yY1ULKh) | **4,6,2,2** | **3.50** | 4 | Pending | 
+| 77 | [Training-Free Loosely Speculative Decoding: Accepting Semantically Correct Drafts Beyond Exact Match](https://openreview.net/forum?id=JjoTg34YiU) | **8,6,6,6** | **6.50** | 4 | Pending | 
+| 78 | [CaRe-BN: Precise Moving Statistics for Stabilizing Spiking Neural Networks in Reinforcement Learning](https://openreview.net/forum?id=AaZVrbElhC) | **4,2,6,6** | **4.50** | 4 | Pending | 
+| 79 | [From Scarcity to Efficiency: Preference-Guided Learning for Sparse-Reward Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7ei1uOYUY0) | **4,6,6,2** | **4.50** | 4 | Pending | 
+| 80 | [Stabilizing Off-Policy Reinforcement Learning for LLMs via Balanced Policy Optimization with Adaptive Clipping](https://openreview.net/forum?id=jIeJJqG7dz) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 81 | [PoLi-RL: A Point-to-List Reinforcement Learning Framework for Conditional Semantic Textual Similarity](https://openreview.net/forum?id=sLcRCH1U68) | **8,4,6** | **6.00** | 3 | Pending | 
+| 82 | [AdaCoT: Pareto-Optimal Adaptive Chain-of-Thought Triggering via Reinforcement Learning](https://openreview.net/forum?id=6SAdRgSugm) | **4,6,4,2** | **4.00** | 4 | Pending | 
+| 83 | [AgentRL: Scaling Agentic Reinforcement Learning with a Multi-Turn, Multi-Task Framework](https://openreview.net/forum?id=zq3vAmuUk9) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 84 | [SimpleVLA-RL: Scaling VLA Training via Reinforcement Learning](https://openreview.net/forum?id=TQhSodCM4r) | **6,8,6,8** | **7.00** | 4 | Pending | 
+| 85 | [LLM-Assisted Reinforcement Learning for Distributed Scheduling](https://openreview.net/forum?id=Ikjxsa5RHD) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 86 | [LogitSpec: Accelerating Retrieval-based Speculative Decoding via Next Next Token Speculation](https://openreview.net/forum?id=I9f5NdjBvK) | **2,6,4,2** | **3.50** | 4 | Pending | 
+| 87 | [Bingo: Boosting Efficient Reasoning of LLMs via Dynamic and Significance-based Reinforcement Learning](https://openreview.net/forum?id=nrUsCBW3oT) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 88 | [FLASH: Latent-Aware Semi-Autoregressive Speculative Decoding for Multimodal Tasks](https://openreview.net/forum?id=yyqbLqLhGl) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 89 | [ConvRec-R1: Training LLM-based Conversational Recommender Systems with Reinforcement Learning](https://openreview.net/forum?id=Xgw2D9cALS) | **2,4,4,6** | **4.00** | 4 | Pending | 
+| 90 | [TriSpec: Ternary Speculative Decoding via Lightweight Proxy Verification](https://openreview.net/forum?id=yhhgkkiQe5) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 91 | [Dynamic Mask Attention: End-to-End Trainable Content-aware Sparse Attention](https://openreview.net/forum?id=vrBZs2UL5n) | **6,6,2** | **4.67** | 3 | Pending | 
+| 92 | [Scaling Behaviors of LLM Reinforcement Learning Post-Training: An Empirical Study in Mathematical Reasoning](https://openreview.net/forum?id=KBut2YCZ4g) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 93 | [Adamas: Hadamard Sparse Attention for Efficient Long-context Inference](https://openreview.net/forum?id=C9p44r7o3z) | **6,2,8** | **5.33** | 3 | Pending | 
+| 94 | [Flatter Tokens are More Valuable for Speculative Draft Model Training](https://openreview.net/forum?id=wgGJE6Z1B3) | **4,4,6,8** | **5.50** | 4 | Pending | 
+| 95 | [DiffuSpec: Unlocking Diffusion Language Models for Speculative Decoding](https://openreview.net/forum?id=u2pAPZZCmN) | **2,4,2,4** | **3.00** | 4 | Pending | 
+| 96 | [BRAIN: Boltzmann Reinforcement For Analog Ising Networks](https://openreview.net/forum?id=XthfAAfnVd) | **4,2,0** | **2.00** | 3 | Pending | 
+| 97 | [STEP-VQ: Sequence-model Agnostic Frame-level Inference with VQ-VAE for Model-based Reinforcement Learning](https://openreview.net/forum?id=aBgX5jCTcd) | **2,2,2** | **2.00** | 3 | Pending | 
+| 98 | [WebSailor-V2: Bridging the Chasm to Proprietary Agents via Synthetic Data and Scalable Reinforcement Learning](https://openreview.net/forum?id=HuP16O5SJf) | **6,4,8,2** | **5.00** | 4 | Pending | 
+| 99 | [TACLer: Tailored Curriculum Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=SBOX9XlACW) | **2,4,4,2** | **3.00** | 4 | Pending | 
+| 100 | [Accelerating Large Language Model Inference via Speculative Decoding with Progressive Tree Drafting](https://openreview.net/forum?id=iW4lyuOQ0J) | **6,4,2,2** | **3.50** | 4 | Pending | 
+| 101 | [Bootstrapping Language and Numerical Feedback for Reinforcement Learning in LLMs](https://openreview.net/forum?id=K9GxQKEJzS) | **4,2,6** | **4.00** | 3 | Pending | 
+| 102 | [INTRA: Interleaved Non-contiguous Token spaRse Attention](https://openreview.net/forum?id=hqqhBFhR8k) | **6,4,4** | **4.67** | 3 | Pending | 
+| 103 | [When Speculation Spills Secrets: Side Channels via Speculative Decoding in LLMs](https://openreview.net/forum?id=zq40cmz1JD) | **6,6,4,4** | **5.00** | 4 | Pending | 
+| 104 | [Efficient Reinforcement Finetuning via Adaptive Curriculum Learning](https://openreview.net/forum?id=z0yJLFueGC) | **4,4,2,6** | **4.00** | 4 | Pending | 
+| 105 | [Training Hybrid Deep Quantum Neural Network for Efficient Reinforcement Learning](https://openreview.net/forum?id=GObHf7syOA) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 106 | [SelfJudge: Faster Speculative Decoding via Self-Supervised Judge Verification](https://openreview.net/forum?id=Np9HKxRMcG) | **4,4,4** | **4.00** | 3 | Pending | 
+| 107 | [DeepSearch: Overcome the Bottleneck of Reinforcement Learning with Verifiable Rewards via Monte Carlo Tree Search](https://openreview.net/forum?id=Kx0G6v2c2S) | **4,6,4** | **4.67** | 3 | Pending | 
+| 108 | [Entropy-Aware Speculative Decoding Toward Improved LLM Reasoning](https://openreview.net/forum?id=pPa5mIFj5p) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 109 | [BlockSpec: Blockwise Speculative Decoding for Diffusion LLMs](https://openreview.net/forum?id=hmAviop5rm) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 110 | [EvoCoT: Overcoming the Exploration Bottleneck in Reinforcement Learning for LLMs](https://openreview.net/forum?id=qQzY7SLpEV) | **2,2,4,4** | **3.00** | 4 | Pending | 
+| 111 | [Efficient and Transferable Agentic Knowledge Graph RAG via Reinforcement Learning](https://openreview.net/forum?id=vyb4S7dbSx) | **4,4,6,8** | **5.50** | 4 | Pending | 
+| 112 | [ComputerRL: Scaling End-to-End Online Reinforcement Learning for Computer Use Agents](https://openreview.net/forum?id=oEVfNf0w4B) | **4,6,4** | **4.67** | 3 | Pending | 
+| 113 | [Taming Masked Diffusion Language Models via Consistency Trajectory Reinforcement Learning with Fewer Decoding Step](https://openreview.net/forum?id=GRzwN5iuIh) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 114 | [RL4SBDD: Reinforcement Learning for Preference Alignment in Structure-based Drug Design](https://openreview.net/forum?id=dWEQpTkr1v) | **6,4,6,2** | **4.50** | 4 | Pending | 
+| 115 | [Max-Speedup Speculative Sampling: A Generic Tree Construction Principle](https://openreview.net/forum?id=oGPeI321sI) | **6,2,6,2** | **4.00** | 4 | Pending | 
+| 116 | [WirelessMathLM: Teaching Mathematical Reasoning for LLMs in Wireless Communications with Reinforcement Learning](https://openreview.net/forum?id=BuoOt8CE5K) | **2,4,6,4** | **4.00** | 4 | Pending | 
+| 117 | [ProteinZero: Self-Improving Protein Generation via Online Reinforcement Learning](https://openreview.net/forum?id=7fn75St2Ee) | **4,6,6** | **5.33** | 3 | Pending | 
+| 118 | [TraPO: A Semi-Supervised Reinforcement Learning Framework for Boosting LLM Reasoning](https://openreview.net/forum?id=3K1y4KbWAx) | **4,4,4** | **4.00** | 3 | Pending | 
+| 119 | [IFDECORATOR: Wrapping Instruction Following Reinforcement Learning with Verifiable Rewards](https://openreview.net/forum?id=wdY1VxgHK6) | **2,6,6,4,6** | **4.80** | 5 | Pending | 
+| 120 | [BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning](https://openreview.net/forum?id=rQXBw8fn3Z) | **4,6,4,4,4** | **4.40** | 5 | Pending | 
+| 121 | [Measure Once, Mask Once: Delta Refined Block Sparse Attention](https://openreview.net/forum?id=5HzrYMUlRd) | **4,4,6,2** | **4.00** | 4 | Pending | 
+| 122 | [MARS: Optimizing Dual-System Deep Research via Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=abxVxyXNhW) | **4,2,6,2** | **3.50** | 4 | Pending | 
+| 123 | [ERA: Transforming VLMs into Embodied Agents via Embodied Prior Learning and Online Reinforcement Learning](https://openreview.net/forum?id=hqFNqVQEUd) | **2,2,6,6** | **4.00** | 4 | Pending | 
+| 124 | [WETAP: Speculative Decoding with Width-Entropy Tree and Adaptive Pruning for LLMs Inference Acceleration](https://openreview.net/forum?id=Cae9he70Th) | **2,6,4,6** | **4.50** | 4 | Pending | 
+| 125 | [REA-RL: Reflection-Aware Online Reinforcement Learning for Efficient Reasoning](https://openreview.net/forum?id=E6keG5QDct) | **4,4,8,6** | **5.50** | 4 | Pending | 
+| 126 | [Conserving Fitness Evaluation in Evolutionary Algorithms with Reinforcement Learning](https://openreview.net/forum?id=v1yVNFntqE) | **0,2,4,2** | **2.00** | 4 | Pending | 
+| 127 | [SeqRL: Sequence-Attentive Reinforcement Learning for LLM Jailbreaking](https://openreview.net/forum?id=KdI9luPqaB) | **4,4,4** | **4.00** | 3 | Pending | 
+| 128 | [Global Resolution: Optimal Multi-Draft Speculative Sampling via Convex Optimization](https://openreview.net/forum?id=gpsczXOsHn) | **6,6,8,6** | **6.50** | 4 | Pending | 
+| 129 | [FlowCast: Trajectory Forecasting for Scalable Zero-Cost Speculative Flow Matching](https://openreview.net/forum?id=gv8R88PVEG) | **8,6,2,6** | **5.50** | 4 | Pending | 
+| 130 | [Iterative Refinement of Flow Policies in Probability Space for Online Reinforcement Learning](https://openreview.net/forum?id=qf9c1rQoXG) | **4,8,2** | **4.67** | 3 | Pending | 
+| 131 | [Meta-Reinforcement Learning for Compiler Optimization: A Kernel-Embedded CompilerLLM with Verified Assumptions and Practical Guarantees](https://openreview.net/forum?id=yhYy69cyHR) | **0,2,2** | **1.33** | 3 | Pending | 
+| 132 | [DEAGLE: Token Tree with Dynamic Depth Will Further Benefit the Speculative Decoding](https://openreview.net/forum?id=eZRPb52ccA) | **4,2,4** | **3.33** | 3 | Pending | 
+| 133 | [Guided Speculative Inference for Efficient Test-Time Alignment of LLMs](https://openreview.net/forum?id=miNzDqDENd) | **6,2,4** | **4.00** | 3 | Pending | 
+| 134 | [Mind the budget: Accelerating Deep Reinforcement Learning using Early Exit Neural Networks](https://openreview.net/forum?id=dgZBENfrMu) | **4,2,2,4** | **3.00** | 4 | Pending | 
+| 135 | [Break the Trade-off Between Watermark Strength and Speculative Sampling Efficiency for Language Models](https://openreview.net/forum?id=HA8vzzT6Ax) | **6,8,6,8,6,6** | **6.67** | 6 | Pending | 
+| 136 | [Asynchronous Policy Gradient Aggregation for Efficient Distributed Reinforcement Learning](https://openreview.net/forum?id=SitVEPYv6W) | **4,6,8** | **6.00** | 3 | Pending | 
+| 137 | [Making Offline Model-Based Reinforcement Learning Work on Real Robots](https://openreview.net/forum?id=rbNOhbdQ0v) | **4,2,4** | **3.33** | 3 | Pending | 
+| 138 | [Reflective Reinforcement Tool Learning](https://openreview.net/forum?id=1PRZhOM0vk) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 139 | [MC-SJD : Maximal Coupling Speculative Jacobi Decoding for Autoregressive Visual Generation Acceleration](https://openreview.net/forum?id=7a95PGL0Up) | **4,6,4** | **4.67** | 3 | Pending | 
+| 140 | [Knowledge-Level Consistency Reinforcement Learning: Dual-Fact Alignment for Long-Form Factuality](https://openreview.net/forum?id=Q04RwdeN9z) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 141 | [Curriculum-Based Termination Critic for Scalable Program Decomposition in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=Q40JCBKW1q) | **2,0,6,2,2** | **2.40** | 5 | Pending | 
+| 142 | [Reframing attention as a reinforcement learning problem for causal discovery](https://openreview.net/forum?id=fY4proGNFD) | **4,2,4** | **3.33** | 3 | Pending | 
+| 143 | [ProofAug+: Boosting Reinforcement Learning for LLM Theorem Provers with Conditioned Proof Repair](https://openreview.net/forum?id=V0w5LmwWoD) | **4,6,8,2** | **5.00** | 4 | Pending | 
+| 144 | [Learning to Think in Blocks: A Prior-Guided Reinforcement Learning Framework for RAG](https://openreview.net/forum?id=VRBKiWBPKZ) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 145 | [SimuAgent: An LLM-Based Simulink Modeling Assistant Enhanced with Reinforcement Learning](https://openreview.net/forum?id=mMB3Y1ERqi) | **8,6,0,6** | **5.00** | 4 | Pending | 
+| 146 | [Expressive Value Learning for Scalable Offline Reinforcement Learning](https://openreview.net/forum?id=Hze2lxCX6D) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 147 | [CCR: A Continuous Composite Reward for Efficient Reinforcement Learning-Based Jailbreak Attacks](https://openreview.net/forum?id=LSZ0adCum7) | **6,2,2,4** | **3.50** | 4 | Pending | 
+| 148 | [Speculative Sampling for Parametric Temporal Point Processes](https://openreview.net/forum?id=UXCXjRSx0T) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 149 | [EffComp: Efficient Prompt Compression via Hybrid Reinforcement & Supervised Learning](https://openreview.net/forum?id=qSKDBVXhHJ) | **4,2,6,4** | **4.00** | 4 | Pending | 
+| 150 | [SKARL: Provably Scalable Kernel Mean Field Reinforcement Learning for Variable-Size Multi-Agent Systems](https://openreview.net/forum?id=VJZ56DDkin) | **4,4,4** | **4.00** | 3 | Pending | 
+| 151 | [Generative Trajectory Planning in Dynamic Environments: A Joint Diffusion and Reinforcement Learning Framework](https://openreview.net/forum?id=MKM8iEaowV) | **6,2,2,2** | **3.00** | 4 | Pending | 
+| 152 | [When should I search more: Adaptive Complex Query Optimization with Reinforcement Learning](https://openreview.net/forum?id=dMb4jh5Jk0) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 153 | [Hierarchical Gradient-Informed Reinforcement Learning for Scalable and Partially Observable Dynamic Resource Allocation](https://openreview.net/forum?id=vhuLW3SK5w) | **2,2,2,4** | **2.50** | 4 | Pending | 
+| 154 | [TACO: Think-Answer Consistency for Optimized Long-Chain Reasoning and Efficient Data Learning via Reinforcement Learning in LVLMs](https://openreview.net/forum?id=tKPHgfjcu4) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 155 | [RoRecomp: Enhancing Reasoning Efficiency via Rollout Response Recomposition in Reinforcement Learning](https://openreview.net/forum?id=l9MqBHCb91) | **4,4,2** | **3.33** | 3 | Pending | 
+| 156 | [RePAIR: A Rule-based Process-Adaptive Reinforcement for Large Language Model Training](https://openreview.net/forum?id=r4PjSs01MZ) | **6,4,4,6** | **5.00** | 4 | Pending | 
+| 157 | [CUDA-L1: Improving CUDA Optimization via  Contrastive Reinforcement Learning](https://openreview.net/forum?id=igZItUbY6n) | **2,0,8,4** | **3.50** | 4 | Pending | 
+| 158 | [Not-a-Bandit: Provably No-Regret Drafter Selection in Speculative Decoding for LLMs](https://openreview.net/forum?id=JMmljf895g) | **4,2,2,4** | **3.00** | 4 | Pending | 
+| 159 | [Greedy Multi-Path Block Verification for Faster Decoding in Speculative Sampling](https://openreview.net/forum?id=sqZP2BlxRu) | **4,4,4** | **4.00** | 3 | Pending | 
+| 160 | [Hierarchical Routers for Efficient Top-k Retrieval in Sparse Attention](https://openreview.net/forum?id=QjyLNKm9mx) | **2,6,6** | **4.67** | 3 | Pending | 
+| 161 | [SkillEvo: An Experience Learning Framework with  Reinforcement Learning for Skill Evolution](https://openreview.net/forum?id=S1cIE9pe3k) | **6,6,2,4** | **4.50** | 4 | Pending | 
+| 162 | [Inference-Time Alignment Control for Diffusion Models with Reinforcement Learning Guidance](https://openreview.net/forum?id=9mucoWbieo) | **4,2,2,4** | **3.00** | 4 | Pending | 
+| 163 | [Probing to Refine: Reinforcement Distillation of LLM Reasoners via Explanatory Inversion](https://openreview.net/forum?id=rkIw2GqYEt) | **6,6,6,6,6,4** | **5.67** | 6 | Pending | 
+| 164 | [SuperRL: Reinforcement Learning with Supervision to Boost Language Model Reasoning](https://openreview.net/forum?id=IjMfTINVcq) | **6,6,4,4,4** | **4.80** | 5 | Pending | 
+| 165 | [Reinforcement Learning Agents in Quantum Code Discovery with Argmax-Preserving Quantization](https://openreview.net/forum?id=jI57OAExtD) | **2,8,6,2** | **4.50** | 4 | Pending | 
+| 166 | [HIRL-GAN：Hierarchical Mask-Guided Inpainting via GAN and Reinforcement Learning for Urban Occlusion Removal](https://openreview.net/forum?id=tNOA2JMEhT) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 167 | [Stabilizing MoE Reinforcement Learning by Aligning Training and Inference Routers](https://openreview.net/forum?id=6LORvHYkV3) | **6,2,4,6** | **4.50** | 4 | Pending | 
+| 168 | [Policy-Driven World Model Adaptation for Robust Offline Model-based Reinforcement Learning](https://openreview.net/forum?id=30I17s8gjs) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 169 | [Agent²: An Agent-Generates-Agent Framework for Reinforcement Learning Automation](https://openreview.net/forum?id=nwXCmnZ35w) | **2,4,2,4** | **3.00** | 4 | Pending | 
+| 170 | [Reinforcement Learning with Verifiable Rewards Implicitly Incentivizes Correct Reasoning in Base LLMs](https://openreview.net/forum?id=jGbRWwIidy) | **6,4,6** | **5.33** | 3 | Pending | 
+| 171 | [ViRL-TSC: Enhancing Reinforcement Learning with Vision-Language Models for Context-Aware Traffic Signal Control](https://openreview.net/forum?id=36xNdrIUXa) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 172 | [PilotRAG: Teaching LLMs Multi-Turn Hybrid RAG via Reinforcement Learning](https://openreview.net/forum?id=GpHG7VwbIY) | **2,4,2,2** | **2.50** | 4 | Pending | 
+| 173 | [MUA-RL: Multi-turn User-interacting Agent Reinforcement Learning for agentic tool use](https://openreview.net/forum?id=BtU29vylui) | **4,6,2,2** | **3.50** | 4 | Pending | 
+| 174 | [Enhancing Vision-Language Reasoning via Reinforcement Learning with Scalable Multimodal QA Synthesis](https://openreview.net/forum?id=pe3Fx0awUx) | **8,2,4,4** | **4.50** | 4 | Pending | 
+| 175 | [Spatiotemporal Forecasting as Planning: A Model-Based Reinforcement Learning Approach with Generative World Models](https://openreview.net/forum?id=ASPC2Ut0CB) | **6,4,4,0** | **3.50** | 4 | Pending | 
+| 176 | [SpecPrune-VLA: Accelerating Vision-Language-Action Models via Action-Aware Self-Speculative Pruning](https://openreview.net/forum?id=t85Ni0LwjC) | **4,4,6,6,2** | **4.40** | 5 | Pending | 
+| 177 | [Advancing Sparse Attention in Spiking Neural Networks via Spike-Timing-Based Prioritization](https://openreview.net/forum?id=sL0NpgJRMs) | **2,2,4,2** | **2.50** | 4 | Pending | 
+| 178 | [SSRL: Self-Search Reinforcement Learning](https://openreview.net/forum?id=WgRyl6fzLx) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 179 | [READ: End-to-End Autonomous Driving Made Safer with Efficient Reinforcement Learning](https://openreview.net/forum?id=UOYkiemcUP) | **2,4,4** | **3.33** | 3 | Pending | 
+| 180 | [Reinforcement Learning for Heterogeneous DAG Scheduling with Weighted Cross-Attention](https://openreview.net/forum?id=MwuSvrthXq) | **4,2,4,6** | **4.00** | 4 | Pending | 
+| 181 | [EFRame: Deeper Reasoning via Exploration-Filter-Replay Reinforcement Learning Framework](https://openreview.net/forum?id=AIKURJjxXT) | **2,4,2,2** | **2.50** | 4 | Pending | 
+| 182 | [CapRL: Stimulating Dense Image Caption Capabilities via Reinforcement Learning](https://openreview.net/forum?id=JLelnhqXaC) | **4,4,6,4** | **4.50** | 4 | Pending | 
+| 183 | [Self-Guided Process Reward Optimization with Redefined Step-wise Advantage for Process Reinforcement Learning](https://openreview.net/forum?id=pFuxtzaC3K) | **8,2,6,4** | **5.00** | 4 | Pending | 
+| 184 | [Towards High Data Efficiency in Reinforcement Learning with Verifiable Reward](https://openreview.net/forum?id=sruA4AZmZI) | **4,4,6** | **4.67** | 3 | Pending | 
+| 185 | [Reinforcement Learning for Versatile Video Reasoning Capabilities in Base Multimodal LLMs](https://openreview.net/forum?id=b3mk8XrH9N) | **2,6,4,2,2** | **3.20** | 5 | Pending | 
+| 186 | [SWIRL: A Staged Workflow for Interleaved Reinforcement Learning in Mobile GUI Control](https://openreview.net/forum?id=HfRJDTBuSr) | **4,4,2,6,2** | **3.60** | 5 | Pending | 
+| 187 | [RewardMap: Tackling Sparse Rewards in Fine-grained Visual Reasoning via Multi-Stage Reinforcement Learning](https://openreview.net/forum?id=iRVbPxHNrX) | **6,8,4,2** | **5.00** | 4 | Pending | 
+| 188 | [Zero-Shot Visual Generalization in Model-Based Reinforcement Learning via Latent Consistency](https://openreview.net/forum?id=CoxruEzsd2) | **6,6,2** | **4.67** | 3 | Pending | 
+| 189 | [Sparse Attention Adaptation for Long Reasoning](https://openreview.net/forum?id=c5BOcHM6J8) | **2,6,8,6,4** | **5.20** | 5 | Pending | 
+| 190 | [Tailored Primitive Initialization is the Secret Key to Reinforcement Learning](https://openreview.net/forum?id=1tWqSvoeBd) | **6,2,4,4** | **4.00** | 4 | Pending | 
+| 191 | [BFM-Zero: A Promptable Behavioral Foundation Model for Humanoid Control Using Unsupervised Reinforcement Learning](https://openreview.net/forum?id=jkhl2oI0g5) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 192 | [Teacher-Student Multi-Agent Reinforcement Learning Framework for AutoML Pipeline Construction](https://openreview.net/forum?id=yhqCTAFy0O) | **0,2,4,0,2** | **1.60** | 5 | Pending | 
+| 193 | [Test-time Offline Reinforcement Learning on Goal-related Experience](https://openreview.net/forum?id=Nyjvjgh6jW) | **6,6,4,4** | **5.00** | 4 | Pending | 
+| 194 | [Agentic Reinforcement Learning with Implicit Step Rewards](https://openreview.net/forum?id=ooROvpmxMV) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 195 | [Dynamic Causal Influence Learning in Cooperative Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=Wo9fI4QZGP) | **4,2,2,4** | **3.00** | 4 | Pending | 
+| 196 | [Surrogate Signals from Format and Length: Reinforcement Learning for Solving Mathematical Problems without Ground Truth Answers](https://openreview.net/forum?id=FxGCfnJswW) | **4,4,4** | **4.00** | 3 | Pending | 
+| 197 | [C2T: Classifier-based Token Tree Construction in Speculative Decoding](https://openreview.net/forum?id=8pX8He3Yyg) | **6,4,0,4** | **3.50** | 4 | Pending | 
+| 198 | [Subgoal-Guided Reward Shaping: Improving Preference-Based Offline Reinforcement Learning via Conditional VAEs](https://openreview.net/forum?id=5T1vMQldr8) | **4,4,4** | **4.00** | 3 | Pending | 
+| 199 | [Not All Thoughts are Generated Equal: Efficient LLM Reasoning via Synergizing-Oriented Multi-Turn Reinforcement Learning](https://openreview.net/forum?id=HhmuDEH80X) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 200 | [LGR2: Language Guided Reward Relabeling for Accelerating Hierarchical Reinforcement Learning](https://openreview.net/forum?id=YjlepjYxAd) | **4,4,4,2,0** | **2.80** | 5 | Pending | 
+| 201 | [Dynamic Optimizations of LLM Ensembles with Two-Stage Reinforcement Learning Agents](https://openreview.net/forum?id=mhalNLINnn) | **6,4,4** | **4.67** | 3 | Pending | 
+| 202 | [SCRIBES: Web-Scale Script-Based Semi-Structured Data Extraction with Reinforcement Learning](https://openreview.net/forum?id=gQSnEIA3Z3) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 203 | [Self-Supervised Diffusion Model Sampling With Reinforcement Learning](https://openreview.net/forum?id=aATVaBx01a) | **6,2,2,0** | **2.50** | 4 | Pending | 
+| 204 | [PosS: Position Specialist Generates Better Draft for Speculative Decoding](https://openreview.net/forum?id=xaA5tlCHDi) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 205 | [Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form](https://openreview.net/forum?id=U6z5Y1htbe) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 206 | [Cactus: Accelerating Auto-Regressive Decoding with Constrained Acceptance Speculative Sampling](https://openreview.net/forum?id=lpUIkCAy9p) | **6,4,2,6,6** | **4.80** | 5 | Pending | 
+| 207 | [Control Reinforcement Learning: Interpretable Token-Level Steering of LLMs via Sparse Autoencoder Features](https://openreview.net/forum?id=jiPrwmMb2e) | **4,4,2,6** | **4.00** | 4 | Pending | 
+| 208 | [Advancing Autonomous VLM Agents via Variational Subgoal-Conditioned Reinforcement Learning](https://openreview.net/forum?id=Ba1R0hXD4N) | **2,4,4** | **3.33** | 3 | Pending | 
+| 209 | [The Disparate Impacts of Speculative Decoding](https://openreview.net/forum?id=2hOQcn5QUA) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 210 | [Process Reinforcement through Implicit Rewards](https://openreview.net/forum?id=CmyqMn3HeJ) | **6,2,8,2** | **4.50** | 4 | Pending | 
+| 211 | [Towards Optimism-Pessimism Trade-off in Model-based Offline-to-Online Reinforcement Learning](https://openreview.net/forum?id=odsl3gqVSX) | **4,6,4** | **4.67** | 3 | Pending | 
+| 212 | [Progra: Progress-Aware Reinforcement Learning for Multi-Turn Function Calling](https://openreview.net/forum?id=6dopJjgtdE) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 213 | [FASA: FREQUENCY-AWARE SPARSE ATTENTION](https://openreview.net/forum?id=FnSgecCEwg) | **6,6,4,8** | **6.00** | 4 | Pending | 
+| 214 | [SPaRFT: Self-Paced Reinforcement Fine-Tuning for Large Language Models](https://openreview.net/forum?id=u9pQM2B59U) | **2,6,2,2** | **3.00** | 4 | Pending | 
+| 215 | [SpecTr-GBV: Multi-Draft Block Verification Accelerating Speculative Decoding](https://openreview.net/forum?id=5FAUpLjndj) | **8,6,2,2** | **4.50** | 4 | Pending | 
+| 216 | [Surprise-Modulated Meta-Advantages in Reinforcement Learning: Towards Language-Neutral Post-Training for Code LLMs](https://openreview.net/forum?id=kcQGDAnTZM) | **2,4,4,2** | **3.00** | 4 | Pending | 
+| 217 | [Learning to Reason About Code Insecurity: Composite-Reinforcement Fine-Tuning for Cognitive Alignment](https://openreview.net/forum?id=LygvJQPPJ2) | **2,2,4** | **2.67** | 3 | Pending | 
+| 218 | [GALAX: Graph-Augmented Language Model for Explainable Reinforcement-Guided Subgraph Reasoning in Precision Medicine](https://openreview.net/forum?id=ADFXCeYXvR) | **4,6,8,2** | **5.00** | 4 | Pending | 
+| 219 | [MaxCode: A Max-Reward Reinforcement Learning Framework for Automated Code Optimization](https://openreview.net/forum?id=E4RYoWcbl2) | **2,4,2,2** | **2.50** | 4 | Pending | 
+| 220 | [LaSeR: Reinforcement Learning with Last-Token Self-Rewarding](https://openreview.net/forum?id=1OhgEmix20) | **8,4,4,4,6** | **5.20** | 5 | Pending | 
+| 221 | [Speculative Speculative Decoding](https://openreview.net/forum?id=aL1Wnml9Ef) | **2,6,6,6** | **5.00** | 4 | Pending | 
+| 222 | [vAttention: Verified Sparse Attention via Sampling](https://openreview.net/forum?id=zzTDulLys0) | **6,6,6,2** | **5.00** | 4 | Pending | 
+| 223 | [CMDPO: Centered Mirror Descent Policy Optimization for Stable and Efficient Reinforcement Learning](https://openreview.net/forum?id=OaijL8iG5G) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 224 | [Constrained Reinforcement Learning using Bender’s Decomposition and Exact Constraint Satisfaction](https://openreview.net/forum?id=KJ3zkHzsKm) | **8,4,2,2** | **4.00** | 4 | Pending | 
+| 225 | [Alpha-RF: Automated RF-Filter-Circuit Design with Neural Simulator and Reinforcement Learning](https://openreview.net/forum?id=4pQAHzsFlv) | **4,2,2,4** | **3.00** | 4 | Pending | 
+| 226 | [EECE: Ensemble-based Epistemic and Cooperative Exploration for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=EfsV41FTRQ) | **4,6,4** | **4.67** | 3 | Pending | 
+| 227 | [MasHost Builds It All: Autonomous Multi-Agent System Directed by Reinforcement Learning](https://openreview.net/forum?id=AIbKudcDs8) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 228 | [AI-SearchPlanner: Modular Agentic Search via Pareto-Optimal Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=DMUZOwlDEz) | **4,4,4,0** | **3.00** | 4 | Pending | 
+| 229 | [DLER: Doing Length pEnalty Right — Incentivizing More Intelligence per Token via Reinforcement Learning](https://openreview.net/forum?id=gxkOfdaaMA) | **4,8,4,4** | **5.00** | 4 | Pending | 
+| 230 | [Unsupervised Reinforcement Learning with Verifiable Rewards via First Repeat Criterion](https://openreview.net/forum?id=l4noTuvYMP) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 231 | [Stable Planning through Aligned Representations in Model-Based Reinforcement Learning](https://openreview.net/forum?id=wdBqDf3BZs) | **2,4,4,6** | **4.00** | 4 | Pending | 
+| 232 | [ScaleMoE: Mixture-of-Experts for Scalable Continuous Control in Actor–Critic Reinforcement Learning](https://openreview.net/forum?id=xWOTN66DQm) | **2,4,4,2** | **3.00** | 4 | Pending | 
+| 233 | [CARL: Constraint-Aware Reinforcement Learning for Planning with LLMs](https://openreview.net/forum?id=5MOGAO0YXd) | **4,4,2** | **3.33** | 3 | Pending | 
+| 234 | [Collaborative Device-Cloud LLM Inference through Reinforcement Learning](https://openreview.net/forum?id=SwHnok3JtD) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 235 | [Efficient On-Policy Reinforcement Learning via Exploration of Sparse Parameter Space](https://openreview.net/forum?id=y09blHAYKj) | **2,2,4,2** | **2.50** | 4 | Pending | 
+| 236 | [PilotRL: Training Language Model Agents via Global Planning-Guided Progressive Reinforcement Learning](https://openreview.net/forum?id=eB7zqVh300) | **6,2,6,4** | **4.50** | 4 | Pending | 
+| 237 | [Mitigating Forgetting Between Supervised and Reinforcement Learning Yields Stronger Reasoners](https://openreview.net/forum?id=HHx5KFnj8P) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 238 | [From Supervision to Exploration: What Does Protein Language Model Learn During Reinforcement Learning?](https://openreview.net/forum?id=2CPHv8mWS4) | **2,2,4** | **2.67** | 3 | Pending | 
+| 239 | [Generalization in Online Reinforcement Learning for Mobile Agents](https://openreview.net/forum?id=INoDyme6wS) | **4,2,6** | **4.00** | 3 | Pending | 
+| 240 | [Object-Centric World Models from Few-Shot Annotations for Sample-Efficient Reinforcement Learning](https://openreview.net/forum?id=qmEyJadwHA) | **6,6,4** | **5.33** | 3 | Pending | 
+| 241 | [CVeDRL: An Efficient Code Verifier via Difficulty-aware Reinforcement Learning](https://openreview.net/forum?id=F7O3S4wo61) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 242 | [Harnessing the Power of Reinforcement Learning for Language-Model-Based Information Retriever via Query-Document Co-Augmentation](https://openreview.net/forum?id=6UDRtcScwO) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 243 | [TROLL: Trust Regions Improve Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=X9D5MVpPJ9) | **10,4,6,6** | **6.50** | 4 | Pending | 
+| 244 | [Round-trip Reinforcement Learning: Self-Consistent Training for Better Chemical LLMs](https://openreview.net/forum?id=8YlFBmNYVV) | **2,6,4** | **4.00** | 3 | Pending | 
+| 245 | [Taming the Judge: Deconflicting AI Feedback for Stable Reinforcement Learning](https://openreview.net/forum?id=yeKgUkFRsF) | **2,2,4,6** | **3.50** | 4 | Pending | 
+| 246 | [Reinforcement Reward Model with Policy Feedback](https://openreview.net/forum?id=I9P0Yu73if) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 247 | [Neural Predictor-Corrector: Solving Homotopy Problems with Reinforcement Learning](https://openreview.net/forum?id=x6iodYWNty) | **4,6,6** | **5.33** | 3 | Pending | 
+| 248 | [SparseD: Sparse Attention for Diffusion Language Models](https://openreview.net/forum?id=dwbrZtYP04) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 249 | [FlashOmni: A Unified Sparse Attention Engine for Diffusion Transformers](https://openreview.net/forum?id=HljnvKxGRo) | **4,8,2,2** | **4.00** | 4 | Pending | 
+| 250 | [FairGRPO: Fair Reinforcement Learning for Equitable Clinical Reasoning](https://openreview.net/forum?id=X7oBvgAeuh) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 251 | [MemSearcher: Training LLMs to Reason, Search and Manage Memory via End-to-End Reinforcement Learning](https://openreview.net/forum?id=EWIAx3NgvA) | **2,2,2,4** | **2.50** | 4 | Pending | 
+| 252 | [Learn the Ropes, Then Trust the Wins: Self-imitation with Progressive Exploration for Agentic Reinforcement Learning](https://openreview.net/forum?id=Kssko33Ekq) | **2,6,6,2** | **4.00** | 4 | Pending | 
+| 253 | [Cross-Modal Syntax-NL Attention for Multi-Agent Reinforcement Learning in Collaborative Coding](https://openreview.net/forum?id=5sEj8EL8J4) | **4,2,2** | **2.67** | 3 | Pending | 
+| 254 | [RLAR: An Agentic Reward System for Multi-task Reinforcement Learning on Large Language Models](https://openreview.net/forum?id=fJ6tVqIYVU) | **2,6,4,2** | **3.50** | 4 | Pending | 
+| 255 | [Pretraining in Actor-Critic Reinforcement Learning for Robot Motion Control](https://openreview.net/forum?id=2vBAf3J0uD) | **4,4,2,4,4** | **3.60** | 5 | Pending | 
+| 256 | [Shared Dynamic Model-Aligned Hypernetworks for Zero-Shot Generalization in Contextual Reinforcement Learning](https://openreview.net/forum?id=mUrw5WixTx) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 257 | [Boosting Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning](https://openreview.net/forum?id=AXNRILww9c) | **6,4,6** | **5.33** | 3 | Pending | 
+| 258 | [ReMix: Reinforcement Routing for Mixtures of LoRAs in LLM Finetuning](https://openreview.net/forum?id=zNqc0li5Dl) | **2,6,2,6** | **4.00** | 4 | Pending | 
+| 259 | [HarnessLLM: Automatic Testing Harness Generation via Reinforcement Learning](https://openreview.net/forum?id=44C65zgF2G) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 260 | [Reinforcement Learning Improves Traversal of Hierarchical Knowledge in LLMs](https://openreview.net/forum?id=OferBmc2zT) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 261 | [LACONIC: Length-Aware Constrained Reinforcement Learning for LLM](https://openreview.net/forum?id=Q038RrNkwv) | **4,4,4** | **4.00** | 3 | Pending | 
+| 262 | [Contrastive Inverse Reinforcement Learning for Highway Driving Behavior Optimization](https://openreview.net/forum?id=IzhW8cS1K1) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 263 | [Stealthy Backdoor Attack in Reinforcement Learning via Bi-level Optimization](https://openreview.net/forum?id=YM23GVqQqj) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 264 | [Hybrid Reinforcement: when reward is sparse, better to be dense](https://openreview.net/forum?id=0CajQNVKyB) | **4,6,6,8** | **6.00** | 4 | Pending | 
+| 265 | [Scalable Constrained Multi-Agent Reinforcement Learning via State Augmentation and Consensus for Separable Dynamics](https://openreview.net/forum?id=CAMU0mOR7p) | **4,2,4,4** | **3.50** | 4 | Pending | 
+| 266 | [GuirlVG: Incentivize GUI Visual Grounding via Empirical Exploration on Reinforcement Learning](https://openreview.net/forum?id=zrH2A1upAo) | **6,6,4,4** | **5.00** | 4 | Pending | 
+| 267 | [Improving Causal Inference Robustness via Reinforcement-guided Diffusion Models](https://openreview.net/forum?id=OQ37q5JEtQ) | **2,6,2,4** | **3.50** | 4 | Pending | 
+| 268 | [Black-Box Combinatorial Optimization with Order-Invariant Reinforcement Learning](https://openreview.net/forum?id=EKqBgn6bea) | **6,6,4** | **5.33** | 3 | Pending | 
+| 269 | [Goal-Guided Efficient Exploration via Large Language Model in Reinforcement Learning](https://openreview.net/forum?id=Xs1CrA1kZQ) | **4,4,0,2** | **2.50** | 4 | Pending | 
+| 270 | [Beyond Parallel Corpora: Unlocking Autonomous Machine Translation via Autocritical Reinforcement Learning](https://openreview.net/forum?id=a60YWVnVoo) | **4,4,2** | **3.33** | 3 | Pending | 
+| 271 | [VLA-RFT: Vision-Language-Action Reinforcement Fine-Tuning with Verified Rewards in World Simulators](https://openreview.net/forum?id=Jaut99EHeu) | **2,2,6,6** | **4.00** | 4 | Pending | 
+| 272 | [Breaking Training Bottlenecks: Effective Reinforcement Learning for Modern Coding Models](https://openreview.net/forum?id=ryosylfHX2) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 273 | [RL of Thoughts: Navigating LLM Reasoning with Inference-time Reinforcement Learning](https://openreview.net/forum?id=Dw034qKrP5) | **4,6,6,8** | **6.00** | 4 | Pending | 
+| 274 | [J1: Incentivizing Thinking in LLM-as-a-Judge via Reinforcement Learning](https://openreview.net/forum?id=dnJEHl6DI1) | **6,8,6** | **6.67** | 3 | Pending | 
+| 275 | [$\mu$P for RL: Mitigating Feature Inconsistencies During Reinforcement Learning](https://openreview.net/forum?id=Wuy631kHwH) | **4,6,6,6** | **5.50** | 4 | Pending | 
+| 276 | [Curriculum-RLAIF: Curriculum Alignment with Reinforcement Learning from AI Feedback](https://openreview.net/forum?id=drKf5JmqnH) | **2,4,6,4** | **4.00** | 4 | Pending | 
+| 277 | [RLBenchNet: Benchmarking Neural Architectures with PPO Across Reinforcement Learning Tasks](https://openreview.net/forum?id=3u5Ti1CfzE) | **2,2,4,0** | **2.00** | 4 | Pending | 
+| 278 | [Temperature as a Meta-Policy: Adaptive Temperature in LLM Reinforcement Learning](https://openreview.net/forum?id=AoTHU2OmS6) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 279 | [RL$^2$eak: Reinforcement Learning Enhanced Prompt Leakage Attack in Multi-tenant Large Language Model Services](https://openreview.net/forum?id=LmGSD6CedJ) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 280 | [CORectifier: Hierarchical Trajectory Rectifications Boost Reinforcement Learning for Combinatorial Optimization](https://openreview.net/forum?id=xniQIl8oTw) | **4,2,2,2** | **2.50** | 4 | Pending | 
+| 281 | [RLPIR: Reinforcement Learning with Prefix and Intrinsic Reward](https://openreview.net/forum?id=3jrWUqoItt) | **6,4,2** | **4.00** | 3 | Pending | 
+| 282 | [Autonomous Urban Region Representation with LLM-informed Reinforcement Learning](https://openreview.net/forum?id=M34Eyawzm5) | **4,4,4,0** | **3.00** | 4 | Pending | 
+| 283 | [Value Shaping: Bias Reduction in Bellman Error for Deep Reinforcement Learning](https://openreview.net/forum?id=pye62xAoi4) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 284 | [Verl-Tool: Towards Holistic Agentic Reinforcement Learning with Tool Use](https://openreview.net/forum?id=oWFtI0cNsE) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 285 | [Guided Sampling in Reinforcement Learning for LLM Reasoning](https://openreview.net/forum?id=oXgxHVTqcm) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 286 | [Evolution Strategies at Scale: LLM Fine-Tuning Beyond Reinforcement Learning](https://openreview.net/forum?id=1zqmmcjvdN) | **4,2,4** | **3.33** | 3 | Pending | 
+| 287 | [BroRL: Scaling Reinforcement Learning via Broadened Exploration](https://openreview.net/forum?id=YwEh20x8ud) | **4,6,2,4** | **4.00** | 4 | Pending | 
+| 288 | [Parallel-R1: Towards Parallel Thinking via Reinforcement Learning](https://openreview.net/forum?id=wOmjeBN6hP) | **8,6,2,8,4,6,8** | **6.00** | 7 | Pending | 
+| 289 | [RLTime: Reinforcement Learning-Based Feature Attribution for Interpretable Time Series Models](https://openreview.net/forum?id=cg4BxldVRg) | **4,4,6** | **4.67** | 3 | Pending | 
+| 290 | [Cog-Rethinker: Hierarchical Metacognitive Reinforcement Learning for LLM Reasoning](https://openreview.net/forum?id=94TUKl42Gm) | **4,2,6,2** | **3.50** | 4 | Pending | 
+| 291 | [Mixture-of-World Models: Scaling Multi-Task Reinforcement Learning with Modular Latent Dynamics](https://openreview.net/forum?id=qUQARlAx5y) | **6,2,4,4** | **4.00** | 4 | Pending | 
+| 292 | [The Art of Scaling Reinforcement Learning Compute for LLMs](https://openreview.net/forum?id=FMjeC9Msws) | **8,8,6,8** | **7.50** | 4 | Pending | 
+| 293 | [Let it Calm: Exploratory Annealed Decoding for Verifiable Reinforcement Learning](https://openreview.net/forum?id=GQqZrmqQNe) | **6,2,4** | **4.00** | 3 | Pending | 
+| 294 | [DeepTravel: An End-to-End Agentic Reinforcement Learning Framework for Autonomous Travel Planning Agents](https://openreview.net/forum?id=fXhTKS4Gpd) | **4,8,2,4** | **4.50** | 4 | Pending | 
+| 295 | [SAC Flow: Sample-Efficient Reinforcement Learning of Flow-Based Policies via Velocity-Reparameterized Sequential Modeling](https://openreview.net/forum?id=zZvWj4JrYj) | **4,6,4,8** | **5.50** | 4 | Pending | 
+| 296 | [FOE-RL: Flexible Online Reinforcement Learning for Efficient Inference in Large Language Models](https://openreview.net/forum?id=Z2SRrwSS9O) | **0,4,2,4** | **2.50** | 4 | Pending | 
+| 297 | [On-Policy RL Meets Off-Policy Experts: Harmonizing Supervised Fine-Tuning and Reinforcement Learning via Dynamic Weighting](https://openreview.net/forum?id=dCm9bBrk5d) | **4,4,6,6** | **5.00** | 4 | Pending | 
+| 298 | [SpecExit: Accelerating Large Reasoning Model via Speculative Exit](https://openreview.net/forum?id=OTaUT4J1d4) | **6,6,2,6** | **5.00** | 4 | Pending | 
+| 299 | [Interpretable Intrinsic Cues for Efficient Reinforcement Learning with Large Language Models](https://openreview.net/forum?id=GWvZQsMLfl) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 300 | [MultiCrafter: High-Fidelity Multi-Subject Generation via Spatially Disentangled Attention and Identity-Aware Reinforcement Learning](https://openreview.net/forum?id=9XZcqgdzrS) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 301 | [Efficient Multi-Step Reinforcement Learning with Expectation-Maximization Bootstrapping](https://openreview.net/forum?id=qfkTRsPqFB) | **4,6,2,6** | **4.50** | 4 | Pending | 
+| 302 | [Inverse Reinforcement Learning with Dynamic Reward Scaling for LLM Alignment](https://openreview.net/forum?id=K0Zh6mzTzc) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 303 | [XQC: Well-conditioned Optimization Accelerates Deep Reinforcement Learning](https://openreview.net/forum?id=tx1ZvypKqS) | **8,4,6,8** | **6.50** | 4 | Pending | 
+| 304 | [ACTIVE-o3 : Empowering MLLMs with Active Perception via Pure Reinforcement Learning](https://openreview.net/forum?id=1QaTq2NXD6) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 305 | [Knowledge-to-Verification: Unlocking Reinforcement Learning with Verifiable Rewards for LLMs in Knowledge-Intensive Domains](https://openreview.net/forum?id=EVS7SeKBqI) | **2,4,4,4** | **3.50** | 4 | Pending | 
+| 306 | [Mastering Sparse CUDA Generation through Pretrained Models and Deep Reinforcement Learning](https://openreview.net/forum?id=VdLEaGPYWT) | **8,6,6,4** | **6.00** | 4 | Pending | 
+| 307 | [Coefficients-Preserving Sampling for Reinforcement Learning with Flow Matching](https://openreview.net/forum?id=SoHZapVUPE) | **4,2,6,8** | **5.00** | 4 | Pending | 
+| 308 | [Revolutionizing Reinforcement Learning Framework for Diffusion Large Language Models](https://openreview.net/forum?id=KNAyc9DMe3) | **2,4,8,6** | **5.00** | 4 | Pending | 
+| 309 | [GEPO: Group Expectation Policy Optimization for Stable Heterogeneous Reinforcement Learning](https://openreview.net/forum?id=movNwgQtDt) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 310 | [Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment](https://openreview.net/forum?id=1G7WIw1fu8) | **4,6,6,2** | **4.50** | 4 | Pending | 
+| 311 | [Compositional HyperModules for Few-Shot Code Adaptation in Meta-Reinforcement Learning](https://openreview.net/forum?id=NWoHQbALl4) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 312 | [TAROT: Test-Driven and Capability-Adaptive Curriculum Reinforcement Fine-Tuning for Code Generation](https://openreview.net/forum?id=62DZyNWRgv) | **2,4,2,2,8,4** | **3.67** | 6 | Pending | 
+| 313 | [Dynamic Role-Graph Reinforcement Learning for Multi-Agent Collaborative Coding Systems](https://openreview.net/forum?id=95bwpkVPuR) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 314 | [AlgoForge: Specializing Code Generation Agents through Collaborative Reinforcement Learning](https://openreview.net/forum?id=KwqbtKeaRl) | **2,4,4,0** | **2.50** | 4 | Pending | 
+| 315 | [Beyond English-Centric Training: How Reinforcement Learning Improves Cross-Lingual Reasoning in LLMs](https://openreview.net/forum?id=hdrG6SaTcA) | **6,4,4,6** | **5.00** | 4 | Pending | 
+| 316 | [Peeking inside the Black-Box: Reinforcement Learning for Explainable and Accurate Relation Extraction](https://openreview.net/forum?id=Cvwu959bOs) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 317 | [Swap-guided Preference Learning for Personalized Reinforcement Learning from Human Feedback](https://openreview.net/forum?id=nc28mSbyVG) | **6,4,8,6** | **6.00** | 4 | Pending | 
+| 318 | [Learning in Context, Guided by Choice:  A Reward-Free Paradigm for Reinforcement Learning with Transformers](https://openreview.net/forum?id=UsHtbJPFoP) | **2,6,2** | **3.33** | 3 | Pending | 
+| 319 | [Explore Data Left Behind in Reinforcement Learning for Reasoning Language Models](https://openreview.net/forum?id=BOsuSLbD8L) | **4,4,2,6** | **4.00** | 4 | Pending | 
+| 320 | [Trajectory Generation with Conservative Value Guidance for Offline Reinforcement Learning](https://openreview.net/forum?id=eTThjhjzwZ) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 321 | [Inverse Reinforcement Learning Using Just Classification and a Few Regressions](https://openreview.net/forum?id=4iWwif5C9U) | **4,6,6,2** | **4.50** | 4 | Pending | 
+| 322 | [Architectural Inductive Biases Can Be Enough for State Abstraction in Deep Reinforcement Learning](https://openreview.net/forum?id=DbrefyDn8R) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 323 | [h1: Bootstrapping Models to Reason over Longer Horizons via Reinforcement Learning](https://openreview.net/forum?id=SP7W06tphZ) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 324 | [RFS: Reinforcement learning with Residual flow steering for dexterous manipulation](https://openreview.net/forum?id=Kt9tJeOwjy) | **2,6,4,4** | **4.00** | 4 | Pending | 
+| 325 | [EXPO: Stable Reinforcement Learning with Expressive Policies](https://openreview.net/forum?id=aFjSjkB6CV) | **8,8,4,6** | **6.50** | 4 | Pending | 
+| 326 | [Positive Transfer of Prior Knowledge in Deep Reinforcement Learning via Reward Shaping](https://openreview.net/forum?id=jS7l8oPBlj) | **6,2,2** | **3.33** | 3 | Pending | 
+| 327 | [LLE-MORL: Locally Linear Extrapolation of Policies for Efficient Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=qPUQMLRBsT) | **6,4,2,0** | **3.00** | 4 | Pending | 
+| 328 | [Parameter-Efficient Reinforcement Learning using Prefix Optimization](https://openreview.net/forum?id=SLhLUdlaqc) | **4,4,8,2** | **4.50** | 4 | Pending | 
+| 329 | [Reinforcement Learning with Discrete Diffusion Policies for Combinatorial Action Spaces](https://openreview.net/forum?id=tM34PZf8W9) | **6,6,4,2** | **4.50** | 4 | Pending | 
+| 330 | [CPMöbius: Iterative Coach–Player Reasoning for Data-Free Reinforcement Learning](https://openreview.net/forum?id=jC63F5aXpe) | **6,6,4,2** | **4.50** | 4 | Pending | 
+| 331 | [X-Pruner: An Adaptive Pruning Method with Self-Compensation Driven by Reinforcement Learning for Language Models](https://openreview.net/forum?id=uYOofVezYt) | **4,2,6,2** | **3.50** | 4 | Pending | 
+| 332 | [LLM-Guided Communication for Cooperative Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=JH1mMoGtyl) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 333 | [Partially Equivariant Reinforcement Learning in Symmetry-Breaking Environments](https://openreview.net/forum?id=dRDcVyobhH) | **8,4,4** | **5.33** | 3 | Pending | 
+| 334 | [Fleming-R1: Toward Expert-Level Medical Reasoning via Reinforcement Learning](https://openreview.net/forum?id=LSxWHNHpGf) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 335 | [Language Agents for Hypothesis-driven Clinical Decision Making with Reinforcement Learning](https://openreview.net/forum?id=7vHUQCMAzG) | **4,6,4** | **4.67** | 3 | Pending | 
+| 336 | [Reinforcement-Guided Subtask Decomposition for Unified Vision-Language Learning](https://openreview.net/forum?id=8IWDK1I6j0) | **4,8,4,4** | **5.00** | 4 | Pending | 
+| 337 | [Strict Subgoal Execution: Reliable Long-Horizon Planning in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=cMpOvMuyYa) | **8,4,6,2** | **5.00** | 4 | Pending | 
+| 338 | [Evo-PI: Scaling Medical Reasoning via Evolving Principle-Guided Reinforcement Learning](https://openreview.net/forum?id=oagI3xi3Yc) | **4,2,6,2** | **3.50** | 4 | Pending | 
+| 339 | [Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning](https://openreview.net/forum?id=gRdEcs0qdd) | **8,4,8,4** | **6.00** | 4 | Pending | 
+| 340 | [Video-Thinker: Sparking "Thinking with Videos" via Reinforcement Learning](https://openreview.net/forum?id=ofNbGPV6Ve) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 341 | [Overcoming Joint Intractability with Lossless Hierarchical Speculative Decoding](https://openreview.net/forum?id=LaVrNaBNwM) | **6,8,0,6** | **5.00** | 4 | Pending | 
+| 342 | [A Constrained Bi-level Optimization Framework for Constrained Reinforcement Learning from Human Feedback](https://openreview.net/forum?id=QOPlh31RTZ) | **2,4,4,4** | **3.50** | 4 | Pending | 
+| 343 | [Anchor-Guided Behavior Cloning with Offline Reinforcement Learning for Robust Autonomous Driving](https://openreview.net/forum?id=RbsLsTYi4H) | **2,4,4,2** | **3.00** | 4 | Pending | 
+| 344 | [Toward Neural Streaming Scheduling: A Memory-Augmented Reinforcement Learning Model with Critical Structure Encoding](https://openreview.net/forum?id=rnrENwgDsn) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 345 | [AgentPO: Enhancing Multi-Agent Collaboration via Reinforcement Learning](https://openreview.net/forum?id=5L8uyzjn2l) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 346 | [Agentic-KGR: Co-evolutionary Knowledge Graph Construction through Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7qQ50LrRn5) | **6,2,2,6** | **4.00** | 4 | Pending | 
+| 347 | [CARTS: Cooperative Reinforcement Learning for Traffic Signal Control and Carbon Emission Reduction](https://openreview.net/forum?id=7E6dg4HIIW) | **8,2,4** | **4.67** | 3 | Pending | 
+| 348 | [Mitigating Hallucinations in Large Language Models via Hybrid Reinforcement Learning](https://openreview.net/forum?id=4t51qDeEq7) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 349 | [How reinforcement learning after next-token prediction facilitates learning](https://openreview.net/forum?id=CTGpC7xWHM) | **8,4,6** | **6.00** | 3 | Pending | 
+| 350 | [Sample-efficient Reinforcement Learning by Warm-starting with LLMs](https://openreview.net/forum?id=jKcHPxRvk9) | **2,0,2,4** | **2.00** | 4 | Pending | 
+| 351 | [Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=7N0ugLE17t) | **2,10,2,6** | **5.00** | 4 | Pending | 
+| 352 | [Overton Pluralistic Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=BzeVZ63hh4) | **2,2,4,2** | **2.50** | 4 | Pending | 
+| 353 | [MCPlanner: Multi-Scale Consistency Planning for Offline Reinforcement Learning](https://openreview.net/forum?id=P5heo2n6Vq) | **4,2,6** | **4.00** | 3 | Pending | 
+| 354 | [Legal-Gated Attention Networks: Enforcing Action Legality as a Structural Inductive Bias in Deep Reinforcement Learning](https://openreview.net/forum?id=aMgYP4lh0d) | **2,4,2,2,2** | **2.40** | 5 | Pending | 
+| 355 | [The Best of N Worlds: Aligning Reinforcement Learning with Best-of-N Sampling via max@k Optimization](https://openreview.net/forum?id=BmkOKYfbmV) | **4,6,4,2** | **4.00** | 4 | Pending | 
+| 356 | [AlphaAlign: Incentivizing Safety Alignment with Extremely Simplified Reinforcement Learning](https://openreview.net/forum?id=2XNb1JUKW3) | **6,6,4,4** | **5.00** | 4 | Pending | 
+| 357 | [Adversarial Test Case Generation via Reinforcement Learning Extends Scaling Laws](https://openreview.net/forum?id=tTZGP1d1A8) | **2,4,4,2** | **3.00** | 4 | Pending | 
+| 358 | [Chasing Moving Targets with Online Self-Play Reinforcement Learning for Safer Language Models](https://openreview.net/forum?id=VqQ1DXEeyo) | **6,6,4** | **5.33** | 3 | Pending | 
+| 359 | [Efficient Reinforcement Learning by Guiding World Models with Non-Curated Data](https://openreview.net/forum?id=oBXfPyi47m) | **8,8,10,6** | **8.00** | 4 | Pending | 
+| 360 | [On the Suboptimality of Semi-Markov Decision Process in Hierarchical Reinforcement Learning](https://openreview.net/forum?id=wH2KwMOojc) | **2,6,2,6** | **4.00** | 4 | Pending | 
+| 361 | [Reinforcement Learning for Symbolic Graphics Code with Visual Feedback](https://openreview.net/forum?id=HkpqT07shd) | **2,0,4,4** | **2.50** | 4 | Pending | 
+| 362 | [Federated Recommendation with Reinforcement Learning based Knowledge Distillation](https://openreview.net/forum?id=Qlk5I6TI2D) | **4,2,4** | **3.33** | 3 | Pending | 
+| 363 | [Tagging the Thought: Unlocking Personalization Reasoning via Reinforcement Learning](https://openreview.net/forum?id=aM9cmVV0fK) | **4,4,4** | **4.00** | 3 | Pending | 
+| 364 | [VIPO: Value Function Inconsistency Penalized Offline Reinforcement Learning](https://openreview.net/forum?id=DoF6K8DDyz) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 365 | [VideoZoomer: Reinforcement-Learned Temporal Focusing for Long Video Reasoning](https://openreview.net/forum?id=ARHCFvgx6G) | **8,4,4,6** | **5.50** | 4 | Pending | 
+| 366 | [Doctor-R1: Mastering Clinical Inquiry with Experiential Agentic Reinforcement Learning](https://openreview.net/forum?id=vQGHTyL0Jw) | **6,6,4,6,4** | **5.20** | 5 | Pending | 
+| 367 | [On Predictability of Reinforcement Learning Dynamics for Large Language Models](https://openreview.net/forum?id=SdHmA6BYVJ) | **6,6,6,4** | **5.50** | 4 | Pending | 
+| 368 | [HAMMER: Hamiltonian Curiosity Augmented Large Language Model Reinforcement](https://openreview.net/forum?id=OfIPPocM4H) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 369 | [CORE: Concept-Oriented Reinforcement for Bridging the Definition–Application Gap in Mathematical Reasoning](https://openreview.net/forum?id=pRSRiXdpkm) | **6,6,6,2** | **5.00** | 4 | Pending | 
+| 370 | [Token Hidden Reward: Steering Exploration-Exploitation in Group Relative Deep Reinforcement Learning](https://openreview.net/forum?id=htQDmHvva6) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 371 | [Learning from Less: Guiding Deep Reinforcement Learning with Differentiable Symbolic Planning](https://openreview.net/forum?id=eVWGZTVLea) | **2,4,4,4** | **3.50** | 4 | Pending | 
+| 372 | [Towards Faithful and Controllable Personalization via Critique-Post-Edit Reinforcement Learning](https://openreview.net/forum?id=y2P0h8Bxm8) | **2,2,4,4** | **3.00** | 4 | Pending | 
+| 373 | [A$^2$Search: Ambiguity-Aware Question Answering with Reinforcement Learning](https://openreview.net/forum?id=3CPzUWIoNf) | **6,6,4** | **5.33** | 3 | Pending | 
+| 374 | [Learning Interpretable Options by Identifying Reward Diffusion Bottlenecks in Reinforcement Learning](https://openreview.net/forum?id=FYx7NQHhGS) | **4,4,2,6** | **4.00** | 4 | Pending | 
+| 375 | [QRIM: Quantum Robust Inner Minimization for Reinforcement Learning](https://openreview.net/forum?id=YKOMMh2pSg) | **2,8,4,8** | **5.50** | 4 | Pending | 
+| 376 | [Continuous Speculative Decoding for Autoregressive Image Generation](https://openreview.net/forum?id=KGgSlCGwB0) | **4,4,6,2** | **4.00** | 4 | Pending | 
+| 377 | [Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation](https://openreview.net/forum?id=KhEjFE1QvQ) | **4,4,6,4** | **4.50** | 4 | Pending | 
+| 378 | [One-Step Flow Q-Learning: Addressing the Diffusion Policy Bottleneck in Offline Reinforcement Learning](https://openreview.net/forum?id=60VgwdzxDM) | **6,8,4,6** | **6.00** | 4 | Pending | 
+| 379 | [Self-Rewarding Rubric-Based Reinforcement Learning for Open-Ended Reasoning](https://openreview.net/forum?id=2x9Dat4PBO) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 380 | [$\mathbf{T^3}$: Reducing Belief Deviation in Reinforcement Learning for Active Reasoning](https://openreview.net/forum?id=r8hzDA3pUY) | **4,6,8,8** | **6.50** | 4 | Pending | 
+| 381 | [From Verifiable Dot to Reward Chain: Harnessing Verifiable Reference-based Rewards for Reinforcement Learning of Open-ended Generation](https://openreview.net/forum?id=ZumVIktGbt) | **8,6,6,6** | **6.50** | 4 | Pending | 
+| 382 | [UserRL: Training Interactive User-Centric Agent via Reinforcement Learning](https://openreview.net/forum?id=kjCzhKVzEJ) | **2,6,4,6** | **4.50** | 4 | Pending | 
+| 383 | [Generalizing Beyond Suboptimality: Offline Reinforcement Learning Learns Effective Scheduling through Random Solutions](https://openreview.net/forum?id=IdsRzAAkB2) | **8,6,4,4** | **5.50** | 4 | Pending | 
+| 384 | [RL Is a Hammer and LLMs Are Nails: A Simple Reinforcement Learning Recipe for Strong Prompt Injection](https://openreview.net/forum?id=VTyL1y4Lab) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 385 | [GAR: Generative Adversarial Reinforcement Learning for Formal Theorem Proving](https://openreview.net/forum?id=1MUZsrJxi9) | **6,8,6,6** | **6.50** | 4 | Pending | 
+| 386 | [Reinforcement Learning with Inverse Rewards for World Model Post-training](https://openreview.net/forum?id=n5dkjiplv4) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 387 | [SPELL: Self-Play Reinforcement Learning for evolving Long-Context Language Models](https://openreview.net/forum?id=83F6YF4Hz6) | **8,4,6,6** | **6.00** | 4 | Pending | 
+| 388 | [Alleviating Forgetfulness of Linear Attention by Hybrid Sparse Attention and Contextualized Learnable Token Eviction](https://openreview.net/forum?id=ioeOm5tFDM) | **2,6,2,2** | **3.00** | 4 | Pending | 
+| 389 | [Latent-Space Reinforcement Learning for Image Segmentation](https://openreview.net/forum?id=0MeCArRu5K) | **4,4,2** | **3.33** | 3 | Pending | 
+| 390 | [Bridging the performance-gap between target-free and target-based reinforcement learning](https://openreview.net/forum?id=ltcxS7JE0c) | **8,4,6,4** | **5.50** | 4 | Pending | 
+| 391 | [CRPA: Curriculum-driven Reinforcement Pre-Alignment for Domain-Adaptive Vision-Language Models](https://openreview.net/forum?id=3rZh4QeNyt) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 392 | [Glance and Focus Reinforcement for Pan-cancer Screening](https://openreview.net/forum?id=qsSIBK6nJX) | **4,6,4,10** | **6.00** | 4 | Pending | 
+| 393 | [Improving Online Reinforcement Learning via Behavior Prior Distillation](https://openreview.net/forum?id=s5XJibyXlZ) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 394 | [RRVF: Visual Reinforcement Learning with Reasoning, Rendering, and Visual Feedback](https://openreview.net/forum?id=5qfX9zJDi2) | **4,4,8** | **5.33** | 3 | Pending | 
+| 395 | [Long-Context Generalization with Sparse Attention](https://openreview.net/forum?id=PsB6Lynznk) | **8,6,6,6** | **6.50** | 4 | Pending | 
+| 396 | [Self-Exploring Language Models for Explainable Link Forecasting on Temporal Graphs via Reinforcement Learning](https://openreview.net/forum?id=AB3jM3iMaW) | **6,4,2,8** | **5.00** | 4 | Pending | 
+| 397 | [Multi-Policy Pareto Front Tracking Based Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=K3E05Agd6W) | **4,4,2,2** | **3.00** | 4 | Pending | 
+| 398 | [Stackelberg Coupling of Online Representation  Learning and Reinforcement Learning](https://openreview.net/forum?id=cFzPNWC9Qb) | **4,2,8,4** | **4.50** | 4 | Pending | 
+| 399 | [Blending Supervised and Reinforcement Fine-Tuning with Prefix Sampling](https://openreview.net/forum?id=FOBmN3oAKm) | **8,2,4,4** | **4.50** | 4 | Pending | 
+| 400 | [Advancing Multi-agent Traffic Simulation via R1-Style Reinforcement Fine-Tuning](https://openreview.net/forum?id=7BiQwV9Sic) | **8,2,6,4** | **5.00** | 4 | Pending | 
+| 401 | [Understanding and Improving Length Generalization in Hierarchical Sparse Attention Models](https://openreview.net/forum?id=iHqdSQk6qc) | **8,4,6,4** | **5.50** | 4 | Pending | 
+| 402 | [The Choice of Divergence: A Neglected Key to Mitigating Diversity Collapse in Reinforcement Learning with Verifiable Reward](https://openreview.net/forum?id=xPEsxcO7F7) | **4,4,4,8,8** | **5.60** | 5 | Pending | 
+| 403 | [TTRV: Test-Time Reinforcement Learning for Vision Language Models](https://openreview.net/forum?id=lPf7qAXMAk) | **2,2,6,4** | **3.50** | 4 | Pending | 
+| 404 | [DisCo: Reinforcement with Diversity Constraints for Multi-Human Generation](https://openreview.net/forum?id=WSoBhpZpdD) | **4,6,2** | **4.00** | 3 | Pending | 
+| 405 | [MARFT: Multi-Agent Reinforcement Fine-Tuning](https://openreview.net/forum?id=Yu1ZsRlqeK) | **4,6,4,2** | **4.00** | 4 | Pending | 
+| 406 | [Quality-Preserving Auto-Regressive Mesh Generation Acceleration via Multi-Head Speculative Decoding](https://openreview.net/forum?id=7s68UdT65x) | **6,4,4** | **4.67** | 3 | Pending | 
+| 407 | [Pref-GRPO: Pairwise Preference Reward-based GRPO for Stable Text-to-Image Reinforcement Learning](https://openreview.net/forum?id=rUDEPUZAvL) | **4,4,6,4** | **4.50** | 4 | Pending | 
+| 408 | [Expert or not? Assessing data quality in offline reinforcement learning](https://openreview.net/forum?id=QCNv7tbuFA) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 409 | [Incentivizing LLM Reasoning via Reinforcement Learning with Functional Monte Carlo Tree Search](https://openreview.net/forum?id=lHbhzxiVI9) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 410 | [SRFT: A Single-Stage Method with Supervised and Reinforcement Fine-Tuning for Reasoning](https://openreview.net/forum?id=n6E0r6kQWQ) | **4,4,6,6** | **5.00** | 4 | Pending | 
+| 411 | [GUI-Shift: Enhancing VLM-Based GUI Agents through Self-supervised Reinforcement Learning](https://openreview.net/forum?id=NakMHPljT7) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 412 | [ALDEN: Reinforcement Learning for Active Navigation and Evidence Gathering in Long Documents](https://openreview.net/forum?id=CRWd9MgCl2) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 413 | [VideoNSA: Native Sparse Attention Scales Video Understanding](https://openreview.net/forum?id=zA2LbsUMDd) | **4,6,6,6** | **5.50** | 4 | Pending | 
+| 414 | [Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment](https://openreview.net/forum?id=DkHt2K1g2Y) | **4,6,6,4** | **5.00** | 4 | Pending | 
+| 415 | [WebGen-R1: Incentivizing LLMs to Generate Functional and Aesthetic Websites with Reinforcement Learning](https://openreview.net/forum?id=Zzf6ExJZXj) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 416 | [Formal-Lagrangian Policy Optimization for Safe Reinforcement Learning in Code Generation with Differentiable Verification](https://openreview.net/forum?id=w7jkX7FfZ5) | **0,4,0** | **1.33** | 3 | Pending | 
+| 417 | [Reinforcement Learning Fine-Tuning Enhances Activation Intensity and Diversity in the Internal Circuitry of LLMs](https://openreview.net/forum?id=tzS9roOTdj) | **4,4,8** | **5.33** | 3 | Pending | 
+| 418 | [Enough is as good as a feast: A Comprehensive Analysis of How Reinforcement Learning Mitigates Task Conflicts in LLMs](https://openreview.net/forum?id=N4l4Jp50R4) | **4,6,8,6** | **6.00** | 4 | Pending | 
+| 419 | [Polyglot-R1: Reinforcement Learning for Multilingual Multi-Perspective Reasoning in LLMs](https://openreview.net/forum?id=yOxb03ThcW) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 420 | [Exploration for Deployment-Efficient Reinforcement Learning Agents](https://openreview.net/forum?id=BN4vhB5IRy) | **2,4,4,4,2** | **3.20** | 5 | Pending | 
+| 421 | [RTLSeek: Boosting the LLM-Based RTL Generation with Diversity-Oriented Reinforcement Learning](https://openreview.net/forum?id=qO7g1dToiO) | **4,2,4,2** | **3.00** | 4 | Pending | 
+| 422 | [Just Enough Thinking: Efficient Reasoning with Adaptive Length Penalties Reinforcement Learning](https://openreview.net/forum?id=QY5tl8AhlT) | **4,4,6,6** | **5.00** | 4 | Pending | 
+| 423 | [Learning Communication in Offline Multi-Agent Reinforcement Learning](https://openreview.net/forum?id=NZSsN8cL0r) | **8,4,2,4** | **4.50** | 4 | Pending | 
+| 424 | [Policy Transfer for Improved Sample Efficiency in Goal-Conditioned Reinforcement Learning](https://openreview.net/forum?id=YXxjnq9HwR) | **2,4,2,2** | **2.50** | 4 | Pending | 
+| 425 | [Reward Is Enough: LLMs Are In-Context Reinforcement Learners](https://openreview.net/forum?id=keCXNHOe4W) | **6,6,2** | **4.67** | 3 | Pending | 
+| 426 | [FrameMind: Frame-Interleaved Chain-of-Thought for Video Reasoning via Reinforcement Learning](https://openreview.net/forum?id=veHx4mmc9K) | **6,6,2,2** | **4.00** | 4 | Pending | 
+| 427 | [Carbon- and System-Aware LoRA Scaling for On-Device LLMs via Hierarchical Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=gRXnaH3hDo) | **2,2,2,2** | **2.00** | 4 | Pending | 
+| 428 | [IncentRL: Bayesian Adaptation of Preference Gaps in Reinforcement Learning](https://openreview.net/forum?id=5o0zF03RP9) | **0,0,0,2** | **0.50** | 4 | Pending | 
+| 429 | [Inference-based Rewards for Reinforcement Learning](https://openreview.net/forum?id=omnybNZPv1) | **6,6,6,2** | **5.00** | 4 | Pending | 
+| 430 | [AstRL: Analog and Mixed-Signal Circuit Synthesis with Deep Reinforcement Learning](https://openreview.net/forum?id=Iz5YEMgdYe) | **2,6,4** | **4.00** | 3 | Pending | 
+| 431 | [Contextual Latent World Models for Offline Meta Reinforcement Learning](https://openreview.net/forum?id=c4D7NJGC6D) | **6,4,2** | **4.00** | 3 | Pending | 
+| 432 | [STRuCT-LLM: Unifying Tabular and Graph Reasoning with Reinforcement Learning for Semantic Parsing](https://openreview.net/forum?id=xZDoGrMTGI) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 433 | [RAPID: An Efficient Reinforcement Learning Algorithm for Small Language Models](https://openreview.net/forum?id=qwfXfdto89) | **2,2,0,2** | **1.50** | 4 | Pending | 
+| 434 | [Decision Pre-Trained Transformer is a Scalable In-Context Reinforcement Learner](https://openreview.net/forum?id=t6roJiPN6Y) | **4,2,4,6** | **4.00** | 4 | Pending | 
+| 435 | [Plan Then Action: High-Level Planning Guidance Reinforcement Learning  for LLM Reasoning](https://openreview.net/forum?id=YfJdLI8daz) | **8,2,4,2** | **4.00** | 4 | Pending | 
+| 436 | [Generative Adversarial Optimization: Dual-Reward Reinforcement Learning for Mathematics Reasoning](https://openreview.net/forum?id=Ccu21bGqRv) | **2,2,4** | **2.67** | 3 | Pending | 
+| 437 | [Offline Reinforcement Learning Through Trajectory Clustering and Lower Bound Penalisation](https://openreview.net/forum?id=DOL96nnJpm) | **6,4,4,4,4** | **4.40** | 5 | Pending | 
+| 438 | [Improving Black-Box LLMs with Feedback Reinforcement Learning](https://openreview.net/forum?id=Cr3CWfN7jB) | **4,2,4,4** | **3.50** | 4 | Pending | 
+| 439 | [LongRLVR: Long-Context Reinforcement Learning Requires Verifiable Context Rewards](https://openreview.net/forum?id=omVhYvyTPJ) | **8,4,2** | **4.67** | 3 | Pending | 
+| 440 | [Selective Expert Guidance for Effective and Diverse Exploration in Reinforcement Learning of LLMs](https://openreview.net/forum?id=axlFycAkoL) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 441 | [SIREN: Subgraph Isomorphism via Reinforcement Enhanced Graph Neural Networks](https://openreview.net/forum?id=vGxKB0b0uI) | **6,4,4,4** | **4.50** | 4 | Pending | 
+| 442 | [DeepTheorem: Advancing LLM Reasoning for Theorem Proving Through Natural Language and Reinforcement Learning](https://openreview.net/forum?id=0OUkySEAf0) | **6,4,2,2** | **3.50** | 4 | Pending | 
+| 443 | [FAuNO: Semi-Asynchronous Federated Reinforcement Learning Framework for Task Offloading in Edge Systems](https://openreview.net/forum?id=398L0TTKiG) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 444 | [IN-RIL: Interleaved Reinforcement and Imitation Learning for Policy Fine-Tuning](https://openreview.net/forum?id=32lhWShxy8) | **2,6,2,2** | **3.00** | 4 | Pending | 
+| 445 | [Curriculum Reinforcement Learning from Easy to Hard Tasks Improves LLM Reasoning](https://openreview.net/forum?id=KJvHnl3kUv) | **6,6,4** | **5.33** | 3 | Pending | 
+| 446 | [RTG: Reverse Trajectory Generation for Reinforcement Learning Under Sparse Reward](https://openreview.net/forum?id=V54Is8qvjZ) | **6,4,4,6** | **5.00** | 4 | Pending | 
+| 447 | [ViaRL: Adaptive Temporal Grounding via Visual Iterated Amplification Reinforcement Learning](https://openreview.net/forum?id=G0ettIR8yv) | **4,4,8** | **5.33** | 3 | Pending | 
+| 448 | [SIRI: Scaling Iterative Reinforcement Learning with Interleaved Compression](https://openreview.net/forum?id=TgoOdFMIJb) | **2,4,6,2** | **3.50** | 4 | Pending | 
+| 449 | [OPRIDE: Efficient Offline Preference-based Reinforcement Learning via In-Dataset Exploration](https://openreview.net/forum?id=QLDHukpozh) | **6,4,6,4** | **5.00** | 4 | Pending | 
+| 450 | [MIRA: Memory-Integrated Reinforcement Learning Agent  with Limited LLM Guidance](https://openreview.net/forum?id=oWagByDNPc) | **4,6,6,2** | **4.50** | 4 | Pending | 
+| 451 | [MobileGUI-RL: Advancing Mobile GUI Agent through Reinforcement Learning in Online Environment](https://openreview.net/forum?id=LrXGarwVO8) | **4,4,2,4,4** | **3.60** | 5 | Pending | 
+| 452 | [Interleaved Reasoning for Large Language Models via Reinforcement Learning](https://openreview.net/forum?id=DIWdk9Zo7g) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 453 | [Graph-R1: Towards Agentic GraphRAG Framework via End-to-end Reinforcement Learning](https://openreview.net/forum?id=PkwJjGJ7aN) | **4,6,4,6** | **5.00** | 4 | Pending | 
+| 454 | [Evolutionary Multi-Agent Reinforcement Learning for Crisis-Aware Demographic Policy Optimization](https://openreview.net/forum?id=OJf6hePdN7) | **6,2,2** | **3.33** | 3 | Pending | 
+| 455 | [Sample-Efficient Online Distributionally Robust Reinforcement Learning via General Function Approximation](https://openreview.net/forum?id=71iwUe98cI) | **6,2,4,4** | **4.00** | 4 | Pending | 
+| 456 | [Detecting Data Contamination from Reinforcement Learning Post-training for Large Language Models](https://openreview.net/forum?id=EjiJmiA6ea) | **6,4,6** | **5.33** | 3 | Pending | 
+| 457 | [FiRL : Finslerian Reinforcement Learning for Risk-Aware Anisotropic Locomotion](https://openreview.net/forum?id=YCHE8YOqyx) | **0,6,4,6** | **4.00** | 4 | Pending | 
+| 458 | [Principled Fast and Meta Knowledge Learners for Continual Reinforcement Learning](https://openreview.net/forum?id=loNTDX3wTn) | **8,6,8,4** | **6.50** | 4 | Pending | 
+| 459 | [Preference Conditioned Multi-Objective Reinforcement Learning: Decomposed, Diversity-Driven Policy Optimization](https://openreview.net/forum?id=iH7mSOTR4q) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 460 | [TaskForce: Cooperative Multi-agent Reinforcement Learning for Multi-task Optimization](https://openreview.net/forum?id=iTslNNPfep) | **4,6,4,4** | **4.50** | 4 | Pending | 
+| 461 | [Human-in-the-Loop Policy Optimization for Preference-Based Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=PRHNKeaZpP) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 462 | [GRACE: A Language Model Framework for Explainable Inverse Reinforcement Learning](https://openreview.net/forum?id=uW9FoHBuoQ) | **4,2,6,4** | **4.00** | 4 | Pending | 
+| 463 | [R1-Reward: Training Multimodal Reward Model Through Stable Reinforcement Learning](https://openreview.net/forum?id=4Ewgw9M2xE) | **8,6,8,4** | **6.50** | 4 | Pending | 
+| 464 | [SPEAR: Structured Pruning for Spiking Neural Networks via Synaptic Operation Estimation and Reinforcement Learning](https://openreview.net/forum?id=Wo8hTwoYcm) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 465 | [Writing-RL: Advancing Long-form Writing via Adaptive Curriculum Reinforcement Learning](https://openreview.net/forum?id=4srk2cxr30) | **4,6,4,4,4** | **4.40** | 5 | Pending | 
+| 466 | [$\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving](https://openreview.net/forum?id=HBOLN5m3qg) | **6,4,6,6** | **5.50** | 4 | Pending | 
+| 467 | [ReasonIE: better LLMs for Scientific Information Extraction with reinforcement learning and data augmentation](https://openreview.net/forum?id=qkxIeGjeSu) | **4,4,4,2** | **3.50** | 4 | Pending | 
+| 468 | [One RL to See Them All: Visual Triple Unified Reinforcement Learning](https://openreview.net/forum?id=MwR1Uihush) | **4,4,4,4,4** | **4.00** | 5 | Pending | 
+| 469 | [Generalizable Multilevel Graph Optimization via Reinforcement-Guided Diffusion from Simple Subproblems](https://openreview.net/forum?id=uhP8VQzWkz) | **4,4,4** | **4.00** | 3 | Pending | 
+| 470 | [Towards Efficient Online Exploration for Reinforcement Learning with Human Feedback](https://openreview.net/forum?id=oGpnoXtA6G) | **2,4,6** | **4.00** | 3 | Pending | 
+| 471 | [POLO: Preference-Guided Multi-Turn Reinforcement Learning for Lead Optimization](https://openreview.net/forum?id=BAOO9H0ehZ) | **2,4,4** | **3.33** | 3 | Pending | 
+| 472 | [CDE: Curiosity-Driven Exploration for Efficient Reinforcement Learning in Large Language Models](https://openreview.net/forum?id=5rXN5knHKW) | **0,6,6,6** | **4.50** | 4 | Pending | 
+| 473 | [Self-Speculative Masked Diffusions](https://openreview.net/forum?id=ogMTEtHO6M) | **6,4,6,8** | **6.00** | 4 | Pending | 
+| 474 | [FRL-SAGE: Stackelberg Game-Theoretic Defense Against Adaptive Adversaries in Federated Reinforcement Learning](https://openreview.net/forum?id=Jq0KN0lgtM) | **0,4,2,2,2** | **2.00** | 5 | Pending | 
+| 475 | [CoT-Space: A Theoretical Framework for Internal Slow-Thinking via Reinforcement Learning](https://openreview.net/forum?id=4DJ62eO2T2) | **6,6,2,2** | **4.00** | 4 | Pending | 
+| 476 | [AGE-MORL: Agent-Guided Evolutionary Control for Multi-Objective Reinforcement Learning](https://openreview.net/forum?id=lxPe6S5E7k) | **2,2,4,6** | **3.50** | 4 | Pending | 
+| 477 | [VCRL: Variance-based Curriculum Reinforcement Learning for Large Language Models](https://openreview.net/forum?id=FBhWTuMTYA) | **4,6,2,6** | **4.50** | 4 | Pending | 
+| 478 | [ReconDreamer-RL: Enhancing Reinforcement Learning via Diffusion-based Scene Reconstruction](https://openreview.net/forum?id=cEAOqt6guL) | **4,6,6,6** | **5.50** | 4 | Pending | 
+| 479 | [MARS-SQL: A Multi-Agent Reinforcement Learning Framework for Text-to-SQL](https://openreview.net/forum?id=EURAfiUpVJ) | **6,2,4** | **4.00** | 3 | Pending | 
+| 480 | [No Prompt Left Behind: Exploiting Zero-Variance Prompts in LLM Reinforcement Learning via Entropy-Guided Advantage Shaping](https://openreview.net/forum?id=kiXFIESZKv) | **6,6,6** | **6.00** | 3 | Pending | 
+| 481 | [Emergent Hierarchical Reasoning in LLMs through Reinforcement Learning](https://openreview.net/forum?id=NlkykTqAId) | **4,4,4,6** | **4.50** | 4 | Pending | 
+| 482 | [Star-Corrector: A Multi-Turn Interactive Reinforcement Learning Framework for Lean4 Theorem Correction](https://openreview.net/forum?id=nXJmbeMHDQ) | **0,4,2,4** | **2.50** | 4 | Pending | 
+| 483 | [DeRL: Diverse‑Exploration Reinforcement Learning for Large Language Models Improves Mathematical Reasoning](https://openreview.net/forum?id=ZIYYeTkZQ4) | **2,2,4** | **2.67** | 3 | Pending | 
+| 484 | [RewardCode: Training Generalist Code Reward Model via Pairwise Reinforcement Learning](https://openreview.net/forum?id=zpsYG8fYc8) | **4,4,4,4** | **4.00** | 4 | Pending | 
+| 485 | [Refining Hybrid Genetic Search for CVRP via Reinforcement Learning-Finetuned LLM](https://openreview.net/forum?id=aITKXFeivk) | **4,6,8,6** | **6.00** | 4 | Pending | 
+| 486 | [ADORA: Training Reasoning Models with Dynamic Advantage Estimation on Reinforcement Learning](https://openreview.net/forum?id=ly09ZBzSOc) | **4,4,2,4** | **3.50** | 4 | Pending | 
+| 487 | [STRONGER TOGETHER: ON-POLICY REINFORCEMENT LEARNING FOR COLLABORATIVE LLMS](https://openreview.net/forum?id=IdF6JqXWzx) | **4,4,2,6** | **4.00** | 4 | Pending | 
+| 488 | [Ego to World: Collaborative Spatial Reasoning in Embodied Systems via Reinforcement Learning](https://openreview.net/forum?id=G7vF4FYtOk) | **6,2,6,2** | **4.00** | 4 | Pending | 
+| 489 | [Belief-Based Offline Reinforcement Learning for Delay-Robust Policy Optimization](https://openreview.net/forum?id=3C1U86DcW4) | **6,2,4,6** | **4.50** | 4 | Pending | 
+| 490 | [Shop-R1: Rewarding LLMs to Simulate Human Behavior in Online Shopping via Reinforcement Learning](https://openreview.net/forum?id=fkIePp9YEO) | **6,4,4,2** | **4.00** | 4 | Pending | 
+| 491 | [AIGID-RFT: Reinforcement Fine-Tuning Multimodal LLMs for AI-Generated Image Detection](https://openreview.net/forum?id=5WJzbZZeh1) | **6,2,2,8** | **4.50** | 4 | Pending | 
+| 492 | [Tree Search for LLM Agent Reinforcement Learning](https://openreview.net/forum?id=ZpQwAFhU13) | **6,4,6** | **5.33** | 3 | Pending | 
+| 493 | [Policy Likelihood-based Query Sampling and Critic-Exploited Reset for Efficient Preference-based Reinforcement Learning](https://openreview.net/forum?id=ITeuGb2bYg) | **6,6,8** | **6.67** | 3 | Pending | 
+| 494 | [FM-IRL: Flow-Matching for Reward Modeling and Policy Regularization in Reinforcement Learning](https://openreview.net/forum?id=EJjq0o3iQk) | **2,4,8,2** | **4.00** | 4 | Pending | 
+| 495 | [Breaking the Exploration Bottleneck: Rubric-Scaffolded Reinforcement Learning for General LLM Reasoning](https://openreview.net/forum?id=5doZa7g4XL) | **2,4,6,8** | **5.00** | 4 | Pending | 
+| 496 | [DVLA-RL: Dual-Level Vision–Language Alignment with Reinforcement Learning Gating for Few-Shot Learning](https://openreview.net/forum?id=2ix1K6zPRf) | **6,4,4** | **4.67** | 3 | Pending | 
+| 497 | [MobileRL: Online Agentic Reinforcement Learning for Mobile GUI Agents](https://openreview.net/forum?id=C3F0G9nXhl) | **4,8,4,2** | **4.50** | 4 | Pending | 
+| 498 | [Learning What Reinforcement Learning Can't: Interleaved Online Fine-Tuning for Hardest Questions](https://openreview.net/forum?id=LzCBLrNoyM) | **6,6,8,4** | **6.00** | 4 | Pending | 
+| 499 | [Contrastive Code Graph Embeddings for Reinforcement Learning-Based Automated Code Refactoring](https://openreview.net/forum?id=0xHWd4CUaX) | **2,4,2,0** | **2.00** | 4 | Pending | 
+| 500 | [Dynamic Trust Region Adaptation for \\ Human-in-the-Loop Reinforcement Learning \\ in Code Refinement](https://openreview.net/forum?id=FPBtaGBv81) | **0,2,2,4** | **2.00** | 4 | Pending | 

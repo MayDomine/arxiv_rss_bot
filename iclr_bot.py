@@ -676,7 +676,7 @@ class ICLRBot:
             header.append(f"> Showing top {len(display_papers)} papers (out of {total_filtered} matching), sorted by keyword relevance score (no ratings available yet).")
         header.append("")
 
-        table_header = "| # | Title | Avg Rating | Reviews | Decision | OpenReview |\n"
+        table_header = "| # | Title | Ratings |Avg Rating | Reviews | Decision |\n"
         table_divider = "| --- | --- | --- | --- | --- | --- |\n"
 
         rows: List[str] = []
@@ -687,9 +687,10 @@ class ICLRBot:
             reviews = str(paper.rating_count) if paper.rating_count else "0"
             decision = paper.decision or "Pending"
             title = paper.title.replace("\n", " ").strip()
+            rate_str = ",".join(str(round(r)) for r in paper.ratings) if paper.ratings else "N/A"
 
             rows.append(
-                f"| {idx} | [{title}]({paper.forum_link}) | {avg_rating} | {reviews} | {decision} | [Link]({paper.forum_link}) |"
+                f"| {idx} | [{title}]({paper.forum_link}) | **{rate_str}** | **{avg_rating}** | {reviews} | {decision} | "
             )
 
         content = header + [table_header + table_divider + "\n".join(rows)]
