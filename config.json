@@ -47,5 +47,6 @@
     "min_score": 2.5,
     "enable_deduplication": true,
     "deduplication_methods": ["id", "title", "link"],
-    "fetch_ratings": true
+    "fetch_ratings": true,
+    "display_limit": 500
 } 

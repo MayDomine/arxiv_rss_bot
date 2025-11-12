@@ -460,7 +460,7 @@ def update_iclr_cache():
             logger.warning("ICLR cache could not be populated.")
             return False
 
-        # Filter and sort papers for RSS feed (top 100 by rating)
+        # Filter and sort papers for RSS feed (top display_limit by rating)
         filtered_papers = []
         for paper_dict in cache_payload:
             # Convert dict back to ICLRPaper-like object for filtering
@@ -473,8 +473,8 @@ def update_iclr_cache():
             if bot.matches_criteria(paper_like):
                 filtered_papers.append(paper_dict)
 
-        # Sort by average rating and take top 100
-        rss_papers = sorted(filtered_papers, key=lambda p: (p.get('average_rating') or 0), reverse=True)[:100]
+        # Sort by average rating and take top display_limit
+        rss_papers = sorted(filtered_papers, key=lambda p: (p.get('average_rating') or 0), reverse=True)[:bot.display_limit]
 
         base_url = os.environ.get("BASE_URL", "http://localhost:1999").strip()  # Fixed port
         year = bot.year

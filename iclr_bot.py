@@ -26,7 +26,6 @@ logger = logging.getLogger(__name__)
 
 OPENREVIEW_API = os.environ.get("OPENREVIEW_API", "https://api2.openreview.net")
 
-
 def _ensure_directory(path: Path) -> None:
     """Create parent directories for the given path."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -119,12 +118,14 @@ class ICLRBot:
         year: int = 2026,
         output_dir: Optional[Path] = None,
         max_papers: Optional[int] = None,
+        display_limit: int = 100,
         session: Optional[requests.Session] = None,
         config_file: str = "config.json",
     ) -> None:
         self.year = year
         self.output_dir = output_dir or Path("iclr")
         self.max_papers = max_papers
+        self.display_limit = display_limit
         self.session = session or requests.Session()
         self.config_file = config_file
 
@@ -133,6 +134,10 @@ class ICLRBot:
 
         # Load configuration
         self.config = self.load_config()
+
+        # Override display_limit from config if not explicitly set
+        if display_limit == 100:  # Default value, so check config
+            self.display_limit = self.config.get("display_limit", 100)
 
     def load_config(self) -> Dict[str, Any]:
         """Load configuration from JSON file."""
@@ -194,6 +199,7 @@ class ICLRBot:
             ],
             "min_score": 0.0,
             "fetch_ratings": True,  # Whether to fetch review ratings
+            "display_limit": 100,  # Number of papers to display in README
         }
 
     def matches_criteria(self, paper: ICLRPaper) -> bool:
@@ -566,9 +572,9 @@ class ICLRBot:
             # Sort by some criteria (we'll use paper number as proxy for submission order)
             # Papers with higher numbers might be more recent and potentially rated
             sorted_papers = sorted(filtered_papers, key=lambda p: getattr(p, 'score', 0), reverse=True)
-            top_papers = sorted_papers[:100]
+            top_papers = sorted_papers[:self.display_limit]
 
-            logger.info("Fetching ratings for top 100 filtered papers...")
+            logger.info(f"Fetching ratings for top {self.display_limit} filtered papers...")
 
             # Prepare batch data
             paper_data = [(i+1, paper.forum_id) for i, paper in enumerate(top_papers)]
@@ -584,7 +590,7 @@ class ICLRBot:
                 paper.ratings = ratings_info["ratings"]
 
             rated_count = sum(1 for p in top_papers if p.average_rating is not None)
-            logger.info("Found ratings for %d out of 100 top papers", rated_count)
+            logger.info(f"Found ratings for %d out of {self.display_limit} top papers", rated_count)
 
         logger.info("Processed %d papers with review data", len(filtered_papers))
         return filtered_papers
@@ -627,9 +633,8 @@ class ICLRBot:
         total_filtered = len(papers)
 
         # Sort papers by keyword relevance score (descending)
-        display_limit = 100
         sorted_papers = sorted(papers, key=lambda p: getattr(p, 'score', 0), reverse=True)
-        display_papers = sorted_papers[:display_limit]
+        display_papers = sorted_papers[:self.display_limit]
 
         # Count rated papers
         rated_count = sum(1 for p in papers if p.average_rating is not None)
@@ -658,9 +663,9 @@ class ICLRBot:
             )
 
         if rated_count > 0:
-            header.append(f"> Showing top {len(display_papers)} papers, sorted by keyword relevance score. {rated_count} papers have review ratings.")
+            header.append(f"> Showing top {len(display_papers)} papers (out of {total_filtered} matching), sorted by keyword relevance score. {rated_count} papers have review ratings.")
         else:
-            header.append(f"> Showing top {len(display_papers)} papers, sorted by keyword relevance score (no ratings available yet).")
+            header.append(f"> Showing top {len(display_papers)} papers (out of {total_filtered} matching), sorted by keyword relevance score (no ratings available yet).")
         header.append("")
 
         table_header = "| # | Title | Avg Rating | Reviews | Decision | OpenReview |\n"
