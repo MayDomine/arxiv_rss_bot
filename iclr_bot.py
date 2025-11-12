@@ -282,7 +282,7 @@ class ICLRBot:
     ) -> List[Dict[str, Any]]:
         """Fetch all notes for a specific domain."""
         notes: List[Dict[str, Any]] = []
-        page_size = 1000  # Use larger page size to minimize requests
+        page_size = 10000 # Use larger page size to minimize requests
 
         try:
             url = f"{OPENREVIEW_API}/notes"
@@ -423,7 +423,7 @@ class ICLRBot:
         batch_size = 20  # Smaller batches
         results = {}
 
-        for i in range(0, len(paper_data_list), batch_size):
+        for i in tqdm(range(0, len(paper_data_list), batch_size)):
             batch = paper_data_list[i:i + batch_size]
             forum_ids = [forum_id for _, forum_id in batch]
 
