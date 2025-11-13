@@ -9,22 +9,22 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2025-11-12 12:55:58 UTC
+- **Last Updated**: 2025-11-13 12:56:00 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [From Attention to Disaggregation: Tracing the Evolution of LLM Inference](https://arxiv.org/abs/2511.07422)
+### 1. [Mixture-of-Channels: Exploiting Sparse FFNs for Efficient LLMs Pre-Training and Inference](https://arxiv.org/abs/2511.09323)
 
-**Authors**: Madabattula Rajesh Kumar, Srinivasa Rao Aravilli, Mustafa Saify, Shashank Srivastava  
-**Category**: cs.DC  
-**Published**: 2025-11-12  
+**Authors**: Tong Wu, Yutong He, Bin Wang, Kun Yuan  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
 **Score**: 12.5  
 **Type**: new  
-**ArXiv ID**: 2511.07422v1  
+**ArXiv ID**: 2511.09323v1  
 
-The evolution of Large Language Models from the Transformer architecture to models with trillions of parameters has shifted the primary bottleneck from model training to real time inference. Deploying these massive models is a complex distributed systems challenge constrained by memory bandwidth, co...
+Large language models (LLMs) have demonstrated remarkable success across diverse artificial intelligence tasks, driven by scaling laws that correlate model size and training data with performance improvements. However, this scaling paradigm incurs substantial memory overhead, creating significant ch...
 
 ---
 
@@ -32,7 +32,7 @@ The evolution of Large Language Models from the Transformer architecture to mode
 
 **Authors**: Chongyang Tan, Ruoqi Wen, Rongpeng Li, Zhifeng Zhao, Ekram Hossain, Honggang Zhang  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 11.0  
 **Type**: replace-cross  
 **ArXiv ID**: 2505.11570v2  
@@ -41,11 +41,24 @@ Federated Learning (FL) enables distributed model training across edge devices i
 
 ---
 
-### 3. [Motif 2 12.7B technical report](https://arxiv.org/abs/2511.07464)
+### 3. [Polar Sparsity: High Throughput Batched LLM Inferencing with Scalable Contextual Sparsity](https://arxiv.org/abs/2505.14884)
+
+**Authors**: Susav Shrestha, Brad Settlemyer, Nikoli Dryden, Narasimha Reddy  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
+**Score**: 10.5  
+**Type**: replace  
+**ArXiv ID**: 2505.14884v3  
+
+Accelerating large language model (LLM) inference is critical for real-world deployments requiring high throughput and low latency. Contextual sparsity, where each token dynamically activates only a small subset of the model parameters, shows promise but does not scale to large batch sizes due to un...
+
+---
+
+### 4. [Motif 2 12.7B technical report](https://arxiv.org/abs/2511.07464)
 
 **Authors**: Junghwan Lim, Sungmin Lee, Dongseok Kim, Taehyun Kim, Eunhwan Park, Jeesoo Lee, Jeongdoo Lee, Junhyeok Lee, Wai Ting Cheung, Dahye Choi, Jaeheui Her, Jaeyeon Huh, Hanbin Jung, Changjin Kang, Beomgyu Kim, Minjae Kim, Taewhan Kim, Youngrok Kim, Hyukjin Kweon, Haesol Lee, Kungyu Lee, Dongpin Oh, Yeongjae Park, Bokki Ryu, Dongjoo Weon  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 10.0  
 **Type**: cross  
 **ArXiv ID**: 2511.07464v1  
@@ -54,11 +67,50 @@ We introduce Motif-2-12.7B, a new open-weight foundation model that pushes the e
 
 ---
 
-### 4. [Synera: Synergistic LLM Serving across Device and Cloud at Scale](https://arxiv.org/abs/2511.07423)
+### 5. [AttnCache: Accelerating Self-Attention Inference for LLM Prefill via Attention Cache](https://arxiv.org/abs/2510.25979)
+
+**Authors**: Dinghong Song, Yuan Feng, Yiwei Wang, Shangye Chen, Cyril Guyot, Filip Blagojevic, Hyeran Jeon, Pengfei Su, Dong Li  
+**Category**: cs.CL  
+**Published**: 2025-11-13  
+**Score**: 10.0  
+**Type**: replace  
+**ArXiv ID**: 2510.25979v3  
+
+Large Language Models (LLMs) are widely used in generative applications such as chatting, code generation, and reasoning. However, many realworld workloads such as classification, question answering, recommendation, and text embedding rely solely on the prefill stage of inference, where the model en...
+
+---
+
+### 6. [LLM Inference Beyond a Single Node: From Bottlenecks to Mitigations with Fast All-Reduce Communication](https://arxiv.org/abs/2511.09557)
+
+**Authors**: Prajwal Singhania, Siddharth Singh, Lannie Dalton Hough, Akarsh Srivastava, Harshitha Menon, Charles Fredrick Jekel, Abhinav Bhatele  
+**Category**: cs.DC  
+**Published**: 2025-11-13  
+**Score**: 10.0  
+**Type**: new  
+**ArXiv ID**: 2511.09557v1  
+
+As large language models (LLMs) continue to grow in size, distributed inference has become increasingly important. Model-parallel strategies must now efficiently scale not only across multiple GPUs but also across multiple nodes. In this work, we present a detailed performance study of multi-node di...
+
+---
+
+### 7. [FLAD: Federated Learning for LLM-based Autonomous Driving in Vehicle-Edge-Cloud Networks](https://arxiv.org/abs/2511.09025)
+
+**Authors**: Tianao Xiang, Mingjian Zhi, Yuanguo Bi, Lin Cai, Yuhao Chen  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
+**Score**: 10.0  
+**Type**: new  
+**ArXiv ID**: 2511.09025v1  
+
+Large Language Models (LLMs) have impressive data fusion and reasoning capabilities for autonomous driving (AD). However, training LLMs for AD faces significant challenges including high computation transmission costs, and privacy concerns associated with sensitive driving data. Federated Learning (...
+
+---
+
+### 8. [Synera: Synergistic LLM Serving across Device and Cloud at Scale](https://arxiv.org/abs/2511.07423)
 
 **Authors**: Genglin Wang, Liekang Zeng, Bufang Yang, Kaiwei Liu, Guoliang Xing, Chumin Sun, Li Zhou, Jie Sun, Zhenyu Yan  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 9.5  
 **Type**: cross  
 **ArXiv ID**: 2511.07423v1  
@@ -67,24 +119,24 @@ Large Language Models (LLMs) are becoming key components in various mobile opera
 
 ---
 
-### 5. [ElasticMM: Efficient Multimodal LLMs Serving with Elastic Multimodal Parallelism](https://arxiv.org/abs/2507.10069)
+### 9. [A Distributed Training Architecture For Combinatorial Optimization](https://arxiv.org/abs/2511.09261)
 
-**Authors**: Zedong Liu, Shenggan Cheng, Guangming Tan, Yang You, Dingwen Tao  
-**Category**: cs.DC  
-**Published**: 2025-11-12  
+**Authors**: Yuyao Long  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
 **Score**: 9.5  
-**Type**: replace  
-**ArXiv ID**: 2507.10069v3  
+**Type**: new  
+**ArXiv ID**: 2511.09261v1  
 
-Multimodal large language models (MLLMs) extend LLMs to handle images, videos, and audio by incorporating feature extractors and projection modules. However, these additional components -- combined with complex inference pipelines and heterogeneous workloads -- introduce significant inference overhe...
+In recent years, graph neural networks (GNNs) have been widely applied in tackling combinatorial optimization problems. However, existing methods still suffer from limited accuracy when addressing that on complex graphs and exhibit poor scalability, since full training requires loading the whole adj...
 
 ---
 
-### 6. [Sparse3DPR: Training-Free 3D Hierarchical Scene Parsing and Task-Adaptive Subgraph Reasoning from Sparse RGB Views](https://arxiv.org/abs/2511.07813)
+### 10. [Sparse3DPR: Training-Free 3D Hierarchical Scene Parsing and Task-Adaptive Subgraph Reasoning from Sparse RGB Views](https://arxiv.org/abs/2511.07813)
 
 **Authors**: Haida Feng, Hao Wei, Zewen Xu, Haolin Wang, Chade Li, Yihong Wu  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 9.0  
 **Type**: cross  
 **ArXiv ID**: 2511.07813v1  
@@ -93,11 +145,11 @@ Recently, large language models (LLMs) have been explored widely for 3D scene un
 
 ---
 
-### 7. [MA-GTS: A Multi-Agent Framework for Solving Complex Graph Problems in Real-World Applications](https://arxiv.org/abs/2502.18540)
+### 11. [MA-GTS: A Multi-Agent Framework for Solving Complex Graph Problems in Real-World Applications](https://arxiv.org/abs/2502.18540)
 
 **Authors**: Zike Yuan, Ming Liu, Hui Wang, Bing Qin  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 9.0  
 **Type**: replace-cross  
 **ArXiv ID**: 2502.18540v2  
@@ -106,11 +158,11 @@ Graph-theoretic problems arise in real-world applications like logistics, commun
 
 ---
 
-### 8. [FedSEA-LLaMA: A Secure, Efficient and Adaptive Federated Splitting Framework for Large Language Models](https://arxiv.org/abs/2505.15683)
+### 12. [FedSEA-LLaMA: A Secure, Efficient and Adaptive Federated Splitting Framework for Large Language Models](https://arxiv.org/abs/2505.15683)
 
 **Authors**: Zishuai Zhang, Hainan zhang, Weihua Li, Qinnan zhang, jin Dong, Yongxin Tong, Zhiming Zheng  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 9.0  
 **Type**: replace-cross  
 **ArXiv ID**: 2505.15683v3  
@@ -119,11 +171,24 @@ Private data holds promise for improving LLMs due to its high quality, but its s
 
 ---
 
-### 9. [FractalCloud: A Fractal-Inspired Architecture for Efficient Large-Scale Point Cloud Processing](https://arxiv.org/abs/2511.07665)
+### 13. [Tree-OPO: Off-policy Monte Carlo Tree-Guided Advantage Optimization for Multistep Reasoning](https://arxiv.org/abs/2509.09284)
+
+**Authors**: Bingning Huang, Tu Nguyen, Matthieu Zimmer  
+**Category**: cs.CL  
+**Published**: 2025-11-13  
+**Score**: 9.0  
+**Type**: replace-cross  
+**ArXiv ID**: 2509.09284v2  
+
+Recent advances in reasoning with large language models (LLMs) have shown the effectiveness of Monte Carlo Tree Search (MCTS) for generating high-quality intermediate trajectories, particularly in math and symbolic domains. Inspired by this, we explore how MCTS-derived trajectories-traditionally use...
+
+---
+
+### 14. [FractalCloud: A Fractal-Inspired Architecture for Efficient Large-Scale Point Cloud Processing](https://arxiv.org/abs/2511.07665)
 
 **Authors**: Yuzhe Fu, Changchun Zhou, Hancheng Ye, Bowen Duan, Qiyu Huang, Chiyue Wei, Cong Guo, Hai "Helen'' Li, Yiran Chen  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 8.5  
 **Type**: cross  
 **ArXiv ID**: 2511.07665v1  
@@ -132,11 +197,11 @@ Three-dimensional (3D) point clouds are increasingly used in applications such a
 
 ---
 
-### 10. [A Remarkably Efficient Paradigm to Multimodal Large Language Models for Sequential Recommendation](https://arxiv.org/abs/2511.05885)
+### 15. [A Remarkably Efficient Paradigm to Multimodal Large Language Models for Sequential Recommendation](https://arxiv.org/abs/2511.05885)
 
 **Authors**: Qiyong Zhong, Jiajie Su, Ming Yang, Yunshan Ma, Xiaolin Zheng, Chaochao Chen  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 8.5  
 **Type**: replace-cross  
 **ArXiv ID**: 2511.05885v2  
@@ -145,11 +210,11 @@ Sequential recommendations (SR) predict users' future interactions based on thei
 
 ---
 
-### 11. [Network and Systems Performance Characterization of MCP-Enabled LLM Agents](https://arxiv.org/abs/2511.07426)
+### 16. [Network and Systems Performance Characterization of MCP-Enabled LLM Agents](https://arxiv.org/abs/2511.07426)
 
 **Authors**: Zihao Ding, Mufeng Zhu, Yao Liu  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 8.0  
 **Type**: cross  
 **ArXiv ID**: 2511.07426v1  
@@ -158,11 +223,11 @@ Model Context Protocol (MCP) has recently gained increased attention within the 
 
 ---
 
-### 12. [How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference](https://arxiv.org/abs/2505.09598)
+### 17. [How Hungry is AI? Benchmarking Energy, Water, and Carbon Footprint of LLM Inference](https://arxiv.org/abs/2505.09598)
 
 **Authors**: Nidhal Jegham, Marwan Abdelatti, Chan Young Koh, Lassad Elmoubarki, Abdeltawab Hendawi  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 8.0  
 **Type**: replace-cross  
 **ArXiv ID**: 2505.09598v5  
@@ -171,11 +236,11 @@ This paper introduces an infrastructure-aware benchmarking framework for quantif
 
 ---
 
-### 13. [RSVG-ZeroOV: Exploring a Training-Free Framework for Zero-Shot Open-Vocabulary Visual Grounding in Remote Sensing Images](https://arxiv.org/abs/2509.18711)
+### 18. [RSVG-ZeroOV: Exploring a Training-Free Framework for Zero-Shot Open-Vocabulary Visual Grounding in Remote Sensing Images](https://arxiv.org/abs/2509.18711)
 
 **Authors**: Ke Li, Di Wang, Ting Wang, Fuyu Dong, Yiming Zhang, Luyao Zhang, Xiangyu Wang, Shaofeng Li, Quan Wang  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 8.0  
 **Type**: replace-cross  
 **ArXiv ID**: 2509.18711v2  
@@ -184,50 +249,24 @@ Remote sensing visual grounding (RSVG) aims to localize objects in remote sensin
 
 ---
 
-### 14. [TeleRAG: Efficient Retrieval-Augmented Generation Inference with Lookahead Retrieval](https://arxiv.org/abs/2502.20969)
+### 19. [TransactionGPT](https://arxiv.org/abs/2511.08939)
 
-**Authors**: Chien-Yu Lin, Keisuke Kamahori, Yiyu Liu, Xiaoxiang Shi, Madhav Kashyap, Yile Gu, Rulin Shao, Zihao Ye, Kan Zhu, Rohan Kadekodi, Stephanie Wang, Arvind Krishnamurthy, Luis Ceze, Baris Kasikci  
-**Category**: cs.DC  
-**Published**: 2025-11-12  
+**Authors**: Yingtong Dou, Zhimeng Jiang, Tianyi Zhang, Mingzhi Hu, Zhichao Xu, Shubham Jain, Uday Singh Saini, Xiran Fan, Jiarui Sun, Menghai Pan, Junpeng Wang, Xin Dai, Liang Wang, Chin-Chia Michael Yeh, Yujie Fan, Vineeth Rakesh, Huiyuan Chen, Mangesh Bendre, Zhongfang Zhuang, Xiaoting Li, Prince Aboagye, Vivian Lai, Minghua Xu, Hao Yang, Yiwei Cai, Mahashweta Das, Yuzhong Chen  
+**Category**: cs.CL  
+**Published**: 2025-11-13  
 **Score**: 8.0  
-**Type**: replace  
-**ArXiv ID**: 2502.20969v3  
+**Type**: cross  
+**ArXiv ID**: 2511.08939v1  
 
-Retrieval-augmented generation (RAG) extends large language models (LLMs) with external data sources to enhance factual correctness and domain coverage. Modern RAG pipelines rely on large datastores, creating a significant system challenge: achieving high throughput and low latency is difficult, esp...
+We present TransactionGPT (TGPT), a foundation model for consumer transaction data within one of world's largest payment networks. TGPT is designed to understand and generate transaction trajectories while simultaneously supporting a variety of downstream prediction and classification tasks. We intr...
 
 ---
 
-### 15. [ARAC: Adaptive Regularized Multi-Agent Soft Actor-Critic in Graph-Structured Adversarial Games](https://arxiv.org/abs/2511.08412)
-
-**Authors**: Ruochuan Shi, Runyu Lu, Yuanheng Zhu, Dongbin Zhao  
-**Category**: cs.LG  
-**Published**: 2025-11-12  
-**Score**: 8.0  
-**Type**: new  
-**ArXiv ID**: 2511.08412v1  
-
-In graph-structured multi-agent reinforcement learning (MARL) adversarial tasks such as pursuit and confrontation, agents must coordinate under highly dynamic interactions, where sparse rewards hinder efficient policy learning. We propose Adaptive Regularized Multi-Agent Soft Actor-Critic (ARAC), wh...
-
----
-
-### 16. [CATransformers: Carbon Aware Transformers Through Joint Model-Hardware Optimization](https://arxiv.org/abs/2505.01386)
-
-**Authors**: Irene Wang, Newsha Ardalani, Mostafa Elhoushi, Daniel Jiang, Samuel Hsia, Ekin Sumbul, Divya Mahajan, Carole-Jean Wu, Bilge Acun  
-**Category**: cs.LG  
-**Published**: 2025-11-12  
-**Score**: 8.0  
-**Type**: replace  
-**ArXiv ID**: 2505.01386v4  
-
-Machine learning solutions are rapidly adopted to enable a variety of key use cases, from conversational AI assistants to scientific discovery. This growing adoption is expected to increase the associated lifecycle carbon footprint, including both \emph{operational carbon} from training and inferenc...
-
----
-
-### 17. [Global Optimization on Graph-Structured Data via Gaussian Processes with Spectral Representations](https://arxiv.org/abs/2511.07734)
+### 20. [Global Optimization on Graph-Structured Data via Gaussian Processes with Spectral Representations](https://arxiv.org/abs/2511.07734)
 
 **Authors**: Shu Hong, Yongsheng Mei, Mahdi Imani, Tian Lan  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: cross  
 **ArXiv ID**: 2511.07734v1  
@@ -236,11 +275,11 @@ Bayesian optimization (BO) is a powerful framework for optimizing expensive blac
 
 ---
 
-### 18. [OTSNet: A Neurocognitive-Inspired Observation-Thinking-Spelling Pipeline for Scene Text Recognition](https://arxiv.org/abs/2511.08133)
+### 21. [OTSNet: A Neurocognitive-Inspired Observation-Thinking-Spelling Pipeline for Scene Text Recognition](https://arxiv.org/abs/2511.08133)
 
 **Authors**: Lixu Sun, Nurmemet Yolwas, Wushour Silamu  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: cross  
 **ArXiv ID**: 2511.08133v1  
@@ -249,11 +288,11 @@ Scene Text Recognition (STR) remains challenging due to real-world complexities,
 
 ---
 
-### 19. [Dual-Kernel Graph Community Contrastive Learning](https://arxiv.org/abs/2511.08287)
+### 22. [Dual-Kernel Graph Community Contrastive Learning](https://arxiv.org/abs/2511.08287)
 
 **Authors**: Xiang Chen, Kun Yue, Wenjie Liu, Zhenyu Zhang, Liang Duan  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: cross  
 **ArXiv ID**: 2511.08287v1  
@@ -262,11 +301,11 @@ Graph Contrastive Learning (GCL) has emerged as a powerful paradigm for training
 
 ---
 
-### 20. [Glia: A Human-Inspired AI for Automated Systems Design and Optimization](https://arxiv.org/abs/2510.27176)
+### 23. [Glia: A Human-Inspired AI for Automated Systems Design and Optimization](https://arxiv.org/abs/2510.27176)
 
 **Authors**: Pouya Hamadanian, Pantea Karimi, Arash Nasr-Esfahany, Kimia Noorbakhsh, Joseph Chandler, Ali ParandehGheibi, Mohammad Alizadeh, Hari Balakrishnan  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: replace  
 **ArXiv ID**: 2510.27176v2  
@@ -275,11 +314,11 @@ Can an AI autonomously design mechanisms for computer systems on par with the cr
 
 ---
 
-### 21. [GUI-AIMA: Aligning Intrinsic Multimodal Attention with a Context Anchor for GUI Grounding](https://arxiv.org/abs/2511.00810)
+### 24. [GUI-AIMA: Aligning Intrinsic Multimodal Attention with a Context Anchor for GUI Grounding](https://arxiv.org/abs/2511.00810)
 
 **Authors**: Shijie Zhou, Viet Dac Lai, Hao Tan, Jihyung Kil, Wanrong Zhu, Changyou Chen, Ruiyi Zhang  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: replace-cross  
 **ArXiv ID**: 2511.00810v2  
@@ -288,63 +327,63 @@ Graphical user interface (GUI) grounding is a key function of computer-use agent
 
 ---
 
-### 22. [REIS: A High-Performance and Energy-Efficient Retrieval System with In-Storage Processing](https://arxiv.org/abs/2506.16444)
+### 25. [Accelerating Training Speed of Tiny Recursive Models via Curriculum Guided Adaptive Recursion](https://arxiv.org/abs/2511.08653)
 
-**Authors**: Kangqi Chen, Andreas Kosmas Kakolyris, Rakesh Nadig, Manos Frouzakis, Nika Mansouri Ghiasi, Yu Liang, Haiyu Mao, Jisung Park, Mohammad Sadrosadati, Onur Mutlu  
+**Authors**: Kaleem Ullah Qasim, Jiashu Zhang  
 **Category**: cs.CL  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
+**Score**: 7.5  
+**Type**: cross  
+**ArXiv ID**: 2511.08653v1  
+
+Recursive reasoning models achieve remarkable performance on complex reasoning tasks through iterative refinement, enabling tiny networks to match large language models thousands of times their size. However, training remains computationally expensive, prior work reporting approximately 36 GPU-hours...
+
+---
+
+### 26. [Selective Sinkhorn Routing for Improved Sparse Mixture of Experts](https://arxiv.org/abs/2511.08972)
+
+**Authors**: Duc Anh Nguyen, Huu Binh Ta, Nhuan Le Duc, Tan M. Nguyen, Toan Tran  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
+**Score**: 7.5  
+**Type**: new  
+**ArXiv ID**: 2511.08972v1  
+
+Sparse Mixture-of-Experts (SMoE) has gained prominence as a scalable and computationally efficient architecture, enabling significant growth in model capacity without incurring additional inference costs. However, existing SMoE models often rely on auxiliary losses (e.g., z-loss, load balancing) and...
+
+---
+
+### 27. [Evolutionary Policy Optimization](https://arxiv.org/abs/2503.19037)
+
+**Authors**: Jianren Wang, Yifan Su, Abhinav Gupta, Deepak Pathak  
+**Category**: cs.LG  
+**Published**: 2025-11-13  
 **Score**: 7.5  
 **Type**: replace  
-**ArXiv ID**: 2506.16444v2  
+**ArXiv ID**: 2503.19037v3  
 
-Large Language Models (LLMs) face an inherent challenge: their knowledge is confined to the data that they have been trained on. To overcome this issue, Retrieval-Augmented Generation (RAG) complements the static training-derived knowledge of LLMs with an external knowledge repository. RAG consists ...
+On-policy reinforcement learning (RL) algorithms are widely used for their strong asymptotic performance and training stability, but they struggle to scale with larger batch sizes, as additional parallel environments yield redundant data due to limited policy-induced diversity. In contrast, Evolutio...
 
 ---
 
-### 23. [Resource Allocation in Hybrid Radio-Optical IoT Networks using GNN with Multi-task Learning](https://arxiv.org/abs/2511.07428)
+### 28. [Lethe: Layer- and Time-Adaptive KV Cache Pruning for Reasoning-Intensive LLM Serving](https://arxiv.org/abs/2511.06029)
 
-**Authors**: Aymen Hamrouni, Sofie Pollin, Hazem Sallouha  
+**Authors**: Hui Zeng, Daming Zhao, Pengfei Yang, WenXuan Hou, Tianyang Zheng, Hui Li, Weiye Ji, Jidong Zhai  
 **Category**: cs.LG  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.5  
-**Type**: cross  
-**ArXiv ID**: 2511.07428v1  
+**Type**: replace  
+**ArXiv ID**: 2511.06029v2  
 
-This paper addresses the problem of dual-technology scheduling in hybrid Internet of Things (IoT) networks that integrate Optical Wireless Communication (OWC) alongside Radio Frequency (RF). We begin by formulating a Mixed-Integer Nonlinear Programming (MINLP) model that jointly considers throughput...
+Generative reasoning with large language models (LLMs) often involves long decoding sequences, leading to substantial memory and latency overheads from accumulating key-value (KV) caches. While existing KV compression methods primarily focus on reducing prefill memory from long input sequences, they...
 
 ---
 
-### 24. [BDD2Seq: Enabling Scalable Reversible-Circuit Synthesis via Graph-to-Sequence Learning](https://arxiv.org/abs/2511.08315)
-
-**Authors**: Mingkai Miao, Jianheng Tang, Guangyu Hu, Hongce Zhang  
-**Category**: cs.LG  
-**Published**: 2025-11-12  
-**Score**: 7.5  
-**Type**: cross  
-**ArXiv ID**: 2511.08315v1  
-
-Binary Decision Diagrams (BDDs) are instrumental in many electronic design automation (EDA) tasks thanks to their compact representation of Boolean functions. In BDD-based reversible-circuit synthesis, which is critical for quantum computing, the chosen variable ordering governs the number of BDD no...
-
----
-
-### 25. [SeFA-Policy: Fast and Accurate Visuomotor Policy Learning with Selective Flow Alignment](https://arxiv.org/abs/2511.08583)
-
-**Authors**: Rong Xue, Jiageng Mao, Mingtong Zhang, Yue Wang  
-**Category**: cs.LG  
-**Published**: 2025-11-12  
-**Score**: 7.5  
-**Type**: cross  
-**ArXiv ID**: 2511.08583v1  
-
-Developing efficient and accurate visuomotor policies poses a central challenge in robotic imitation learning. While recent rectified flow approaches have advanced visuomotor policy learning, they suffer from a key limitation: After iterative distillation, generated actions may deviate from the grou...
-
----
-
-### 26. [Alignment-Aware Quantization for LLM Safety](https://arxiv.org/abs/2511.07842)
+### 29. [Alignment-Aware Quantization for LLM Safety](https://arxiv.org/abs/2511.07842)
 
 **Authors**: Sunghyun Wee, Suyoung Kim, Hyeonjin Kim, Kyomin Hwang, Nojun Kwak  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.0  
 **Type**: new  
 **ArXiv ID**: 2511.07842v1  
@@ -353,55 +392,16 @@ Safety and efficiency are both important factors when deploying large language m
 
 ---
 
-### 27. [Benchmarking Multi-Step Legal Reasoning and Analyzing Chain-of-Thought Effects in Large Language Models](https://arxiv.org/abs/2511.07979)
+### 30. [Benchmarking Multi-Step Legal Reasoning and Analyzing Chain-of-Thought Effects in Large Language Models](https://arxiv.org/abs/2511.07979)
 
 **Authors**: Wenhan Yu, Xinbo Lin, Lanxin Ni, Jinhua Cheng, Lei Sha  
 **Category**: cs.AI  
-**Published**: 2025-11-12  
+**Published**: 2025-11-13  
 **Score**: 7.0  
 **Type**: new  
 **ArXiv ID**: 2511.07979v1  
 
 Large language models (LLMs) have demonstrated strong reasoning abilities across specialized domains, motivating research into their application to legal reasoning. However, existing legal benchmarks often conflate factual recall with genuine inference, fragment the reasoning process, and overlook t...
-
----
-
-### 28. [Two Heads are Better than One: Distilling Large Language Model Features Into Small Models with Feature Decomposition and Mixture](https://arxiv.org/abs/2511.07110)
-
-**Authors**: Tianhao Fu, Xinxin Xu, Weichen Xu, Jue Chen, Ruilong Ren, Bowen Deng, Xinyu Zhao, Jian Cao, Xixin Cao  
-**Category**: cs.AI  
-**Published**: 2025-11-12  
-**Score**: 7.0  
-**Type**: replace  
-**ArXiv ID**: 2511.07110v2  
-
-Market making (MM) through Reinforcement Learning (RL) has attracted significant attention in financial trading. With the development of Large Language Models (LLMs), more and more attempts are being made to apply LLMs to financial areas. A simple, direct application of LLM as an agent shows signifi...
-
----
-
-### 29. [A Unified and Fast-Sampling Diffusion Bridge Framework via Stochastic Optimal Control](https://arxiv.org/abs/2505.21528)
-
-**Authors**: Mokai Pan, Kaizhen Zhu, Yuexin Ma, Yanwei Fu, Jingyi Yu, Jingya Wang, Ye Shi  
-**Category**: cs.AI  
-**Published**: 2025-11-12  
-**Score**: 7.0  
-**Type**: replace-cross  
-**ArXiv ID**: 2505.21528v2  
-
-Recent advances in diffusion bridge models leverage Doob's $h$-transform to establish fixed endpoints between distributions, demonstrating promising results in image translation and restoration tasks. However, these approaches often produce blurred or excessively smoothed image details and lack a co...
-
----
-
-### 30. [Federated Learning with Gramian Angular Fields for Privacy-Preserving ECG Classification on Heterogeneous IoT Devices](https://arxiv.org/abs/2511.03753)
-
-**Authors**: Youssef Elmir, Yassine Himeur, Abbes Amira  
-**Category**: cs.AI  
-**Published**: 2025-11-12  
-**Score**: 7.0  
-**Type**: replace-cross  
-**ArXiv ID**: 2511.03753v2  
-
-This study presents a federated learning (FL) framework for privacy-preserving electrocardiogram (ECG) classification in Internet of Things (IoT) healthcare environments. By transforming 1D ECG signals into 2D Gramian Angular Field (GAF) images, the proposed approach enables efficient feature extrac...
 
 ---
 
