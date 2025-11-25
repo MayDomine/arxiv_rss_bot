@@ -59,7 +59,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 1999
 
 CMD ["python", "rss_service.py"]
 """
@@ -74,7 +74,7 @@ services:
   arxiv-rss-service:
     build: .
     ports:
-      - "5000:5000"
+      - "1999:1999"
     environment:
       - FLASK_ENV=production
     restart: unless-stopped
@@ -136,14 +136,14 @@ def update_rss_service_for_production():
 
     # Replace localhost with environment variable
     content = content.replace(
-        'feed_url = f"http://localhost:5000/rss/{category}" if category else "http://localhost:5000/rss"',
-        "feed_url = f\"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss/{category}\" if category else f\"{os.environ.get('BASE_URL', 'http://localhost:5000')}/rss\"",
+        'feed_url = f"http://localhost:1999/rss/{category}" if category else "http://localhost:1999/rss"',
+        "feed_url = f\"{os.environ.get('BASE_URL', 'http://localhost:1999')}/rss/{category}\" if category else f\"{os.environ.get('BASE_URL', 'http://localhost:1999')}/rss\"",
     )
 
     # Update the run command for production
     content = content.replace(
-        "app.run(host='0.0.0.0', port=5000, debug=True)",
-        "port = int(os.environ.get('PORT', 5000))\n    app.run(host='0.0.0.0', port=port, debug=False)",
+        "app.run(host='0.0.0.0', port=1999, debug=True)",
+        "port = int(os.environ.get('PORT', 1999))\n    app.run(host='0.0.0.0', port=port, debug=False)",
     )
 
     # Write back the updated content
@@ -175,10 +175,10 @@ Your RSS feed will be available at: https://your-app-name.herokuapp.com/rss
         print(
             """
 1. Build the Docker image: docker build -t arxiv-rss-service .
-2. Run the container: docker run -p 5000:5000 arxiv-rss-service
+2. Run the container: docker run -p 1999:1999 arxiv-rss-service
 3. Or use docker-compose: docker-compose up
 
-Your RSS feed will be available at: http://localhost:5000/rss
+Your RSS feed will be available at: http://localhost:1999/rss
         """
         )
 
@@ -210,9 +210,9 @@ Your RSS feed will be available at: https://your-app-name.railway.app/rss
             """
 1. Install dependencies: pip install -r requirements.txt
 2. Run the service: python rss_service.py
-3. Open http://localhost:5000 in your browser
+3. Open http://localhost:1999 in your browser
 
-Your RSS feed will be available at: http://localhost:5000/rss
+Your RSS feed will be available at: http://localhost:1999/rss
         """
         )
 

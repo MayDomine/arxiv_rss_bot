@@ -448,7 +448,7 @@ server {
     # Main location
     location / {
         limit_req zone=rss burst=20 nodelay;
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -461,7 +461,7 @@ server {
     # RSS feeds with caching
     location ~* \.(xml|rss)$ {
         limit_req zone=rss burst=20 nodelay;
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -473,7 +473,7 @@ server {
     
     # Health check
     location /health {
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -495,7 +495,7 @@ def get_base_url():
     if os.environ.get('HTTPS_ENABLED', 'false').lower() == 'true':
         return f"https://{os.environ.get('DOMAIN', 'localhost')}"
     else:
-        return f"http://localhost:{os.environ.get('PORT', '5000')}"
+        return f"http://localhost:{os.environ.get('PORT', '1999')}"
 
 # Update the generate_rss_feed function
 def generate_rss_feed(category=None):

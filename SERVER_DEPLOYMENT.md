@@ -23,11 +23,11 @@ python deploy_rss_service.py
 
 # 3. Build and run
 docker build -t arxiv-rss-service .
-docker run -d -p 5000:5000 --name arxiv-rss arxiv-rss-service
+docker run -d -p 1999:1999 --name arxiv-rss arxiv-rss-service
 
 # 4. Check if it's running
 docker ps
-curl http://localhost:5000/health
+curl http://localhost:1999/health
 ```
 
 ### Option 2: Direct Python Deployment
@@ -63,7 +63,7 @@ ExecStart=/usr/bin/python3 rss_service.py
 Restart=always
 RestartSec=10
 Environment=FLASK_ENV=production
-Environment=PORT=5000
+Environment=PORT=1999
 
 [Install]
 WantedBy=multi-user.target
@@ -99,7 +99,7 @@ server {
     server_name your-domain.com www.your-domain.com;
 
     location / {
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -111,7 +111,7 @@ server {
 
     # Cache RSS feeds for 1 hour
     location ~* \.(xml|rss)$ {
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -172,7 +172,7 @@ server {
     
     location / {
         limit_req zone=rss burst=20 nodelay;
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -185,7 +185,7 @@ server {
     # RSS feeds with caching
     location ~* \.(xml|rss)$ {
         limit_req zone=rss burst=20 nodelay;
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -249,7 +249,7 @@ server {
     
     location /rss {
         limit_req zone=rss burst=20 nodelay;
-        proxy_pass http://127.0.0.1:5000;
+        proxy_pass http://127.0.0.1:1999;
         # ... proxy headers ...
     }
 }
@@ -296,7 +296,7 @@ Create a simple health check script:
 #!/bin/bash
 # /usr/local/bin/check-arxiv-rss.sh
 
-HEALTH_URL="http://localhost:5000/health"
+HEALTH_URL="http://localhost:1999/health"
 LOG_FILE="/var/log/arxiv-rss/health.log"
 
 response=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_URL)
@@ -379,16 +379,16 @@ services:
   arxiv-rss:
     build: .
     ports:
-      - "5000:5000"
+      - "1999:1999"
     environment:
       - FLASK_ENV=production
-      - PORT=5000
+      - PORT=1999
     restart: unless-stopped
     volumes:
       - ./config.json:/app/config.json:ro
       - ./logs:/app/logs
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:1999/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -477,8 +477,8 @@ def rss_feed():
 
 2. **Port already in use**
    ```bash
-   sudo netstat -tlnp | grep :5000
-   sudo lsof -i :5000
+   sudo netstat -tlnp | grep :1999
+   sudo lsof -i :1999
    ```
 
 3. **Permission issues**
@@ -502,8 +502,8 @@ iotop
 nethogs
 
 # Monitor application
-curl -s http://localhost:5000/health | jq
-ab -n 1000 -c 10 http://localhost:5000/rss
+curl -s http://localhost:1999/health | jq
+ab -n 1000 -c 10 http://localhost:1999/rss
 ```
 
 ## ✅ Deployment Checklist

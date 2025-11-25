@@ -5,11 +5,11 @@ Provides an RSS feed endpoint that can be subscribed to in RSS readers.
 Implements a static cache that updates daily at 12:00.
 """
 
-from flask import Flask, Response, render_template_string
+from flask import Flask, Response
 from arxiv_bot import ArxivBot
-from iclr_bot import ICLRBot
+from feedgen.feed import FeedGenerator
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 import logging
 import os
 import time
@@ -25,72 +25,15 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 # Global cache for RSS feeds
+# Structure: {category: {"papers": [paper_dict, ...], "last_update": datetime}}
 rss_cache = {}
 # Last update timestamp
 last_update_time = None
+# Maximum number of papers to keep in cache per feed (0 = unlimited)
+MAX_PAPERS_PER_FEED = 100
+# Maximum days to keep papers in cache (0 = unlimited)
+MAX_DAYS_TO_KEEP = 30
 
-# ICLR cache
-iclr_cache = {
-    "content": None,
-    "papers": [],
-    "last_update": None,
-}
-
-# RSS template
-RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>{{feed_title}}</title>
-        <link>{{feed_link}}</link>
-        <description>{{feed_description}}</description>
-        <language>en-us</language>
-        <lastBuildDate>{{last_build_date}}</lastBuildDate>
-        <atom:link href="{{feed_url}}" rel="self" type="application/rss+xml" />
-        {% for paper in papers %}
-        <item>
-            <title>{{paper.title}}</title>
-            <link>{{paper.link}}</link>
-            <guid>{{paper.link}}</guid>
-            <pubDate>{{paper.pub_date_rss}}</pubDate>
-            <description><![CDATA[
-                <strong>Authors:</strong> {{paper.authors_str}}<br/>
-                <strong>Category:</strong> {{paper.category}}<br/>
-                <strong>Score:</strong> {{paper.score}}<br/>
-                <strong>Type:</strong> {{paper.type}}<br/>
-                <strong>Arxiv ID:</strong> {{paper.arxiv_id}}<br/>
-                <strong>Abstract:</strong> {{paper.summary}}
-            ]]></description>
-        </item>
-        {% endfor %}
-    </channel>
-</rss>"""
-
-ICLR_RSS_TEMPLATE = """<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>ICLR {{year}} Highlighted Papers</title>
-        <link>https://openreview.net</link>
-        <description>ICLR {{year}} papers aggregated from OpenReview with review statistics.</description>
-        <language>en-us</language>
-        <lastBuildDate>{{last_build_date}}</lastBuildDate>
-        <atom:link href="{{feed_url}}" rel="self" type="application/rss+xml" />
-        {% for paper in papers %}
-        <item>
-            <title>{{paper.title}}</title>
-            <link>{{paper.link}}</link>
-            <guid>{{paper.link}}</guid>
-            <pubDate>{{paper.pub_date}}</pubDate>
-            <description><![CDATA[
-                <strong>Authors:</strong> {{paper.authors}}<br/>
-                <strong>Average Rating:</strong> {{paper.average_rating}}<br/>
-                <strong>Review Count:</strong> {{paper.rating_count}}<br/>
-                <strong>Decision:</strong> {{paper.decision}}<br/>
-                <strong>Abstract:</strong> {{paper.abstract}}
-            ]]></description>
-        </item>
-        {% endfor %}
-    </channel>
-</rss>"""
 
 
 @app.route("/")
@@ -118,7 +61,6 @@ def index():
             <p><a href="/rss/cs.LG" class="rss-link">🧠 ML Papers</a> - Machine Learning papers</p>
             <p><a href="/rss/cs.CL" class="rss-link">💬 NLP Papers</a> - Natural Language Processing papers</p>
             <p><a href="/rss/cs.CV" class="rss-link">👁️ CV Papers</a> - Computer Vision papers</p>
-            <p><a href="/rss/iclr" class="rss-link">📑 ICLR 2026 Papers</a> - Highlighted OpenReview papers</p>
         </div>
         
         <div class="info">
@@ -183,8 +125,65 @@ def get_config():
         )
 
 
+def _ensure_timezone(dt):
+    """Ensure a datetime object has timezone info. Returns UTC datetime if no timezone."""
+    if not isinstance(dt, datetime):
+        # If it's a string, try to parse it
+        if isinstance(dt, str):
+            try:
+                dt = datetime.strptime(dt, "%Y-%m-%d")
+            except:
+                return datetime.now(timezone.utc)
+        else:
+            return datetime.now(timezone.utc)
+    
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
+def _cleanup_old_papers(papers):
+    """Remove papers older than MAX_DAYS_TO_KEEP days."""
+    if MAX_DAYS_TO_KEEP <= 0:
+        return papers
+    
+    # Ensure all papers have timezone info (fix for old cached data)
+    for paper in papers:
+        paper['pub_date'] = _ensure_timezone(paper.get('pub_date'))
+    
+    cutoff_date = datetime.now(timezone.utc) - timedelta(days=MAX_DAYS_TO_KEEP)
+    return [p for p in papers if p['pub_date'] >= cutoff_date]
+
+
+def _limit_papers(papers):
+    """Limit the number of papers to MAX_PAPERS_PER_FEED."""
+    if MAX_PAPERS_PER_FEED <= 0:
+        return papers
+    return papers[:MAX_PAPERS_PER_FEED]
+
+
+def _merge_papers(existing_papers, new_papers):
+    """Merge new papers with existing ones, removing duplicates by link."""
+    # Ensure all existing papers have timezone info (fix for old cached data)
+    for paper in existing_papers:
+        paper['pub_date'] = _ensure_timezone(paper.get('pub_date'))
+    
+    # Create a dict with link as key for fast lookup
+    papers_dict = {p['link']: p for p in existing_papers}
+    
+    # Add new papers (will overwrite if duplicate)
+    for paper in new_papers:
+        papers_dict[paper['link']] = paper
+    
+    # Convert back to list and sort by publication date (newest first)
+    merged = list(papers_dict.values())
+    merged.sort(key=lambda x: x['pub_date'], reverse=True)
+    
+    return merged
+
+
 def update_rss_cache():
-    """Update the RSS cache with fresh data."""
+    """Update the RSS cache with fresh data, preserving historical papers."""
     global rss_cache, last_update_time
     
     try:
@@ -196,16 +195,8 @@ def update_rss_cache():
         papers = bot.fetch_arxiv_papers()
         filtered_papers = bot.filter_papers(papers)
 
-        # If no new papers, don't update the cache
-        if not filtered_papers:
-            logger.info("No new papers found. RSS cache not updated.")
-            return True
-        
         # Base URL for feed links
-        base_url = os.environ.get('BASE_URL', 'http://localhost:5000').strip()
-        
-        # Clear existing cache
-        rss_cache = {}
+        base_url = os.environ.get('BASE_URL', 'http://localhost:1999').strip()
         
         # Generate cache for main feed and each category
         categories = bot.config.get("categories", [])
@@ -215,29 +206,23 @@ def update_rss_cache():
             # Prepare category-specific data
             if category:
                 category_papers = [p for p in filtered_papers if p["category"] == category]
-                feed_title = f"arXiv {category} Papers"
-                feed_description = f"Filtered arXiv papers from {category} category"
-                feed_url = f"{base_url}/rss/{category}"
             else:
                 category_papers = filtered_papers
-                feed_title = "arXiv Filtered Papers"
-                feed_description = "Papers filtered based on configured keywords and categories"
-                feed_url = f"{base_url}/rss"
             
-            # Prepare papers for RSS
-            rss_papers = []
+            # Prepare new papers for RSS
+            new_rss_papers = []
             for paper in category_papers:
                 # Format authors
                 authors_str = ", ".join(paper["authors"]) if paper["authors"] else "Unknown"
                 
-                # Format date for RSS
+                # Format date for RSS (with timezone info)
                 try:
                     pub_date = datetime.strptime(paper["published_date"], "%Y-%m-%d")
-                    pub_date_rss = pub_date.strftime("%a, %d %b %Y %H:%M:%S +0000")
+                    pub_date = _ensure_timezone(pub_date)
                 except:
-                    pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
+                    pub_date = datetime.now(timezone.utc)
                 
-                rss_papers.append(
+                new_rss_papers.append(
                     {
                         "title": paper["title"],
                         "link": paper["link"],
@@ -245,40 +230,101 @@ def update_rss_cache():
                         "category": paper["category"],
                         "score": paper["score"],
                         "summary": paper["summary"],
-                        "pub_date_rss": pub_date_rss,
+                        "pub_date": pub_date,
                     }
                 )
             
-            # Sort papers by score
-            rss_papers = sorted(rss_papers, key=lambda x: x['score'], reverse=True)
-            
-            # Generate RSS XML
-            rss_content = render_template_string(
-                RSS_TEMPLATE,
-                feed_title=feed_title,
-                feed_link="https://arxiv.org",
-                feed_description=feed_description,
-                feed_url=feed_url,
-                last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
-                papers=rss_papers,
-            )
-            
-            # Store in cache
+            # Get existing papers from cache
             cache_key = category if category else "main"
+            existing_papers = []
+            if cache_key in rss_cache and "papers" in rss_cache[cache_key]:
+                existing_papers = rss_cache[cache_key]["papers"]
+            
+            # Merge with existing papers (removes duplicates by link)
+            merged_papers = _merge_papers(existing_papers, new_rss_papers)
+            
+            # Clean up old papers
+            merged_papers = _cleanup_old_papers(merged_papers)
+            
+            # Limit number of papers
+            merged_papers = _limit_papers(merged_papers)
+            
+            # Store papers in cache (we'll generate RSS XML on-demand)
             rss_cache[cache_key] = {
-                "content": rss_content,
-                "paper_count": len(rss_papers)
+                "papers": merged_papers,
+                "last_update": datetime.now(timezone.utc)
             }
         
         # Update timestamp
-        last_update_time = datetime.now()
+        last_update_time = datetime.now(timezone.utc)
+        new_count = len(filtered_papers) if filtered_papers else 0
+        total_count = sum(len(feed['papers']) for feed in rss_cache.values())
         logger.info(f"RSS cache updated at {last_update_time.isoformat()}")
-        logger.info(f"Cached {len(rss_cache)} feeds with {sum(feed['paper_count'] for feed in rss_cache.values())} total papers")
+        logger.info(f"Added {new_count} new papers. Total cached: {total_count} papers across {len(rss_cache)} feeds")
         
         return True
     except Exception as e:
         logger.error(f"Error updating RSS cache: {e}")
         return False
+
+
+def _generate_rss_xml(papers, feed_title, feed_description, feed_url):
+    """Generate RSS XML from paper data using feedgen.
+    
+    Generates a valid RSS 2.0 compliant feed with all required and recommended fields.
+    """
+    fg = FeedGenerator()
+    
+    # Required RSS 2.0 channel elements
+    fg.title(feed_title)
+    fg.link(href=feed_url, rel='self')
+    fg.link(href="https://arxiv.org", rel='alternate')
+    fg.description(feed_description)
+    
+    # Recommended RSS 2.0 channel elements
+    fg.language('en-us')
+    fg.lastBuildDate(datetime.now(timezone.utc))
+    fg.generator('arXiv RSS Bot v1.0')
+    # TTL (Time To Live) in minutes - suggests cache refresh interval (24 hours = 1440 minutes)
+    fg.ttl(1440)
+    
+    # Add items (papers)
+    for idx, paper in enumerate(papers):
+        try:
+            fe = fg.add_entry()
+            
+            # Required RSS 2.0 item elements
+            fe.title(paper['title'])
+            fe.link(href=paper['link'])
+            
+            # Recommended RSS 2.0 item elements
+            fe.guid(paper['link'], permalink=True)
+            
+            # Ensure pub_date has timezone info (fix for cached data without timezone)
+            pub_date_raw = paper.get('pub_date')
+            logger.debug(f"Paper {idx}: raw pub_date type={type(pub_date_raw)}, value={pub_date_raw}")
+            pub_date = _ensure_timezone(pub_date_raw)
+            logger.debug(f"Paper {idx}: processed pub_date type={type(pub_date)}, value={pub_date}, tzinfo={pub_date.tzinfo}")
+            fe.pubDate(pub_date)
+        except Exception as e:
+            logger.error(f"Error processing paper {idx} (title: {paper.get('title', 'Unknown')[:50]}): {e}")
+            logger.error(f"Paper data: {paper}")
+            import traceback
+            logger.error(f"Traceback: {traceback.format_exc()}")
+            raise
+        
+        # Build description with paper details (required for item)
+        description = f"<strong>Authors:</strong> {paper['authors_str']}<br/>"
+        description += f"<strong>Category:</strong> {paper['category']}<br/>"
+        description += f"<strong>Score:</strong> {paper['score']}<br/>"
+        if 'type' in paper:
+            description += f"<strong>Type:</strong> {paper['type']}<br/>"
+        if 'arxiv_id' in paper:
+            description += f"<strong>Arxiv ID:</strong> {paper['arxiv_id']}<br/>"
+        description += f"<strong>Abstract:</strong> {paper['summary']}"
+        fe.description(description)
+    
+    return fg.rss_str(pretty=True).decode('utf-8')
 
 
 def generate_rss_feed(category=None):
@@ -295,10 +341,26 @@ def generate_rss_feed(category=None):
             update_rss_cache()
         
         # Get from cache
-        if cache_key in rss_cache:
-            logger.info(f"Serving {cache_key} feed from cache (last updated: {last_update_time.isoformat() if last_update_time else 'never'})")
+        if cache_key in rss_cache and "papers" in rss_cache[cache_key]:
+            papers = rss_cache[cache_key]["papers"]
+            base_url = os.environ.get('BASE_URL', 'http://localhost:1999').strip()
+            
+            # Prepare feed metadata
+            if category:
+                feed_title = f"arXiv {category} Papers"
+                feed_description = f"Filtered arXiv papers from {category} category"
+                feed_url = f"{base_url}/rss/{category}"
+            else:
+                feed_title = "arXiv Filtered Papers"
+                feed_description = "Papers filtered based on configured keywords and categories"
+                feed_url = f"{base_url}/rss"
+            
+            # Generate RSS XML from cached papers
+            rss_content = _generate_rss_xml(papers, feed_title, feed_description, feed_url)
+            
+            logger.info(f"Serving {cache_key} feed from cache with {len(papers)} papers (last updated: {rss_cache[cache_key].get('last_update', 'unknown')})")
             return Response(
-                rss_cache[cache_key]["content"],
+                rss_content,
                 mimetype="application/rss+xml",
                 headers={"Content-Type": "application/rss+xml; charset=utf-8"},
             )
@@ -326,12 +388,12 @@ def generate_rss_feed(category=None):
                 # Format authors
                 authors_str = ", ".join(paper["authors"]) if paper["authors"] else "Unknown"
                 
-                # Format date for RSS
+                # Format date for RSS (with timezone info)
                 try:
                     pub_date = datetime.strptime(paper["published_date"], "%Y-%m-%d")
-                    pub_date_rss = pub_date.strftime("%a, %d %b %Y %H:%M:%S +0000")
+                    pub_date = _ensure_timezone(pub_date)
                 except:
-                    pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
+                    pub_date = datetime.now(timezone.utc)
                 
                 rss_papers.append(
                     {
@@ -341,25 +403,18 @@ def generate_rss_feed(category=None):
                         "category": paper["category"],
                         "score": paper["score"],
                         "summary": paper["summary"],
-                        "pub_date_rss": pub_date_rss,
+                        "pub_date": pub_date,
                     }
                 )
             
-            rss_papers = sorted(rss_papers, key=lambda x: x['score'], reverse=True)
-            base_url = os.environ.get('BASE_URL', 'http://localhost:5000').strip()
+            # Sort by publication date (newest first)
+            rss_papers = sorted(rss_papers, key=lambda x: x['pub_date'], reverse=True)
+            base_url = os.environ.get('BASE_URL', 'http://localhost:1999').strip()
             
-            # Generate RSS XML
+            # Generate RSS XML using feedgen
             feed_url = f"{base_url}/rss/{category}" if category else f"{base_url}/rss"
             
-            rss_content = render_template_string(
-                RSS_TEMPLATE,
-                feed_title=feed_title,
-                feed_link="https://arxiv.org",
-                feed_description=feed_description,
-                feed_url=feed_url,
-                last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
-                papers=rss_papers,
-            )
+            rss_content = _generate_rss_xml(rss_papers, feed_title, feed_description, feed_url)
             
             logger.info(f"Generated on-demand RSS feed with {len(rss_papers)} papers")
             
@@ -370,22 +425,32 @@ def generate_rss_feed(category=None):
             )
     
     except Exception as e:
-        logger.error(f"Error generating RSS feed: {e}")
+        import traceback
+        error_msg = f"Error generating RSS feed: {e}"
+        logger.error(error_msg)
+        logger.error(f"Full traceback:\n{traceback.format_exc()}")
         return Response(
-            f"Error generating RSS feed: {str(e)}", status=500, mimetype="text/plain"
+            f"Error generating RSS feed: {str(e)}\n\nFull traceback:\n{traceback.format_exc()}", 
+            status=500, 
+            mimetype="text/plain"
         )
 
 
 @app.route("/health")
 def health_check():
     """Health check endpoint."""
-    global last_update_time
+    global last_update_time, rss_cache
+    total_papers = sum(len(feed.get("papers", [])) for feed in rss_cache.values())
     return Response(
         json.dumps({
             "status": "healthy", 
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "last_cache_update": last_update_time.isoformat() if last_update_time else None,
-            "cache_status": "active" if rss_cache else "empty"
+            "cache_status": "active" if rss_cache else "empty",
+            "total_feeds": len(rss_cache),
+            "total_papers_cached": total_papers,
+            "max_papers_per_feed": MAX_PAPERS_PER_FEED,
+            "max_days_to_keep": MAX_DAYS_TO_KEEP
         }),
         mimetype="application/json",
     )
@@ -398,156 +463,10 @@ def manual_update_cache():
     return Response(
         json.dumps({
             "status": "success" if success else "error",
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "message": "Cache updated successfully" if success else "Failed to update cache"
         }),
         mimetype="application/json",
-    )
-
-
-def build_iclr_rss_payload(papers, year: int, base_url: str):
-    """Prepare structured data for the ICLR RSS template."""
-    rss_papers = []
-    for paper in papers:
-        pub_date = paper.get("submission_date")
-        if pub_date:
-            try:
-                pub_date_dt = datetime.fromisoformat(pub_date.replace("Z", "+00:00"))
-                pub_date_rss = pub_date_dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
-            except ValueError:
-                pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
-        else:
-            pub_date_rss = datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000")
-
-        rss_papers.append(
-            {
-                "title": paper.get("title"),
-                "link": paper.get("forum_link"),
-                "authors": ", ".join(paper.get("authors", [])) or "Unknown",
-                "average_rating": (
-                    f"{paper.get('average_rating'):.2f}"
-                    if isinstance(paper.get("average_rating"), (int, float))
-                    else "N/A"
-                ),
-                "rating_count": paper.get("rating_count", 0),
-                "decision": paper.get("decision") or "Pending",
-                "abstract": (paper.get("abstract") or "")[:500],
-                "pub_date": pub_date_rss,
-            }
-        )
-
-    return {
-        "feed_url": f"{base_url}/rss/iclr",
-        "papers": rss_papers,
-        "year": year,
-    }
-
-
-def update_iclr_cache():
-    """Fetch ICLR papers and regenerate cache/README."""
-    global iclr_cache
-
-    try:
-        logger.info("Updating ICLR cache...")
-        bot = ICLRBot()
-        papers = bot.run()
-        cache_payload = bot.load_cached_papers()
-
-        if not cache_payload and papers:
-            cache_payload = [paper.to_dict() for paper in papers]
-
-        if not cache_payload:
-            logger.warning("ICLR cache could not be populated.")
-            return False
-
-        # Filter and sort papers for RSS feed (top display_limit by rating)
-        filtered_papers = []
-        for paper_dict in cache_payload:
-            # Convert dict back to ICLRPaper-like object for filtering
-            class PaperLike:
-                def __init__(self, d):
-                    self.title = d.get('title', '')
-                    self.abstract = d.get('abstract', '')
-
-            paper_like = PaperLike(paper_dict)
-            if bot.matches_criteria(paper_like):
-                filtered_papers.append(paper_dict)
-
-        # Sort by average rating and take top display_limit
-        rss_papers = sorted(filtered_papers, key=lambda p: (p.get('average_rating') or 0), reverse=True)[:bot.display_limit]
-
-        base_url = os.environ.get("BASE_URL", "http://localhost:1999").strip()  # Fixed port
-        year = bot.year
-        rss_payload = build_iclr_rss_payload(rss_papers, year, base_url)
-
-        iclr_cache["content"] = render_template_string(
-            ICLR_RSS_TEMPLATE,
-            feed_title=f"ICLR {year} Filtered Papers",
-            feed_link="https://openreview.net",
-            feed_description=f"ICLR {year} papers filtered by keywords from OpenReview with review statistics.",
-            feed_url=f"{base_url}/rss/iclr",
-            last_build_date=datetime.now().strftime("%a, %d %b %Y %H:%M:%S +0000"),
-            papers=rss_payload["papers"],  # Pass the papers list directly
-            year=year,
-        )
-        iclr_cache["papers"] = rss_papers  # Store filtered papers
-        iclr_cache["last_update"] = datetime.now()
-
-        logger.info("ICLR cache updated with %d filtered papers (from %d total)", len(rss_papers), len(cache_payload))
-        return True
-    except Exception as exc:
-        logger.error("Failed to update ICLR cache: %s", exc)
-        return False
-
-
-@app.route("/rss/iclr")
-def iclr_rss_feed():
-    """Serve the ICLR RSS feed."""
-    global iclr_cache
-
-    if not iclr_cache.get("content"):
-        logger.info("ICLR cache empty, triggering update.")
-        update_iclr_cache()
-
-    if not iclr_cache.get("content"):
-        return Response(
-            json.dumps(
-                {
-                    "status": "error",
-                    "message": "ICLR cache is empty. Trigger /update-iclr-cache first.",
-                }
-            ),
-            status=503,
-            mimetype="application/json",
-        )
-
-    return Response(
-        iclr_cache["content"],
-        mimetype="application/rss+xml",
-        headers={"Content-Type": "application/rss+xml; charset=utf-8"},
-    )
-
-
-@app.route("/update-iclr-cache")
-def manual_update_iclr_cache():
-    """Manually trigger the ICLR cache and README refresh."""
-    success = update_iclr_cache()
-    status = "success" if success else "error"
-    return Response(
-        json.dumps(
-            {
-                "status": status,
-                "timestamp": datetime.now().isoformat(),
-                "message": "ICLR cache updated successfully"
-                if success
-                else "Failed to update ICLR cache",
-                "last_update": iclr_cache.get("last_update").isoformat()
-                if iclr_cache.get("last_update")
-                else None,
-            }
-        ),
-        mimetype="application/json",
-        status=200 if success else 500,
     )
 
 
@@ -577,4 +496,4 @@ if __name__ == "__main__":
     # Start the scheduler
     schedule_cache_updates()
     # Run the Flask app
-    app.run(host="0.0.0.0", port=1999, debug=True)
+    app.run(host="0.0.0.0", port=1999)

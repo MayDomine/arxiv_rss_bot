@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  arxiv-rss-service:
+    build: .
+    ports:
+      - "1999:1999"
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json:ro
