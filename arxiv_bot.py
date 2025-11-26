@@ -214,6 +214,10 @@ class ArxivBot:
 
         # Check for required keywords
         keywords = self.config.get("keywords", [])
+
+        if paper.get("type", "").lower() != "new" :
+            return False
+
         if keywords:
             keyword_matches = any(
                 keyword.lower() in text_to_check for keyword in keywords
