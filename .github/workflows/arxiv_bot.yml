@@ -9,6 +9,7 @@ on:
       - 'CUSTOM_RULES.md'
       - 'example_custom_rules.py'
       - 'rss_service.py'
+      - '.github/workflows/arxiv_bot.yml'
   schedule:
     - cron: '0 4 * * 1-5' # utc+8 13:00 on Monday-Friday
   workflow_dispatch:
