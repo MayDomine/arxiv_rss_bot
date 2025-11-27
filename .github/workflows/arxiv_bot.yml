@@ -10,7 +10,7 @@ on:
       - 'example_custom_rules.py'
       - 'rss_service.py'
   schedule:
-    - cron: '0 12 * * 1-5'
+    - cron: '0 4 * * 1-5' # utc+8 13:00 on Monday-Friday
   workflow_dispatch:
 
 permissions:
