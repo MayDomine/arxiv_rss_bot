@@ -477,7 +477,7 @@ def schedule_cache_updates():
         update_rss_cache()
         
         # Schedule daily update at 12:00
-        schedule.every().day.at("12:00").do(update_rss_cache)
+        schedule.every().day.at("12:00", "Asia/Shanghai").do(update_rss_cache)
         
         logger.info("Scheduled daily cache updates at 12:00")
         
