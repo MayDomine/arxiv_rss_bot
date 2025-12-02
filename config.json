@@ -56,6 +56,6 @@
         "model": "kimi-k2-thinking",
         "prompt_file": "ai_summary_prompt.txt",
         "max_papers_to_summarize": 15,
-        "max_workers": 15
+        "max_workers": 5
     }
 } 
