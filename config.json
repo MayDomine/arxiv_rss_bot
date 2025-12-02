@@ -53,9 +53,9 @@
         "enabled": true,
         "api_key_env": "MOONSHOT_API_KEY",
         "base_url": "https://api.moonshot.cn/v1",
-        "model": "moonshot-v1-32k",
+        "model": "kimi-k2-thinking",
         "prompt_file": "ai_summary_prompt.txt",
-        "max_papers_to_summarize": 5,
-        "max_workers": 5
+        "max_papers_to_summarize": 15,
+        "max_workers": 15
     }
 } 
