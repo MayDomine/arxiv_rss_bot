@@ -6,10 +6,14 @@ Updates README.md with matching papers.
 
 import feedparser
 import json
+import os
+import requests
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional, Tuple
+from pathlib import Path
 import logging
 import re
+from openai import OpenAI
 
 # Configure logging
 logging.basicConfig(
@@ -54,6 +58,14 @@ class ArxivBot:
             "days_back": 7,
             "exclude_keywords": [],
             "min_score": 0.0,
+            "ai_summary": {
+                "enabled": False,
+                "api_key_env": "MOONSHOT_API_KEY",
+                "base_url": "https://api.moonshot.cn/v1",
+                "model": "moonshot-v1-32k",
+                "prompt_file": "ai_summary_prompt.txt",
+                "max_papers_to_summarize": 5,
+            },
         }
 
     def parse_paper_summary(self, summary: str) -> Optional[Tuple[str, str, str]]:
@@ -255,6 +267,177 @@ class ArxivBot:
 
         return score
 
+    def download_arxiv_pdf(self, paper: Dict[str, Any], output_dir: Path = Path("pdf_cache")) -> Optional[Path]:
+        """Download arXiv PDF for a paper.
+        
+        Args:
+            paper: Paper dictionary with 'link' and 'id' fields
+            output_dir: Directory to save PDF files
+            
+        Returns:
+            Path to downloaded PDF file, or None if download failed
+        """
+        try:
+            # Get PDF URL from paper link
+            pdf_url = paper["link"].replace("/abs/", "/pdf/") + ".pdf"
+            
+            # Create output directory
+            output_dir.mkdir(parents=True, exist_ok=True)
+            
+            # Use paper ID as filename
+            paper_id = paper.get("id", paper["link"].split("/")[-1])
+            pdf_path = output_dir / f"{paper_id}.pdf"
+            
+            # Skip if already downloaded
+            if pdf_path.exists():
+                logger.debug(f"PDF already exists: {pdf_path}")
+                return pdf_path
+            
+            logger.info(f"Downloading PDF for {paper['title'][:50]}...")
+            
+            # Download PDF
+            response = requests.get(pdf_url, stream=True, timeout=60)
+            response.raise_for_status()
+            
+            # Check content type
+            content_type = response.headers.get("content-type", "")
+            if "pdf" not in content_type.lower():
+                logger.warning(f"Content-Type is {content_type}, might not be a PDF")
+            
+            # Save to file
+            with open(pdf_path, "wb") as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            file_size = pdf_path.stat().st_size
+            logger.info(f"Downloaded PDF: {pdf_path.name} ({file_size:,} bytes)")
+            
+            return pdf_path
+            
+        except Exception as e:
+            logger.error(f"Error downloading PDF for {paper.get('title', 'unknown')}: {e}")
+            return None
+
+    def summarize_pdf_with_ai(self, pdf_path: Path, paper_title: str = "") -> Optional[str]:
+        """Summarize PDF using AI (Kimi/Moonshot or other OpenAI-compatible API).
+        
+        Args:
+            pdf_path: Path to the PDF file
+            paper_title: Optional paper title for context
+            
+        Returns:
+            Summary text if successful, None otherwise
+        """
+        ai_config = self.config.get("ai_summary", {})
+        
+        if not ai_config.get("enabled", False):
+            return None
+        
+        try:
+            # Get API key from environment
+            api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
+            api_key = os.environ.get(api_key_env)
+            
+            if not api_key:
+                logger.warning(f"AI summary enabled but {api_key_env} not set, skipping")
+                return None
+            
+            # Initialize OpenAI client with configurable base URL
+            base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
+            client = OpenAI(
+                api_key=api_key,
+                base_url=base_url,
+            )
+            
+            logger.info(f"Uploading PDF to AI service: {pdf_path.name}")
+            
+            # Upload file
+            file_object = client.files.create(
+                file=pdf_path,
+                purpose="file-extract"
+            )
+            
+            logger.info(f"File uploaded. Extracting content...")
+            
+            # Get file content
+            try:
+                file_content = client.files.content(file_id=file_object.id).text
+            except AttributeError:
+                file_content = client.files.retrieve_content(file_id=file_object.id)
+            
+            logger.info(f"File content extracted ({len(file_content)} characters)")
+            
+            # Load prompt from file
+            prompt_file = ai_config.get("prompt_file", "ai_summary_prompt.txt")
+            prompt = self._load_ai_prompt(prompt_file)
+            
+            if paper_title:
+                prompt = f"论文标题：{paper_title}\n\n{prompt}"
+            
+            # Prepare messages
+            messages = [
+                {
+                    "role": "system",
+                    "content": "你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。同时，你会拒绝一切涉及恐怖主义，种族歧视，黄色暴力等问题的回答。Moonshot AI 为专有名词，不可翻译成其他语言。"
+                },
+                {
+                    "role": "system",
+                    "content": file_content,
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ]
+            
+            # Get model from config
+            model = ai_config.get("model", "moonshot-v1-32k")
+            logger.info(f"Requesting summary using model: {model}")
+            
+            # Call chat completion
+            completion = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=0.3,
+            )
+            
+            summary = completion.choices[0].message.content
+            logger.info("AI summary received successfully")
+            
+            return summary
+            
+        except Exception as e:
+            logger.error(f"Error summarizing PDF with AI: {e}")
+            import traceback
+            logger.debug(traceback.format_exc())
+            return None
+
+    def _load_ai_prompt(self, prompt_file: str) -> str:
+        """Load AI prompt from file.
+        
+        Args:
+            prompt_file: Path to prompt file
+            
+        Returns:
+            Prompt text, or default prompt if file not found
+        """
+        try:
+            prompt_path = Path(prompt_file)
+            if prompt_path.exists():
+                with open(prompt_path, "r", encoding="utf-8") as f:
+                    return f.read().strip()
+        except Exception as e:
+            logger.warning(f"Error loading prompt file {prompt_file}: {e}")
+        
+        # Return default prompt
+        return """请总结这篇论文的核心结论和实验结果。请包括：
+1. 论文的主要贡献和创新点
+2. 核心实验方法和设置
+3. 主要实验结果和性能指标
+4. 关键结论和发现
+
+请用中文回答，结构清晰，重点突出。"""
+
     def render_readme(self, papers: List[Dict[str, Any]]) -> str:
         """Render papers to README.md format."""
         if not papers:
@@ -352,9 +535,25 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         if not papers:
             return "No papers found matching the criteria."
 
+        ai_config = self.config.get("ai_summary", {})
+        ai_enabled = ai_config.get("enabled", False)
+        max_summarize = ai_config.get("max_papers_to_summarize", 5)
+        
         papers_text = []
         for i, paper in enumerate(papers, 1):
             authors_str = ", ".join(paper["authors"]) if paper["authors"] else "Unknown"
+
+            # Try to get AI summary for top papers
+            ai_summary = None
+            if ai_enabled and i <= max_summarize:
+                try:
+                    # Download PDF
+                    pdf_path = self.download_arxiv_pdf(paper)
+                    if pdf_path:
+                        # Get AI summary
+                        ai_summary = self.summarize_pdf_with_ai(pdf_path, paper['title'])
+                except Exception as e:
+                    logger.warning(f"Failed to get AI summary for paper {i}: {e}")
 
             paper_entry = f"""### {i}. [{paper['title']}]({paper['link']})
 
@@ -365,9 +564,17 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 **Type**: {paper['type']}  
 **ArXiv ID**: {paper['arxiv_id']}  
 
-{paper['summary'][:300]}{'...' if len(paper['summary']) > 300 else ''}
+#### Abstract
+{paper['summary'][:300]}{'...' if len(paper['summary']) > 300 else ''}"""
 
----"""
+            # Add AI summary if available
+            if ai_summary:
+                paper_entry += f"""
+
+#### AI Summary (by {ai_config.get('model', 'AI')})
+{ai_summary}"""
+
+            paper_entry += "\n\n---"
             papers_text.append(paper_entry)
 
         return "\n\n".join(papers_text)

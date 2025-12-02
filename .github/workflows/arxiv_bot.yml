@@ -43,6 +43,8 @@ jobs:
         python test_bot.py
         
     - name: Run arXiv Bot
+      env:
+        MOONSHOT_API_KEY: ${{ secrets.MOONSHOT_API_KEY }}
       run: |
         python arxiv_bot.py
         

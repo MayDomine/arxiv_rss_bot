@@ -48,5 +48,13 @@
     "enable_deduplication": true,
     "deduplication_methods": ["id", "title", "link"],
     "fetch_ratings": true,
-    "display_limit": 500
+    "display_limit": 500,
+    "ai_summary": {
+        "enabled": true,
+        "api_key_env": "MOONSHOT_API_KEY",
+        "base_url": "https://api.moonshot.cn/v1",
+        "model": "moonshot-v1-32k",
+        "prompt_file": "ai_summary_prompt.txt",
+        "max_papers_to_summarize": 5
+    }
 } 
