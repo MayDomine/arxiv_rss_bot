@@ -14,6 +14,8 @@ from pathlib import Path
 import logging
 import re
 from openai import OpenAI
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from tqdm import tqdm
 
 # Configure logging
 logging.basicConfig(
@@ -65,6 +67,7 @@ class ArxivBot:
                 "model": "moonshot-v1-32k",
                 "prompt_file": "ai_summary_prompt.txt",
                 "max_papers_to_summarize": 5,
+                "max_workers": 5,  # Number of concurrent requests
             },
         }
 
@@ -318,12 +321,13 @@ class ArxivBot:
             logger.error(f"Error downloading PDF for {paper.get('title', 'unknown')}: {e}")
             return None
 
-    def summarize_pdf_with_ai(self, pdf_path: Path, paper_title: str = "") -> Optional[str]:
+    def summarize_pdf_with_ai(self, pdf_path: Path, paper_title: str = "", client: Optional[OpenAI] = None) -> Optional[str]:
         """Summarize PDF using AI (Kimi/Moonshot or other OpenAI-compatible API).
         
         Args:
             pdf_path: Path to the PDF file
             paper_title: Optional paper title for context
+            client: Optional OpenAI client (if None, will create one)
             
         Returns:
             Summary text if successful, None otherwise
@@ -334,22 +338,22 @@ class ArxivBot:
             return None
         
         try:
-            # Get API key from environment
-            api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
-            api_key = os.environ.get(api_key_env)
-            
-            if not api_key:
-                logger.warning(f"AI summary enabled but {api_key_env} not set, skipping")
-                return None
-            
-            # Initialize OpenAI client with configurable base URL
-            base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
-            client = OpenAI(
-                api_key=api_key,
-                base_url=base_url,
-            )
-            
-            logger.info(f"Uploading PDF to AI service: {pdf_path.name}")
+            # Use provided client or create new one
+            if client is None:
+                # Get API key from environment
+                api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
+                api_key = os.environ.get(api_key_env)
+                
+                if not api_key:
+                    logger.warning(f"AI summary enabled but {api_key_env} not set, skipping")
+                    return None
+                
+                # Initialize OpenAI client with configurable base URL
+                base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
+                client = OpenAI(
+                    api_key=api_key,
+                    base_url=base_url,
+                )
             
             # Upload file
             file_object = client.files.create(
@@ -357,15 +361,11 @@ class ArxivBot:
                 purpose="file-extract"
             )
             
-            logger.info(f"File uploaded. Extracting content...")
-            
             # Get file content
             try:
                 file_content = client.files.content(file_id=file_object.id).text
             except AttributeError:
                 file_content = client.files.retrieve_content(file_id=file_object.id)
-            
-            logger.info(f"File content extracted ({len(file_content)} characters)")
             
             # Load prompt from file
             prompt_file = ai_config.get("prompt_file", "ai_summary_prompt.txt")
@@ -392,7 +392,6 @@ class ArxivBot:
             
             # Get model from config
             model = ai_config.get("model", "moonshot-v1-32k")
-            logger.info(f"Requesting summary using model: {model}")
             
             # Call chat completion
             completion = client.chat.completions.create(
@@ -402,14 +401,10 @@ class ArxivBot:
             )
             
             summary = completion.choices[0].message.content
-            logger.info("AI summary received successfully")
-            
             return summary
             
         except Exception as e:
-            logger.error(f"Error summarizing PDF with AI: {e}")
-            import traceback
-            logger.debug(traceback.format_exc())
+            logger.debug(f"Error summarizing PDF {pdf_path.name}: {e}")
             return None
 
     def _load_ai_prompt(self, prompt_file: str) -> str:
@@ -530,6 +525,30 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 *Generated automatically by arXiv Bot*
 """
 
+    def _process_paper_with_ai(self, paper: Dict[str, Any], index: int, ai_config: Dict[str, Any], client: Optional[OpenAI]) -> Tuple[int, Optional[str]]:
+        """Process a single paper: download PDF and get AI summary.
+        
+        Args:
+            paper: Paper dictionary
+            index: Paper index (1-based)
+            ai_config: AI configuration
+            client: OpenAI client instance
+            
+        Returns:
+            Tuple of (index, ai_summary)
+        """
+        try:
+            # Download PDF
+            pdf_path = self.download_arxiv_pdf(paper)
+            if pdf_path:
+                # Get AI summary
+                ai_summary = self.summarize_pdf_with_ai(pdf_path, paper['title'], client)
+                return (index, ai_summary)
+        except Exception as e:
+            logger.debug(f"Failed to get AI summary for paper {index}: {e}")
+        
+        return (index, None)
+
     def generate_papers_section(self, papers: List[Dict[str, Any]]) -> str:
         """Generate the papers section for README."""
         if not papers:
@@ -539,21 +558,49 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         ai_enabled = ai_config.get("enabled", False)
         max_summarize = ai_config.get("max_papers_to_summarize", 5)
         
+        # Prepare papers that need AI summary
+        papers_to_summarize = []
+        if ai_enabled:
+            papers_to_summarize = papers[:max_summarize]
+        
+        # Initialize OpenAI client once if needed
+        ai_client = None
+        if ai_enabled and papers_to_summarize:
+            api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
+            api_key = os.environ.get(api_key_env)
+            if api_key:
+                base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
+                ai_client = OpenAI(
+                    api_key=api_key,
+                    base_url=base_url,
+                )
+        
+        # Process papers in parallel with progress bar
+        ai_summaries = {}
+        if papers_to_summarize:
+            max_workers = ai_config.get("max_workers", 5)  # Configurable concurrency
+            
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
+                # Submit all tasks
+                future_to_index = {
+                    executor.submit(self._process_paper_with_ai, paper, i+1, ai_config, ai_client): i+1
+                    for i, paper in enumerate(papers_to_summarize)
+                }
+                
+                # Process with progress bar
+                with tqdm(total=len(papers_to_summarize), desc="Processing papers with AI", unit="paper") as pbar:
+                    for future in as_completed(future_to_index):
+                        index, ai_summary = future.result()
+                        ai_summaries[index] = ai_summary
+                        pbar.update(1)
+                        if ai_summary:
+                            pbar.set_postfix({"status": f"✓ {index}/{len(papers_to_summarize)}"})
+        
+        # Generate papers section
         papers_text = []
         for i, paper in enumerate(papers, 1):
             authors_str = ", ".join(paper["authors"]) if paper["authors"] else "Unknown"
-
-            # Try to get AI summary for top papers
-            ai_summary = None
-            if ai_enabled and i <= max_summarize:
-                try:
-                    # Download PDF
-                    pdf_path = self.download_arxiv_pdf(paper)
-                    if pdf_path:
-                        # Get AI summary
-                        ai_summary = self.summarize_pdf_with_ai(pdf_path, paper['title'])
-                except Exception as e:
-                    logger.warning(f"Failed to get AI summary for paper {i}: {e}")
+            ai_summary = ai_summaries.get(i)
 
             paper_entry = f"""### {i}. [{paper['title']}]({paper['link']})
 

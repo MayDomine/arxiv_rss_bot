@@ -55,6 +55,7 @@
         "base_url": "https://api.moonshot.cn/v1",
         "model": "moonshot-v1-32k",
         "prompt_file": "ai_summary_prompt.txt",
-        "max_papers_to_summarize": 5
+        "max_papers_to_summarize": 5,
+        "max_workers": 5
     }
 } 
