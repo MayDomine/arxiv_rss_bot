@@ -44,7 +44,7 @@ jobs:
         
     - name: Run arXiv Bot
       env:
-        MOONSHOT_API_KEY: ${{ secrets.MOONSHOT_API_KEY }}
+        DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
       run: |
         python arxiv_bot.py
         
