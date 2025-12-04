@@ -604,12 +604,17 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
 #### Abstract
 {paper['summary'][:300]}{'...' if len(paper['summary']) > 300 else ''}"""
 
-            # Add AI summary if available
+            # Add AI summary if available (wrapped in collapsible details block)
             if ai_summary:
+                model_name = ai_config.get('model', 'AI')
                 paper_entry += f"""
 
-#### AI Summary (by {ai_config.get('model', 'AI')})
-{ai_summary}"""
+<details>
+<summary><strong>🤖 AI Summary (by {model_name})</strong> - Click to expand</summary>
+
+{ai_summary}
+
+</details>"""
 
             paper_entry += "\n\n---"
             papers_text.append(paper_entry)
