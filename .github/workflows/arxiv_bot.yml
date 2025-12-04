@@ -40,7 +40,7 @@ jobs:
         
     - name: Test bot functionality
       run: |
-        python test_bot.py
+        python ./tests/core/test_bot.py
         
     - name: Run arXiv Bot
       env:
