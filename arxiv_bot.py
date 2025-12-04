@@ -62,9 +62,9 @@ class ArxivBot:
             "min_score": 0.0,
             "ai_summary": {
                 "enabled": False,
-                "api_key_env": "MOONSHOT_API_KEY",
-                "base_url": "https://api.moonshot.cn/v1",
-                "model": "moonshot-v1-32k",
+                "api_key_env": "DASHSCOPE_API_KEY",
+                "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+                "model": "qwen-long",
                 "prompt_file": "ai_summary_prompt.txt",
                 "max_papers_to_summarize": 5,
                 "max_workers": 5,  # Number of concurrent requests
@@ -322,7 +322,7 @@ class ArxivBot:
             return None
 
     def summarize_pdf_with_ai(self, pdf_path: Path, paper_title: str = "", client: Optional[OpenAI] = None) -> Optional[str]:
-        """Summarize PDF using AI (Kimi/Moonshot or other OpenAI-compatible API).
+        """Summarize PDF using AI (Qwen/DashScope or other OpenAI-compatible API).
         
         Args:
             pdf_path: Path to the PDF file
@@ -341,7 +341,7 @@ class ArxivBot:
             # Use provided client or create new one
             if client is None:
                 # Get API key from environment
-                api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
+                api_key_env = ai_config.get("api_key_env", "DASHSCOPE_API_KEY")
                 api_key = os.environ.get(api_key_env)
                 
                 if not api_key:
@@ -349,7 +349,7 @@ class ArxivBot:
                     return None
                 
                 # Initialize OpenAI client with configurable base URL
-                base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
+                base_url = ai_config.get("base_url", "https://dashscope.aliyuncs.com/compatible-mode/v1")
                 client = OpenAI(
                     api_key=api_key,
                     base_url=base_url,
@@ -361,12 +361,6 @@ class ArxivBot:
                 purpose="file-extract"
             )
             
-            # Get file content
-            try:
-                file_content = client.files.content(file_id=file_object.id).text
-            except AttributeError:
-                file_content = client.files.retrieve_content(file_id=file_object.id)
-            
             # Load prompt from file
             prompt_file = ai_config.get("prompt_file", "ai_summary_prompt.txt")
             prompt = self._load_ai_prompt(prompt_file)
@@ -374,15 +368,11 @@ class ArxivBot:
             if paper_title:
                 prompt = f"论文标题：{paper_title}\n\n{prompt}"
             
-            # Prepare messages
+            # Prepare messages with file reference (DashScope/Qwen uses fileid:// format)
             messages = [
                 {
                     "role": "system",
-                    "content": "你是 Kimi，由 Moonshot AI 提供的人工智能助手，你更擅长中文和英文的对话。你会为用户提供安全，有帮助，准确的回答。同时，你会拒绝一切涉及恐怖主义，种族歧视，黄色暴力等问题的回答。Moonshot AI 为专有名词，不可翻译成其他语言。"
-                },
-                {
-                    "role": "system",
-                    "content": file_content,
+                    "content": f"fileid://{file_object.id}",
                 },
                 {
                     "role": "user",
@@ -391,7 +381,7 @@ class ArxivBot:
             ]
             
             # Get model from config
-            model = ai_config.get("model", "moonshot-v1-32k")
+            model = ai_config.get("model", "qwen-long")
             
             # Call chat completion
             completion = client.chat.completions.create(
@@ -566,10 +556,10 @@ The bot runs daily at 12:00 UTC via GitHub Actions to fetch the latest papers.
         # Initialize OpenAI client once if needed
         ai_client = None
         if ai_enabled and papers_to_summarize:
-            api_key_env = ai_config.get("api_key_env", "MOONSHOT_API_KEY")
+            api_key_env = ai_config.get("api_key_env", "DASHSCOPE_API_KEY")
             api_key = os.environ.get(api_key_env)
             if api_key:
-                base_url = ai_config.get("base_url", "https://api.moonshot.cn/v1")
+                base_url = ai_config.get("base_url", "https://dashscope.aliyuncs.com/compatible-mode/v1")
                 ai_client = OpenAI(
                     api_key=api_key,
                     base_url=base_url,

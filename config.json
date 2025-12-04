@@ -51,9 +51,9 @@
     "display_limit": 500,
     "ai_summary": {
         "enabled": true,
-        "api_key_env": "MOONSHOT_API_KEY",
-        "base_url": "https://api.moonshot.cn/v1",
-        "model": "kimi-k2-thinking",
+        "api_key_env": "DASHSCOPE_API_KEY",
+        "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "model": "qwen-long",
         "prompt_file": "ai_summary_prompt.txt",
         "max_papers_to_summarize": 15,
         "max_workers": 3
