@@ -11,7 +11,7 @@ on:
       - 'rss_service.py'
       - '.github/workflows/arxiv_bot.yml'
   schedule:
-    - cron: '40 4 * * 1-5' # utc+8 13:40 on Monday-Friday
+    - cron: '40 5 * * 1-5' # utc+8 14:40 on Monday-Friday
   workflow_dispatch:
 
 permissions:
