@@ -9,1464 +9,1299 @@ You can click this to deploy yours
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/maydomine/arxiv_rss_bot)
 ## 📊 Statistics
 
-- **Last Updated**: 2026-08-27 16:51:41 UTC
+- **Last Updated**: 2026-08-28 17:45:56 UTC
 - **Total Papers Found**: 30
 - **Categories Monitored**: cs.AI, cs.CL, cs.DC, cs.LG
 
 ## 📚 Recent Papers
 
-### 1. [ExFold: Unified Expert Folding for Training-Free MoE Prefill-Decode Acceleration](https://arxiv.org/abs/2608.24938)
+### 1. [VPP: Virtual Pipeline Parallelism for Efficient Chunked Prefill in Long-Context LLM Inference](https://arxiv.org/abs/2608.26523)
 
-**Authors**: Juntong Wu, Yifei Liu, Junyi Chen, Siqi Fan, Chaoran Feng, Minghao Li, Liujie Zhang, Weihang Chen, Li Yuan  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 11.0  
+**Authors**: Yan Shi, Xiaochao Wang, Jingchun Gao, Jintao Luo, Xinyi Zhou, Feng Liu, Kui Luo, Xushi Li, Xinjie Guo, Liangjun Feng  
+**Category**: cs.DC  
+**Published**: 2026-08-28  
+**Score**: 14.0  
 **Type**: new  
-**ArXiv ID**: 2608.24938v1  
+**ArXiv ID**: 2608.26523v1  
 
 #### Abstract
-Mixture-of-Experts (MoE) models scale capacity for strong quality while keeping per-token compute bounded through sparse expert activation. Yet low-latency MoE serving is increasingly challenging, because it spans two inference phases with fundamentally different bottlenecks: prefill is dominated by...
+Chunked prefill pipeline parallelism (CPP) is a key technique for LLM inference. However, equal-size chunks exhibit imbalanced latency, as later chunks attend longer prefix KV caches and incur higher attention costs, leading to pipeline bubbles. Existing approaches mitigate this imbalance through dy...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# ExFold: Unified Expert Folding for Training-Free MoE Prefill-Decode Acceleration 论文总结
+# **论文总结：VPP: Virtual Pipeline Parallelism for Efficient Chunked Prefill in Long-Context LLM Inference**
+
+---
+
+## 1. **论文的主要贡献和创新点**
+
+### ✅ 解决的问题
+在长上下文 LLM 推理中，**Chunked Prefill Pipeline Parallelism (CPP)** 是一种关键技术，用于将长输入提示划分为小块以提升调度灵活性并缓解头阻塞（HOL blocking）。然而，传统等大小分块会导致严重的**计算负载不均衡**：随着前缀 KV Cache 增长，后续 chunk 的 attention 开销显著增加，导致 pipeline 中出现大量“气泡”（pipeline bubbles），降低硬件利用率。
+
+现有方案如 **Dynamic CPP (DCPP)** 通过动态调整 chunk 大小来平衡执行时间，但引入了更高的调度开销和更细粒度的执行单元，反而在长序列上造成额外的通信与算子启动开销。
+
+---
+
+### 🚀 提出的新方法：Virtual Pipeline Parallelism (VPP)
+
+VPP 的核心思想是：  
+> **不改变 chunk 大小，而是重构 pipeline 的布局，利用虚拟阶段（virtual stages）和 V-shaped 遍历策略来吸收固有的延迟增长。**
+
+#### 主要创新点：
+1. **V-shaped 虚拟阶段遍历（V-shaped Stage Traversal）**  
+   - 将模型划分为多个虚拟 stage，并采用“前向-折返”的方式在物理设备间流动（形成“V”形路径）。
+   - 利用相邻 chunk 的轻量首尾阶段去填充当前 chunk 重型中间阶段造成的空窗期，从而自然地掩盖因 KV Cache 增长带来的线性延迟上升。
+
+2. **异步通信重排序（Asynchronous Communication Reordering）**  
+   - 重新安排跨 rank 的发送/接收操作顺序，避免双向通信阻塞，实现 computation-communication 有效重叠。
+
+3. **流水线打包（Pipelined Packing）**  
+   - 在一个请求的 drain 阶段插入下一个请求的初始 chunk，压缩跨请求的 pipeline drain bubbles。
+
+---
+
+### 🔍 相比现有方法的优势
+
+| 维度 | DCPP | VPP |
+|------|------|-----|
+| Chunk Size | 动态调整 → 更多调度开销 | 固定大小 → 更高效 kernel 执行 |
+| 负载均衡机制 | 依赖运行时预测与调参 | 利用可预测的线性延迟增长进行静态调度 |
+| 通信优化 | 同步通信易产生 stall | 异步重排序提升通信隐藏能力 |
+| 跨请求效率 | 存在明显 drain bubbles | 通过 pipelined packing 显著压缩 idle 时间 |
+
+> ✅ **VPP 在保持短序列性能的同时，在长序列和混合负载下实现了更高吞吐量和更低 TTFT，且无需复杂的在线成本估计与参数调优。**
+
+---
+
+## 2. **核心实验方法和设置**
+
+### 📊 数据集与工作负载
+未使用传统 NLP 数据集，而是构建了三类典型推理 workload：
+- **短序列（Short Sequences）**：4K、8K、16K tokens，100 并发请求
+- **长序列（Long Sequences）**：单个请求长度从 64K 到 1M tokens
+- **混合长度（Mixed-Length Workload）**：基于 GSM8K 合成，长度范围 7–122,710 tokens（均值 ~22.5K，p90 ~64K），并发 16
+
+所有请求仅生成 1 个 output token，以隔离 prefill 性能。
+
+---
+
+### ⚙️ 实验设置
+
+- **硬件平台**：华为 Atlas900 A3 SuperPoD，配备 **16 × Ascend 910C NPU**（每颗 64GB HBM）
+- **通信后端**：HCCL（HUAWEI Collective Communication Library）
+- **框架基础**：PyTorch v2.10 + vLLM-Ascend v0.23.0
+- **并行配置**：TP8 + 2-stage Pipeline Parallelism（即 `TP8+CPP2`, `TP8+DCPP2`, `TP8+VPP2`）
+
+---
+
+### 🎯 评估指标
+- **Throughput（吞吐量）**：单位为 token/s
+- **Time-to-First-Token (TTFT)**：反映 prefill 延迟
+- **Pipeline Bubble Ratio**：衡量 pipeline 利用率
+- **Profiling Breakdown**：分解 computation、bubble、exposed communication 占比
+
+---
+
+### 🆚 基线方法对比
+| 方法 | 描述 |
+|------|------|
+| **CPP** | 固定大小 chunk 的标准 chunked prefill pipeline parallelism |
+| **DCPP** | 动态调整 chunk 大小以平衡执行时间（vLLM-Ascend 推荐配置） |
+| **VPP** | 本文提出的方法（含 V-shaped traversal + async comm + pipelined packing） |
+
+---
+
+## 3. **主要实验结果和性能指标**
+
+### 📈 整体性能提升（vs. DCPP）
+
+| 场景 | Throughput 提升 | TTFT 改善 |
+|------|------------------|-----------|
+| **长序列（Long Sequences）** | 最高 **+13.1%**（DeepSeek-V3.1 @512K） | 显著下降 |
+| **混合负载（Mixed Workloads）** | 最高 **+6.7%**（DeepSeek-V3.1） | 同步改善 |
+| **短序列（Short Sequences）** | 基本持平或轻微提升（最高 +10.8%） | 无退化 |
+
+> 💡 特别是在 **512K-token DeepSeek-V3.1 prefill 任务中**：
+> - **pipeline bubble ratio 从 6.4% 降至 0.1%**
+> - 实现了 **98.0% 的 bubble reduction**
+> - **TTFT 减少 40.36 秒（相对 DCPP 下降 12.53%）**
+
+---
+
+### 🔍 性能分解分析（DeepSeek-V3.1 @512K）
+
+| 指标 | DCPP | VPP | 变化（Δ） | 改进比例 |
+|------|------|-----|----------|---------|
+| **Computation Time** | 279.07s | 250.84s | ↓28.23s | -10.11% |
+| **Bubble Time** | 20.47s | 0.39s | ↓20.07s | **-98.04%** |
+| **Exposed Communication** | 22.68s | 30.63s | ↑7.95s | +35.05%（trade-off） |
+| **Total TTFT** | 322.22s | 281.86s | ↓40.36s | **-12.53%** |
+
+> ⚠️ 注意：虽然暴露通信略有增加，但由于 **communication-computation overlap 提升至 51.75%**（原仅 0.05%），实际影响可控。
+
+---
+
+### 🔬 消融实验结果（Ablation Study）
+
+在 DeepSeek-V3.1 @256K 上测试三种 VPP 变体：
+
+| 方案 | End-to-End Latency Reduction | Bubble Ratio | 关键改进 |
+|------|-------------------------------|--------------|--------|
+| **Vanilla VPP** | —— | 11.0% | 引入 V-shaped 调度 |
+| **VPP-Async** | ↓3.13% | 8.3% | 异步通信重排序，提升通信隐藏 |
+| **VPP-Async + Pipelined Packing** | ↓6.89% | **2.4%** | 压缩跨请求 drain bubbles |
+
+> ✅ 两个优化模块协同作用，分别解决 **intra-request communication stall** 和 **inter-request idle time**。
+
+---
+
+### 🧪 Chunk Size 敏感性分析
+- **最佳 chunk size 多为 24K**，即使不能整除总长度。
+- 原因：最后一个较小的 chunk 正好落在 pipeline drain 阶段，其计算与通信可被前面 chunk 隐藏，减少尾部气泡。
+- 例外：极短序列（如 64K）中，越小 chunk 越好，因 pipeline 无法进入稳态。
+
+---
+
+## 4. **关键结论和发现**
+
+### ✅ 主要发现
+1. **DCPP 的负载均衡收益被调度开销抵消**  
+   - 在长序列中，动态分块导致过多 kernel launch 与通信事件，碎片化严重，最终性能反不如固定分块。
+
+2. **chunk latency 增长具有近似线性规律**  
+   - 得益于 causal attention 对 KV Cache 的依赖，后期 chunk 的延迟增长可建模为 $ T_k \propto (k+1)t $，为 VPP 的静态调度提供了理论依据。
+
+3. **VPP 成功将不平衡转化为并行机会**  
+   - 不试图消除差异，而是通过 V-shaped traversal 让“快慢阶段互补”，实现自然负载匹配。
+
+4. **虚拟 stage 设计优于动态 resize**  
+   - 更稳定、无需 runtime profiling，更适合生产部署。
+
+---
+
+### ⚠️ 局限性
+1. **对稀疏 attention（如 DSA）支持有限**  
+   - 如 GLM-5.2 使用 DSA 结构，attention 成本随长度增长变缓，破坏了线性假设，导致 VPP 效果减弱。
+   
+2. **依赖 MoE 专家并行（EP）配置**  
+   - 若 EP 关闭或 attention 占比下降，V-shaped 匹配可能失效。
+
+3. **目前仅适配两物理 stage 场景**  
+   - 扩展到更深 pipeline 或异构设备仍需进一步研究。
+
+---
+
+### 🔮 未来工作方向
+- 扩展 VPP 至 **更深的 pipeline 架构**（>2 stages）
+- 支持 **sparse attention 模型** 的自适应虚拟 stage 调度
+- 探索 **异构请求混合调度** 下的全局最优 packing 策略
+- 结合 **context parallelism** 进一步降低内存压力
+
+---
+
+## ✅ 总结
+
+VPP 提出了一种全新的视角来应对长上下文 LLM 推理中的 pipeline 不平衡问题：  
+> **不是通过“削峰填谷”式的动态 chunk 调整，而是通过“错峰调度”的虚拟 stage 布局，把不可避免的增长变成可利用的资源。**
+
+它在 **吞吐量、TTFT、稳定性** 上全面超越 DCPP，尤其在百万 token 级别任务中展现出巨大潜力，是面向下一代超长上下文 LLM serving 系统的重要基础设施设计。
+
+</details>
+
+---
+
+### 2. [Dependency-Aware Revocable Decoding for Efficient Diffusion Large Language Model Inference](https://arxiv.org/abs/2608.26574)
+
+**Authors**: Wooje Park, Insu Lee, Minyoung Noh, Jaeyun Jang, Sungmin Lee, Kyuhong Shim, Byonghyo Shim  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 10.5  
+**Type**: new  
+**ArXiv ID**: 2608.26574v1  
+
+#### Abstract
+Diffusion large language models (dLLMs) offer a promising alternative to autoregressive generation by decoding multiple tokens in parallel through iterative denoising. However, increasing decoding parallelism often degrades generation quality, as early errors can contaminate later contexts. Revocabl...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# 论文总结：Dependency-Aware Revocable Decoding for Efficient Diffusion Large Language Model Inference
 
 ---
 
 ## 1. 论文的主要贡献和创新点
 
 ### 解决了什么问题
+现有的 **revocable decoding** 方法（如 Saber 和 WINO）虽然通过重新验证并重掩码不可靠 token 来提升 dLLM 的生成质量，但存在一个被忽视的关键缺陷：  
+> **在验证过程中，已解码但错误的 token 可能污染上下文（verification context），导致误判或不必要的重掩码**。
 
-Mixture-of-Experts (MoE) 模型通过稀疏激活专家实现高效扩展，但在实际部署中面临两个阶段的不同瓶颈：
-
-- **Prefill 阶段**：以 **token-wise expert computation** 为主导，计算密集。
-- **Decode 阶段**：以 **batch-wise expert memory traffic** 为主导，内存密集。
-
-现有训练无关（training-free）加速方法通常只优化其中一个阶段，且对被排除专家的贡献处理不当：
-- **Token-wise sparsification**（如 Top-K 减少）：直接丢弃未选专家，导致质量下降。
-- **Expert-set consolidation**（如 REAP、SERE）：静态合并或动态重路由，但缺乏对输出幅度差异的校准。
-
-这些方法在联合加速时误差叠加，难以兼顾两阶段性能与质量。
-
----
+例如，在提示 “The city of _ _ is on the Southern California coast” 中，并行预测可能产生 “Los Diego”，两个词单独看都合理，但组合无效。当使用彼此作为上下文进行验证时，模型可能无法纠正这一组合错误，甚至将两者都判定为不可靠而过度重掩码。
 
 ### 提出了什么新方法或新思路
+作者提出 **Dependency-Aware Revocable Decoding (DARD)**，一种无需训练的三状态可撤销解码框架，其核心思想是：
 
-作者提出 **ExFold** —— 一种统一的、无需训练的 **专家折叠（Expert Folding）框架**，用于同时加速 MoE 的 prefill 和 decode 阶段。
-
-#### 核心思想：将专家排除视为“有损压缩”，通过“投影恢复”重建其贡献
-
-- 将 prefill 和 decode 统一建模为一个 **受限输出近似问题（constrained output approximation）**。
-- 对于被排除的专家 $E_s$，不直接丢弃，而是将其输出 $E_s(x)$ 通过一个 **标量投影器（scalar projector）** 投影到某个保留专家 $E_t$ 上：
-  $$
-  E_s(x) \approx s_{s\to t} \cdot E_t(x)
-  $$
-  其中标量 $s_{s\to t}$ 在离线校准阶段学习得到。
-- 被折叠的贡献通过修改 **router weights** 实现，无需改变模型参数或结构。
-
-#### 两大阶段共享同一机制，仅选择策略不同：
-
-| 阶段     | 保留专家选择方式                     | 折叠机制               |
-|----------|--------------------------------------|------------------------|
-| Prefill  | 每个 token 选 Top-K 主导专家         | Token-level folding    |
-| Decode   | 整个 batch 选最多 D 个活跃专家集合     | Batch-level folding    |
-
-两者共用相同的 **scalar projector matrix** 和 **loss matrix** 来决定如何折叠。
-
----
+- 引入三种 token 状态：
+  - **Masked (M)**：未解码
+  - **Candidate (C)**：已解码但置信度中等，需进一步验证
+  - **Unmasked (U)**：高置信度，视为可靠上下文
+- 在验证阶段采用 **选择性上下文机制**：
+  - 验证 `C` 状态 token 时，仅允许其关注更高置信度的 `C` 或所有 `U` token，形成 **confidence-ordered attention**。
+  - 这种设计模拟了按置信度排序的多步自回归解码过程，避免低质量 token 干扰验证。
+- 对 `M` token 的预测采用 **自适应 logit mixing**：
+  - 结合来自原始序列（含 `C` 上下文）和影子序列（不含 `C` 上下文）的预测。
+  - 根据附近 `C` token 的验证结果（晋升为 `U` 或降级为 `M`）动态调整两者的权重 $ w $，从而控制 `C` token 的上下文影响力。
 
 ### 相比现有方法的优势
-
-| 方面 | ExFold | 现有方法（如 MC-MoE, REAP, SERE） |
-|------|-------|-------------------------------|
-| **统一性** | ✅ 同时优化 prefill 和 decode | ❌ 通常只针对单一阶段 |
-| **质量保持** | ✅ 显式恢复被排除专家贡献 | ❌ 丢弃或粗略替代，误差大 |
-| **无需训练** | ✅ 完全基于离线校准 | ✅ 多数也是 |
-| **兼容性** | ✅ 只修改 router metadata，可插拔集成 | ✅ 类似 |
-| **灵活性** | ✅ 动态适应不同 token/batch 的预算 | ❌ 静态压缩无法自适应 |
-
-> 💡 **关键洞察**：许多专家输出方向相近但幅值不同 → 只需一个标量即可有效对齐。
+- **更鲁棒的验证机制**：通过隔离不可靠 token 的上下文影响，显著减少因上下文污染导致的验证失败。
+- **更高的速度-质量权衡（speed-quality Pareto frontier）**：相比 Saber 和 WINO，在更少的 decoding steps 下达到更高性能，或在相同步数下性能更优。
+- **无需额外训练**：纯推理期优化，兼容现有 dLLM。
+- **通用性强**：在多种文本与多模态任务上均表现稳定提升。
 
 ---
 
 ## 2. 核心实验方法和设置
 
 ### 使用了哪些数据集
+共评估 **12 个基准**，涵盖语言与多模态任务：
 
-综合多个领域 benchmark 进行评估：
+#### 文本任务（6个）：
+- **GSM8K**：数学应用题
+- **MATH500**：高等数学问题
+- **MBPP**：Python 编程任务
+- **Countdown**：算术推理
+- **Sudoku**：逻辑填空（4-shot）
+- **ARC-Challenge**：科学常识推理
 
-| 数据集 | 任务类型 | 主要指标 |
-|--------|---------|---------|
-| **MATH500** | 数学推理 | Accuracy |
-| **AIME24** | 竞赛数学 | Mean symbolic-equivalence accuracy |
-| **IFEval / IFBench** | 指令遵循 | Prompt-level accuracy |
-| **GPQA-Diamond** | 高阶知识推理 | Accuracy |
-| **LiveCodeBench v5 / HumanEval+** | 代码生成 | Pass@8, Pass@1 |
-| **MMLU-Pro** | 多任务知识理解 | Category-macro accuracy |
-
-> 所有评估均使用 OpenCompass 兼容 pipeline。
-
----
+#### 多模态任务（6个）：
+- **Flickr30K**：图像描述生成（使用 CIDEr 指标）
+- **AI2D**：图表理解
+- **ScienceQA**：带图科学问答
+- **MathVista / MATH-Vision**：视觉数学推理
+- **MMMU**：跨学科多模态理解
 
 ### 实验设置和评估指标
 
-#### 模型
-- **主模型**：`Qwen3-30B-A3B`（48层，128专家，Top-8）
-- **其他验证模型**：
-  - `GLM-4.5-Air`
-  - `DeepSeek-V2-Lite`
-  - `DeepSeek-V4-Flash`（284B 参数，256专家）
-  - `Qwen3.5-35B-A3B`
-
-#### 硬件与系统
-- 平台：**vLLM**
-- GPU：NVIDIA H800 80GB
-- 实现：自定义 **Triton CUDA kernel**，轻量级集成
-
-#### 评估指标
-| 指标 | 含义 | 测量场景 |
-|------|------|--------|
-| **TTFT** | Time to First Token | Prefill 阶段延迟 |
-| **TPOT** | Time Per Output Token | Decode 阶段延迟 |
-| **Offline Throughput** | 输出 token/s | 高吞吐批量生成 |
-| **Average Quality** | 多任务平均得分 | 模型能力保留程度 |
-
-#### 加速配置命名
-- `P4`: Prefill 每 token 保留 4 个专家
-- `D64`: Decode 每 batch 最多激活 64 个专家
-- `P4+D64`: 联合加速
-
----
+| 项目 | 设置说明 |
+|------|----------|
+| **模型** | 使用三个开源 dLLM：<br>- LLaDA-8B-Instruct<br>- LLaDA-1.5<br>- MMaDA-8B-MixCoT |
+| **评估方式** | 零样本（zero-shot），除 Sudoku 为 4-shot |
+| **性能指标** | - 文本任务：Accuracy<br>- Flickr30K：CIDEr Score<br>- MBPP：pass@1 functional correctness |
+| **效率指标** | - 平均 decoding steps<br>- 吞吐量（Tokens Per Second, TPS） |
+| **实现细节** | 使用 block decoding，generation length=256，block length=128；温度设为 0 |
 
 ### 基线方法对比
-
-| 类别 | 方法 | 特点 |
-|------|------|------|
-| **Token-wise sparsification** | Top-K reduction, MC-MoE, MoDES | 减少每个 token 的专家数，利于 prefill |
-| **Expert-set consolidation** | REAP (pruning), SERE (re-routing) | 缩小 batch 激活专家集，利于 decode |
-| **联合压缩** | All Top-K=4, MC-MoE-K4 | 直接应用单阶段方法到双阶段 |
-
----
-
-## 3. 主要实验结果和性能指标
-
-### 关键性能数据（来自 Qwen3 和 DeepSeek-V4）
-
-| 指标 | 结果 |
-|------|------|
-| **TTFT 加速比** | 最高达 **1.41×** |
-| **TPOT 加速比** | 最高达 **2.45×** |
-| **离线吞吐提升** | 达 **1.20× ~ 1.29×** |
-| **质量保留率** | 平均保留原始模型 **~99%** 的能力 |
-
-> 在 `ExFold P4+D64` 设置下，实现显著加速的同时几乎无损。
-
----
-
-### 与基线方法的对比结果（Qwen3-30B-A3B）
-
-#### ✅ Prefill Only (`P4`)
-| 方法 | Avg. Quality | 相比 Baseline |
-|------|-------------|---------------|
-| Baseline (Top-8) | 68.57 | — |
-| Direct Top-4 | 66.64 | ↓1.93 |
-| MC-MoE-P4 | 65.44 | ↓3.13 |
-| **ExFold-P4** | **69.26** | ↑**+0.69** ✅ |
-
-> ExFold 不仅没降质，反而轻微提升！
-
-#### ✅ Decode Only (`D64`)
-| 方法 | Avg. Quality | 相比 Baseline |
-|------|-------------|---------------|
-| REAP-D64 | 61.50 | ↓7.07 |
-| SERE-K4 | 64.15 | ↓4.42 |
-| **ExFold-D64** | **68.75** | ↑**+0.18** ✅ |
-
-> 即使 decode 池缩小一半（128→64），仍接近原模型表现。
-
-#### ✅ Joint Acceleration (`P4+D64`)
-| 方法 | Avg. Quality | 相比 Baseline |
-|------|-------------|---------------|
-| All TopK=4 | 56.17 | ↓12.40 |
-| MC-MoE-K4 | 57.30 | ↓11.27 |
-| MoDES-K4 | 65.72 | ↓2.85 |
-| **ExFold P4+D64** | **68.50** | ↑**-0.07** ✅ |
-
-> 其他方法严重掉点，而 ExFold 几乎无损！
-
----
-
-### 消融实验结果
-
-#### 🔍 投影器形式对比（Table 3）
-
-| 投影器类型 | 存储开销 | 是否可用 fused kernel | 下游任务平均得分 |
-|-----------|----------|------------------------|------------------|
-| Global scalar | 1 | ✅ 是 | 65.60 |
-| Layer scalar | L | ✅ 是 | 64.70 |
-| **Pairwise scalar** | P | ✅ 是 | **66.94** ✅ |
-| Diagonal | PH | ❌ 否（需 unfused） | 65.87 |
-| Low-rank (R16) | ~4.87 GiB | ❌ 否 | 66.60 |
-
-> **Pairwise scalar** 在精度、效率、兼容性上达到最佳平衡。
-
-#### 🔍 校准数据来源影响（Table 4）
-
-| 校准数据来源 | 平均得分 |
-|------------|---------|
-| MATH | 71.10 |
-| CODE | 71.62 |
-| PRETRAIN | 72.75 |
-| **Mixed (default)** | **73.00** ✅ |
-
-> 混合领域校准效果最好，说明专家几何具有通用性，**无需任务特定校准**。
-
-#### 🔍 保留专家选择策略（Table 5）
-
-| 策略 | Prefill 得分 | Decode 得分 |
-|------|------------|-----------|
-| 仅按 router score $s_i$ 排序 | 79.36 | 78.55 |
-| 仅按输出范数 $h_e$ 排序 | 74.42 | 78.74 |
-| **按 $s_i \times h_e$ 排序（本文）** | **80.11** ✅ | **79.74** ✅ |
-
-> 结合路由权重与输出强度的选择更优。
-
----
-
-## 4. 关键结论和发现
-
-### 主要发现
-
-1. ✅ **MoE 两阶段瓶颈本质统一**：尽管 prefill 和 decode 资源约束不同，但“被排除专家贡献”的形式一致，可统一建模为输出近似问题。
-2. ✅ **专家冗余主要体现在幅值而非方向**：大量专家输出方向相似，仅幅值差异显著 → **一个标量即可有效对齐**。
-3. ✅ **显式恢复优于隐式丢弃**：ExFold 通过 scalar projector 显式重建被排除专家贡献，在同等预算下显著优于直接剪枝或跳过。
-4. ✅ **统一框架避免误差累积**：ExFold 使用相同 projector 处理两阶段，避免了分别优化带来的目标不一致和误差叠加。
-5. ✅ **即插即用、高效实用**：仅需一次离线校准 + 修改 router metadata，可在 vLLM 中无缝集成，带来显著加速。
-
----
-
-### 方法的局限性
-
-1. 🚫 **依赖专家间方向对齐假设**：若某些模型专家高度异构、方向分散，则 scalar projector 效果可能下降。
-2. ⚠️ **校准数据需具代表性**：虽然无需任务标签，但仍需覆盖多样输入分布，否则 projector 泛化性受影响。
-3. ⚠️ **极端压缩仍有损失**：当 `D` 极小时（如 D=32），即使 ExFold 也难以完全保持质量（见 Table 6）。
-4. 🚫 **未解决专家调度开销**：虽减少内存访问，但 expert dispatch 和 aggregation 开销依然存在。
-
----
-
-### 未来工作方向
-
-1. 🔮 **探索更复杂的 projector 形式**：如 low-rank 或 conditional scalar，在精度要求极高时使用。
-2. 🔁 **在线自适应 folding**：根据输入难度动态调整保留专家数量与 folding 强度。
-3. 🧩 **与其他优化正交结合**：与 KV Cache 压缩（如 C2KV）、attention 优化等联合使用，进一步提升端到端性能。
-4. 🌐 **推广至更多架构**：验证在 dense 模型、非 Transformer 架构中的可行性。
-5. 📦 **自动化 tuning 工具链**：构建自动搜索最优 `K`, `D`, `calibration set` 的工具包。
-
----
-
-## 总结
-
-📌 **ExFold 是首个真正意义上统一加速 MoE prefill 与 decode 的 training-free 框架**。它通过 **专家折叠（Expert Folding）** 的新颖视角，将被排除专家的贡献显式投影回保留专家，实现了：
-
-- ✅ **高达 1.41× TTFT 和 2.45× TPOT 加速**
-- ✅ **平均保留 ~99% 原始模型质量**
-- ✅ **即插即用、无需微调、兼容性强**
-
-其成功源于对 **专家输出几何特性** 的深刻洞察：**方向对齐 + 幅值可调 → 标量投影足够**。该工作为 MoE 高效推理提供了新的设计范式。
-
-🔗 **开源地址**：[https://github.com/Time-Rune/ExFold-MoE](https://github.com/Time-Rune/ExFold-MoE)
-
-</details>
-
----
-
-### 2. [Hierarchical Shared Memory-Aware Optimization for TRSM on GPU Platforms](https://arxiv.org/abs/2608.25469)
-
-**Authors**: Xinzhe Chen, Haowei Li, Lijuan Hu, Wenjing Ma, Fangfang Liu  
-**Category**: cs.DC  
-**Published**: 2026-08-27  
-**Score**: 8.5  
-**Type**: new  
-**ArXiv ID**: 2608.25469v1  
-
-#### Abstract
-Triangular Solve with Multiple Right-hand Sides (TRSM) is a fundamental BLAS Level-3 operation that underpins LU/Cholesky decomposition, sparse direct solvers, and matrix inversion. In the left-side lower-triangular case studied in this paper, efficient GPU implementation remains challenging because...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# 论文总结：Hierarchical Shared Memory-Aware Optimization for TRSM on GPU Platforms
-
-## 1. 论文的主要贡献和创新点
-
-### 解决的问题
-本文针对 **TRSM**（Triangular Solve with Multiple Right-hand Sides）在 GPU 上的高效实现面临三大挑战：
-- **小规模矩阵**（m, n ≤ 64）受限于共享内存（shared memory）容量，尤其是 `double complex` 类型下无法同时缓存矩阵 A 和 B，导致频繁访问全局内存。
-- **大规模矩阵**中，传统方法对角块求逆需要 $O(I^2)$ 的共享内存，限制了 block size 的选择，影响 GEMM 更新阶段的计算密度和效率。
-- 现有优化多为单平台设计，缺乏跨平台（如 NVIDIA A100、H800 和 Hygon DCU Z100）的性能可移植性。
-
-### 提出的新方法与创新思路
-作者提出 **HSMA-TRSM**，一个层次化的共享内存感知优化框架，其核心贡献如下：
-
-#### （1）小规模 TRSM 优化：流水线化计算-内存重叠机制
-- 设计基于 **loop unrolling** 和 **instruction reordering** 的流水线策略，在小规模场景下实现数据预取与前向替换（forward substitution）计算的重叠。
-- 针对 `double complex` 类型提出 **dual thread-group seven-stage pipeline**，将共享内存划分为多个子区域，通过两个线程组协作完成分块加载与计算，突破共享内存容量瓶颈。
-
-#### （2）大规模 TRSM 优化：对角块解耦 + 自适应分块
-- 提出 **diagonal block decoupling strategy**，将传统融合内核拆解，采用纯回代方式执行对角块求逆，将其共享内存占用从 $O(I^2)$ 降低至 $O(IB)$。
-- 引入 **double buffering** 机制构建异步计算流水线，隐藏列级数据加载延迟。
-- 提出 **adaptive blocking algorithm**，根据矩阵规模和数据类型动态选择最优 block size。
-
-#### （3）零运行时开销的跨平台配置选择框架
-- 构建基于 **offline profiling + online lookup** 的编译期配置选择机制：
-  - 离线阶段生成“输入规模 × 数据类型 → 最优 block size”的映射表；
-  - 运行时仅需一次哈希查找即可确定参数，无额外性能开销。
-- 实现了在 **NVIDIA A100、H800** 和 **Hygon DCU Z100** 上的高性能可移植性。
-
-### 相比现有方法的优势
-| 方面 | 传统方法（cuBLAS / rocBLAS） | HSMA-TRSM |
-|------|-------------------------------|-----------|
-| 小规模内存利用 | 分阶段执行，难以重叠访存与计算 | 流水线设计显著提升内存利用率 |
-| `double complex` 支持 | 受限于共享内存容量，性能差 | 专用七级双线程组流水线有效缓解瓶颈 |
-| 大规模 block size | rocBLAS 固定为 128，不自适应 | 动态选择 block size，适配不同硬件与问题规模 |
-| 对角块内存占用 | 融合内核需 $O(I^2)$ shared memory | 解耦后降至 $O(IB)$，支持更大 block size |
-| 性能可移植性 | 平台特定优化，迁移困难 | 统一框架 + 查表机制支持多平台 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 实验平台
-- **NVIDIA A100-SXM4-40GB**
-- **NVIDIA H800 PCIe**
-- **Hygon DCU Z100**
-
-详细规格见下表：
-
-| Platform | SM/CU | Shmem/LDS per Block | HBM | Bandwidth | FP32 Peak | Thread Group |
-|---------|--------|---------------------|-----|------------|------------|---------------|
-| A100 | 108 SM | 48KB | 40GB HBM2e | 1.6 TB/s | 19.5 TFLOPS | 32 (warp) |
-| H800 | 132 SM | 48KB | 80GB HBM3 | 2.0 TB/s | 51 TFLOPS | 32 (warp) |
-| DCU Z100 | 64 CU | 64KB | 16GB HBM2 | 1.0 TB/s | 13.9 TFLOPS | 64 (wavefront) |
-
-### 数据集与测试配置
-- 使用 **square matrices**（m = n），范围从 64 到 16384。
-- 测试四种数据类型：
-  - `float`, `double`
-  - `float complex`, `double complex`
-- 输入矩阵随机初始化。
-- 每个测试点运行 10 次，取后 9 次平均值（首次用于预热）。
-
-### 评估指标
-- **GFLOPS**：实测性能
-- **Speedup**：相对于 cuBLAS / rocBLAS 的加速比
-- **Numerical correctness**：以 $\frac{\|X_{\text{ours}} - X_{\text{cuBLAS}}\|_F}{\|X_{\text{cuBLAS}}\|_F}$ 衡量数值一致性
-
-### 基线方法对比
-- **cuBLAS v13.2.1**（NVIDIA 平台）
-- **rocBLAS v5.1**（DCU 平台）
-- **MAGMA**（A100 上作为补充对比）
+- **Standard dLLM decoding**：固定解码，无重掩码
+- **Saber**：基于置信度下降检测可疑 token
+- **WINO**：双路径验证，独立判断每个 token 是否保留
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
 ### 关键性能数据
+- 在 **Flickr30K** 上，DARD 相比 **Saber** 实现：
+  - **2.71× 的加速**
+  - **CIDEr 分数提升 4.35 点**
+- 在 **MATH500** 上，DARD 达到最高准确率 **34.6%**，仅需 **59.3 步**，而 Saber 需要 81 步才达到 33.2%
+- 在 **GSM8K** 上，DARD 实现 **5.3× 加速**，同时准确率提升 **+5.5%**
 
-#### 小规模 TRSM（m, n ≤ 64）
-| 数据类型 | 平台 | m=64 性能（GFLOPS） | 相对提升 |
-|--------|-------|------------------|----------|
-| `float` | DCU | 4.64 | +18.4% vs rocBLAS |
-| `float` | A100 | 5.75 | +29.2% vs cuBLAS |
-| `float complex` | DCU | 11.61 | +86.3% vs rocBLAS |
-| `double complex` | DCU | 3.53 | **+96.1%** vs rocBLAS |
-| `double complex` | A100 | 15.88 | **+14.5%** vs cuBLAS |
-| `double complex` | H800 | 12.47 | **+105.4%** vs cuBLAS |
+### 与基线方法的对比结果
+| 方法 | 相对 Saber 准确率增益 | 相对 Saber 步数减少 |
+|------|------------------------|-----------------------|
+| **DARD (ours)** | **+1.4%** | **-21.7 步 (-26.8%)** |
+| WINO | +0.2% | -22.0 步 |
+| Saber | 基准 | 基准 |
 
-> 💡 在 `double complex` 场景下达到最高 **2.05×** 加速（H800 上）。
+> DARD 在多个任务上不仅超越 Pareto 前沿，且在峰值性能配置下也优于标准 one-token-per-step 解码（见 Table 7 & 8）。
 
-#### 大规模 TRSM（m > 64）
-| 数据类型 | 平台 | 峰值性能（GFLOPS） | 相对加速比 |
-|--------|-------|------------------|-------------|
-| `float` | DCU | 6010 | 1.63× vs rocBLAS |
-| `double` | DCU | 3654 | **2.06×** vs rocBLAS |
-| `float` | A100 | 17802 | > cuBLAS/MAGMA |
-| `double complex` | A100 | 17111 | > cuBLAS/MAGMA |
-| `float` | H800 | 36088 | 最高绝对吞吐 |
-| `float complex` | H800 | 38654 | 最高绝对吞吐 |
+### 消融实验结果
 
-> ✅ 在 m=16384 时仍保持 **1.63× ~ 2.06×** 的稳定加速。
+#### ✅ 注意力掩码设计（Table 1）
+| 方法 | Acc. (%) | Steps |
+|------|---------|-------|
+| Saber | 33.2 | 81.0 |
+| DARD (bidir) | 31.4 | 58.5 |
+| DARD (12r) | 32.0 | 59.3 |
+| **DARD (confidence, ours)** | **34.6** | **59.3** |
 
-### 与 MAGMA 的对比（A100）
-| m | 数据类型 | HSMA-TRSM (GFLOPS) | MAGMA (GFLOPS) | 提升幅度 |
-|----|----------|--------------------|----------------|-----------|
-| 4096 | `float` | 11798 | 8837 | +33.5% |
-| 4096 | `double` | 10577 | 7344 | +44.0% |
-| 16384 | `double complex` | 17111 | 14179 | +20.7% |
+> 使用双向注意力会导致精度大幅下降，证明 **有序注意力至关重要**；基于置信度排序效果最优。
 
-### 消融分析（Ablation Study）
-- **对角块解耦效果显著**：
-  - 在 A100 上，随着矩阵增大，`Diag. inv.` 占比从 20.7%（m=2048）下降到 3.7%（m=8192），而 `GEMM update` 占比上升至 88.0%，表明大问题已由 GEMM 主导，优化收益明显。
-- **自适应 blocking 更优**：
-  - 固定 block size=128（如 rocBLAS）在中等规模尚可，但在大矩阵上因更新次数过多导致开销增加。
-  - HSMA-TRSM 能随矩阵增长自动增大 block size（如从 256 → 512），减少 kernel launch 次数并提高 GEMM 效率。
+#### ✅ 自适应 Logit Mixing（Table 2）
+| 方法 | Acc. (%) | Steps |
+|------|---------|-------|
+| Saber | 33.2 | 81.0 |
+| DARD (w=0.0) | 29.2 | 82.0 |
+| DARD (w=0.5) | 31.1 | 63.6 |
+| DARD (w=1.0) | 33.4 | 57.1 |
+| **DARD (adaptive, ours)** | **34.6** | **59.3** |
+
+> 固定权重无法兼顾效率与准确性，**自适应混合策略实现了最佳平衡**。
+
+#### ✅ 配置鲁棒性（Table 3）
+不同 generation/block length 下 DARD 性能稳定，表明其对超参不敏感。
 
 ---
 
 ## 4. 关键结论和发现
 
-### 主要发现
-1. **共享内存是小规模 TRSM 的核心瓶颈**，尤其对于宽数据类型（如 `double complex`）。传统的直接求解策略在此类边界情况下失效。
-2. **解耦对角块处理路径** 是打破 $O(I^2)$ 内存约束的关键，使 block size 可扩展性大幅提升，从而启用更高效率的大型 GEMM 内核。
-3. **自适应 blocking 策略优于固定 block size**，特别是在跨越性能拐点（crossover point）时能避免不必要的细粒度更新。
-4. **离线索引 + 运行时查表** 的配置选择机制实现了真正的零运行时开销性能调优，适用于生产级 BLAS 库部署。
-5. **HSMA-TRSM 在多种平台和数据类型上均取得显著加速**，峰值达 **2.05× over cuBLAS**, **2.06× over rocBLAS**，且在 `double complex` 小规模和 `real-type` 大规模场景下增益最强。
+### 论文的主要发现
+1. **上下文污染是 revocable decoding 的关键瓶颈**：现有方法忽略了解码 token 对验证过程的反向干扰。
+2. **分离 token 状态 + 控制依赖关系可有效缓解该问题**：引入 `C` 状态并通过 confidence-ordered attention 构建干净验证上下文，显著提升纠错能力。
+3. **DARD 显著改善了 dLLM 的 speed-quality trade-off**：在 12 个 benchmark 上 consistently 超越现有方法，实现更快、更强的生成。
+4. **该方法具备良好的泛化性和实用性**：适用于多种 dLLM 架构和任务类型，无需微调即可部署。
 
 ### 方法的局限性
-- 当前框架主要面向 **dense TRSM**，未涵盖稀疏或批量（batched）场景。
-- 对于某些高度优化的 vendor kernel（如 H800 上的 `double complex`），剩余优化空间较小，提升有限。
-- 编译期 profiling 表格需预先构建，虽不影响运行时，但增加了部署复杂性。
+- **绝对性能增益有限**：目标不是改变模型分布，而是提高一致性，因此提升幅度受限于原模型能力。
+- **计算开销略有增加**：
+  - 单步延迟略高于 Saber（约 +40ms），但由于总步数大幅减少，端到端时间仍更短。
+  - 峰值显存增加 <6.3%，主要来自影子序列。
+- **依赖置信度作为可靠性代理**：若模型校准不佳，confidence 可能不能准确反映 token 质量。
 
 ### 未来工作方向
-- 扩展至 **very small scales** 的 kernel fusion 优化。
-- 支持 **batched TRSM** 和 **mixed-precision** 计算。
-- 探索在 **sparse matrix** 或 **hierarchical matrices** 中的应用。
-- 进一步集成自动调参工具链，实现全自动部署。
+- 探索更精细的 token 可靠性估计方法（如集成多个 internal signals）。
+- 将 DARD 扩展至视频生成等长序列扩散模型。
+- 与 learnable decoding policy 方法结合，进一步优化 token 选择策略。
+- 研究如何在低资源设备上高效实现 shadow sequence 机制。
 
---- 
+---
 
-> 📌 **总结一句话**：  
-> HSMA-TRSM 通过分层优化策略，在小规模采用共享内存流水线，在大规模实施对角块解耦与自适应分块，并结合离线调优+在线查表机制，实现了跨平台、高效率、低开销的 TRSM GPU 加速，在多种场景下达到 **2倍以上** 的性能超越。
+> ✅ **总结一句话**：  
+> DARD 通过 **三状态机制 + 依赖感知验证**，解决了 revocable decoding 中的上下文污染问题，在无需训练的前提下，显著提升了 dLLM 的推理效率与生成质量，推动了 diffusion-based generation 的实用化进程。
 
 </details>
 
 ---
 
-### 3. [Compression Trinity: Exploring Sparsity, Quantization, and Low-Rank Approximations for LLM Compression](https://arxiv.org/abs/2608.24070)
+### 3. [Decoupled I/O-Dominant Pipelines for Large-Scale Whole-Slide Image Embedding Extraction](https://arxiv.org/abs/2608.27278)
 
-**Authors**: Mohammad Mozaffari  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 8.0  
+**Authors**: Mayanka Chandrashekar, Xi Zhang, Ethan Seefried, Tirthankar Ghosal, John Gounley, Heidi Hanson  
+**Category**: cs.DC  
+**Published**: 2026-08-28  
+**Score**: 9.5  
 **Type**: new  
-**ArXiv ID**: 2608.24070v1  
+**ArXiv ID**: 2608.27278v1  
 
 #### Abstract
-Prohibitive computational and environmental costs impede the scalable deployment of Large Language Models (LLMs). Traditional compression techniques (sparsity, quantization, low-rank approximations) are typically applied in isolation, and each hits an accuracy-efficiency wall. This thesis proposes t...
+Whole-slide images (WSIs) are central to computational pathology but are prohibitively large, making patch-based processing the practical unit for foundation model inference. At scale, however, generating and handling massive numbers of patches on quickly introduces significant I/O and orchestration...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# **论文总结：Compression Trinity: Exploring Sparsity, Quantization, and Low-Rank Approximations for LLM Compression**
-
----
-
-## **1. 论文的主要贡献和创新点**
-
-### **解决的问题**
-大型语言模型（LLMs）在训练和推理阶段面临高昂的计算、内存和环境成本，限制了其可扩展部署。传统压缩技术（如 sparsity、quantization、low-rank approximations）通常**孤立应用**，导致每种方法在达到一定压缩率后遭遇“准确率-效率墙”（accuracy-efficiency wall），无法进一步提升效率而不严重损失性能。
-
-该论文指出，单一压缩策略存在根本性局限：
-- **Sparsity** 减少 FLOPs，但对 memory-bound 的推理阶段加速有限；
-- **Quantization** 减少内存带宽需求，但在 compute-bound 阶段收益较小；
-- 单独使用任一方法均难以兼顾不同生命周期阶段的硬件瓶颈。
-
-### **提出的新方法与新思路**
-论文提出了 **“Compression Trinity”** 框架——一种将 **sparsity、quantization 和 low-rank approximations 联合应用** 的统一范式，认为三者是互补而非替代关系。
-
-#### **三大支柱的角色分工**：
-| 技术 | 功能 |
-|------|------|
-| **Sparsity** | 减少计算量（降低 FLOPs） |
-| **Quantization** | 减少内存带宽压力（降低参数位宽） |
-| **Low-rank approximations** | 恢复因前两者造成的精度损失，作为“算法补偿机制” |
-
-该框架贯穿 LLM 生命周期，在 **pretraining** 和 **post-training compression** 两个阶段分别设计了具体实现方案：
-
-#### **创新方法**：
-1. **MKOR**（用于优化器加速）
-   - 在 second-order optimizer 中引入 block-diagonal sparsity 和 low-rank inversion 来近似 curvature。
-   - 将 curvature 更新复杂度从 $O(d^3)$ 降至 $O(d^2)$，收敛速度比 KFAC 快 **1.85×**。
-
-2. **SLoPE**（Double-Pruned Sparse Plus Lazy Low-Rank Adapter Pretraining）
-   - 在 pretraining 中同时对前向和反向传播进行 N:M sparsity（如 2:4）剪枝。
-   - 最后 1% 训练阶段引入 low-rank “lazy” adapters 恢复精度。
-   - 实现端到端训练加速 **1.25×**，且不影响推理效率。
-
-3. **OPTIMA**
-   - 后训练压缩中通过全局最优列级二次规划重建权重，稳定静态 mask。
-   - 在零样本场景下将 accuracy 提升最高达 **3.97%**。
-
-4. **PATCH**
-   - 引入可学习的混合稀疏结构（dense tiles + 2:4 sparse tiles），支持连续 sparsity ratio（0%-50%）。
-   - 允许灵活权衡稀疏性与模型质量，突破固定结构限制。
-
-5. **SLiM**（Sparse + Low-rank + Quantized Model）
-   - 综合三者的一次性（one-shot）压缩方法。
-   - 使用数学推导的 low-rank adapter 补偿量化与剪枝的信息损失。
-   - 性能超越当前 SOTA 方法最多 **5.66%**，甚至在相同参数预算下优于未压缩 dense 模型 **0.6%**。
-
-### **相比现有方法的优势**
-| 方面 | 优势 |
-|------|------|
-| **系统性** | 不再孤立看待压缩技术，而是构建多维协同框架 |
-| **全生命周期覆盖** | 支持 pretraining 加速与 post-training 部署优化 |
-| **硬件感知设计** | 区分 compute-bound（training/prefill）与 memory-bound（decoding）阶段，针对性施加压缩策略 |
-| **高效恢复机制** | 利用 low-rank 结构以极小代价恢复精度，避免昂贵微调 |
-| **实际可用性强** | 多数方法无需完整 retraining，适合工业部署 |
-
----
-
-## **2. 核心实验方法和设置**
-
-### **使用的数据集**
-| 类型 | 数据集 |
-|------|--------|
-| **预训练任务** | WikiCorpus, BookCorpus, SlimPajama（用于 BERT/GPT 类模型 pretraining） |
-| **下游评估任务** |  
-| - **问答/常识推理** | MMLU, PIQA, ARC-Easy/Challenge, OpenBookQA, RACE |
-| - **语言建模** | WikiText2（perplexity 评估） |
-| - **其他** | WinoGrande, HellaSwag, GLUE（分类任务） |
-
-### **实验设置与评估指标**
-| 设置项 | 描述 |
-|-------|------|
-| **模型族** | OPT, LLaMA-2, LLaMA-3, Qwen-2.5, BERT-Large-Uncased, GPT2-Small |
-| **压缩目标** | 达成 4x–8x 模型大小压缩比（model size reduction） |
-| **评估指标** |  
-| - **Accuracy** | 平均零样本任务得分（zero-shot accuracy） |
-| - **Perplexity** | 在 WikiText2 上的语言建模能力 |
-| - **Speedup** | 训练/推理端到端时间加速比 |
-| - **Memory Reduction** | 显存占用下降倍数 |
-| - **Sparsity Ratio** | 结构化（2:4）、非结构化（50%, 60%）等 |
-
-### **基线方法对比**
-| 基线方法 | 类型 | 特点 |
-|---------|------|------|
-| **SparseGPT**, **Wanda**, **Thanos** | 一次性剪枝（one-shot pruning） | 层级局部优化，忽略跨层依赖 |
-| **GPTQ**, **OPTQ** | 逐层量化 | 基于 Hessian 近似量化误差最小化 |
-| **FST (Fully Sparse Training)** | 动态稀疏训练 | 使用 transposable weights，需最终 dense fine-tuning |
-| **LAMB**, **SGD**, **KFAC**, **KAISA**, **Eva** | Optimizer 对比 | 测试 MKOR 在收敛速度上的优势 |
-| **Bi-Mask**, **ProxSparse** | N:M 稀疏训练 | 仅应用于 MLP 层，不覆盖 Attention |
-
----
-
-## **3. 主要实验结果和性能指标**
-
-### **关键性能数据汇总**
-
-| 方法 | 场景 | 性能提升 |
-|------|------|----------|
-| **MKOR** | BERT-Large pretraining | 收敛速度比 KFAC 快 **1.85×**，端到端训练提速 **2.57×** |
-| **SLoPE** | LLM pretraining | 训练加速 **1.25×**，推理加速最高 **2.1×**（取决于 adapter rank） |
-| | | 内存减少 **1.8×–2.3×**（训练），**2.0×–2.5×**（推理） |
-| **OPTIMA** | 后训练压缩 | 在 60% unstructured sparsity 下，平均 accuracy 提升 **3.97%** |
-| **PATCH** | 可学习稀疏结构 | 实现 **1.38× 推理速度提升**，支持动态 sparsity ratio 控制 |
-| **SLiM** | 一体化压缩 | 相比 SOTA 提升 accuracy 最高 **5.66%**，同等参数下优于 dense 模型 **0.6%** |
-
-### **与基线方法的对比结果**
-#### ✅ **SLoPE vs FST**（Table 4.1 & 4.2）
-| 指标 | SLoPE | FST |
-|------|-------|-----|
-| 是否修剪 Attention 层 | ✅ 是 | ❌ 否 |
-| 是否使用动态权重 | ❌ 静态 mask | ✅ 是（额外开销） |
-| 是否需要 dense fine-tuning | ❌ 否 | ✅ 是（~17% 预训练） |
-| 推理是否加速 | ✅ 是 | ❌ 否（最终为 dense 模型） |
-| 端到端训练速度 | **快 1.25×** | 无显著加速 |
-
-> → SLoPE 在训练和推理上均实现持续加速，而 FST 因最后密集微调失去推理优势。
-
-#### ✅ **Multi-Pillar vs Single-Pillar Compression**（Table 1.2）
-| 方法 | 压缩比 | 平均 accuracy |
-|------|--------|--------------|
-| Dense Baseline (FP16) | 1x | 54.61% |
-| 2-bit Quantization | 8x | 31.81% |
-| 87.5% Unstructured Sparsity | 8x | 31.24% |
-| **4-bit + 2:4 Sparsity** | 8x | **47.97%** |
-| **4-bit + 50% Unstructured Sparsity** | 8x | **52.38%** |
-
-> → 单一压缩柱石导致性能崩溃；联合使用可恢复 **>95%** 的原始性能。
-
-#### ✅ **SLiM vs 其他压缩方法**（Table E.10–E.11）
-在 8x 压缩比下：
-- **纯 2-bit 量化**：perplexity 高达 44.9（LLaMA-2-13B）
-- **4-bit + 2:4 sparsity**：perplexity 降至 54.9
-- **SLiM（三者结合）**：perplexity 进一步降至 **48.0**，accuracy 提升明显
-
-> → **sparsity + quantization + low-rank > quantization-only**
-
-### **消融实验结果**
-- **低秩适配器的作用**：移除 lazy adapter 导致 SLoPE 在最后阶段 accuracy 下降约 2–4%，验证其恢复能力。
-- **tile mask 学习的有效性**：PATCH 中若禁用 tile-level mask 学习，则无法灵活控制整体 sparsity ratio，性能下降。
-- **OPTIMA 的重建策略**：相比简单 magnitude-based pruning，OPTIMA 的 column-wise quadratic program 显著改善 zero-shot accuracy（+3.97%）。
-
----
-
-## **4. 关键结论和发现**
-
-### **主要发现**
-1. **“Compression Trinity” 是必要而非充分条件**  
-   单一压缩技术存在天花板，只有联合利用 sparsity（减 FLOPs）、quantization（减 bandwidth）、low-rank（补 accuracy）才能突破效率墙。
-
-2. **不同生命周期阶段需差异化压缩策略**  
-   - **Training/Prefill**：compute-bound → 优先使用 sparsity 加速矩阵乘法；
-   - **Decoding**：memory-bound → 优先使用 quantization 减少 HBM 数据搬运；
-   - Trinity 正好覆盖两类瓶颈。
-
-3. **low-rank 不应仅用于 fine-tuning，也可用于压缩恢复**  
-   SLiM 和 SLoPE 表明，mathematically-derived low-rank adapters 可高效补偿信息损失，无需大规模 retraining。
-
-4. **静态 mask 有极限，动态学习更优**  
-   OPTIMA 在 zero-training 下表现良好，但 PATCH 通过 fine-tuning 学习 hybrid 结构，实现了更高灵活性和性能上限。
-
-5. **端到端加速必须考虑全流程一致性**  
-   如 FST 虽然训练稀疏，但最终转为 dense 模型，导致推理无加速；SLoPE 保持稀疏性贯穿始终，真正实现 end-to-end 提速。
-
-### **方法的局限性**
-| 局限 | 说明 |
-|------|------|
-| **依赖特定硬件支持** | 如 cuSPARSELt 对 2:4 sparsity 的加速依赖 NVIDIA Ampere 架构 Tensor Core |
-| **超大模型扩展性待验证** | 实验集中在 125M–70B 参数范围，万亿级模型可能面临通信瓶颈变化 |
-| **KV Cache 未被压缩** | 当前工作聚焦 linear layers，attention 的 KV cache 成为主要内存瓶颈（尤其长序列） |
-| **metadata 开销未完全消除** | 稀疏格式仍需存储 indices，低比特下可能抵消压缩增益 |
-
-### **未来工作方向**
-1. **将 Trinity 扩展至 Context Window**
-   - 量化动态 KV states
-   - 在 attention pattern 中引入 sparsity（如 sliding window, block-sparse）
-   - 对 attention head 应用 low-rank 分解，支持无限上下文推理
-
-2. **硬件-算法协同设计（Hardware-Algorithm Co-design）**
-   - 设计无需显式索引存储的“algorithmic sparsity”
-   - 提出“硬件定义”的稀疏格式，减少 metadata 开销
-
-3. **激活张量压缩（Activation Sparsity）**
-   - 将 PATCH 思路迁移到 activation tensor，实现 prefill 阶段的 compute-bound 加速
-   - 探索 activation-level 的可学习稀疏模式
-
-4. **联合优化框架**
-   - 将当前顺序 pipeline（prune → quantize → adapt）升级为 joint optimization
-   - 探索 “quantized sparse-plus-low-rank” 分解这一开放问题
-
-5. **更广泛的模型架构适用性**
-   - 验证 Compression Trinity 在 MoE、state space models（如 Mamba）中的有效性
-
----
-
-> 💡 **结语**：本论文确立了一个核心理念——**效率不是事后优化，而是模型设计的基本约束**。“Compression Trinity” 不仅是一种技术组合，更是新一代高效 AI 的设计哲学：**知识密集，计算稀疏**（dense in knowledge, sparse in computation），推动高智能 AI 更加可持续与普惠。
-
-</details>
-
----
-
-### 4. [Parason: Revealing Subtask and Trial Parallelism in LLM Reasoning](https://arxiv.org/abs/2608.24658)
-
-**Authors**: Zhengyang Zhang, Zijian Zhang, Jiaxuan Gao, Shusheng Xu, Yi Wu, Song Han, Ligeng Zhu  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 8.0  
-**Type**: new  
-**ArXiv ID**: 2608.24658v1  
-
-#### Abstract
-Scaling test-time reasoning has substantially improved the problem-solving ability of large language models (LLMs), but standard autoregressive decoding still executes long reasoning traces sequentially, creating severe latency for difficult tasks (up to days and weeks). Parallel reasoning offers a ...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# 论文总结：Parason: Revealing Subtask- and Trial Parallelism in LLM Reasoning
+# 论文总结：Decoupled I/O-Dominant Pipelines for Large-Scale Whole-Slide Image Embedding Extraction
 
 ---
 
 ## 1. 论文的主要贡献和创新点
 
 ### ✅ 解决了什么问题
-当前大型语言模型（LLM）在复杂推理任务中依赖**长序列的 Chain-of-Thought（CoT）推理**，但由于标准的自回归解码机制是**串行执行**的，导致推理延迟极高（甚至可达数天），严重限制了其在交互式应用（如编程助手、数学求解器）中的实用性。
 
-现有并行推理系统（如 Multiverse、ThreadWeaver）主要关注 **Subtask Parallelism**（子任务并行），即把一个大任务分解为多个独立子任务并行处理。然而，它们忽略了另一种广泛存在的并行形式——**Trial Parallelism**（尝试并行），即模型对不确定路径进行多假设探索、验证与聚合的过程。
-
-Parason 发现：**Trial Parallelism 在硬问题中占主导地位（高达 65.5%~76.1%）**，而现有方法未能有效利用这一潜力。
-
----
+- **大规模 Whole-Slide Images (WSIs)** 在计算病理学中至关重要，但由于其尺寸巨大（通常为数十亿像素），直接处理不可行，必须采用 **patch-based 处理**。
+- 在大规模场景下，生成和管理海量 patches 会引入严重的 **I/O 和数据编排开销**，导致端到端性能被 **数据移动而非计算能力** 所主导。
+- 现有 WSI 处理流程通常是 **紧耦合（tightly coupled）** 的，将 patch 生成、模型推理和输出处理交织在一起，造成资源争用、共享存储压力大、扩展性差。
+- 此外，大多数系统将 embedding 视为临时文件，缺乏对 **embedding 的持久化存储与重用机制**，导致重复计算成本高昂。
 
 ### 🚀 提出的新方法与新思路
 
-Parason 是一个**算法-系统协同设计框架**（algorithm-system co-design），旨在揭示并充分利用 LLM 推理中的两种并行性：
+作者提出了一种 **解耦的、I/O-aware 的三阶段流水线架构**，用于大规模 WSI embedding 提取：
 
-#### （1）提出双语义并行分类法（Dual Semantic Taxonomy）
-- **Subtask Parallelism（AND 分支）**  
-  将问题拆分为多个必须完成的独立子目标（如分治计算 1–800 的和）。所有分支结果都需合并才能得到最终答案。
-- **Trial Parallelism（OR 分支）**  
-  多个不确定路径被并行探索（如尝试不同公式解 24 游戏），只要有一个成功即可；输出会被拼接进上下文用于后续综合判断。
+1. **Stage 1: Patch Generation & Staging**
+   - 使用 MPI 进行空间分解，独立生成 patches 并暂存。
+   - 引入 **I/O-aware 数据预热策略**，优化小文件写入行为。
 
-> 🔍 这种区分具有实际意义：Subtask 减少最长路径延迟，Trial 提升准确性。
+2. **Stage 2: Embarrassingly Parallel Embedding Inference**
+   - 各 GPU 独立加载 patch 数据并执行前向推理，无集体通信（no all-reduce）。
+   - 利用 SPMD（Single Program Multiple Data）模式实现高并发推理。
 
-#### （2）引入结构化并行轨迹格式（CFG-based Representation）
-定义了一个**上下文无关文法（Context-Free Grammar, CFG）** 来显式标记：
-- `<Parallel>`：并行区域开始
-- `<Outlines>`：列出分支目的
-- `<Subtask>` / `<Trial>`：指定分支类型
-- `<Thread>`：存储各分支执行结果
+3. **Stage 3: Sharded Vector Database Ingestion**
+   - 将 embedding 及其元数据（patient, slide, spatial coordinates）直接注入分布式 **vector database（如 Milvus）**。
+   - 支持后续任务（检索、聚类、few-shot learning）直接查询，避免重复访问原始 WSI。
 
-该格式使推理过程可被解析、调度和执行。
-
-#### （3）提出 PA-GRPO 强化学习训练算法
-**Parallelism-Aware Group Relative Policy Optimization (PA-GRPO)** 是一种多目标强化学习策略，联合优化以下目标：
-- 正确性（accuracy）
-- 最长路径延迟（token-level latency）
-- 子任务与试错并行的比例（parallelism ratio）
-
-奖励函数设计如下：
-$$
-R = -1 + 2 \cdot \mathbf{1}_{\text{correct}} \left(1 - \frac{T}{\mu_T}\right)^\alpha + \beta_{\text{subtask}} \cdot R_{\text{subtask}} + \beta_{\text{trial}} \cdot R_{\text{trial}} + \text{acceleration reward}
-$$
-
-这使得模型学会在合适时机生成合适的并行结构。
-
-#### （4）无缝集成到现代推理引擎
-通过将 `<Parallel>` 区域映射为 **tool calls**，并在 SGLang 中实现运行时支持，实现了真正的**端到端可执行并行推理**，无需修改底层推理架构。
-
----
+> 🔑 **核心思想**：将 I/O 密集型、计算密集型和写密集型阶段完全解耦，使每个阶段可独立优化，并将 embedding 构建为 **可共享、可复用的数据资产（AI-Ready Data）**。
 
 ### ⚖️ 相比现有方法的优势
 
-| 维度 | 现有方法（如 ThreadWeaver） | Parason |
-|------|-----------------------------|--------|
-| 并行类型 | 主要支持 Subtask Parallelism | 同时建模 Subtask & Trial Parallelism |
-| 结构表达能力 | 缺乏语义标签区分分支类型 | 显式语法标记，语义清晰 |
-| 可执行性 | 多为理论加速或需深度定制引擎 | 支持 tool call 执行，真实 wall-clock 加速 |
-| 训练引导 | 无显式鼓励并行结构 | PA-GRPO 显式奖励并行性和低延迟 |
-| 实际收益 | 加速有限（约 1.1–1.2×） | 实测平均 **1.7× token-level acceleration** |
+| 维度 | 传统方法 | 本文方法 |
+|------|--------|---------|
+| **架构设计** | 紧耦合流水线（tight coupling） | 完全解耦三阶段（fully decoupled） |
+| **I/O 管理** | 边生成边处理，加剧存储争用 | 分阶段处理，支持异步 staging |
+| **embedding 存储** | 临时文件，不可复用 | 持久化至 metadata-aware vector DB |
+| **扩展性** | 受限于共享 I/O 路径 | 各阶段按需扩展，减少干扰 |
+| **下游应用支持** | 需重新提取 embedding | 支持高效 filtering、retrieval、analytics |
 
 ---
 
 ## 2. 核心实验方法和设置
 
-### 📚 使用的数据集
+### 📦 数据集
 
-| 数据集 | 描述 |
-|-------|------|
-| **AIME24 / AIME25** | American Invitational Mathematics Examination，高难度数学竞赛题，共 ~30 道/年 |
-| **AMC** | American Mathematics Competitions，中等难度选择题 |
-| **Math500** | Hendrycks 等人构建的数学推理基准 |
-| **OpenMath** | 开放数学推理数据集，强调多样化解法 |
-| **Humanity's Last Exam (HLE)** | 极难综合性考试数据集，用于分析并行比例 |
+- **CCDI MCI Dataset**（Childhood Cancer Data Initiative Molecular Characterization Initiative）
+  - 来源：National Cancer Institute Imaging Data Commons (ICDC)
+  - 包含：**4,185 张 H&E 染色 WSI**
+  - 总 patch 数量：约 **4.14 亿个（256×256）**
+  - 非空白 patch：约 **1.7 亿个**
+  - 患者数：4,054 名
+  - DICOM 文件数：19,603 个
 
-> 注：训练数据来自 ThreadWeaver 发布的 964 条 Qwen3-8B 推理轨迹，并结合 Polaris-53k 进行 RL 微调。
+> 数据集具有高度异构性，涵盖不同组织类型和分辨率，适合评估真实世界下的系统表现。
 
----
+### 💻 实验平台
 
-### 🧪 实验设置与评估指标
+- **硬件系统**：Oak Ridge National Laboratory 的 **Frontier 超算系统**
+  - 每节点配置：1 × 64-core AMD EPYC CPU + 8 × AMD Instinct MI250X GPUs
+  - 网络互联：Slingshot 高速网络
+- **存储系统**：**Orion 并行文件系统**（基于 Lustre）
+  - 特点：高聚合带宽，但在高并发小文件读写时存在元数据瓶颈
 
-#### 模型规模
-- 主要使用 **8B 参数模型**进行训练与比较（控制变量）
+### 🧪 评估设置与指标
 
-#### 基线方法对比
-| 方法 | 类型 | 是否开源 |
-|------|------|---------|
-| ThreadWeaver (8B) | 自适应并行推理 | ✅ |
-| Multiverse (32B) | 并行生成框架 | ✅ |
-| Dynamic Early Exit | 提前退出机制 | ✅ |
-| AdaptThink | 动态思考长度调整 | ✅ |
-| Self-consistency / Best-of-N | 多采样投票 | ✅ |
+#### 四类实验设置（Setups）：
 
-#### 评估指标
-| 指标 | 定义 |
+| 设置 | 目标 |
+|------|-----|
+| **Setup A**: Patch Sweep | 测试固定 WSI 下随 patch 数量增加的性能变化，识别 I/O 主导拐点 |
+| **Setup B**: Strong Scaling | 固定 workload，增加 GPU 数量，测试强扩展效率 |
+| **Setup C**: Kernel-Level Profiling | 分析 GPU 内核执行效率，验证是否真正 compute-bound |
+| **Setup D**: Production-Scale Run | 在全部 4,185 张 WSI 上运行，评估实际部署中的变异性与吞吐量 |
+
+#### 关键评估指标：
+
+| 阶段 | 指标 |
 |------|------|
-| **Accuracy (%)** | 最终答案正确率 |
-| **Token Latency (#Tokens)** | 最长生成路径上的 token 数量（反映 wall-clock 时间） |
-| **Acceleration Ratio** | 总生成 token / 最长路径 token |
-| **Trigger Ratio** | 含至少一个 `<Parallel>` 块的样本占比 |
-| **Subtask/Trial Ratio** | 各类并行步骤所占比例 |
+| **Patch Generation** | 文件数量、平均文件大小、写入吞吐量（MB/s）、runtime、speedup、efficiency |
+| **Embedding Inference** | GPU 利用率、I/O 等待时间占比、throughput (patches/sec)、end-to-end runtime |
+| **Vector DB Ingestion** | 插入速率（rows/s）、总耗时、内存占用、并行效率 |
+
+#### 基线对比方法（隐式）
+
+虽然未显式列出多个 baselines，但通过与以下典型做法对比体现优势：
+
+- **传统紧耦合 pipeline**（如 OpenSlide-based workflows）
+- **未持久化 embedding 的临时处理方式**
+- **非分片 vector database 或本地存储方案**
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
-### 📊 关键性能数据（来自 Table 2 & 4）
+### 📈 关键性能数据汇总
 
-| 方法 | AIME24 | AIME25 | Math500 | AMC | Avg Acc | Token Latency | Accel. Ratio |
-|------|--------|--------|---------|-----|----------|---------------|--------------|
-| ThreadWeaver (8B) | 79.9 | 60.5 | 92.3 | 91.4 | 81.0 | 14.8k | 1.18× |
-| **Parason-8B (+PA-GRPO)** | **78.2** | **70.6** | **94.6** | **97.5** | **84.7** | 14.5k | **1.71–1.75×** |
+#### ✅ Patch Generation 阶段（Stage 1）
 
-> 💡 Parason 在仅用 **8B 模型**的情况下，超越多数基于 32B 模型的方法，在 AIME25 和 AMC 上达到 SOTA 表现。
+- 使用 **224 vs 256 patch size** 对比：
+  - 更大的 patch size 减少了文件总数（↓25%），显著提升写入吞吐量（↑~30–50%）
+  - 示例：`ca6e4e7a` slide 使用 256 patch size 时达到 **224.27 MB/s**，而 224 仅为 200.67 MB/s
+- **强扩展性测试（56 → 224 MPI ranks）**：
+  - 最高速度提升仅 **1.77×**，效率下降至 **44.2%**
+  - 表明性能受限于 **filesystem contention** 而非计算或通信
+
+> ➤ 结论：**小文件元数据操作是主要瓶颈**
+
+#### ✅ Embedding Inference 阶段（Stage 2）
+
+| 模型 | GPU 数 | Throughput (patches/sec) | 效率（40 GPUs） |
+|-------|--------|----------------------------|----------------|
+| **HIPT** | 40 | 1,104.1 | 18.0% |
+| **H-Optimus-0** | 40 | 855.8 | 19.3% |
+| **Virchow2** | 40 | 826.9 | 29.6% |
+
+- **GPU 利用率始终偏低**（普遍 < 40%），即使 workload 很大
+- **I/O wait 占比随规模上升**（最高达 15.5%）
+- **吞吐量在 patch 数超过 ~10K 后趋于饱和**（见 Fig 2）
+
+> ➤ 结论：**并非 compute-bound，而是受制于 patch 数据供给延迟**
+
+#### ✅ Kernel-Level 分析（Setup C）
+
+- 所有模型内核均处于 **compute-efficient 区域**（接近 Roofline 的 GEMM/Conv boundary）
+- 但单次 kernel 执行时间短（毫秒级），批次间出现明显空闲（stall）
+- 表明 **GPU 等待数据加载，而非计算能力不足**
+
+#### ✅ Vector Database Ingestion（Stage 3）
+
+| 节点数 | 插入速率 (rows/s) | 总吞吐增速 | 效率峰值 |
+|--------|------------------|------------|----------|
+| 1 | ~22K | 1.00× | — |
+| 2 | ~40K | 1.53× | 76.3% |
+| **4** | **~86K** | **3.47×** | **86.7%** ✅ |
+| 8 | ~188K | 6.15× | 76.9% |
+
+- **4 节点时效率最高（86.7%）**，之后因读带宽和元数据竞争导致收益递减
+- 内存稳定（每 rank ~0.6 GB），说明为 **streaming 设计成功**
+
+> ➤ 结论：**仍为 I/O-bound，最佳运行点需权衡并发与存储压力**
+
+#### ✅ 生产级运行（Setup D）
+
+- 大型 WSI（>100K patches）能更好摊销固定开销，吞吐更高
+- 存在显著 **straggler effect**：最快 worker 与最慢相差数百秒（如 Virchow2 达 369s 差距）
+- CV（变异系数）低至 0.002～0.115，反映负载不均衡风险
 
 ---
 
-### 🔍 与基线方法的对比结果
+## 4. 关键结论和发现
 
-- **平均准确率提升**：从 ThreadWeaver 的 81.0% 提升至 **84.7%**
-- **加速比显著提高**：从 1.18× 提升至最高 **1.75×**
-- **更优的延迟-精度权衡**：在相同 token 预算下，Parason 能达到更高准确率（见 Table 3）
+### 🔍 主要发现
 
-#### 示例：在 2048 token 预算下的表现（Table 3）
-| 方法 | AIME24 Accuracy |
-|------|------------------|
-| SFT only | 16.8% |
-| PA-GRPO (β_subtask=0.1) | **34.7%**（↑17.9 pts）|
+1. **大规模 WSI embedding 提取本质上是 I/O- and orchestration-dominant workload**  
+   > 而非传统认知中的 compute-bound 或 communication-bound。
 
-> 表明 Parason 能在极低预算下仍保持高效推理。
+2. **即使各阶段“完美并行”，整体性能仍由数据移动决定**  
+   > 包括 patch 生成的小文件 I/O、embedding 推理的数据供给、vector DB 的写放大等。
+
+3. **解耦设计显著改善资源利用与可扩展性**  
+   > 允许各阶段独立调优，降低跨阶段干扰，提高系统鲁棒性。
+
+4. **构建 metadata-aware vector database 是实现 embedding 重用的关键**  
+   > 支持快速 filtering、retrieval、few-shot learning，尤其利于低资源环境。
+
+5. **性能模型可表达为**：
+   $$
+   T(R) = \max\left(\frac{N}{R}, \frac{N \cdot B}{BW_{\text{storage}}}\right)
+   $$
+   > 当 compute term 缩小时，data transfer term 成为主导项。
 
 ---
 
-### 🔬 消融实验结果（Ablation Study）
+### ⚠️ 方法的局限性
 
-#### （1）不同 β 设置的影响（Table 2）
-| 设置 | 效果 |
-|------|------|
-| ↑ `β_trial` | → 显著提升 accuracy（尤其 AIME25 和 AMC） |
-| ↑ `β_subtask` | → 更多 Subtask 分支 → 更短最长路径 → 更高 acceleration ratio |
-| ↑ `α`（latency penalty） | → 模型主动压缩 critical path，降低 token latency |
+1. **依赖高性能并行文件系统（如 Orion/Lustre）**
+   - 在普通 NAS 或云存储上可能难以复现相同性能
+2. **未解决 patch 存储本身的长期成本问题**
+   - 虽然 embedding 可重用，但原始 patch 文件仍需大量存储空间
+3. **当前 vector DB 查询尚未集成到训练流程中**
+   - 如 active learning、retrieval-augmented inference 等高级应用尚待开发
+4. **缺乏动态负载均衡机制应对 straggler**
+   - 当前为静态分配，未来可引入 work-stealing 或 adaptive scheduling
 
-> ✅ 实验表明两个并行维度可以独立调节，实现灵活控制。
+---
 
-#### （2）PA-GRPO 对并行触发的影响（Table 4）
-| 设置 | Trigger Ratio | Accel. Ratio |
-|------|----------------|--------------|
-| SFT only | 69.3% | 1.27× |
-| +PA-GRPO (β_trial=0.1) | 98.8% | 1.71× |
-| +PA-GRPO (β_subtask=0.05) | 79.3% | **1.75×** |
+### 🔮 未来工作方向
 
-> 表明 PA-GRPO 成功“教会”模型主动构造并行结构。
+1. **构建端到端的 embedding-as-a-service（EaaS）平台**
+   - 提供统一 API 访问已计算 embedding，支持多团队协作
+2. **融合 caching 与 tiered storage 策略**
+   - 将 hot embedding 缓存在 NVMe 或 DRAM 中，cold 数据归档至对象存储
+3. **支持增量更新与版本控制**
+   - 新增 WSI 或模型升级后，支持增量 embedding 注入
+4. **探索 embedding compression 与量化技术**
+   - 减少 vector DB 存储与传输开销，同时保持语义质量
+5. **将 vector DB 查询嵌入 downstream 任务**
+   - 如 retrieval-based few-shot classification、attention grounding 等
+
+---
+
+## ✅ 总结
+
+本论文揭示了一个重要洞见：**在大规模 WSI embedding 提取中，真正的瓶颈不是 GPU 算力，而是数据如何高效地“流动”**。通过提出一个 **三阶段解耦流水线 + metadata-aware vector database** 的新范式，作者不仅提升了系统吞吐与可扩展性，更将 embedding 从“一次性中间产物”转变为 **可持续使用的科学资产**，为未来的大规模医学 AI 基础设施建设提供了重要参考。
+
+</details>
+
+---
+
+### 4. [Activation Outliers Matter: Robust Recovery for Quantized Multimodal LLMs](https://arxiv.org/abs/2608.26581)
+
+**Authors**: Tanzila Rahman, Mehran Taghian Jazi, Yunke Peng, Zhuang Ma, Anandharaju Durai Raju, Yao Wang, Xing Huang, Hei Yi Mak, Shadan Golestan, Hoang Le, Yonghan Dong, Wei Guo, Yaoyuan Wang  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 9.5  
+**Type**: new  
+**ArXiv ID**: 2608.26581v1  
+
+#### Abstract
+Low-bit quantization offers a promising avenue for reducing the computational and memory demands of Multimodal Large Language Models (MLLMs). Recent hardware support for low-precision formats, ranging from MXFP8 to ultra-low-bit formats such as MXFP4 and HiF4, has accelerated research into efficient...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# **论文总结：Activation Outliers Matter: Robust Recovery for Quantized Multimodal LLMs**
+
+---
+
+## 1. **论文的主要贡献和创新点**
+
+### ✅ **解决了什么问题**
+该论文系统研究了在**超低位宽（ultra-low-bit）量化**（如 MXFP4 和 HiF4）下，多模态大语言模型（Multimodal LLMs, MLLMs）训练与推理中的性能退化问题。  
+作者发现：
+- 当前低精度格式（如 4-bit）虽然能显著降低计算和内存开销，但在 MLLMs 上会导致严重性能下降。
+- **激活值（activations）的量化误差是主要瓶颈**，尤其是由**激活异常值（activation outliers）**引起的动态范围失配问题。
+
+传统方法（如 PTQ 或通用 QAT）难以应对 MLLMs 中跨模态、模块依赖性强且训练过程中动态变化的激活分布，导致信息丢失严重。
+
+---
+
+### 🚀 **提出了什么新方法或新思路**
+提出 **Residual Fallback Quantization (RFQ)** ——一种轻量级、无需架构修改的激活感知量化策略。
+
+#### 核心思想：
+- 将激活分解为两个路径：
+  1. **主路径**：标准的 ultra-low-bit（如 FP4）量化表示；
+  2. **残差路径**：对量化误差 $ R = X - Q(X) $ 进行二次量化并补偿回输出。
+- 不采用阈值选择机制，而是**显式建模整个激活块的量化残差**，并通过另一个 FP4 通路进行重建与累加。
+
+> 公式表达：  
+> $$
+> Z_{pq} = \tilde{X}_{pr}\tilde{Y}_{rq} + \phi(p,r) \cdot \Delta\tilde{X}_{pr} \cdot \tilde{Y}_{rq}
+> $$
+
+其中 $\phi(p,r)$ 是硬件友好的指示器，用于识别含显著异常值的激活块。
+
+---
+
+### 🔍 **相比现有方法的优势**
+| 对比维度 | 现有方法（如 SmoothQuant, OCC, Outlier Fallback） | 本文 RFQ 方法 |
+|--------|---------------------------------------------|--------------|
+| **适用场景** | 多针对文本 LLM 或静态 PTQ 设置 | 面向端到端 QAT，支持 MLLMs 动态训练过程 |
+| **异常值处理方式** | 剪裁（clipping）、平滑变换、混合精度 fallback | 显式重构量化残差，保留全部信息流 |
+| **硬件兼容性** | 可能引入高精度 fallback 路径，增加访存开销 | 所有操作均保持在统一 FP4 格式内，无额外数据类型 |
+| **实现复杂度** | 通常需模块定制或敏感层分析 | 无需架构修改，仅在 GEMM 层插入残差通路 |
+| **效率影响** | 有时引入显著延迟或带宽压力 | 几乎零计算开销，完全兼容 Tensor Core 加速 |
+
+✅ **优势总结**：  
+RFQ 在不牺牲 ultra-low-bit 计算效率的前提下，有效缓解了激活异常值带来的信息损失，实现了“稳健恢复”。
+
+---
+
+## 2. **核心实验方法和设置**
+
+### 📚 **使用的数据集**
+| 模型 | 数据集 | 说明 |
+|------|-------|------|
+| **Wan2.2-5B** | OpenVid-1M 子集（约 26K 视频-文本对） | 用于视频生成任务的监督微调（SFT） |
+| **Qwen3-VL-30B** | CC-3M（595K 图像-文本样本） | 用于多模态推理能力的 SFT |
+
+---
+
+### ⚙️ **实验设置**
+- **量化格式对比**：
+  - MXFP8（E4M3/E5M2）
+  - MXFP4（E2M1）
+  - HiF4（Hierarchical Float4）
+  - W4A8（权重 4-bit，激活 8-bit）
+- **混合精度策略**：
+  - Embedding 层和 LM Head 保持 BF16
+  - FFN、Attention 投影层等使用低比特格式
+- **训练配置**：
+  - 使用 AdamW 优化器
+  - Wan2.2 学习率：$1\times10^{-5}$；Qwen3-VL：$1\times10^{-7}$
+  - 总训练 token 数约为 5B
+- **QAT 流程**：从公开预训练 checkpoint 初始化后进行低精度微调
+
+---
+
+### 📊 **评估指标**
+| 模型 | 评估任务 | 指标 |
+|------|---------|------|
+| **Wan2.2** | 视频生成质量 | VBench 多项指标：<br>• Temporal Consistency<br>• Dynamic Degree<br>• Aesthetic Quality<br>• Subject Consistency |
+| **Qwen3-VL** | 多模态推理能力 | 四个基准准确率：<br>• RealWorldQA<br>• MMStar<br>• MMBench-EN<br>• SimpleVQA |
+
+---
+
+### 🔁 **基线方法对比**
+| 基线 | 类型 | 描述 |
+|-----|------|------|
+| **BF16 Baseline** | Full Precision | 完整精度模型，作为性能上限参考 |
+| **MXFP8 / HiF4 / MXFP4** | Standard QAT | 直接应用低比特格式，无特殊修复机制 |
+| **W4A8** | Mixed Precision | 权重压缩至 4-bit，激活保留 8-bit，检验激活主导作用 |
+
+---
+
+## 3. **主要实验结果和性能指标**
+
+### 📈 **关键性能数据汇总**
+
+#### 表 1：VBench 视频生成性能（Wan2.2）
+
+| Method | Dynamic Degree | Aesthetic Quality | Subject Consistency |
+|--------|----------------|--------------------|----------------------|
+| BF16 (Baseline) | 45.00 | 59.43 | 95.74 |
+| MXFP4 | 43.00 (-2.00) | 58.93 (-0.50) | 95.65 (-0.09) |
+| **MXFP4 + RFQ** | **50.00 (+5.00)** | **59.26 (-0.16)** | **95.43 (-0.31)** |
+| HiF4 | 53.00 (+8.00) | 59.44 (+0.01) | 95.23 (-0.51) |
+| **HiF4 + RFQ** | **51.00 (+6.00)** | **59.54 (+0.19)** | **95.86 (+0.12)** |
+
+> ✅ RFQ 显著提升动态细节表现，并恢复主体一致性。
+
+---
+
+#### 表 2：多模态推理准确率（Qwen3-VL）
+
+| Method | RealWorldQA | MMStar | MMBench-EN | SimpleVQA |
+|--------|-------------|--------|------------|-----------|
+| BF16 | 72.68 | 70.80 | 90.77 | 16.83 |
+| MXFP4 | 70.98 (-1.70) | 69.67 (-1.13) | 90.72 (-0.05) | 15.16 (-1.67) |
+| **MXFP4 + RFQ** | **72.16 (-0.52)** | **70.73 (-0.07)** | **90.40 (-0.37)** | **16.44 (-0.39)** |
+| HiF4 | 72.42 (-0.26) | 71.27 (+0.47) | 90.50 (-0.27) | 15.35 (-1.48) |
+| **HiF4 + RFQ** | **72.81 (+0.13)** | **71.47 (+0.67)** | **90.77 (±0.00)** | **15.66 (-1.17)** |
+
+> ✅ RFQ 成功缩小甚至反超 BF16 基线差距，在多个任务上接近或超越原始性能。
+
+---
+
+### 🔍 **消融实验结果**
+
+#### （1）量化粒度分析（Table 1 & 5）
+| 方法 | Wan2.2 训练损失↑ | Qwen3-VL 训练损失↑ |
+|------|------------------|--------------------|
+| MXFP8 | +0.30% | +0.20% |
+| W4A8 | +0.80% | +0.70% |
+| MXFP4 | +7.10% | +7.23% |
+| **MXFP4 + RFQ** | **+1.14%** | **+1.43%** |
+| HiF4 | +2.70% | +3.80% |
+| **HiF4 + RFQ** | **+0.61%** | **+0.66%** |
+
+> 💡 发现：**激活量化是主要误差源**，因为即使权重已压缩至 4-bit（W4A8），只要激活保持 8-bit，性能仍稳定；一旦激活也降至 4-bit，性能急剧下降。
+
+#### （2）模块敏感性分析（Figure 2）
+- **视觉组件比语言组件更敏感于 4-bit 量化**，尤其在 Wan2.2 的 WanDiT 生成骨干中退化最严重。
+- **激活张量具有更重尾分布和更大动态范围**，而权重分布紧凑，更适合低位宽表示。
+
+#### （3）残差路径有效性验证
+- 移除残差通路 → 性能回落至标准 MXFP4 水平
+- 使用更高精度存储残差 → 带来显著内存与带宽负担，收益有限
+- RFQ 以纯 FP4 实现残差重建，在几乎零开销下获得最大增益
+
+---
+
+## 4. **关键结论和发现**
+
+### 🔑 **主要发现**
+1. **激活量化是 ultra-low-bit MLLMs 的主要瓶颈**：
+   - 相较于权重，激活存在严重的**重尾分布和动态异常值**，在 FP4 下极易造成信息截断与小值下溢。
+   - 异常值集中在视觉编码器和生成模块，导致跨模态信息传递失真。
+
+2. **视觉模块比语言模块更脆弱**：
+   - 视觉重建任务（如视频生成）对激活保真度要求极高，轻微量化噪声即可破坏时空连贯性。
+   - 语言任务虽也有退化，但相对鲁棒。
+
+3. **RFQ 能高效恢复大部分性能损失**：
+   - 通过显式建模并补偿量化残差，RFQ 在不改变底层计算格式的情况下，显著提升了激活重建质量。
+   - 在 MXFP4 和 HiF4 上均实现接近 BF16 的下游性能。
+
+4. **无需复杂校准或敏感层识别**：
+   - RFQ 是一个统一、模态无关（modality-agnostic）的方法，适用于各种 MLLM 架构。
+
+---
+
+### ⚠️ **方法的局限性**
+- **依赖 block-level 结构**：RFQ 利用了 block-wise scaling（如 MX/HiF4），在非 block 量化方案中可能不直接适用。
+- **仅应用于前向传播**：为避免梯度累积开销，残差路径未参与反向传播，可能限制训练稳定性进一步提升。
+- **尚未扩展至 2-bit 及以下**：当前聚焦于 4-bit，极端低位宽下的有效性待验证。
+
+---
+
+### 🔮 **未来工作方向**
+1. 探索 **2-bit 乃至 sub-4-bit QAT 设置** 下的 RFQ 变体；
+2. 将 RFQ 扩展至更多 MLLM 架构（如 diffusion-based VLMs、agent systems）；
+3. 研究是否可将残差机制引入 **backward pass** 以增强训练稳定性；
+4. 探索自动学习 fallback indicator $\phi(p,r)$ 而非启发式设定；
+5. 在真实边缘设备上部署 RFQ，验证其实际加速与能耗优势。
+
+---
+
+## ✅ **总结一句话**
+> 本论文揭示了**激活异常值是制约多模态大模型低位宽量化的根本原因**，并提出 **Residual Fallback Quantization (RFQ)** ——一种简洁高效的残差补偿机制，在几乎零开销下显著恢复了 MXFP4/HiF4 量化后的性能，为 MLLMs 的高效部署提供了实用解决方案。
+
+</details>
+
+---
+
+### 5. [Puro-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090](https://arxiv.org/abs/2608.27370)
+
+**Authors**: Kairong Luo, Jiarui Cui, Yaorui Yin, Shengqi Chen, Yiming Yang, Linxiang Gao, Yanmohan Wang, Mingzhe Zhang, Kaiyue Wen, Kaifeng Lyu, Wenguang Chen  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 8.0  
+**Type**: new  
+**ArXiv ID**: 2608.27370v1  
+
+#### Abstract
+Language model pretraining has become almost synonymous with prohibitive cost, placing it out of reach for much of the academic and open-source communities. Although strong open-source efforts already exist, including open-weight models and open-source training recipes, a cost-efficient, hardware-ac...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# 论文总结：PuRo-2B: Poor Lab's Qwen2-1.5B Trained on RTX 5090 within $5090
+
+## 1. 论文的主要贡献和创新点
+
+### 解决的问题
+大型语言模型（LLM）的预训练成本高昂，动辄数百万美元，使得学术界和开源社区难以复现和研究完整的训练流程。尽管已有许多优秀的开源模型权重发布，但其训练过程（包括数据、代码、配置等）往往不透明，形成了“开放权重”（open-weight）而非“开放配方”（open-recipe）的困境。这导致了可复现性与可访问性之间的巨大鸿沟。
+
+本文旨在解决这一问题，提出一种**低成本、高效率、完全开放**的LLM预训练方案，让资源有限的“贫穷实验室”（poor lab）也能从零开始训练一个具有竞争力的2B级别模型。
+
+### 提出的新方法与创新点
+作者团队提出了名为 **PuRo-2B** 的完整预训练配方（recipe），其核心是一个协同设计的、覆盖硬件、算法、数据和系统的效率栈。主要创新点包括：
+
+- **硬件选择**：采用消费级 **RTX 5090** GPU 而非昂贵的数据中心级GPU（如H200）。通过成本效益分析，RTX 5090 在单位计算量的价格上远超竞品，是实现低成本的关键。
+- **低精度训练**：全程采用 **blockwise FP8** 混合精度训练。这显著提升了每秒处理的token数量，同时通过精细的分块量化策略保持了模型质量。
+- **优化器创新**：采用 **MuonH** 优化器，该优化器为近似尺度不变的参数矩阵（如注意力和MLP层）施加了 **Hyperball** 约束。它将更新归一化并投影回初始的Frobenius半径球面上，从而实现了对有效学习率（effective LR）的显式控制。
+- **课程模型平均**（Curriculum Model Averaging, CMA）：在第二阶段训练中，采用数据课程（curriculum）策略，将高质量数据放在后期训练。为了缓解后期学习率衰减导致的更新幅度变小问题，采用了常数学习率（constant-LR）的延续训练，并对最后几个检查点进行平均，以保留后期数据的影响。
+- **数据配方**（Data Recipe）：基于代理实验（proxy experiments）来指导数据选择。通过在小规模模型上测试不同数据源或数据切片的效果，获得其能力特征向量，进而决定最终混合数据中的权重分配。
+
+### 相比现有方法的优势
+- **极高的成本效益**：在约 **$6.9K** 的计算成本下，最佳模型性能接近 **Qwen2.5-1.5B**；而仅需 **$4.4K** 即可达到 **Qwen2-1.5B** 的水平，成本仅为同类开源模型（如SmolLM3-3B需$719K）的一小部分。
+- **完全开放与可复现**：不仅发布了模型权重，还公开了全部数据清单（manifests）、训练代码、数据处理代码和中间检查点，遵循 **Apache 2.0** 开源协议。
+- **系统性优化**：不是单一技术的改进，而是硬件、精度、优化、数据等多个层面的协同优化，共同作用于降低总成本。
+
+---
+
+## 2. 核心实验方法和设置
+
+### 数据集
+训练数据主要由公开可用的开源数据集构成，涵盖英文、数学、中文、代码和指令微调数据。具体包括：
+- **英文**：Nemotron HQ, Nemotron HQ Synthetic, FineWeb-Edu-EN, Cosmopedia-v2, DCLM-Dedup 等。
+- **数学**：UltraData-Math, SwallowMath-v2, Nemotron-CC-Math, MegaMath-Web-Pro, OpenWebMath 等。
+- **中文**：FineWeb-Edu-CN, ChineseWebText2.0, Deduplicated merged Chinese web 等。
+- **代码**：Nemotron Synthetic Code, Swallow-Code-v2, MegaMath-Code, StackExchange 等。
+- **SFT/指令**：Nemotron Terminal Corpus, JiuZhang3.0 PT-CoT, Tulu-3 SFT 等。
+
+总训练token数高达 **1.4万亿**（1.4T），其中第一阶段（Phase 1）438.8B，第二阶段（Phase 2）960.0B。
+
+### 实验设置和评估指标
+- **模型架构**：基于 **Qwen3-1.7B** 架构的密集型Decoder-only Transformer，总参数量约为 **2B**。
+- **硬件平台**：使用配备 **RTX 5090** GPU的集群。Phase 1 使用24个GPU，Phase 2 扩展到96个GPU。
+- **训练系统**：基于 **Megatron Core** 和 **Transformer Engine**，支持FP8训练。
+- **评估基准**：综合评估了15个基准任务，分为两类：
+  - **数学与代码**：GSM8K, MATH, sanitized-MBPP, HumanEval。
+  - **推理与知识**：MMLU, MMLU-Pro, ARC-C, ARC-E, BoolQ, CommonsenseQA, HellaSwag, PIQA, SocialIQA, WinoGrande, BBH。
+- **评估协议**：使用 **OpenCompass** 统一评估，报告各任务的百分比得分，最终以15个任务的未加权算术平均值作为综合性能指标。
+
+### 基线方法对比
+论文对比了多个同规模的 **open-weight** 和 **open-recipe** 模型，包括：
+- **Open-Weight**: Qwen2-1.5B, Qwen2.5-1.5B, Gemma-2-2B, Llama-3.2-3B 等。
+- **Open-Recipe**: Instella-3B, OLMoE-A1B/7B, Yulan-Mini-2.4B, SmolLM3-3B 等。
+
+---
+
+## 3. 主要实验结果和性能指标
+
+### 关键性能数据
+- **PuRo-2B ($6.9K)**：在15个任务上的平均得分为 **57.81**，接近 Qwen2.5-1.5B (60.73)，并超过了 Qwen2-1.5B (55.14)。
+- **PuRo-2B ($4.4K)**：在15个任务上的平均得分为 **55.54**，已超过 Qwen2-1.5B 的性能。
+
+### 与基线方法的对比结果
+- **成本-性能优势**：如图1所示，PuRo-2B 在所有对比模型中位于最左上方，即以最低的复制成本（reproduction cost）获得了最高的性能，超越了现有的帕累托前沿（Pareto frontier）。
+- **与其他开源配方模型相比**：在成本上远低于 OLMoE ($200K) 和 SmolLM3 ($719K)，同时性能具有竞争力。
+
+### 消融实验结果
+- **成本节约因素分解**（见图2a）：
+  - **RTX 5090 硬件**：相比H200，提供约 **2.77倍** 的峰值计算性价比。
+  - **FP8 精度**：在保持模型质量的同时，带来 **1.34倍** 的净加速。
+  - **MuonH 优化器**：相比Muon，在相同验证损失下可节省 **16.1%** 的理论计算量。
+  - **CMA 配方**：相比均匀数据顺序，CMA带来了 **1.65倍** 的成本效率提升。
+- **Puro 成本缩放定律**（Puro Cost Scaling Law）：通过在不同预算下训练，拟合出一条 `P = a + b log2(C - Cp1)` 的缩放曲线。该定律预测，仅需 **$4.4K** 的成本即可达到 Qwen2-1.5B 的性能水平。
+
+---
+
+## 4. 关键结论和发现
+
+### 主要发现
+1. **低成本预训练是可行的**：通过精心设计的软硬件协同方案，可以在消费级硬件上以极低的成本（<$10K）训练出性能媲美主流开源模型的2B级别LLM。
+2. **系统性优化至关重要**：PuRo-2B的成功并非依赖单一技术，而是硬件选择、低精度训练、先进优化器和智能数据调度等多方面协同优化的结果。
+3. **开放配方的价值**：发布完整的训练管道，使得像“课程学习如何影响下游微调”这样的端到端研究成为可能。实验表明，经过CMA训练的初始化模型，在后续的SFT中表现更优。
+4. **Puro 成本缩放定律**：为资源有限的研究者提供了一个实用的参考，可以根据预算预估可达到的模型性能。
+
+### 方法的局限性
+- **污染与溯源**：训练数据集大多来自已处理过的开源数据，可能存在与评估基准的污染问题，影响结论的严谨性。
+- **中文能力**：虽然包含了中文数据，但中文能力并非本次发布的主要目标，因此未在主表中报告中文基准分数。
+- **过训练状态**：模型处于“过训练”（overtrained）状态（约700 tokens per parameter），并非计算最优（compute-optimal）。
+- **扩展性**：当前的配方和缩放定律是针对2B模型的，尚未证明其在更大模型上的有效性。
+
+### 未来工作方向
+1. 将可复现性配方从预训练扩展到后训练（post-training），特别是用于研究智能体（agentic）能力。
+2. 探索超越标准密集Transformer的架构空间，如循环Transformer、线性注意力模型、MoE等。
+3. 拓展硬件配方，覆盖更广泛的训练预算，研究不同硬件和规模下的最优系统与训练选择。
+
+</details>
+
+---
+
+### 6. [A Multi-Modal AI Framework for Real-Time Queue Prediction, Management and Optimisation in Intelligent Border Control Systems](https://arxiv.org/abs/2608.27010)
+
+**Authors**: Varvara Mama, Eleni Veroni, Nikolaos Kapsalis, Christos D. Nikolopoulos, Anargyros T. Baklezos  
+**Category**: cs.AI  
+**Published**: 2026-08-28  
+**Score**: 7.5  
+**Type**: new  
+**ArXiv ID**: 2608.27010v1  
+
+#### Abstract
+In the present work an efficient border control management procedure is proposed. Compared to operational queue management systems, whose operations are based on mostly static data, the proposed work takes into account dynamic traffic conditions, thus enabling optimal performance, even in cases of u...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# 论文核心结论与实验结果总结  
+**论文标题：** *A Multi-Modal AI Framework for Real-Time Queue Prediction, Management and Optimisation in Intelligent Border Control Systems*
+
+---
+
+## 1. 论文的主要贡献和创新点
+
+### ✅ 解决的问题
+当前边境控制系统面临以下挑战：
+- **交通流量高度动态且非平稳**，受地缘政治、季节性和突发事件影响显著；
+- 传统队列管理依赖**静态历史数据和规则驱动模型**（如ARIMA、rule-based），难以适应实时波动；
+- 缺乏对**多源异构数据**（车辆信息、预注册数据、环境数据等）的有效融合；
+- 预测与控制模块分离，导致响应滞后，无法实现**主动式优化管理**。
+
+该研究旨在构建一个能够实现实时**队列预测、资源调度与系统优化一体化**的智能边境控制框架。
+
+---
+
+### 🚀 提出的新方法与创新思路
+提出了一种**多模态AI框架**，整合了数据融合、深度学习预测与最优控制策略：
+
+1. **Multi-Modal Data Fusion 架构**  
+   融合多种输入源：
+   - 实时传感器数据（计算机视觉计数）
+   - 历史交通数据
+   - 预注册信息（pre-registration）
+   - 天气与外部交通指标
+   - 渡轮时刻表（ferry scheduling）
+
+2. **LSTM-based Queue Prediction Model**  
+   利用 **Long Short-Term Memory (LSTM)** 网络捕捉交通流中的**非线性时间依赖性与突发模式**，提升预测精度。
+
+3. **Model Predictive Control (MPC) + Scheduling Optimization**  
+   将预测输出接入 **MPC 控制器**，在滚动时域上求解最优控制策略（车道分配、人员调度、路线引导），实现闭环优化。
+
+4. **Predictive Queue Management System (PQMS)**  
+   构建端到端的决策支持系统，为边检官员提供可执行建议，推动从“被动响应”向“主动预测”转变。
+
+---
+
+### 🔍 相比现有方法的优势
+| 维度 | 传统方法（ARIMA / Rule-based） | 本文方法 |
+|------|-------------------------------|--------|
+| 数据利用 | 单一历史数据 | 多源异构数据融合 |
+| 时间建模 | 线性假设，平滑效应强 | 支持非线性、突变建模 |
+| 控制机制 | 反应式（reactive） | 预测式（predictive）+ 主动调控 |
+| 适应能力 | 对峰值/扰动响应慢 | 动态调整资源配置 |
+
+> ✅ 显著提升了系统的**鲁棒性、自适应性和运营效率**。
+
+---
+
+## 2. 核心实验方法和设置
+
+### 📊 使用的数据集
+由于真实边境数据受限，作者采用**合成数据模拟真实场景**，包含：
+- **车辆到达模式**：基于非齐次泊松过程（Non-homogeneous Poisson process）
+- **高峰时段**：通过高斯需求激增模拟（Gaussian demand surges）
+- **服务速率**：车道相关的随机处理时间
+- **多模态补充数据**：
+  - 合成预注册信息
+  - 天气条件
+  - 渡轮班次数据
+
+> 场景涵盖：正常流量、高峰期、突发拥堵三种运行状态。
+
+---
+
+### ⚙️ 实验设置
+- **仿真平台**：离散事件交通模型（discrete-event traffic model）
+- **重复次数**：每组实验独立运行10次，确保统计可靠性
+- **预测目标**：未来 $ H $ 步内的队列长度 $ Q(t+1:t+H) $
+- **控制周期**：实时更新控制动作（车道开放、分流引导）
+
+---
+
+### 📏 评估指标
+| 指标 | 公式 | 描述 |
+|------|------|------|
+| **MSE** | $\frac{1}{N}\sum(Q-\hat{Q})^2$ | 队列预测误差 |
+| **RMSE / MAE** | — | 衡量预测稳定性 |
+| **Avg Waiting Time** | $\frac{1}{N}\sum(t_{exit} - t_{arrival})$ | 平均等待时间（分钟） |
+| **Throughput** | $\frac{\text{processed vehicles}}{\text{time}}$ | 单位小时通行车辆数 |
+| **Queue Length (avg)** | — | 平均排队长度 |
+
+---
+
+### 🔁 基线方法对比
+| 基线模型 | 类型 |
+|---------|------|
+| Historical Average | 历史均值法 |
+| ARIMA | 经典时间序列模型 |
+| Static Rule-Based | 固定规则调度（如固定车道分配） |
+
+---
+
+## 3. 主要实验结果和性能指标
+
+### 📈 关键性能表现（见 Table I & II）
+
+#### ✅ 队列预测性能（Table I）
+| Model | MSE | MAE | RMSE |
+|-------|-----|-----|------|
+| Historical Average | 45.2 | 5.8 | 6.72 |
+| ARIMA | 31.5 | 4.6 | 5.61 |
+| **LSTM (Proposed)** | **20.3** | **3.2** | **4.51** |
+
+> ➤ **相比 ARIMA，MSE 下降约 35%**，显示其更强的时间序列建模能力。
+
+---
+
+#### ✅ 运营性能提升（Table II）
+| Metric | Baseline | Proposed | Improvement |
+|--------|----------|----------|-------------|
+| Avg Waiting Time (min) | 18.5 | **12.9** | ↓ **~30%** |
+| Throughput (veh/hr) | 820 | **980** | ↑ **~19.5%** |
+| Queue Length (avg) | 35.2 | **24.6** | ↓ **~30.1%** |
+
+> ➤ 显著减少拥堵、提高通关效率。
+
+---
+
+### 🔍 消融实验结果（Ablation Study, Table III）
+验证各数据模态对预测性能的影响：
+
+| Configuration | MSE | Performance Drop |
+|---------------|-----|------------------|
+| Full Model | 20.3 | — |
+| Without Pre-registration | 24.1 | +18.7% |
+| Without Environmental Data | 22.8 | +12.3% |
+| Without Historical Data | 27.5 | +35.5% |
+
+> ➤ **历史数据最关键**，但**预注册与环境数据也显著贡献于精度提升**，证明多模态融合的有效性。
+
+---
+
+### 📉 可视化结果（Fig. 2）
+- 在时间序列上的队列预测曲线显示：
+  - LSTM 更快响应流量突变；
+  - ARIMA 存在明显延迟和平滑失真；
+  - 所提方法更贴近 ground truth。
+
+---
+
+### 🧪 极端情况测试
+- 模拟**突发车流 surge** 和 **部分传感器失效**：
+  - 所提模型性能下降 <10%
+  - 基线模型下降 >25%
+> ➤ 展现出良好的**鲁棒性与容错能力**
 
 ---
 
 ## 4. 关键结论和发现
 
 ### ✅ 主要发现
-
-1. **Trial Parallelism 是主流**  
-   在 HLE 和 OpenMath 上，**Trial Parallelism 占据 58%~76% 的可并行步骤**，远超 Subtask Parallelism。例如：
-   - DeepSeek-V4 在 HLE 上 Trial 占 **65.5%**
-   - GPT-5.5 达到 **76.1%**
-
-2. **硬问题更依赖 Trial 并行**  
-   随着问题难度上升，模型更多地采用“尝试多种思路”的策略，而非简单分解。
-
-3. **并行 ≠ 浪费计算**  
-   Parason 将冗余的 Trial 分支转化为**可控的搜索宽度**，并通过结构化表示避免重复计算。
-
-4. **真实加速可行**  
-   在 A800 GPU 上实测显示：
-   - Easy 问题：**1.62× wall-clock speedup**
-   - Hard 问题：**1.47× speedup**
-   - 平均节省 **>15k tokens**
+1. **多模态数据融合 + LSTM 预测** 能有效捕捉复杂、非平稳的边境交通动态；
+2. **LSTM + MPC 联合架构** 实现了预测与控制的闭环协同，优于分离式设计；
+3. 在高方差场景（如渡轮口岸的burst traffic）中优势尤为突出；
+4. 所提框架可推广至不同类型边境（陆路口岸 vs 渡轮码头），具备良好泛化能力；
+5. 统计检验（paired t-test, p<0.01）表明性能提升具有**统计显著性**。
 
 ---
 
-### ⚠️ 局限性（Limitations）
-
-1. **领域局限**：目前实验集中在**数学推理任务**，尚未验证在代码生成、规划代理等其他领域的泛化能力。
-2. **模型尺度受限**：主要在 8B 模型上验证，未扩展至更大模型族（如 70B+）。
-3. **人工标注依赖**：训练数据依赖于外部系统（如 Gemini-3-Flash）对 Subtask/Trial 的标注，可能存在偏差。
-4. **动态调度开销未计入**：虽然支持 tool call，但多 worker 调度的通信成本未完全建模。
+### ⚠️ 方法的局限性
+1. **数据来源依赖性强**：需要高质量、多源数据支持，现实中可能存在缺失或延迟；
+2. **基于合成数据验证**：尚未在真实边境系统部署，实际效果需进一步验证；
+3. 当前未考虑**个体行为建模**（如旅客选择偏好、逃检行为）；
+4. 边缘计算部署尚未实现，实时推理延迟有待评估。
 
 ---
 
 ### 🔮 未来工作方向
-
-1. **跨领域迁移**：将 Parason 应用于 agentic workflow、科学发现、自动定理证明等场景。
-2. **更大模型扩展**：在 32B/70B 级别模型上验证并行模式是否一致。
-3. **自动化标注 pipeline**：减少对商业模型（Gemini/GPT）标注的依赖，构建全开源闭环流程。
-4. **动态资源分配**：根据问题难度自适应决定 Subtask vs Trial 的比例与数量。
-5. **硬件感知调度**：结合 GPU 利用率、内存带宽等因素优化并行执行效率。
+1. 引入 **Reinforcement Learning (RL)** 进行策略优化，替代 MPC 中的手工代价函数设计；
+2. 推进与**真实边境系统集成**（如 EES Entry/Exit System）；
+3. 开发**分布式边缘AI架构**，支持低延迟现场推理；
+4. 加强**不确定性估计与容错机制**（如 missing data imputation, anomaly detection）；
+5. 扩展至多国跨境协作场景下的联合调度优化。
 
 ---
 
-## ✅ 总结一句话
-
-> **Parason 首次系统性识别并建模了 LLM 推理中的 Trial Parallelism，提出 PA-GRPO 与 CFG 结构化表示，在不牺牲准确性的前提下实现了约 1.7× 的实际推理加速，推动了高效、可执行的并行推理系统发展。**
+## 总结
+本论文提出了一种面向智能边境控制的**多模态AI框架**，结合 **LSTM 预测 + MPC 优化 + 多源数据融合**，实现了从“被动应对”到“主动预测”的范式转变。实验表明，该方法在预测准确率、平均等待时间、吞吐量等方面全面超越传统方法，尤其适用于高动态、不确定性强的边境交通环境，为下一代智能边境管理系统提供了可行的技术路径。
 
 </details>
 
 ---
 
-### 5. [Understanding the Energy Scaling of Large Language Model Inference Across Context Lengths and Attention Architectures](https://arxiv.org/abs/2608.25096)
+### 7. [Multi-Dataset Inverse Problem Solving with Distributed Generative AI](https://arxiv.org/abs/2608.26283)
 
-**Authors**: Molka Chkir, Syed Muhammad Danish, Jos H\"oll, Arghavan Asad  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 8.0  
-**Type**: new  
-**ArXiv ID**: 2608.25096v1  
-
-#### Abstract
-The growing adoption of large language models (LLMs) has raised increasing concerns about the energy consumption and environmental impact of inference. This paper presents a systematic empirical study of decode-phase energy consumption across representative open-source LLMs employing Multi-Head Atte...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# 论文总结：Understanding the Energy Scaling of Large Language Model Inference Across Context Lengths and Attention Architectures
-
----
-
-## 1. 论文的主要贡献和创新点
-
-### ✅ 解决了什么问题
-本论文系统地研究了**大型语言模型（LLM）在推理阶段（decode phase）的能耗如何随上下文长度（context length）和注意力机制（attention architecture）的变化而扩展**。尽管已有研究关注 LLM 的训练能耗，但对推理阶段、尤其是不同 attention 架构下能耗动态的研究仍十分有限。
-
-具体而言，论文试图回答以下四个研究问题（RQ）：
-- **RQ1**: 解码能耗每生成 token 如何随 context length 增加？
-- **RQ2**: 不同 attention 机制如何影响解码能耗的扩展行为？
-- **RQ3**: 在自回归生成过程中，token 位置如何影响解码能耗（KV cache 增长的影响）？
-- **RQ4**: 请求批处理（batching）如何影响能耗和延迟？
-
-### ✅ 提出了什么新方法或新思路
-- 首次**隔离 decode phase** 进行精细化能耗测量，排除 prefill phase 干扰。
-- 在统一硬件、精度（FP16）、软件环境（Hugging Face Transformers + PyNVML）下，对采用不同 attention 机制的代表性开源 LLM 进行横向比较。
-- 利用 **NVIDIA NVML 硬件计数器**进行精确的 GPU 能耗测量（单位：Joules），提升结果可信度。
-- 引入“**within-sequence energy drift**”概念，分析单个生成序列中随 KV cache 扩展导致的能耗变化趋势。
-
-### ✅ 相比现有方法的优势
-| 方面 | 以往研究局限 | 本文改进 |
-|------|----------------|-----------|
-| **研究范围** | 多聚焦训练或整体推理能耗 | 聚焦 decode phase，更具实际部署意义 |
-| **attention 影响分析** | 缺乏跨架构系统对比 | 明确区分 MHA、GQA、GQA+SWA 的能耗扩展差异 |
-| **测量粒度** | 多为 aggregate 测量 | 细化到 token-level 和 sequence-level 能耗演化 |
-| **实验控制** | 模型、硬件、配置不一致 | 统一实验条件，确保公平比较 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 🧪 使用的模型（非数据集）
-由于是推理效率研究，未使用传统 NLP 数据集，而是构建了一个**固定英文段落作为 base prompt**，并截断至目标 context length。所选模型覆盖三种典型 attention 架构：
-
-| 模型 | 参数量 | Attention 类型 |
-|------|--------|----------------|
-| OPT-1.3B | 1.3B | Multi-Head Attention (MHA) |
-| Phi-3 Mini | 1.3B | Multi-Head Attention (MHA) |
-| Gemma-2-2B | 2.2B | Grouped Query Attention (GQA) |
-| Mistral-7B | 7B | GQA + Sliding Window Attention (SWA) |
-
-> 注：所有模型均从 Hugging Face 下载，本地运行，使用 FP16 精度。
-
-### ⚙️ 实验设置
-| 参数 | 设置 |
-|------|------|
-| **GPU** | NVIDIA A100-SXM4-40GB |
-| **集群** | Narval HPC（Digital Research Alliance of Canada） |
-| **调度器** | SLURM |
-| **解码策略** | Greedy decoding |
-| **生成 token 数** | 200 tokens（RQ1–RQ4）；chunk size=100（RQ3） |
-| **context lengths** | 128, 512, 1024, 1800 tokens |
-| **batch sizes** | 1, 2, 4, 8 requests |
-| **重复次数** | 每配置运行 10 次 |
-| **预热** | 2 次完整前向传播以稳定 GPU 频率 |
-| **能耗测量工具** | `PyNVML` → `nvmlDeviceGetTotalEnergyConsumption()`（硬件级 millijoule 计数） |
-
-### 📊 评估指标
-| 指标 | 定义 | 单位 |
-|------|------|-------|
-| **Energy per generated token** | 总 decode 能耗 / 生成 token 数 | Joules (J) |
-| **Latency per token** | 总 decode 时间 / 生成 token 数 | milliseconds (ms) |
-| **Latency per request** | 总 decode 时间 / batch size | milliseconds (ms) |
-
-> 所有指标均基于 decode phase，prefill 不计入。
-
----
-
-## 3. 主要实验结果和性能指标
-
-### 🔢 关键性能数据汇总
-
-#### ✅ RQ1 & RQ2：context length 对 decode energy 的影响（见 Table II 和 Fig. 2）
-
-| Model | Attention | 128→1800 Energy Increase |
-|-------|----------|-------------------------|
-| OPT-1.3B | MHA | +17.92% |
-| Phi-3 Mini | MHA | +16.98% |
-| Gemma-2B | GQA | +3.62% |
-| Mistral-7B | GQA+SWA | **+3.32%** |
-
-> **结论**：MHA 模型能耗随 context 显著上升；GQA 明显缓解增长；GQA+SWA 几乎实现恒定能耗。
-
-#### ✅ RQ3：token position 对能耗的影响（within-sequence energy drift）
-
-| Model | Context | Drift (pos 50 → pos 950) |
-|-------|--------|--------------------------|
-| OPT-1.3B (MHA) | 128 | +9.64% |
-| Phi-3 Mini (MHA) | 512 | +6.43% |
-| Gemma-2B (GQA) | 512 | +0.99% |
-| Mistral-7B (GQA+SWA) | 1024 | **-0.83%**（基本不变） |
-
-> **结论**：MHA 中 KV cache 膨胀显著增加后续 token 的 decode energy；GQA 缓解该效应；SWA 几乎完全消除 drift。
-
-#### ✅ RQ4：batching 对能效的影响（见 Tables VII–X）
-
-| Model | Context | Batch 1 → Batch 8 能耗降幅 |
-|-------|--------|----------------------------|
-| OPT-1.3B | 128 | -84.13% |
-| Phi-3 Mini | 128 | -84.82% |
-| Gemma-2B | 128 | -86.74% |
-| Mistral-7B | 128 | -86.10% |
-
-> **平均降低超过 80%**，最高达 **87%** 的能耗和延迟下降。
-
-同时观察到：
-- MHA 模型在长 context 下 batching 效益衰减（如 OPT-1.3B 在 context=1800 时仅降 67%）
-- GQA/GQA+SWA 模型在长 context 下仍保持高 batching 效率（>82%）
-
----
-
-## 4. 关键结论和发现
-
-### 🎯 主要发现
-
-1. **Attention mechanism 是决定 decode energy scaling 的首要因素**
-   - MHA：能耗随 context length 快速增长（~17%↑）
-   - GQA：显著抑制增长（~3–4%↑）
-   - GQA+SWA：几乎实现 constant energy scaling（<4%↑）
-
-2. **Model size 决定绝对能耗水平**
-   - 尽管 OPT-1.3B 使用低效 MHA，但因参数少，其每 token 能耗最低（1.596 J @128）
-   - Mistral-7B 虽用最先进 attention，但因模型大，能耗最高（4.89 J @128）
-
-3. **KV cache 增长导致 within-sequence energy drift**
-   - MHA 模型在生成后期能耗持续上升
-   - GQA 减缓 drift，GQA+SWA 基本消除 drift
-
-4. **Batching 是最有效的部署级优化手段**
-   - 可将 energy per token 和 latency per request 同时降低 **高达 87%**
-   - 对 GQA/GQA+SWA 模型更友好，尤其在长 context 场景下
-
-5. **Latency 不能反映真实能耗代价**
-   - MHA 模型能耗上升但 latency 几乎不变 → 表明能耗来自更高 GPU power 或 memory activity，而非执行时间延长
-
----
-
-### ⚠️ 局限性
-
-1. **仅评估 decode phase**  
-   虽然符合研究目标，但在真实场景中 prefill 也可能成为瓶颈，特别是对于长输入。
-
-2. **单一硬件平台（A100）**  
-   结果可能无法直接外推到其他 GPU（如 consumer-grade 或移动设备）。
-
-3. **未考虑量化、缓存优化等系统级技术**  
-   如 KV cache quantization、PagedAttention 等可进一步影响能耗，但不在本研究范围内。
-
-4. **仅测试 greedy decoding**  
-   采样策略（如 beam search、top-k）可能引入不同计算模式，影响能耗分布。
-
----
-
-### 🔮 未来工作方向
-
-1. **扩展至更多 attention 架构**  
-   如 MQA（Multi-Query Attention）、ALiBi、FlashAttention 等，建立更完整的 energy-scaling 图谱。
-
-2. **结合系统优化技术联合分析**  
-   探索 batching + quantization + attention 架构的协同节能潜力。
-
-3. **端到端任务级能耗建模**  
-   将 energy scaling 模型应用于真实应用（如 chatbot、代码生成），预测全生命周期能耗。
-
-4. **绿色 LLM 设计指南**  
-   基于本研究结论，提出面向可持续部署的 LLM 架构选择与 inference 配置推荐框架。
-
----
-
-> ✅ **一句话总结**：  
-> 本论文揭示了 **attention architecture 是 LLM 推理能耗扩展性的核心控制器**，而 **model size 决定基础能耗水平**，**batching 是最强部署优化**。为绿色、高效 LLM 部署提供了实证依据与设计指导。
-
-</details>
-
----
-
-### 6. [Groundhog Bit-Flip Attack: Seeding Infinite Generation Loops in Mixture-of-Experts LLMs through Bit Flips](https://arxiv.org/abs/2608.25276)
-
-**Authors**: Huakang Lin, Tiancheng Zheng, Mingxuan Sun, Tianhong Xu, Fan Zhang, Yunsi Fei, Ruyi Ding  
-**Category**: cs.CL  
-**Published**: 2026-08-27  
-**Score**: 7.5  
-**Type**: new  
-**ArXiv ID**: 2608.25276v1  
-
-#### Abstract
-Mixture-of-Experts (MoE) architectures enable scalable and efficient large language models (LLMs) by selectively activating expert sub-networks through a routing mechanism. However, this adaptive design introduces a new attack surface: specific experts become disproportionately correlated with certa...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# 论文总结：Groundhog Bit-Flip Attack: Seeding Infinite Generation Loops in Mixture-of-Experts LLMs through Bit Flips
-
----
-
-## 1. 论文的主要贡献和创新点
-
-### 解决了什么问题
-该论文揭示了 **Mixture-of-Experts (MoE)** 架构在 **availability 安全性** 上的重大漏洞。尽管 MoE 能有效降低推理成本，但其路由机制（routing）使得某些专家（expert）高度专业化于生成特定控制类 token（如 `<EOS>` 或 `<EOT>`）。攻击者可利用此特性，通过微小扰动（bit flip）破坏这些关键专家的功能，导致模型无法正常终止输出，从而引发 **Denial-of-Wallet (DoW)** 攻击 —— 用户因无限生成而消耗大量 token，造成经济负担。
-
-### 提出了什么新方法或新思路
-作者提出了 **Groundhog Bit-Flip Attack (GBFA)**，这是首个针对 MoE-based LLM 的基于 bit-flip 的 DoW 攻击方法。其核心思想是：
-- 利用 MoE 中专家对特定 token（如 EOS）的高度依赖性；
-- 识别并定位负责生成终止 token 的“目标相关专家”（target-related experts）；
-- 在 **router 层** 对这些专家对应的权重或偏置进行 **bit-level 扰动**，使其在推理时不再被激活，从而抑制 EOS 生成，诱导模型进入无限循环。
-
-### 相比现有方法的优势
-| 维度 | 传统 BFA（Bit-Flip Attack） | GBFA（本文） |
-|------|----------------------------|------------|
-| 攻击目标 | Integrity（完整性），如降低准确率、诱导错误分类 | Availability（可用性），诱导输出膨胀，实现 DoW |
-| 影响范围 | 广泛影响模型整体行为 | 精准操控特定功能（如终止逻辑） |
-| 隐蔽性 | 输出可能失真、无意义 | 语义保真度高，输出仍连贯，难以检测 |
-| 参数修改量 | 通常需大量 bit 修改 | **平均 <4 个专家** 即可引发显著效果 |
-
-> ✅ **创新点总结**：首次将 bit-flip 攻击从 integrity-oriented 转向 availability-oriented，提出了一种轻量级、高隐蔽性的结构性攻击范式，精准打击 MoE 的路由机制弱点。
-
----
-
-## 2. 核心实验方法和设置
-
-### 使用了哪些数据集
-- **专家识别阶段**：使用 Stanford Alpaca instruction-tuning 数据集构建样本序列。
-- **攻击评估阶段**：
-  - 分类任务：`AGNews`, `SST-2`
-  - 生成任务：`Samsum`（对话摘要）、`SQuAD 2.0`（问答）
-- **代理编码任务**：自定义 10 个 Python 编码沙箱环境（sandbox），用于测试 plan mode 和 thinking loop 攻击。
-
-### 实验设置和评估指标
-
-#### 模型
-共评估 **6 个开源 MoE-based LLMs**：
-- Mixtral-8x7B
-- Phi-3.5-MoE
-- DeepSeek-V2-Lite
-- Qwen3-30B-A3B
-- Qwen3-Coder-Next
-- GPT-OSS-20B
-
-#### 攻击流程（三步法）
-1. **Step 1：Target-related Expert Detection**
-   - 提出两种策略：
-     - **GLOBAL**：跨层排序所有专家，选择 Top-K 差异最大的。
-     - **LOCAL**：逐层分析，找出对输出长度影响最大的一层。
-   - 度量指标：**Target Activation Shift (T<sub>l,i</sub>)** 和 **Target Gate Shift (Δg<sub>l,i</sub>)**
-
-2. **Step 2：Vulnerable Bit Search**
-   - 缓存目标层隐藏状态，无需重复前向传播；
-   - 枚举 router 权重/偏置中的每一位，计算其 **bit-flip effectiveness (BF-eff)**；
-   - 选取每专家 top-3 最有效的 bit 进行翻转。
-
-3. **Step 3：Online BFA Execution**
-   - 模拟 Rowhammer 攻击，在部署模型的 DRAM 中注入 bit flip；
-   - 一次成功即可持久化影响后续所有请求。
-
-#### 评估指标
-| 指标 | 含义 |
-|------|------|
-| **P (%)** | 输出 token 数变化百分比：<br>P = (T_deact − T_base)/T_base × 100% |
-| **Clean Accuracy (CA)** | 分类任务准确率 |
-| **ROUGE-1 / F1** | 生成质量度量 |
-| **Perplexity (PPL)** | 语言流畅性指标 |
-| **EOS emission rate** | 成功生成 EOS 的样本比例 |
-
-#### 基线方法对比
-- **Random Deactivation**：随机关闭 50 个专家作为负面对照；
-- **Manual Deactivation**：手动设 logits 为 `-inf`，模拟理想攻击上限；
-- **No Attack (Baseline)**：原始模型表现。
-
----
-
-## 3. 主要实验结果和性能指标
-
-### 关键性能数据
-
-#### 输出膨胀幅度（P 值）
-| 模型 | 最大 P 增幅（分类任务） | 典型增幅 |
-|------|------------------------|---------|
-| Mixtral | **~2.74×10⁹%**（AGNews, GLOBAL） | >10⁵% |
-| Phi-3.5 | **~2.99×10⁹%**（AGNews, GLOBAL） | >10⁷% |
-| DeepSeek | **~3.81×10⁴%**（AGNews, LOCAL） | ~10⁴% |
-| GPT-OSS | **556%**（AGNews, GLOBAL） | ~400–500% |
-
-> 🔥 **最高达 87× 输出增长**，多数测试样本达到 `max_new_tokens` 上限（1024）。
-
-#### Bit-Flip 攻击效果（Table 3）
-- **仅翻转每个专家 3 个 bit**，即可实现接近 manual deactivation 的效果。
-- 例如在 DeepSeek 上，GLOBAL bit-flip 攻击使 AGNews 输出 token 从 47.4 → **2510+**，P 达 **4.64×10⁴%**。
-- GPT-OSS 因直接攻击 **bias 参数**，效果更稳定，接近人工去活化水平。
-
-#### 性能保留情况（Table 4）
-| 模型 | 攻击后 CA 变化 | PPL 变化 |
-|------|---------------|----------|
-| Mixtral | 基本不变（0.838 → 0.840） | 保持 <2.0 |
-| Phi-3.5 | 小幅下降 | 多数 <2.0 |
-| DeepSeek | **严重崩溃**（PPL > 5e6） | ❌ 不稳定 |
-| GPT-OSS | 几乎无损 | PPL ≈ 1.5 |
-
-> ✅ **大多数模型在攻击后仍保持良好语义一致性**，表明 GBFA 具备强隐蔽性。
-
-#### 消融实验结果
-- **LOCAL vs GLOBAL**：
-  - 当 EOS 控制集中于某一层时，LOCAL 更高效；
-  - 若分布于多层，则需 GLOBAL 才有效（如 GPT-OSS）。
-- **解码策略鲁棒性**（Appendix E）：
-  - 在 greedy、temperature sampling、nucleus sampling 下均有效；
-  - 即使加入 repetition penalty (rp=1.3)，仍能进一步延长输出。
-- **token budget 影响**（Appendix F）：
-  - 更大的 `max_new_tokens` 导致更高的相对增幅 P；
-  - 但在 1024 已足以暴露攻击威胁。
-
----
-
-## 4. 关键结论和发现
-
-### 主要发现
-1. ✅ **MoE 存在严重的 termination specialization 现象**：少数专家主导 EOS/EOT 生成，形成天然攻击面。
-2. ✅ **极少量 bit flip 即可触发无限生成**：平均关闭不到 4 个专家，即可驱动输出膨胀至 **5912%**。
-3. ✅ **攻击具有高隐蔽性和实用性**：
-   - 语义连贯，不易被用户察觉；
-   - 可通过 Rowhammer 等硬件故障注入实现；
-   - 攻击一次成功即永久生效（因修改的是 persistent weights）。
-4. ✅ **适用于多种 LLM 模式**：
-   - 对话模式（conversational）
-   - 推理模式（reasoning）
-   - 代理模式（agentic planning），如 Qwen3-Coder 的 plan-step 被拉长至最大步数。
-
-### 方法的局限性
-- **强威胁模型假设**：
-  - 需白盒访问模型参数（虽合理，因许多 MoE 模型公开权重）；
-  - 需具备 Rowhammer 或电压毛刺等 fault injection 能力。
-- **系统级防御存在挑战**：
-  - ECC 内存可缓解但不完全阻止；
-  - TEE 隔离有开销且非普遍部署。
-- **部分模型不稳定**：
-  - 如 DeepSeek 在 bit-flip 后出现语言崩溃（PPL > 5e6），限制了通用性。
-- **缺乏理论建模**：
-  - 未形式化解释为何某些 bit 具有不成比例的影响。
-
-### 未来工作方向
-1. **MoE-specific 防御机制设计**：
-   - 引入 routing redundancy 或 checksum 保护关键专家；
-   - 动态监控 expert activation pattern 异常。
-2. **防御与检测结合**：
-   - 开发 real-time loop detection（如 Breaking the Loop）；
-   - 结合 API 层长度限制 + 行为异常评分。
-3. **扩展到其他控制 token**：
-   - 攻击 `<think>`, `<tool_call>`, `<image>` 等结构化 token 的生成路径。
-4. **探索训练时加固策略**：
-   - 通过 adversarial training 增强 router 对 bit-flip 的鲁棒性。
-
----
-
-> 📌 **总结一句话**：  
-> **GBFA 揭示了 MoE 架构中“高效路由”背后的“脆弱终止”悖论 —— 正是那些让模型更快的专家，成了让它永不结束的致命弱点。**
-
-</details>
-
----
-
-### 7. [psRL: Efficient Training for Agentic AI via Training-Time Prefix Sharing](https://arxiv.org/abs/2608.25683)
-
-**Authors**: Mianjie Yu, Zizhao Mo, Huanyu Qu, Zhirong Qian, Huanle Xu, Cen Li, Zifeng Zhao, Zhi Zhou, Jinhua Zhou, Jun Xie, Chengzhong Xu  
+**Authors**: Daniel Lersch, Steven Goldenberg, Johann Rudi, Markus Diefenthaler, Kevin Brager, Xingfu Wu, Yaohang Li, Nobuo Sato  
 **Category**: cs.DC  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 7.5  
 **Type**: new  
-**ArXiv ID**: 2608.25683v1  
+**ArXiv ID**: 2608.26283v1  
 
 #### Abstract
-In modern agentic AI training, the system bottleneck is shifting from rollout to update. Emerging sampling strategies such as tree-structured and step-wise RL greatly increase training sample volume while incurring relatively low marginal rollout cost, causing the update phase to dominate the end-to...
+Extracting a shared set of unknown, not directly measurable quantities from multiple, heterogeneous datasets is a common challenge across scientific domains. A prominent example is the combination of datasets obtained from different measurements with different settings (e.g. varying detector resolut...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# 论文总结：*psRL: Efficient Training for Agentic AI via Training-Time Prefix Sharing*
+# **论文总结：Multi-Dataset Inverse Problem Solving with Distributed Generative AI**
 
 ---
 
-## 1. 论文的主要贡献和创新点
+## **1. 论文的主要贡献和创新点**
 
-### 解决了什么问题
+### **解决了什么问题**
+该论文针对科学领域中常见的**多数据集反问题（multi-dataset inverse problems）**，即从多个异构、非独立同分布（non-IID）、覆盖不同特征空间区域的数据集中联合推断一组共享的未知物理参数。这类问题在高能物理（如QuantOm项目）、地球物理、逆散射等领域普遍存在。
 
-现代 **Agentic AI**（智能体AI）训练中，传统的系统瓶颈是 **rollout** 阶段（即模型生成轨迹），但随着 **tree-structured RL** 和 **step-wise RL** 等采样策略的兴起，训练样本量急剧增加，而 rollout 成本增长缓慢。这导致 **update 阶段**（参数更新）成为新的性能瓶颈，占端到端训练时间的 **超过 50%**。
+传统方法通常存在以下挑战：
+- 数据集异构性强（不同探测器分辨率、系统误差、覆盖范围不一致）
+- 单独分析各数据集会导致信息丢失，简单合并则可能引入偏差
+- 计算量大，难以扩展到大规模数据和HPC环境
 
-然而，现有训练系统（如 Megatron-LM、DeepSpeed）将每个训练样本视为独立序列处理，忽略了大量样本之间存在的 **前缀冗余（prefix redundancy）**，造成重复计算和内存浪费。
+### **提出了什么新方法或新思路**
+作者提出了一种**基于分布式生成式AI的多数据集反问题求解框架**，是对已有 **SAGIPS（Scalable Asynchronous Generative Inverse Problem Solver）** 框架的扩展。其核心思想是：
 
-### 提出了什么新方法或新思路
+- 将每个数据集 $ R_i $ 分配给一个独立的GPU，配备专属的 **forward operator $ P_i $** 和 **discriminator $ D_i $**
+- 所有GPU共享一个全局同步的 **generator $ G $**，用于预测共享的未知参数 $ \mathbf{a} $
+- 利用 **distributed data-parallel training** 范式，在非独立同分布（non-IID）数据下进行梯度聚合，实现跨数据集的一致性优化
 
-论文提出 **psRL**（prefix sharing for RL），一种专为 **agentic RL 训练** 设计的新型训练系统，其核心思想是利用训练阶段的两个特性：
-
-- **Global Visibility**：整个训练数据在 update 阶段已知且静态。
-- **Data Immutability**：训练样本在 update 过程中不会改变。
-
-基于此，psRL 在 **workload scheduling** 和 **memory management** 两方面进行优化：
-
-#### 创新机制一：灵活的前缀共享机制（Flexible Prefix Sharing）
-1. **Inter-batch Sharing**  
-   允许具有相同前缀的序列分布在不同 micro-batch 中，复用已计算的 KV states 和 attention 结果，提升前缀复用率并支持灵活调度。
-
-2. **Self-sequence Sharing**  
-   将长序列切分为多个连续块，跨 micro-batch 执行，通过缓存前缀 KV 来降低峰值内存占用并消除 pipeline bubbles。
-
-#### 创新机制二：自适应 KV 缓存管理（Adaptive KV Cache Manager）
-1. **Adaptive Block Allocation (ABA)**  
-   动态分配可变大小的内存块以精确匹配共享前缀长度，消除内部碎片化（internal fragmentation），提高内存访问效率。
-
-2. **Dynamic Block Caching (DBC)**  
-   基于 rollout 构建的前缀树分析，采用 **Just-in-Time** 策略：提前缓存未来需要的 KV 块，并在最后一次引用后立即驱逐，最大化内存利用率和前缀命中率。
-
-此外，psRL 实现了 **分层调度策略**：
-- **全局层面**：按语义组（semantic groups）划分数据，平衡负载并保留前缀局部性。
-- **本地层面**：采用 **token-wise micro-batching**，在 token 粒度上打包序列，减少因长度不均造成的 pipeline bubbles。
-
-### 相比现有方法的优势
-
-| 维度 | 现有方法（如 vLLM-PS, SGLang-PS） | psRL |
-|------|-------------------------------|------|
-| **前缀共享粒度** | 固定块大小（如 1 或 16 tokens） | 自适应块大小，精准对齐前缀边界 |
-| **内存管理** | 被动缓存，易产生碎片或高访问开销 | 主动 JIT 缓存 + 及时回收 |
-| **调度灵活性** | 忽视前缀复用或牺牲负载均衡 | 同时优化前缀复用与负载均衡 |
-| **适用场景** | 主要针对推理 | 专为训练设计，支持反向传播正确性 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 使用的数据集
-
-实验覆盖多种 **agent workloads**，包括：
-
-- **学术基准环境**：
-  - `Search`（搜索任务）
-  - `WebShop`（电商交互）
-  - `ALFWorld`（文本游戏环境）
-- **工业级大规模代理**：
-  - `DTN Agent`：基于 **Qwen3-235B MoE** 模型的数字孪生网络运维助手，处理真实设备配置文件与操作任务。
-
-### 实验设置和评估指标
-
-#### 模型配置
-- 学术任务：Qwen2.5-1.5B / 7B
-- 工业任务：Qwen3-235B MoE（最大 40K prompt + 20K gen tokens）
-
-#### 分布式并行
-- 学术任务：DP=2, TP=2, PP=2 → 8 GPUs
-- DTN Agent：DP=4, TP=4, EP=8, PP=12 → 1536 GPUs
-
-#### 采样策略（RL Modes）
-- Trajectory-wise (Traj)
-- Step-wise (Step)
-- Step + Summarization (Step-S)
-- Step + Remove Think (Step-RT)
-- Tree-structured (Tree)
-- Tree-Step (结合 tree 与 step)
-
-#### 评估指标
-- **Throughput**（tokens/s）：update 阶段吞吐量
-- **Peak GPU Memory Usage**（MB）：峰值显存消耗
-- **End-to-End RL Latency**：完整训练迭代耗时
-- **Ablation Studies**：验证各组件有效性
-
-### 基线方法对比
-
-| 基线 | 描述 |
+### **相比现有方法的优势**
+| 方面 | 优势 |
 |------|------|
-| **veRL** | 默认训练框架，无前缀共享 |
-| **veRL w/ vLLM-PS** | 引入 vLLM 风格的固定块大小（16 tokens）前缀共享 |
-| **veRL w/ SGLang-PS** | 引入 SGLang 风格的细粒度块（1 token）前缀共享 |
+| **架构设计** | 支持异构数据并行处理，避免了“一刀切”的数据合并或串行分析 |
+| **理论基础** | 证明了即使数据非IID，只要共享同一组未知参数，梯度累加仍有效（见Appendix A2） |
+| **可扩展性** | 支持多节点、多GPU部署，在Polari系统上验证了高达120 GPU的扩展能力 |
+| **鲁棒性** | 对未知探测器系统误差（如未建模的不确定性）具有鲁棒性 |
+| **灵活性** | 可结合多种gradient transport机制（如ARAR、Double Binary Tree等） |
 
 ---
 
-## 3. 主要实验结果和性能指标
+## **2. 核心实验方法和设置**
 
-### 关键性能数据
+### **使用的数据集**
+实验采用了一个受 **Rutherford散射实验** 启发的合成数据集，构造了6个异构数据集 $ R_0, ..., R_5 $，每个对应不同的探测角度 $ \theta $、效率 $ C_{\text{exp}}(i) $ 和测量不确定性 $ \delta(i) $。
 
-#### 更新阶段吞吐量（Update Throughput）
-- psRL 在所有 workload 上实现 **1.2× ~ 5.2×** 于 veRL 的加速。
-- 在 **DTN Agent (Step)** 场景下达到 **239.1k tokens/s**，相比最强基线 SGLang-PS（62.7k tokens/s）提升 **3.8×**。
+观测值为粒子率 $ v(\theta) $，通过如下公式生成：
+$$
+v(\theta) = C_{\text{exp}}(i) \cdot \frac{\exp(a_0)\exp(2a_0)}{\sin^4(\theta/2)} \cdot [1 + \delta(i)N(0,1)]
+$$
+其中 $ a_0 \approx 0.365 $, $ a_1 = -4 $ 是待恢复的真实参数。
 
-#### 显存使用（Peak Memory）
-- psRL 显存开销接近原生 veRL，远低于 vLLM-PS 和 SGLang-PS。
-- 在极端场景 **ALFWorld (Step-S)** 中：
-  - vLLM-PS 峰值达 **73.1 GB**
-  - veRL 仅 **6.4 GB**
-  - psRL 控制在 **相近水平**
-- 在 **DTN Agent** 上，psRL 将峰值内存从 **56.2 GB** 降至 **33.0 GB**（↓41%）
+所有数据集均取对数形式 $ \ln(v(\theta)) $ 以简化计算。
 
-#### 端到端训练延迟（E2E Latency）
-- psRL 实现最高 **2.1×** 的端到端加速。
-- 在 DTN Agent (Step) 中：
-  - `Log Old Prob` 时间从 57.1s → 7.1s（↓8×）
-  - `Reference Model Forward` 从 68.3s → 8.3s（↓8×）
-  - `Update` 阶段从 462.1s → 88.7s（↓5.2×）
+### **实验设置**
+- **模型结构**：
+  - Generator 和 Discriminator 均为4层全连接网络，每层128神经元，Leaky-ReLU激活
+  - 使用 **GAN 架构** 进行对抗训练
+- **训练配置**：
+  - Ensemble of 10 GANs，每轮训练10k epochs
+  - Adam优化器，学习率：discriminator $ 10^{-4} $, generator $ 10^{-5} $
+  - Batch size: 每次生成1k样本，每个样本生成100个合成事件
+- **硬件平台**：
+  - Run Group A：Jefferson Lab单节点（8×A800 GPU）
+  - Run Group B：Argonne国家实验室 Polaris HPC（多节点，每节点4×A100 GPU）
 
-### 与基线方法的对比结果
+### **评估指标**
+| 指标 | 定义 | 说明 |
+|------|------|------|
+| **Relative Residual** $ r_a = \frac{a - A}{a} $ | 参数估计相对残差 | 衡量准确性，理想值为0 |
+| **Uncertainty** $ \Delta r_a = \frac{\Delta A}{a} $ | 基于ensemble的标准差 | 衡量稳定性 |
+| **Training Time** | 总训练耗时（秒） | 衡量效率 |
+| **GPU Utilization / Memory** | 平均利用率与显存占用 | 衡量资源使用效率 |
+| **Drift Metrics** | Pairwise weight/output drift | 评估多GPU间一致性 |
 
-| 方法 | 吞吐量优势 | 内存优势 | 正确性保障 |
-|------|----------|--------|----------|
-| vLLM-PS | 有限加速（~1.5×） | 显存爆炸（↑2–10×） | 不适用于训练反向传播 |
-| SGLang-PS | 加速较弱（~1.8×） | 更高访问开销 | 缺乏生命周期控制 |
-| **psRL** | ✅ 最高 **5.2×** 加速 | ✅ 显存更低，可控增长 | ✅ 支持 masked attention 与 loss 计算 |
-
-### 消融实验结果（Ablation Study）
-
-#### （1）调度策略对比（Fig. 11a）
-- **Sharing-Agnostic Balancing**（veRL 默认）：执行时间严重倾斜（235s ~ 299s）
-- **Prefix-Match-First**：前缀复用高但负载极不平衡
-- **Balance-First**：平衡好但前缀复用差
-- **psRL（联合优化）**：时间集中在 **245–261s**，兼顾复用与均衡
-
-#### （2）Token-wise Micro-Batching 效果（Fig. 12）
-- 显著平滑 micro-batch 执行时间，避免延迟尖峰。
-- 减少等待气泡（pipeline bubbles），提升 GPU 利用率。
-
-#### （3）Dynamic Block Caching 影响（Fig. 11b）
-- 无 DBC：KV 内存持续增长至 **73k MB**
-- 启用 DBC：峰值降至 **33k MB**（↓54%），呈锯齿状释放模式
-
-#### （4）Adaptive Block Allocation 性能（Fig. 13）
-- 固定块大小存在明显 trade-off：
-  - 小块 → 高访问开销
-  - 大块 → 高内存浪费
-- ABA 无需调参，在 Search 和 DTN Agent 上均表现最优
+### **基线方法对比**
+| 方法 | 描述 |
+|------|------|
+| **Single-GPU, Single-Discriminator** | 所有数据拼接后送入单一判别器 |
+| **Single-GPU, Multi-Discriminator** | 每个数据集有独立判别器，但共用GPU |
+| **Multi-GPU + conv-ARAR / ARAR / Strong-ARAR / Double Binary Tree** | 不同gradient transport策略下的分布式版本 |
 
 ---
 
-## 4. 关键结论和发现
+## **3. 主要实验结果和性能指标**
 
-### 主要发现
+### **关键性能数据**
 
-1. **瓶颈转移**：现代 agentic RL 的瓶颈已从 **rollout-bound** 转向 **update-bound**，传统优化不再有效。
-2. **前缀冗余普遍存在**：在 step-wise 和 tree-structured RL 中，**prefix match rate 超过 90%**（如 ALFWorld Step 模式达 94.51%），现有系统未充分利用。
-3. **训练阶段的独特优势**：Global Visibility 与 Data Immutability 为前缀共享提供了全新优化空间。
-4. **psRL 实现显著加速**：通过 **inter-batch/self-sequence sharing + ABA + DBC**，在真实生产 trace 下实现最高 **5.2× 吞吐提升** 和 **41% 显存下降**。
+#### ✅ **参数恢复精度**
+- 所有方法在使用全部6个数据集时均能将 $ a_0 $ 和 $ a_1 $ 的相对残差收敛至接近零（within uncertainty）
+- **仅用1个数据集时无法唯一确定两个参数**（欠定系统），残差较大
+- 随着数据集数量增加，**uncertainty显著下降**，表明信息互补性增强
 
-### 方法的局限性
+#### ✅ **与基线方法对比**
+| 方法 | 残差表现 | 训练时间（6数据集） | GPU利用率 |
+|------|----------|---------------------|------------|
+| **Single-GPU (Single Disc.)** | 最差，尤其 $ a_1 $ | ~700s | 高但内存压力大 |
+| **Single-GPU (Multi Disc.)** | 中等，n=2时波动明显 | ~800s | 高 |
+| **conv-ARAR (Multi-GPU)** | 最佳，稳定收敛 | 6,334s | 8.42% |
+| **ARAR (Grouped)** | 较差，精度低 | 2,077s | 28.73% |
+| **Strong-ARAR** | 接近最优，速度快 | 2,243s | 20.16% |
+| **Double Binary Tree** | 精度好，但最慢 | 9,209s | 1.97% |
 
-- **依赖 rollout 结构信息**：需提前构建前缀树用于调度与缓存决策，可能增加预处理开销。
-- **扩展性依赖良好语义分组**：若语义组内前缀重叠低，效果会打折扣。
-- **当前实现在 Megatron-LM 上定制**：通用性有待在其他训练框架中验证。
+> 💡 **结论**：multi-GPU方法在精度上优于single-GPU；Strong-ARAR在速度与精度之间取得最佳平衡。
 
-### 未来工作方向
-
-- 将 prefix sharing 扩展至 **off-policy RL** 或 **multi-agent training** 场景。
-- 探索 **自动识别语义组** 的轻量算法，降低调度开销。
-- 结合 **compression** 与 **quantization** 技术进一步压缩 KV cache。
-- 支持动态 rollout 生成过程中的在线前缀共享。
+#### ✅ **消融实验结果**
+- **Multiplicity影响（m=4 vs m=20）**：
+  - 增加multiplicity（即进一步分片）可带来约 **1.5–3.3倍加速**
+  - 参数恢复质量无明显退化，说明数据分片不影响最终性能
+- **输入顺序敏感性测试（Up / Down / Mix）**：
+  - 若先加入低分辨率数据（Down方案），在n=3时uncertainty显著增大
+  - 加入第4个高分辨率数据后迅速恢复 → 表明**高分辨率数据对提升精度至关重要**
+- **Gradient Drift分析**：
+  - **conv-ARAR**：weight & output drift ≈ 0 → 完全同步
+  - **Strong-ARAR**：weight drift小幅上升（~0.01），但output drift几乎为0 → 实际输出一致
+  - **ARAR**：drift持续增长 → 同步性差，解释其较低精度
 
 ---
 
-> **代码开源计划**：作者表示 psRL 源码将很快公开。
+## **4. 关键结论和发现**
+
+### **主要发现**
+1. ✅ **多数据集联合分析显著优于单数据集或简单合并**：
+   - 多源数据提供互补约束，使原本欠定的问题变为可解
+   - 参数估计更精确，uncertainty更低
+
+2. ✅ **non-IID数据下的梯度聚合是可行且有效的**：
+   - 只要所有数据集共享相同的未知参数，即可通过分布式训练实现全局一致性
+   - 无需假设数据IID，突破了传统DDP的限制
+
+3. ✅ **分布式架构具备良好可扩展性和资源效率**：
+   - 每GPU内存占用恒定，不随数据集数量增加而上升
+   - 支持进一步数据分片（multiplicity >1），提升训练速度
+
+4. ✅ **方法对未知系统误差具有鲁棒性**：
+   - 即使forward model中固定了错误的detector uncertainty（0.1 vs 实际变化值），仍能准确恢复参数
+
+5. ✅ **推荐使用Strong-ARAR作为默认通信策略**：
+   - 在精度与训练时间之间达到最佳权衡
+   - 输出一致性高，适合大规模部署
+
+### **方法的局限性**
+- ❗ **依赖所有数据集由相同物理参数生成**：若数据集间存在冲突物理机制，可能导致梯度矛盾，模型无法收敛
+- ❗ **统计代表性不足的数据会影响局部discriminator训练质量**，进而误导generator
+- ❗ **缺乏自动加权机制**：当前equal weighting可能不适合统计量差异大的数据集
+- ❗ **未处理部分可观测情况**：某些数据集可能只对子集参数敏感，本文未涉及
+
+### **未来工作方向**
+- 🔧 开发 **自动数据加权机制** 以应对统计不平衡
+- 🔄 探索集成其他生成模型（如Normalizing Flows、Diffusion Models）替代GAN
+- 📊 更深入的scaling study：研究随着每数据集GPU数增加的收敛行为
+- 🛠️ 引入 **drift-aware synchronization** 或 post-hoc weight averaging 来缓解rank drift
+- 🧪 应用于真实QuantOm项目中的三维质子结构成像任务（已在Appendix B展示可行性）
+
+---
+
+> **附录亮点（Appendix B）**：  
+> 作者展示了该框架可推广至更复杂场景——从三个混合密度数据集中恢复两个二维密度分布 $ p_0(x,y), p_1(x,y) $。结果显示：
+> - 单数据集训练无法恢复真实分布（under-determined）
+> - 使用全部三个数据集后，GAN成功重建出接近真实的密度形状  
+> ➝ 验证了方法在高维、复杂pipeline下的适用性，为实际核物理应用铺平道路。
 
 </details>
 
 ---
 
-### 8. [Drift-Aware Multimodal User Representation Learning via Multi-Scale Temporal Modeling and Sparse Mixture-of-Experts](https://arxiv.org/abs/2608.25773)
+### 8. [SimCast-S2S: An Efficient Generative Model for Subseasonal Precipitation Forecasting via Transfer Learning from Climate Simulations](https://arxiv.org/abs/2608.26594)
 
-**Authors**: Ziqing Qian, Haohang Chen, Shengqi Dang, Yuhan Xiong, Canyu Shen, Jiaying Lei, Nan Cao  
+**Authors**: Hiep V. Dang, Antonios Mamalakis  
 **Category**: cs.LG  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 7.5  
 **Type**: new  
-**ArXiv ID**: 2608.25773v1  
+**ArXiv ID**: 2608.26594v1  
 
 #### Abstract
-Understanding user preferences from noisy and temporally evolving social media behaviors is fundamentally challenging due to interest drift, where user preferences shift across time and exhibit both multi-scale temporal patterns and diverse co-existing interests. To address this, we propose DUMoE, a...
+Subseasonal-to-seasonal (S2S) precipitation forecasting has substantial financial and societal impact, yet remains challenging because of weak predictive signals, high associated uncertainty, and the computational cost of operational systems, which constrains simulation fidelity. We introduce SimCas...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
@@ -1476,1661 +1311,1508 @@ Understanding user preferences from noisy and temporally evolving social media b
 ## 1. 论文的主要贡献和创新点
 
 ### 解决的问题
-该论文旨在解决**用户兴趣漂移**（interest drift）带来的挑战，即用户偏好在时间上不断演变，同时表现出多尺度的时间模式（如短期行为动态与长期依赖）以及多种共存的兴趣。传统方法通常采用静态表示或粗粒度时序建模，难以有效捕捉这种复杂的动态演化过程。
+该论文针对**Subseasonal-to-Seasonal (S2S) 降水预测**中的三大瓶颈问题：
+- **弱可预测信号与高不确定性**：S2S 时间尺度（约3–6周）处于天气与气候之间的过渡区，初始条件误差迅速增长，而慢变边界条件尚未形成稳定信号。
+- **生成大集合预报的计算成本高昂**：传统基于物理模型的 Ensemble Prediction Systems (EPS) 需要多次数值积分，计算资源消耗巨大。
+- **数据驱动模型对训练数据量要求高**：深度生成模型通常需要大量高质量观测数据，但在 S2S 尺度上历史数据有限。
 
-此外，现有方法大多局限于单一模态（如仅文本或交互序列），缺乏对**多模态信号**（text, image, interaction）、**多尺度时间动态**和**显式/隐式用户兴趣**的统一建模框架。
+### 提出的新方法：SimCast-S2S
+作者提出了一种名为 **SimCast-S2S** 的高效生成式模型框架，结合了以下三项关键技术：
 
----
+1. **Latent Diffusion Model（潜在扩散模型）**
+   - 在由 Variational Autoencoders (VAEs) 学习到的低维**Latent Space**中进行扩散过程建模，而非在原始高维物理空间中直接操作。
+   - 显著降低生成成本，支持快速采样大规模概率集合（如100成员）。
 
-### 提出的新方法与思路
-作者提出了 **DUMoE**（Drift-aware User Modeling with Mixture-of-Experts），一个统一的用户表征学习框架，其核心创新包括：
+2. **Simulation-to-Reanalysis Transfer Learning（仿真到再分析迁移学习）**
+   - 利用大规模气候模拟数据（CESM2-LE，28个成员）预训练模型，再通过微调迁移到真实世界再分析数据（ERA5）。
+   - 解决真实观测数据不足的问题，并提升模型泛化能力。
 
-#### （1）Temporal Dynamics-Aware Backbone Network
-- 融合三种时间维度的信息：
-  - **Static Profile**：用户静态属性（如粉丝数、自我描述）
-  - **Short-term Behavioral Signals**：通过 LSTM 建模最近的行为序列
-  - **Long-term Dependencies**：通过 Transformer 捕捉历史交互中的长程依赖
-- 将三者融合为层次化用户表示 $ z_u $，实现对多尺度时间动态的有效建模。
-
-#### （2）Sparse Mixture-of-Experts (MoE) Interest Adapter
-- 引入稀疏 MoE 结构进行**多兴趣解耦**（multi-interest disentanglement）：
-  - 多个专家网络（expert networks）各自专注于不同的潜在兴趣子空间
-  - 门控网络（gating network）动态选择最相关的 K 个专家（top-K routing），实现个性化路由
-  - 残差结构设计使专家在共享语义空间基础上进行特化，提升可解释性和稳定性
-
-#### （3）Three-Stage Training Strategy
-为稳定训练并促进专家专业化，提出分阶段优化策略：
-1. **Backbone Pre-training**：先训练主干网络，不启用 MoE
-2. **Expert Specialization**：冻结 backbone，独立训练每个专家对应特定兴趣类别
-3. **Gating Optimization**：冻结 backbone 和专家，仅训练门控网络参数
-
----
+3. **Low-Rank Adaptation (LoRA) 微调策略**
+   - 在迁移阶段仅更新低秩参数矩阵，冻结大部分预训练权重。
+   - 减少过拟合风险，提高训练效率和稳定性。
 
 ### 相比现有方法的优势
-| 维度 | DUMoE 的优势 |
-|------|---------------|
-| **多模态整合** | 支持 text + image 内容联合编码（使用 UNITE 模型） |
-| **时间建模** | 显式区分短时、长时与静态偏好，优于单一序列模型（如 SASRec/BERT4Rec） |
-| **兴趣多样性建模** | MoE 实现兴趣解耦与稀疏激活，优于单向量或多兴趣胶囊路由方法（如 MIND/HORAE） |
-| **训练稳定性** | 分阶段训练避免端到端联合优化导致的不稳定收敛 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 数据集
-构建了一个大规模、带有时序标注的多模态社交媒体数据集，来源于 **X (Twitter)** 平台：
-- **用户数量**：14,015
-- **推文数量**：7.685M
-- **图片数量**：2.890M
-- **兴趣领域**：15 个高层类别（如 Entertainment, Politics, Technology, Food 等）
-- **标签生成方式**：使用 GPT-5.1 对每组连续 30 条推文的内容及其前序上下文进行自动标注，形成伪标签
-- **数据划分**：按时间顺序切分为 8:2:2（训练:验证:测试）
-
-> 图 2 展示了各兴趣领域的数据分布，显示主题覆盖广泛且存在显著差异。
-
----
-
-### 实验设置与评估指标
-
-#### 下游任务
-1. **User Interest Classification**（兴趣分类）
-2. **Social Interaction Prediction**（社交互动预测）
-
-#### 评估指标
-| 任务 | 指标说明 |
-|------|--------|
-| **Interest Classification** |  
-| - Hit@1 | Top-1 准确率 |
-| - NDCG@3 | 排名质量（强调 top 位置） |
-| - Macro Recall | 宏平均召回率 |
-| - KL Divergence | 预测分布与真实分布之间的对齐程度（越低越好） |
-| **Interaction Prediction** |  
-| - Accuracy (Acc) | 分类准确率 |
-| - Recall | 正样本检索能力 |
-| - F1 Score | 综合性能 |
-| - BCE Loss | 概率校准能力（越低越好） |
-
-#### 基线方法对比
-涵盖三大类主流方法：
-
-##### （1）Sequential Recommendation
-- SASRec [1]
-- BERT4Rec [2]
-- PTUM [6]
-
-##### （2）Multi-Interest Modeling
-- MIND [22]
-- HORAE [28]
-
-##### （3）Content-Aware Representation Learning
-- PeterRec [3]
-- UniSRec [18]
-
-所有基线均使用官方代码复现，并保持相同的数据划分与预测头结构以确保公平比较。
-
----
-
-## 3. 主要实验结果和性能指标
-
-### 用户兴趣分类结果（Table 1）
-
-| Method | Hit@1↑ | NDCG@3↑ | Recall↑ | KL↓ |
-|--------|--------|---------|--------|-----|
-| SASRec | 0.788 | 0.883 | 0.723 | 0.584 |
-| BERT4Rec | 0.776 | 0.879 | 0.707 | 0.568 |
-| PTUM | 0.811 | 0.900 | 0.757 | 0.482 |
-| MIND | 0.821 | 0.904 | 0.763 | 0.471 |
-| HORAE | 0.807 | 0.897 | 0.746 | 0.506 |
-| PeterRec | 0.786 | 0.885 | 0.714 | 0.532 |
-| UniSRec | 0.767 | 0.873 | 0.689 | 0.595 |
-| **DUMoE (Ours)** | **0.872** | **0.940** | **0.856** | **0.323** |
-
-> ✅ **关键突破**：
-- Hit@1 提升约 **6.2%**（vs MIND）、**7.5%**（vs PTUM）
-- Recall 提升 **+12.2%**（vs MIND）
-- KL Divergence 下降 **31.4%**（vs MIND），表明预测分布更贴近真实分布
-
----
-
-### 用户互动预测结果（Table 2）
-
-| Method | Acc↑ | Recall↑ | F1↑ | BCE↓ |
-|--------|------|--------|-----|-----|
-| SASRec | 0.873 | 0.877 | 0.874 | 0.302 |
-| BERT4Rec | 0.877 | 0.884 | 0.878 | 0.294 |
-| PTUM | 0.886 | 0.887 | 0.886 | 0.274 |
-| MIND | 0.884 | 0.884 | 0.884 | 0.277 |
-| HORAE | 0.882 | 0.888 | 0.883 | 0.281 |
-| PeterRec | 0.883 | 0.894 | 0.885 | 0.279 |
-| UniSRec | 0.875 | 0.883 | 0.876 | 0.297 |
-| **DUMoE (Ours)** | **0.883** | **0.926** | **0.888** | **0.276** |
-
-> ✅ **关键表现**：
-- Recall 达到 **0.926**，远超最佳基线 PeterRec（+3.2%）
-- F1 与最佳持平（0.888），BCE 与 PTUM/MIND 相当，说明在保持良好概率校准的同时大幅提升检索能力
-
----
-
-### 消融实验结果（Table 3）
-
-| 变体 | Hit@1↑ | Recall↑ | Acc↑ | BCE↓ | 说明 |
-|------|--------|--------|------|-----|------|
-| w/o Adapter | 0.858 | 0.810 | 0.858 | 0.329 | 移除 MoE 导致性能下降，证明其必要性 |
-| w/o Gating | 0.864 | 0.827 | 0.858 | 0.326 | 均匀加权替代门控，削弱个性化路由效果 |
-| w/o Stage-wise Training | 0.865 | 0.846 | 0.873 | 0.294 | 性能略降，验证三阶段训练有助于稳定收敛 |
-| Static Only | 0.774 | 0.728 | 0.807 | 0.409 | 忽略动态行为严重损害性能 |
-| Short-term Only | 0.805 | 0.738 | 0.846 | 0.350 | 短期建模不足 |
-| Long-term Only | 0.862 | 0.829 | 0.864 | 0.313 | 表现较好但仍低于完整模型 |
-| Lcls Only | 0.870 | 0.848 | 0.799 | 0.437 | 仅用分类损失损害交互预测 |
-| Lrec Only | 0.798 | 0.719 | 0.869 | 0.303 | 仅用重建损失损害兴趣识别 |
-
-> 🔍 **结论**：
-- 所有组件均有贡献，尤其是 MoE Adapter 和 Adaptive Gating
-- 三阶段训练提升了 KL 对齐和整体稳定性
-- 多任务目标（Lcls + Lrec）对于平衡两类任务至关重要
-
----
-
-## 4. 关键结论和发现
-
-### 主要发现
-1. **多尺度时间建模是关键**：结合 static profile、short-term dynamics 和 long-term history 显著优于单一时间视角。
-2. **Sparse MoE 有效支持多兴趣解耦**：专家专业化 + 动态路由机制能够更好地建模用户的多样化兴趣，提升可解释性与个性化表达能力。
-3. **分阶段训练提升稳定性与性能**：解耦 backbone 学习、expert specialization 和 gating optimization 有助于避免训练干扰，促进清晰的角色分工。
-4. **多模态输入增强表征质量**：融合 text 和 image 内容显著提升兴趣理解能力，尤其在视觉相关领域（如 Fashion & Beauty, Food）。
-
----
-
-### 方法的局限性
-1. **伪标签噪声风险**：兴趣标签由 GPT-5.1 自动生成，可能存在标注偏差或噪声，影响监督信号的质量。
-2. **固定窗口长度**：LSTM 与 Transformer 使用固定的短/长期窗口（Lt << Lt），未考虑用户个体活动频率差异，可能造成信息丢失或冗余。
-3. **静态专家配置**：专家数量 K 和 top-K’ 路由策略固定，无法根据用户行为复杂度自适应调整活跃专家数量。
-4. **离线训练范式**：当前框架基于批量训练，缺乏在线增量更新能力，难以应对实时兴趣漂移。
-
----
-
-### 未来工作方向
-1. **引入半监督/自监督学习**：减少对外部语言模型生成标签的依赖，探索 contrastive learning 或 masked modeling 进行无监督兴趣发现。
-2. **自适应时间建模**：设计基于用户活跃度的动态窗口选择机制，实现个性化的多尺度聚合。
-3. **Dynamic Expert Allocation**：让专家数量或激活比例随用户行为多样性动态变化，提升灵活性。
-4. **Online Continual Learning**：开发轻量级微调机制（如 LoRA、Adapter Tuning），支持实时更新用户表示以响应快速兴趣漂移。
-5. **更细粒度的兴趣建模**：从高层 domain-level 向 sub-topic 或 intent-level 扩展，提升推荐精度。
-
----
-
-> 📌 **总结**：  
-> DUMoE 是首个将 **multimodal input**、**multi-scale temporal dynamics** 和 **sparse MoE-based multi-interest modeling** 统一于一个框架中的用户建模方法，在真实社交平台数据上展现出卓越的性能。它不仅推动了 drift-aware user representation learning 的发展，也为未来构建更加智能、动态、个性化的推荐系统提供了新范式。  
-> 作者承诺将公开代码与数据集（遵守隐私政策），促进可复现研究。
-
-</details>
-
----
-
-### 9. [Selective Regenerative Decoding: Trajectory-Level Intervention for Inference-Time Reasoning](https://arxiv.org/abs/2608.24338)
-
-**Authors**: Sophia Xiao Pu, Yumo Xu, Sailik Sengupta, Millennium Bismay, Ruixue Lian, James Gung, Yi-an Lai, Arshit Gupta  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 7.0  
-**Type**: new  
-**ArXiv ID**: 2608.24338v1  
-
-#### Abstract
-Inference-time decoding methods improve LLM reasoning by exploring multiple candidate trajectories, yet treat each trajectory as atomic: either retaining it whole or discarding it irreversibly. This wastes computation on partially promising candidates whose high-quality prefixes are abandoned alongs...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# **论文总结：Selective Regenerative Decoding: Trajectory-Level Intervention for Inference-Time Reasoning**
-
----
-
-## 1. **论文的主要贡献和创新点**
-
-### ✅ **解决了什么问题**
-
-现有的 **inference-time decoding** 方法（如 Best-of-N、Speculative Rejection）在处理推理轨迹时，将整个轨迹视为一个不可分割的原子单元（atomic unit），要么保留整个轨迹，要么完全丢弃。这种策略存在以下问题：
-
-- **计算浪费**：许多候选轨迹具有高质量的前缀（prefix），但在后半部分出现质量下降（degraded suffix）。这些“边缘候选”（borderline candidates）因整体得分低而被丢弃，导致前期高质量推理的计算资源被浪费。
-- **效率低下**：Speculative Rejection 虽然能提前终止低分前缀，但决策不可逆，一旦拒绝就永久丢失潜在有用的部分。
-
-### ✅ **提出了什么新方法或新思路**
-
-论文提出 **Selective Regenerative Decoding (SRD)**，一种支持**段级干预**（segment-level intervention）的解码算法，其核心思想是：
-
-> **不抛弃整个轨迹，而是识别并仅重生成质量下降的后缀部分，同时保留高质量前缀。**
-
-SRD 分为三个阶段：
-1. **Generation**：从生成模型 $ G $ 中采样多个候选轨迹。
-2. **Routing**：使用奖励模型 $ R $ 对每个轨迹打分，并根据归一化排名分数 $ u(T) $ 将其路由到三种状态：
-   - **Keep**：高分轨迹直接保留。
-   - **Discard**：低分轨迹直接丢弃。
-   - **Refine**：中等分数轨迹进入重生成流程。
-3. **Regeneration**：对需 **Refine** 的轨迹，定位质量首次下降的位置 $ j^* $，然后以更高温度重新生成从 $ j^*+1 $ 开始的后缀。
-
-该方法**无需更大的目标模型**（larger target model），仅依赖现有生成模型和奖励模型即可完成局部编辑。
-
-### ✅ **相比现有方法的优势**
-
-| 方法 | 是否可逆 | 是否支持局部干预 | 是否需要更大模型 | 样本效率 |
-|------|----------|------------------|------------------|-----------|
-| **Best-of-N** | 否 | 否 | 否 | 低（全生成） |
-| **Speculative Rejection** | 否 | 否 | 否 | 中（早停） |
-| **SRD (Ours)** | 是 | ✅ 是 | 否 | **高（选择性重写）** |
-
-- **更高的样本效率**：理论证明 SRD 在样本效率上比 rejection sampling 高 **1.28–1.36×**。
-- **更高的期望轨迹质量**：通过保留并修复中等质量轨迹，提升最终选出的最佳轨迹质量。
-- **更优的 accuracy-compute tradeoff**：在相同或更低 token 成本下达到与 Best-of-N 相当甚至更好的性能。
-
----
-
-## 2. **核心实验方法和设置**
-
-### ✅ **使用的数据集**
-
-实验覆盖四类典型任务，涵盖数学推理、科学问答、多跳问答和指令跟随：
-
-| 数据集 | 任务类型 | 评估指标 |
-|--------|----------|-----------|
-| **MATH500** | 数学推理 | Accuracy |
-| **GPQA Diamond** | 科学问答（研究生水平） | Accuracy |
-| **HotpotQA** | 多跳问答 | EM, F1 |
-| **AlpacaEval** | 指令跟随 | GPT-4o-mini Win Rate |
-
-### ✅ **实验设置和评估指标**
-
-- **生成模型与奖励模型组合**：共使用 **10 种组合**，例如：
-  - `Llama-3.1-8B-Instruct` + `AceMath-7B-RM`（用于 MATH）
-  - `Qwen3-4B-Instruct` + `RM-Mistral-7B`（用于 AlpacaEval）
-- **评估方式**：报告任务层面的真实性能（accuracy、win rate），而非 reward score，避免 reward hacking 偏差。
-- **关键超参数**：
-  - 路由阈值：$ \theta_{\text{low}} = 0.3, \theta_{\text{high}} = 0.5 $
-  - 重生成边界检测间隔：每 $ m=10 $ 步评估一次 reward
-  - 最大重生成次数：$ N_{\text{refine}} = 3 $
-
-### ✅ **基线方法对比**
-
-所有方法共享相同的 prompt、生成模型和采样参数，仅解码策略不同：
-
-| 基线方法 | 描述 |
-|---------|------|
-| **Temperature Sampling (N=1)** | 单次采样，最基础 baseline |
-| **Best-of-N (BoN)** | 生成 N 条完整轨迹，选 reward 最高的 |
-| **Speculative Rejection (Spec-Rej)** | 实时监控前缀 reward，低于阈值则提前终止 |
-
-> ❗未比较 Reward-guided Speculative Decoding (RSD)，因其依赖更大的 target model，而 SRD 不需要。
-
----
-
-## 3. **主要实验结果和性能指标**
-
-### ✅ **关键性能数据**
-
-#### 🔹 **总体趋势（图2）**
-- SRD 在 **accuracy-compute 曲线上形成新的前沿**，位于 Spec-Rej 和 Best-of-N 之间。
-- 在**低计算预算下显著优于 Spec-Rej**，在**中等预算下接近甚至超越 Best-of-N**，但使用更少输出 token。
-
-#### 🔹 **MATH500 上的具体表现（表2）**
-| $ N $ | Accuracy | 输出 Token（平均） | SRD vs BoN 效率 |
-|-------|----------|--------------------|----------------|
-| 10    | 0.544    | 2,166              | 显著更高效 |
-| 100   | 0.640    | 21,840             | 达到 BoN 水平，token 更少 |
-
-> ✅ SRD 用远少于 BoN 的 token 数量实现了相近准确率。
-
-#### 🔹 **GPQA 上的表现**
-- 所有方法准确率较低（反映任务难度），但 SRD 在**中低预算区间表现更稳定**。
-- BoN 在高预算下虽略高，但 token 成本增长过快，收益递减明显。
-
-#### 🔹 **HotpotQA 与 AlpacaEval**
-- 在多跳推理任务中，SRD 可有效减少冗余链路生成。
-- 在指令跟随任务中，尽管 reward 信号噪声较大，SRD 仍保持稳健提升。
-
-### ✅ **与基线方法的对比结果**
-
-| 对比维度 | 结果 |
-|--------|------|
-| **vs Best-of-N** | 在相同 accuracy 下，**节省大量输出 token**；在相同 token 预算下，**性能相当或更优** |
-| **vs Speculative Rejection** | 在低 compute regime 下**全面胜出**，尤其适合资源受限场景 |
-| **vs 温度采样 (N=1)** | 显著提升 accuracy，且成本可控 |
-
-### ✅ **消融实验结果**
-
-#### 🔹 **路由阈值影响（表3）**
-- 默认设置 $ (\theta_{\text{high}}, \theta_{\text{low}}) = (0.5, 0.3) $ 表现最佳。
-- 过于激进（如 $ \theta_{\text{low}}=0.5 $）会误删可修复轨迹；过于宽松则增加无效重生成。
-
-#### 🔹 **重生成策略对比（表4）**
-| 策略 | 特点 | 性能 |
-|------|------|------|
-| **Reroute (global)**（默认） | 重生成后与其他候选一起排序 | ✅ MATH500 上最优（reward 稳定） |
-| **Self-compare** | 仅比较重生成前后 reward 差异 | ✅ GPQA 上更优（reward 噪声大时更鲁棒） |
-| **Force keep / Refine-BoN** | 强制保留或多路径重试 | ❌ token 成本飙升，无性能增益 |
-
-> 📌 发现：**更复杂的重生成策略并不带来收益，反而增加开销**。
-
-#### 🔹 **评分间隔（scoring interval）影响（表5）**
-- 过小（如1步）易受局部波动干扰，导致过早重生成。
-- 过大（如100步）延迟检测退化点，错过修复时机。
-- **适度间隔（如10–50步）平衡精度与稳定性**。
-
----
-
-## 4. **关键结论和发现**
-
-### ✅ **主要发现**
-
-1. **轨迹不应被视为原子单元**：许多“失败”轨迹其实拥有高质量前缀，应被拯救而非丢弃。
-2. **局部重生成显著提升效率**：SRD 实现了 **1.28–1.36× 的样本效率增益**，且期望轨迹质量严格更高。
-3. **reward model 的校准至关重要**：
-   - 在 reward 稳定时，全局排序（reroute）更优；
-   - 在 reward 噪声大时，本地比较（self-compare）更鲁棒。
-4. **SRD 是通用框架**：可与 speculative decoding、controlled decoding 等方法结合，具备良好扩展性。
-
-### ✅ **方法的局限性**
-
-| 局限性 | 说明 |
-|--------|------|
-| **依赖固定路由阈值** | 当前使用人工设定的 $ \theta_{\text{low}}, \theta_{\text{high}} $，缺乏自适应能力 |
-| **边界检测基于启发式规则** | 再生起点 $ j^* $ 依赖 reward 下降点，可能不够精确 |
-| **实现复杂度较高** | 需协调 generator、reward model、editor、router 四个组件，部署成本上升 |
-| **reward model 偏见放大风险** | 主动 rewrite 内容可能强化 reward model 的风格/长度偏好，而非事实正确性 |
-
-### ✅ **未来工作方向**
-
-1. **学习路由与边界检测策略**：将 $ \theta_{\text{low}}, \theta_{\text{high}} $ 和 $ j^* $ 的选择端到端学习。
-2. **引入 adaptive scoring interval**：动态调整 reward 检查频率。
-3. **探索 reward model alignment**：减轻 bias 放大问题，确保优化的是任务正确性而非 proxy reward。
-4. **扩展至多模态与规划任务**：应用于视觉推理、agent planning 等长序列决策场景。
-
----
-
-> 💡 **一句话总结**：  
-> **SRD 通过“选择性重生成”打破传统解码中原子轨迹假设，在不增加模型规模的前提下，实现了更高效、更智能的推理路径搜索，开辟了 accuracy-compute tradeoff 的新区域。**
-
-</details>
-
----
-
-### 10. [Neurosymbolic Alignment for Physiologically-Safe Clinical Language Models](https://arxiv.org/abs/2608.24534)
-
-**Authors**: Abdulhady Abas Abdullah, Erik Cambria, Milena Zivkovic  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 7.0  
-**Type**: new  
-**ArXiv ID**: 2608.24534v1  
-
-#### Abstract
-Clinical LLMs can generate recommendations that are factually plausible yet physiologically unsafe. We investigate whether safety alignment can be improved by grounding preference optimization in structured physiological knowledge rather than text-only supervision. Methods: We propose Neurosymbolic ...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# Neurosymbolic Alignment for Physiologically-Safe Clinical Language Models 论文总结
-
----
-
-## 1. 论文的主要贡献和创新点
-
-### 解决的问题
-当前临床大语言模型（Clinical LLMs）虽然具备良好的医学知识和流畅表达能力，但可能生成**在生理学上不安全**的建议，例如有害的药物组合、违反内稳态（homeostasis）原则或忽略患者特定禁忌症。这类错误并非简单的事实性错误，而是**关系性、上下文依赖性的生理逻辑冲突**，仅靠检索增强（RAG）或基于文本的偏好优化（如DPO、ORPO）难以有效捕捉。
-
-### 提出的新方法与创新思路
-作者提出 **Neurosymbolic Alignment（神经符号对齐）** 框架，其核心创新在于：
-
-- **生理世界模型（Physiological World Model）**：构建一个包含847K节点的异构生物医学知识图谱（Biomedical Knowledge Graph），并训练一个基于 **HGNN（Heterogeneous Graph Neural Network）** 的可行性评分器。
-- **结构化偏好信号生成**：利用HGNN对候选响应进行生理可行性打分，综合考虑：
-  - **Homeostatic Constraints (Shom)**：生命体征和实验室值的生理边界。
-  - **Multi-hop Path Plausibility (Spath)**：通过多跳路径验证症状-疾病-药物之间的逻辑连贯性。
-  - **Drug-Interaction Penalties (Pint)**：基于知识图谱的药物相互作用风险惩罚。
-- **迭代式在线策略对齐（Iterative ORPO）**：在训练过程中，从当前策略动态采样候选响应，用HGNN打分生成偏好对，并执行 **on-policy ORPO 更新**。这避免了静态偏好数据的分布偏移问题。
-
-### 相比现有方法的优势
-- **训练时对齐，推理时轻量**：HGNN仅用于训练时生成偏好信号，推理时仅需部署对齐后的LLM，无需实时图查询，保证了部署效率。
-- **超越纯文本监督**：将偏好优化的基础从“文本合理性”提升到“生理逻辑一致性”，直接针对临床安全的核心挑战。
-- **可扩展且自动化**：无需大量人工标注的偏好对，通过知识图谱自动产生高质量的生理安全偏好信号。
+| 维度 | SimCast-S2S | 传统方法（如 ECMWF-S2S） | 其他 ML 基线（如 CNN/UNet） |
+|------|-------------|--------------------------|----------------------------|
+| **计算效率** | 极高（GPU分钟级生成百成员集合） | 极低（需数千CPU节点数小时） | 中等（单次前向推理快） |
+| **不确定性建模** | 内生生成，无需后处理 | 依赖扰动初值和物理参数 | 多为确定性输出 |
+| **数据利用效率** | 通过仿真数据预训练克服数据稀缺 | 不适用 | 数据饥渴，易过拟合 |
+| **空间结构保真度** | 更好保留细尺度空间相关性 | 物理一致但可能系统偏差 | 容易过度平滑 |
 
 ---
 
 ## 2. 核心实验方法和设置
 
 ### 使用的数据集
-- **CSB (Clinical Safety Benchmark)**：本文提出的**2,500个场景**的合成基准，专门测试生成式临床推理中的生理约束违规。包含六类场景：
-  - 药物-药物相互作用 (25%)
-  - 禁忌症检测 (20%)
-  - 内稳态违规 (18%)
-  - 剂量错误 (15%)
-  - 器官功能损害 (12%)
-  - 多系统多重用药 (10%)
-- **辅助数据集**（用于通用医学能力评估）：
-  - MedQA-USMLE, PubMedQA, MedMCQA, MMLU-Medical
-- **知识图谱来源**：
-  - 集成 UMLS, DrugBank, Reactome, HPO, SIDER, PharmGKB, STRING 等，共 **847,392 个节点，3.2M 条三元组**。
+| 数据集 | 类型 | 来源 | 用途 |
+|-------|------|------|------|
+| **CESM2-LE** | 气候模拟集合 | Community Earth System Model v2 | 预训练（28个成员，1950–2014） |
+| **ERA5** | 再分析数据 | ECMWF | 微调与测试（1940–2025） |
+
+> 输入变量包括多个压力层（200/500/850 hPa）的风场、温度、湿度、位势高度及地表变量共21个，目标为未来第15–28天的降水异常。
 
 ### 实验设置
-- **基础模型**：Mistral-7B，采用 LoRA 微调。
-- **训练流程**：
-  1. 每个查询生成 K=8 个候选响应。
-  2. 用 scispaCy + UMLS 进行实体抽取与链接。
-  3. HGNN 在子图上计算每个候选的 **PhysioScore**。
-  4. 根据得分生成偏好对，执行 **Iterative ORPO** 更新（共5轮迭代）。
-- **知识图谱构建**：静态快照，HGNN预训练后冻结，仅用于打分。
+- **训练策略**：
+  - 先在 CESM2 上预训练 → 再使用 LoRA 在 ERA5 上微调。
+  - 所有变量转换为标准化异常（standardized anomalies），去除季节循环和长期趋势。
+- **模型结构**：
+  - 五个独立 VAE 分别编码不同物理组（wind, mass, thermal, hydro, precip）。
+  - Latent Space 压缩比达 4× 至 16×。
+  - Diffusion 模型以 VAE 编码后的 latent 表示为条件，预测目标降水 latent。
+- **硬件平台**：单块或多块 A100/H200 GPU。
 
 ### 评估指标
-| 指标 | 描述 |
-|------|------|
-| **CSS (Clinical Safety Score)** | 响应中无生理约束违规的比例（HGNN得分 > 0.85）。 |
-| **RSS (Rule-Engine Safety Score)** | 使用独立的 **DrugBank-Rule 引擎**检查，无警报的比例（完全独立于HGNN）。 |
-| **HR (Hallucination Rate)** | 医生评审的生成内容中存在生理不可能陈述的比例（专家盲评）。 |
-| **DID (Drug Interaction Detection)** | 识别禁忌药物组合的 F1 分数（基于标准标签）。 |
-| **MA (Medical Accuracy)** | 在医学问答数据集上的准确率。 |
-| **PC (Physiological Consistency)** | 测试响应的平均 HGNN 可行性得分。 |
+#### （1）确定性技能（Deterministic Skill）
+- **MAE**（Mean Absolute Error）：平均绝对误差。
+- **ACC**（Anomaly Correlation Coefficient）：异常相关系数。
+
+#### （2）概率性技能（Probabilistic Skill）
+- **RPSS**（Ranked Probability Skill Score）：用于三分位分类预测。
+- **CRPSS**（Continuous Ranked Probability Skill Score）：连续分布评分。
+- **BSS**（Brier Skill Score）：极端事件（>90%分位）预测能力。
+
+#### （3）不确定性量化
+- **PIT Histograms**（Probability Integral Transform）：检验集合是否校准（应接近均匀分布）。
+- **Spread vs. RMSE**：集合离散度与均方根误差的一致性。
+- **Interval Score (MIS)**：综合评价区间预测质量。
+
+#### （4）空间结构真实性
+- **Spatial Autocorrelation**：沿 zonal、meridional、diagonal 方向比较自相关衰减特性。
 
 ### 基线方法对比
-| 基线方法 | 类型 |
-|---------|------|
-| SFT, DPO, ORPO | 监督微调与偏好优化 |
-| SFT+RAG, SFT+DenseRAG | 检索增强生成 |
-| KG-LLM | 静态知识图谱融合 |
-| DrugBank-Rule | 基于规则的运行时防护栏 |
-| SFT+SelfCorrect | 推理时自修正（生成→规则检查→再生） |
-| GPT-4 (Zero-shot & 5-shot) | 闭源模型参考 |
-| SFT-CSB | 在CSB训练集上直接SFT |
+| 类型 | 方法 |
+|------|------|
+| **深度学习基线** | CNN-Small/Medium/Large, UNet-Small/Medium/Large |
+| **物理基线** | ECMWF-S2S（Operational System） |
+| **其他生成模型思想参考** | FuXi-S2S（Encoder-Decoder + Perturbation） |
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
-### 关键性能数据（Ours vs. ORPO）
-| 指标 | ORPO | **Ours (Iter-5)** | **提升** |
-|------|------|------------------|----------|
-| **CSS** | 69.5% | **90.8%** | **+21.3 pp** |
-| **RSS** | 65.2% | **86.4%** | **+21.2 pp** |
-| **HR** | 14.1% | **5.1%** | **-9.0 pp** |
-| **DID** | 72.8% | **91.6%** | **+18.8 pp** |
-| **MA** | 70.1% | **75.2%** | +5.1 pp |
-| **PC** | 0.71 | **0.89** | +0.18 |
+### 关键性能数据（来自 Table 1 和 Figure 3–6）
 
-### 与其他方法的对比
-- **优于 GPT-4 (5-shot)**：尽管参数量少10倍，但在所有安全指标（CSS, RSS, DID）上均超越 GPT-4。
-- **优于 SFT+SelfCorrect**：CSS 高出 **11.4 pp**，表明训练时对齐比推理时自修正更有效。
-- **优于 DrugBank-Rule baseline**：不仅在 CSS 和 DID 上更高，RSS 也达到 **86.4%**（vs. 82.4%），说明模型学习到了超越显式规则的隐含安全模式。
+| 模型 | MAE (×10⁻² std) | ACC（加权） | CRPSS（全球） |
+|------|------------------|--------------|---------------|
+| **SimCast-S2S (Ours)** | **1.30 ± 0.06** | **~0.35** | **显著高于 ECMWF-S2S** |
+| ECMWF-S2S | 1.32 ± 0.06 | ~0.30 | 参考基准 |
+| Best UNet | 1.33 ± 0.06 | — | — |
+| Best CNN | 1.31 ± 0.07 | — | — |
+
+> ✅ SimCast-S2S 在所有指标上均优于或持平于最佳基线。
+
+### 与基线方法的对比结果
+- **确定性预测**：
+  - SimCast-S2S 在 MAE 上优于所有 CNN/UNet 变体和 ECMWF-S2S。
+  - ACC 显著更高（Fig. 2），表明其空间模式匹配更优。
+- **概率性预测**：
+  - **CRPSS 和 RPSS 全球领先**（Fig. 3），尤其在热带太平洋、北美、北大西洋等地优势明显。
+  - 季节维度上，在春夏等难预测季节仍保持正技能（Fig. 4）。
+- **不确定性表现**：
+  - PIT 直方图呈 U 形（under-dispersive），但整体 x²-distance 接近 ECMWF-S2S。
+  - Spread-RMSE 关系更贴近 1:1 线，尤其在热带区域优于 ECMWF-S2S（Fig. 6）。
+  - Interval Score 更低，说明预测区间更尖锐且覆盖更好。
 
 ### 消融实验结果
-| 配置 | CSS | ΔCSS | HR |
-|------|-----|------|----|
-| **Full Model** | 90.8% | — | 5.1% |
-| **w/o HGNN Scoring** | 74.6% | **-16.2 pp** | 12.4% |
-| **w/o Iterative Training** | 79.3% | **-11.5 pp** | 9.8% |
-| **w/o Homeostatic Constraints** | 82.1% | -8.7 pp | 9.4% |
-| **w/o Drug Interaction Penalty** | 84.3% | -6.5 pp | 10.8% |
-| **w/o Path Plausibility** | 86.9% | -3.9 pp | 7.2% |
-
-> **结论**：HGNN打分和迭代训练是性能增益的最主要来源。
-
-### 鲁棒性测试
-- 在合成的 EHR 风格噪声（实体缺失、缩写歧义等）下，CSS 仍保持 **84.2%**，表现出良好鲁棒性。
+- **迁移学习有效性验证**：
+  - 仅在 ERA5 上训练时，SimCast-S2S 性能下降至 **1.37–1.38 ×10⁻² std**（高于 ECMWF）。
+  - 经 CESM2 预训练 + ERA5 微调后，MAE 回升至 **1.30 ×10⁻² std**，证明迁移学习至关重要。
+- **Latent Space 设计优势**：
+  - 直接在物理空间运行扩散模型不可行（计算不现实），latent space 是实现高效生成的关键。
+- **LoRA 的作用**：
+  - 若全参数微调，容易破坏从仿真中学到的通用动力学结构；LoRA 能有效适应域偏移而不损害先验知识。
 
 ---
 
 ## 4. 关键结论和发现
 
 ### 主要发现
-1. **训练时生理对齐显著提升安全性**：将偏好优化建立在结构化的生理知识之上，能有效减少生成内容中的生理不安全行为。
-2. **HGNN 是关键组件**：相比纯规则引擎，HGNN 能捕捉多跳、隐含的生理关系，提供更丰富的监督信号。
-3. **迭代训练至关重要**：动态生成偏好对能逐步暴露更细微的违规，避免静态数据的局限。
-4. **改进非过拟合**：通过 **RSS、DID、HR** 等与HGNN无关的独立指标验证，性能提升是真实有效的，而非对评分器的过拟合。
-5. **跨领域泛化好**：在老年科、儿科等高风险领域提升尤为明显。
+1. **SimCast-S2S 是首个将 Latent Diffusion Model 成功应用于 S2S 降水预测的工作**，实现了高质量概率预测。
+2. **迁移学习 + LoRA 是解决“小样本 + 强不确定性”问题的有效路径**：利用仿真数据扩大训练集规模，显著提升真实场景下的预测技能。
+3. **Latent Space 操作极大提升了生成效率**：
+   - 单 A100 GPU 生成 100 成员集合仅需 **~20.5 分钟**。
+   - 使用 8 块 H200 GPU 可压缩至 **< 2 分钟**（Fig. 8）。
+4. **模型不仅准确，而且生成的空间结构更真实**：
+   - 在 meridional 和 diagonal 方向上的 autocorrelation 更接近 ERA5（Fig. 7），优于 ECMWF-S2S。
+5. **即使未使用后处理、偏差校正或概率标定，SimCast-S2S 仍能挑战最先进的物理系统 ECMWF-S2S**。
 
 ### 方法的局限性
-1. **知识图谱覆盖不全**：约 **4.2%** 的错误源于图谱缺失（尤其在肿瘤学等快速发展的领域）。
-2. **缺乏时间动态建模**：无法处理累积毒性、药物洗脱期等时间相关风险。
-3. **实体链接脆弱**：Negation（否定）、缩写歧义等问题可能导致状态误判。
-4. **评估为合成数据**：所有结果基于 **CSB 合成基准**，尚未在真实电子病历（EHR）上验证。
-5. **计算成本高**：Iterative ORPO 训练耗时约为单次ORPO的4倍。
+- **统计真实性 ≠ 动力学一致性**：
+  - 模型无法保证满足质量守恒、动量平衡等物理定律。
+  - 生成的场可能是统计合理但动态不一致的。
+- **Latent Space 中难以施加显式物理约束**：
+  - 当前框架缺乏机制来强制执行 moisture budget 或能量守恒。
+- **极端事件建模仍有不足**：
+  - 尽管 BSS 表现尚可，但对尾部事件的刻画仍不如理想状态。
+- **解释性较弱**：
+  - 尚未深入分析模型依赖哪些具体物理机制（如 MJO、大气河等）做出预测。
 
 ### 未来工作方向
-1. **外部验证**：在去标识的真实临床笔记上进行盲评验证。
-2. **动态知识更新**：建立 **KG 增量更新机制**（如FDA警报自动注入），解决知识陈旧问题。
-3. **混合架构（Hybrid Architecture）**：部署时引入轻量级验证器，对低置信度输出进行二次检查。
-4. **高效对齐**：探索将HGNN信号蒸馏到小型评分器，降低训练成本。
-5. **时间感知建模**：引入时间序列建模能力，处理动态生理变化。
-6. **扩大评估范围**：纳入匹配规模的 PPO/RLHF 系统和工具增强代理（tool-augmented agents）作为基线。
+1. **引入物理一致性约束**：
+   - 设计 hybrid sampling scheme，在 latent 生成过程中周期性解码并修正物理残差（如 moisture convergence 不平衡）。
+2. **增强可解释性（Explainable AI）**：
+   - 应用 Integrated Gradients、Counterfactual Sampling 等技术识别关键预测因子。
+3. **扩展至多变量联合预测**：
+   - 当前聚焦降水，未来可推广至温度、风速等多变量联合建模。
+4. **探索更多仿真数据源与更大模型容量**：
+   - 结合 Climax、GraphCast 等 foundation model 思路，构建统一的 Earth System Foundation Model。
+5. **实时部署与影响建模应用**：
+   - 利用其低延迟特性，服务于农业、水资源、灾害预警等下游任务。
 
-> **最终结论**：Neurosymbolic Alignment 在受控环境下证明了**基于生理知识的训练时对齐**能够显著、可验证地提升临床LLM的安全性，为构建可信医疗AI提供了新范式，但向真实临床部署的转化仍需克服知识动态性、评估真实性等关键挑战。
+---
+
+> 📌 **总结一句话**：  
+> **SimCast-S2S 展示了“Latent Generative Modeling + Simulation-to-Observation Transfer Learning”是一条高效、可扩展、高性能的数据驱动 S2S 降水预测新范式，有望成为未来次季节预报的重要补充工具。**
 
 </details>
 
 ---
 
-### 11. [When Personality Meets Quantization: A Layer-wise MBTI Analysis of Quantized LLMs](https://arxiv.org/abs/2608.25977)
+### 9. [Affix Cache for Diffusion Large Language Models](https://arxiv.org/abs/2608.26140)
 
-**Authors**: Yao Fu, Lijia Huang, Xiaomin Li, Runchao Li, Yu Yin, Kenneth A. Loparo  
+**Authors**: Kaihua Liang, An Zhong, Xin Tan, Zafar Ayyub Qazi, Hong Xu, Jian Weng, Marco Canini  
 **Category**: cs.CL  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 7.0  
 **Type**: new  
-**ArXiv ID**: 2608.25977v1  
+**ArXiv ID**: 2608.26140v1  
 
 #### Abstract
-Personality is increasingly important in large language models (LLMs), as it shapes users' trust, engagement, and emotional experiences. While the Myers--Briggs Type Indicator (MBTI) has emerged as a common framework for assessing LLMs' personality, existing studies focus primarily on full-precision...
+Diffusion Large Language Models (DLLMs) enable non-autoregressive decoding and bidirectional context modeling, but efficient inference remains challenging. Unlike autoregressive systems, whose key-value (KV) cache can be reused for shared prefixes, DLLMs couple the KV states of shared context tokens...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# When Personality Meets Quantization: A Layer-wise MBTI Analysis of Quantized LLMs —— 核心总结
+# **论文总结：Affix Cache for Diffusion Large Language Models**
+
+---
+
+## **1. 论文的主要贡献和创新点**
+
+### **解决的问题**
+传统的 **Autoregressive LLMs (AR LLMs)** 支持高效的 **prefix caching**，即对共享前缀（如系统提示）的 Key-Value (KV) 缓存可直接复用，显著提升推理效率。然而，**Diffusion Large Language Models (DLLMs)** 由于采用 **bidirectional attention**，其 KV 状态会随着生成过程动态变化，导致共享上下文的缓存状态“过时”（stale），无法直接复用。若完全不复用，则需频繁全量重新计算，带来高昂开销。
+
+现有 DLLM 推理框架（如 dLLM-Cache、dKV-Cache、Fast-dLLM）虽尝试通过周期性全量重算或近似缓存策略缓解问题，但仍无法实现跨请求的 **affix-level cache reuse**（即对任意位置共享文本片段的复用）。
+
+### **提出的新方法：ACache**
+本文提出 **ACache (Affix Cache)**，一种面向 DLLMs 的细粒度缓存复用机制，核心思想是：
+- 将共享文本视为 **affix**（可为 prefix、infix 或 suffix），支持跨请求复用其 KV 缓存。
+- 引入 **Anchor Tokens**：在每个请求中识别一小部分对当前生成任务影响最大的 affix token。
+- **选择性重算**：仅对这些 Anchor Tokens 和请求特定部分进行 KV 重算，其余 affix 缓存直接复用。
+
+### **相比现有方法的优势**
+- **首次实现跨请求的 affix 缓存复用**：突破传统 prefix-centric 缓存限制，利用双向注意力特性支持任意位置共享文本的高效复用。
+- **高精度恢复**：仅重算约 20% 的 affix tokens 即可恢复因直接缓存复用导致的精度损失。
+- **显著提升效率**：在真实推理引擎上实现高达 **55.7% 的重算延迟降低** 和 **1.68× 的端到端吞吐提升**。
+- **通用性强**：适用于不同任务、模型（LLaDA、Dream）、affix 类型（前缀/中缀/后缀）和 shot 数。
+
+---
+
+## **2. 核心实验方法和设置**
+
+### **使用的数据集**
+- **GSM8K**：数学推理任务，测试模型逐步推理能力。
+- **MBPP**：代码生成任务，评估编程能力。
+- **BABILong-0k/qa1**：长上下文检索任务，测试记忆与定位能力。
+
+### **实验设置**
+- **模型**：
+  - **LLaDA-8B-Instruct**：从零训练的 diffusion LLM。
+  - **Dream-v0-Instruct-7B**：基于 AR 模型初始化的 diffusion LLM。
+- **硬件**：NVIDIA A100-SXM4-40GB GPU。
+- **框架**：
+  - 质量评估使用 Hugging Face Transformers。
+  - 效率评估基于自研 **Nano-vLLM** 推理引擎原型（集成 Fast-dLLM）。
+- **默认参数**：
+  - 生成长度：256 tokens（BABILong 为 8）。
+  - Block 长度：32。
+  - 置信阈值：0.9。
+  - Anchor ratio 扫描范围：{0, 0.1, 0.2, 0.3, 0.5, 1.0}。
+
+### **Affix 构造方式**
+- **Prefix**：`Ex Qry Mask`
+- **Infix**：`Qry_head Ex Ans_prompt Mask`
+- **Suffix**：`Qry Mask Ex`
+
+其中 `Ex` 为共享的 few-shot 示例，作为 affix。
+
+### **评估指标**
+- **Accuracy**：任务准确率（GSM8K、MBPP、BABILong）。
+- **Recompute Latency**：KV 重算阶段的前向延迟（ms）。
+- **Throughput**：每秒生成 token 数。
+- **Peak KV Cache Memory**：峰值 KV 缓存占用（GB）。
+
+### **基线方法**
+- **Baseline**：基于 Fast-dLLM 的 Nano-vLLM 原型，无 ACache，周期性全量重算。
+- **Direct Reuse (Anchor ratio = 0)**：直接复用整个 affix 缓存（会导致精度下降）。
+- **Full Recomputation (Anchor ratio = 1)**：完全重算所有 affix tokens。
+
+---
+
+## **3. 主要实验结果和性能指标**
+
+### **关键性能数据**
+
+#### **(1) 准确率恢复效果（Figure 4）**
+- 在 **1-shot 设置下**，直接复用（ratio=0）导致严重精度下降（如 LLaDA GSM8K 下降达 49.5%）。
+- 使用 **ACache (ratio=0.2)** 可恢复大部分精度：
+  - 1-shot 平均准确率从 37.28% 提升至 **52.61%**。
+  - 2-shot 下接近全重算性能（58.03% vs 58.41%）。
+- 对 **infix 和 suffix** 同样有效，验证了 affix 复用的通用性。
+
+#### **(2) 推理效率提升（Tables 1 & 2）**
+| 模型 | 数据集 | Batch | 重算延迟降低 | 吞吐提升 |
+|------|--------|-------|---------------|-----------|
+| LLaDA | GSM8K | 16 | **55.7%** | **1.60×** |
+| LLaDA | MBPP | 16 | 53.7% | **1.68×** |
+| Dream | GSM8K | 16 | 42.7% | 1.55× |
+| Dream | MBPP | 16 | 40.0% | **1.63×** |
+
+> 注：Batch=1 时因 Anchor selection 开销未充分摊销，可能略慢；但 Batch≥4 后全面优于基线。
+
+#### **(3) 内存优化（Appendix Table 4）**
+- 峰值 KV 缓存内存最高降低 **43.3%**（LLaDA GSM8K, 4-shot, batch=16）。
+- 共享前缀越长、批大小越大，节省越明显。
+
+### **消融实验结果**
+
+#### **(1) 非 Anchor 缓存是否必要？（Figure 5 & 6）**
+- **KeepNA**（保留非 Anchor 缓存） vs **DropNA**（丢弃非 Anchor 缓存）：
+  - 在 Anchor ratio=0.2 时，LLaDA 上准确率差距达 **17.66%**（43.01% vs 25.35%）。
+  - Dream 上也有 **6.57%** 差距。
+- 结论：**非 Anchor 缓存携带重要共享上下文信息，不能简单丢弃**。ACache 不是 token 剪枝，而是精细的状态同步机制。
+
+#### **(2) Anchor 选择机制对比（Figure 7）**
+- 与 **CacheBlend-style HKVD**（基于 KV 差异）对比：
+  - ACache 在 1-shot 下平均准确率高出 **11.04%**（ratio=0.2）。
+- 结论：**masked-to-affix attention 信号更适合作为 Anchor 选择依据**，因其直接反映生成 token 对 affix 的依赖。
+
+#### **(3) Anchor Selection 开销（Appendix B.3）**
+- 单次开销：**48.1–74.0ms**，主要来自一次额外前向传播（attention probe）。
+- 该开销可被后续重算节省快速摊销，**batch≥2 时即可实现净收益**。
+
+---
+
+## **4. 关键结论和发现**
+
+### **主要发现**
+1. **DLLMs 支持 affix-level 缓存复用**：得益于 bidirectional attention，共享文本无论位于前、中、后均可作为缓存对象。
+2. **Anchor Tokens 是关键**：仅少量 affix tokens 对生成结果有显著影响，选择性重算即可维持上下文一致性。
+3. **ACache 显著提升效率与精度平衡**：以极低重算代价（~20% tokens）恢复几乎全部精度，并大幅提升吞吐。
+4. **非 Anchor 缓存具有语义价值**：直接丢弃会导致严重性能下降，说明缓存复用不仅是计算优化，更是上下文传递机制。
+
+### **局限性**
+1. **原型仅支持 prefix**：受限于 Nano-vLLM 的 paged KV 设计，目前系统原型仅实现 prefix 复用，infix/suffix 需更复杂的物理-逻辑映射。
+2. **依赖预定义 affix**：当前假设共享文本在推理前已知且固定，缺乏在线发现共享模式的能力（如 AR 中的动态 prefix 匹配）。
+3. **Anchor selection 为一次性操作**：未考虑 decoding 过程中 Anchor 动态变化的可能性。
+
+### **未来工作方向**
+- 支持 **infix/suffix 的完整运行时实现**，验证其在真实场景下的端到端收益。
+- 设计 **动态 affix 发现机制**，自动识别高频共现文本并构建共享缓存池。
+- 探索 **动态 Anchor 更新** 策略，适应 decoding 过程中的上下文演化。
+- 将 ACache 与其他 DLLM 加速技术（如 dKV-Cache、FlashDLM）结合，进一步优化性能。
+
+---
+
+> **一句话总结**：  
+> ACache 首次实现了 DLLMs 中跨请求的 affix 缓存复用，通过引入 Anchor Tokens 实现“选择性同步”，在仅重算 ~20% affix tokens 的情况下恢复精度，并在真实系统中实现高达 1.68× 的吞吐提升，为 DLLM 高效推理开辟了新路径。
+
+</details>
+
+---
+
+### 10. [Toward Equitable Low-Carbon Mobility: Fairness-Aware Demand Prediction for Expanding Bike-Sharing Systems](https://arxiv.org/abs/2608.26451)
+
+**Authors**: Man Luo, Yixuan Zhao  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 7.0  
+**Type**: new  
+**ArXiv ID**: 2608.26451v1  
+
+#### Abstract
+Bike-sharing systems are an important component of low-carbon urban mobility, but continued expansion creates challenges in both cold-start prediction and equitable resource allocation. Newly deployed stations lack historical ridership records, causing a mismatch between training and inference for g...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# **论文核心结论与实验结果总结**
+
+## **1. 论文的主要贡献和创新点**
+
+### **解决的问题**
+该论文针对**低收入社区在共享单车系统扩展中面临的结构性不平等问题**，指出当前基于历史需求数据的预测模型存在两大挑战：
+- **冷启动问题（Cold-Start Problem）**：新建站点缺乏历史骑行记录，导致图神经网络（GNN）在训练与推理阶段存在分布差异。
+- **公平性偏差（Fairness Bias）**：低收入社区的历史骑行量偏低可能源于基础设施不足而非真实需求弱，若直接用此类数据训练模型，会**复制并加剧现有的空间不平等**，使资源持续向高收入区域倾斜。
+
+### **提出的新方法：FairGIN**
+作者提出了 **FairGIN（Fairness-aware Graph Neural Network）**，一个面向扩展型共享单车系统的公平感知图神经网络框架，包含三个核心组件：
+
+1. **Expansion-Simulated Increment Training (ESIT)**  
+   在训练过程中随机将部分现有站点模拟为“伪新站点”，并屏蔽其历史需求序列，以模拟实际部署时的冷启动场景，从而缩小训练与推理之间的图结构与特征分布差距。
+
+2. **Attention-Based Knowledge Transfer**  
+   引入可学习的温度缩放注意力机制，使新站点能从已有站点自适应地转移知识。通过正交映射对齐嵌入空间，并结合门控机制融合本地空间特征与迁移表示，提升冷启动站点的表征质量。
+
+3. **Fairness-Aware Optimization**  
+   在损失函数中引入**收入分层正则化项（income-stratified regularization）**，显式减少不同收入群体间的预测需求差异；同时设计**公平校准的部署评分函数**，在决策层面优先考虑低收入区域。
+
+### **相比现有方法的优势**
+- **统一建模动态拓扑与公平性**：首次将归纳式图学习（inductive GNN）与公平性优化联合建模，解决了“冷启动”与“公平性”双重挑战。
+- **端到端可训练**：所有模块可联合优化，无需后处理或额外干预。
+- **部署灵活**：支持对任意新站点进行零样本预测，并可通过调节公平权重实现效率与公平的权衡。
+
+---
+
+## **2. 核心实验方法和设置**
+
+### **使用的数据集**
+实验基于两个公开的真实世界共享单车数据集：
+
+| 数据集 | 城市 | 时间范围 | 现有站点数 (N) | 新增站点数 (M) | 收入中位数 |
+|-------|------|----------|----------------|----------------|-------------|
+| **NYC Citi Bike** | 纽约 | 2018–2023 | 746 | 312 | \$72,800 |
+| **Seattle Bikeshare** | 西雅图 | 2017–2018 | 186 | 61 | \$93,500 |
+
+**辅助数据来源**：
+- POI 分布（OpenStreetMap）
+- 道路网络（OSMnx）
+- 天气（NOAA）
+- 出租车流量（TLC/Rideshare）
+- 收入信息（ACS 5年估计）
+
+### **实验设置与评估指标**
+
+#### **任务设定**
+- 在现有站点上训练模型，在**从未见过的新站点**上测试需求预测能力（归纳学习 setting）。
+- 所有基线方法均适配至相同协议：新站点无历史需求输入。
+
+#### **评估指标**
+
+| 类别 | 指标 | 描述 |
+|------|------|------|
+| **准确性** | MAE, RMSE | 新站点上的平均绝对误差与均方根误差 |
+| **公平性** | RFG（Region-based Fairness Gap） | 不同收入组人均预测需求差异 |
+| | IFG（Individual-based Fairness Gap） | 基于人口加权的个体站点级不公平度量 |
+| | \|ρ\|（Spearman’s ρ） | 预测需求与街区收入的相关性，越接近0越好 |
+
+#### **基线方法对比**
+涵盖六类代表性方法：
+- **统计模型**：ARIMA, LSTM
+- **时空图模型**：STGCN, DCRNN
+- **公平感知模型**：FairST
+- **归纳式GNN**：GraphSAGE, DA-MRGNN, KITS
+- **城市大模型**：UrbanGPT
+
+---
+
+## **3. 主要实验结果和性能指标**
+
+### **关键性能数据（见 Table II）**
+
+| 方法 | NYC – MAE ↓ | NYC – RFG ↓ | Seattle – MAE ↓ | Seattle – \|ρ\| ↓ |
+|------|------------|-------------|------------------|--------------------|
+| KITS（最佳准确率基线） | 2.65 | 2.02 | 2.19 | 0.326 |
+| FairST（最佳公平性基线） | 2.91 | 1.89 | 2.43 | 0.309 |
+| **FairGIN（本文）** | **2.23** | **1.14** | **1.87** | **0.162** |
+| **相对提升** | +15.8% MAE | -33.3% RFG | +14.6% MAE | -45.5% \|ρ\| |
+
+> ✅ FairGIN 在**所有指标上均达到 SOTA**，且在保持高精度的同时显著降低收入相关偏见。
+
+### **与基线方法的对比结果**
+- **传统图模型（STGCN/DCRNN）表现差**：因无法处理动态拓扑变化，在冷启动下性能严重下降。
+- **归纳式方法（GraphSAGE/KITS）提升准确率但未改善公平性**：虽能泛化至新节点，但未引入公平约束，仍延续历史不平等模式。
+- **FairST 公平性较好但准确率受限**：基于固定图结构，难以适应新站点加入后的拓扑演化。
+- **UrbanGPT 表现中等**：依赖提示工程，空间推理不足以纠正系统性群体偏差。
+
+### **消融实验结果（Ablation Study）**
+移除各模块后在 NYC 上的表现退化（Fig. 3）：
+
+| 变体 | MAE ↑ | RFG ↑ | 说明 |
+|------|--------|--------|------|
+| w/o ESIT | +27.3% | +64.0% | 冷启动模拟至关重要 |
+| w/o KT（知识迁移） | +17.0% | +47.4% | 注意力机制有效识别相似源站点 |
+| w/o FL（公平损失） | +2.2% | +69.3% | 显著增加不公平性，验证公平正则必要性 |
+| w/o TS（温度缩放） | +8.1% | +17.5% | 自适应注意力集中提升鲁棒性 |
+
+> 🔍 **ESIT 是基础，FL 是公平性的关键驱动因素**。
+
+---
+
+## **4. 关键结论和发现**
+
+### **主要发现**
+1. **冷启动与公平性需协同建模**：仅提高预测准确性无法解决结构性不公；必须在嵌入学习阶段就注入公平意识。
+2. **FairGIN 实现效率与公平双赢**：在 NYC 和 Seattle 上均显著优于各类基线，证明其跨城市泛化能力强。
+3. **公平部署策略有效提升低收入区覆盖**：使用 `Score = ŷ + α·I[j∈g⁻]` 进行排序后，低收入站点入选比例从 ~20% 提升至 **>55%**，且所选站点仍有较高预测需求（Table III & V），表明**公平性提升未牺牲服务效率**。
+4. **参数敏感性合理可控**：ESIT 掩码率 `p=0.15`、公平权重 `λ_fair=0.3` 为最优配置，符合纽约年均扩张速率（10–20%）。
+
+### **方法的局限性**
+- **二元收入划分**：仅以城市中位收入划分为高低两组，忽略了低收入内部的异质性（如 Table VI 显示极低收入区预测误差更高）。
+- **单一保护属性**：仅考虑收入，未纳入种族、汽车拥有率等其他社会脆弱性维度。
+- **静态特征假设**：空间特征（POI、人口密度）未随时间更新，长期部署可能失效。
+- **地理适用性待验证**：目前仅在美国有桩系统验证，是否适用于无桩系统或全球南方数据稀疏地区尚不明确。
+
+### **未来工作方向**
+- 使用**连续敏感变量**（如 Wasserstein fairness）或**多属性公平目标**（multi-attribute fairness）。
+- 构建**动态更新的空间编码器**，定期融合最新城市数据。
+- 探索**跨城市迁移学习**，缓解数据稀缺地区的冷启动问题。
+- 将框架推广至其他低碳出行方式（如电动滑板车、微公交）的公平规划。
+
+---
+
+> 📌 **总结一句话**：  
+> **FairGIN 成功将归纳式图学习与公平性优化相结合，在提升新建共享单车站点需求预测精度的同时，显著减少了对低收入社区的系统性忽视，为构建真正包容的低碳交通系统提供了可落地的技术路径。**
+
+</details>
+
+---
+
+### 11. [A Unified Framework for Fair and Personalized Decentralized Learning under Communication Constraints](https://arxiv.org/abs/2608.26493)
+
+**Authors**: Krishnendu S. Tharakan, Carlo Fischione  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 7.0  
+**Type**: new  
+**ArXiv ID**: 2608.26493v1  
+
+#### Abstract
+Decentralized learning systems aim to collaboratively train models across multiple clients without relying on a central coordinator. While decentralization improves scalability, privacy, and robustness, it also exacerbates three fundamental challenges: statistical heterogeneity across clients, fairn...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# 论文总结：A Unified Framework for Fair and Personalized Decentralized Learning under Communication Constraints
 
 ---
 
 ## 1. 论文的主要贡献和创新点
 
-### ✅ 解决的问题
-当前关于 **Large Language Models (LLMs)** 的人格研究主要集中于 **full-precision 模型**，且仅基于最终输出进行评估。然而，在实际部署中，**quantized LLMs**（如 4-bit 或 2-bit）被广泛用于降低内存占用和推理成本。因此，以下关键问题尚未被系统研究：
+### 解决的问题
+本文旨在解决**去中心化学习**（decentralized learning）中三个核心挑战的联合优化问题：
+- **统计异质性**（statistical heterogeneity）：客户端数据分布非独立同分布（non-iid），导致单一全局模型对部分客户端表现不佳。
+- **公平性**（fairness）：传统方法优化平均性能，可能牺牲少数或高损失客户端的利益。
+- **通信约束**（communication constraints）：频繁传输高维模型更新在带宽受限、能耗敏感的边缘网络中不可行。
 
-- **量化是否影响 LLM 的人格特质？**
-- **人格判断是如何在模型各层中逐步形成的？**
-- **推理过程中的解码策略是否会引发“人格漂移”（personality drift）？**
+核心问题是：**在通信受限条件下，去中心化学习能实现多高的公平性？**
 
-本文首次系统地探讨了这些问题。
+### 提出的新方法与新思路
+作者提出了 **DMFL-SQ**（Decentralized Multi-Task Fair Learning with Sparse-Quantized Event-triggered Communication），一个统一的算法框架，首次将以下三者集成于同一去中心化学习范式中：
+- **图结构个性化**（graph-based personalization）：通过图正则项 $ R_g(w) $ 耦合相邻客户端的模型，允许个性化同时利用相似性。
+- **无先验公平性目标**（agnostic fairness）：采用 agnostic mixture 风险 $ \Phi(w) = \sup_{\lambda \in \Lambda} \sum_i \lambda_i F_i(w) $，优化最坏情况下的混合风险，提升对高损失客户端的鲁棒性。
+- **压缩事件触发通信**（compressed event-triggered communication）：结合稀疏化（sparsification）、量化（quantization）和事件触发机制，仅当模型变化足够大时才发送稀疏量化的更新。
 
----
+### 相比现有方法的优势
+| 特性 | 现有方法（如 D-PSGD, CHOCO-SGD, q-FFL） | DMFL-SQ |
+|------|----------------------------------------|--------|
+| 去中心化 | 部分支持 | ✅ 完全去中心化 |
+| 个性化 | ❌ 多数为全局模型 | ✅ 图正则化支持个性化 |
+| 公平性 | ❌ 或仅限中心化场景 | ✅ 支持去中心化公平优化 |
+| 通信效率 | ✅ 支持压缩 | ✅ 支持稀疏+量化+事件触发 |
+| 理论保证 | 部分有收敛性 | ✅ 同时提供 **non-convex 收敛率** 和 **PAC-Bayes 泛化界** |
 
-### 🚀 提出的新方法与新思路
-
-#### （1）**首个面向量化 LLMs 的 MBTI 人格评估框架**
-- 将 **MBTI personality assessment** 形式化为单 token 分类任务（A–G 七级量表），采用 **greedy decoding** 消除采样随机性，提升可复现性。
-- 覆盖多种量化方法：主流 **4-bit GPTQ、AWQ** 和极端 **2-bit AQLM** 变体。
-
-#### （2）**引入 Layer-wise 决策动态分析**
-- 首次从 **layer-wise entropy** 和 **confidence gap** 角度分析人格决策的演化路径：
-  - **Entropy** 衡量选项分布的不确定性；
-  - **Confidence gap** 衡量最可能选项与次优选项之间的概率差。
-- 揭示人格并非静态属性，而是随网络深度逐渐收敛的动态过程。
-
-#### （3）提出 **Uncertainty-Amplified Layer Decoding (UALD)**
-- 一种受 DoLa 启发但专为 **主观任务设计** 的推理机制：
-  - 不操作全词表，而是将 logits 投影到 **七个 MBTI 回答选项** 上；
-  - 使用 **scaled additive combination** 放大中间层的不确定性信号；
-  - 公式：`p(UALD) = log P_mature + λ * log P_premature`
-- 通过调节 `λ`（evolution scale）控制对早期层表示的信任程度，从而探测解码过程中的人格稳定性。
-
----
-
-### 🔍 相比现有方法的优势
-
-| 维度 | 传统方法 | 本工作 |
-|------|---------|--------|
-| 模型精度 | 仅评估 full-precision | 覆盖 4-bit 与 2-bit 量化模型 |
-| 评估粒度 | 仅看最终输出 | 引入 **layer-wise 动态分析** |
-| 人格可控性 | 忽略提示工程影响 | 包含 **personality-conditional prompting** |
-| 推理扰动 | 忽视解码策略影响 | 提出 **UALD** 主动诱导并测量 personality drift |
-
-> ✅ **优势总结**：更贴近真实应用场景，揭示了人格表现对量化、提示、解码等实现细节的高度敏感性。
+DMFL-SQ 是首个在**完全去中心化、非凸目标**下，同时兼顾个性化、公平性和通信效率，并提供严格理论分析的框架。
 
 ---
 
 ## 2. 核心实验方法和设置
 
-### 📚 数据集与测试工具
-- 使用标准 **60题 MBTI 问卷**（源自 [16personalities.com](https://www.16personalities.com)）
-- 每道题提供七种响应选项（A–G），对应不同程度的同意/不同意。
-- 所有问题映射到四个 MBTI 二元维度：
-  - **E/I**: Extraversion vs Introversion
-  - **N/S**: Intuition vs Sensing
-  - **T/F**: Thinking vs Feeling
-  - **J/P**: Judging vs Perceiving
+### 使用的数据集
+1. **CIFAR-10**：
+   - 标准图像分类任务。
+   - 数据划分为 20 个客户端，使用 Dirichlet 分布（$\alpha=0.1$）生成强 non-iid 划分。
+   - 模型：CNN（两层卷积 + 两层全连接）。
 
-> 最终 MBTI 类型由每个维度得分符号决定（正为第一项，负为第二项）。
+2. **MUSMET EEG Dataset**：
+   - 真实世界脑电图（EEG）情感识别数据集，包含 20 名音乐家的多模态数据。
+   - 任务：四分类（aggressive, happy, relax, sad）。
+   - 每位音乐家作为一个客户端，天然具有高度异质性。
+   - 模型：3 层 MLP（隐藏层 256, 128）。
 
----
+### 实验设置和评估指标
+- **通信图**：默认环形拓扑（ring），也测试 ER 和 RGG 图。
+- **训练轮次**：固定 $ T = 500 $。
+- **本地更新**：每轮一次 local update。
+- **评估指标**：
+  - **平均准确率**（Average Accuracy）
+  - **最差客户端准确率**（Worst-client Accuracy）
+  - **底部 10% 客户端平均准确率**（Bottom-10% Accuracy）
+  - **准确率标准差**（Accuracy Std）
+  - **Jain’s Fairness Index**（衡量公平性）
+  - **总通信开销**（Bits per client）
 
-### ⚙️ 实验设置
-
-#### （1）模型选择
-覆盖多个主流开源 LLM 家族及量化版本：
-
-| 模型家族 | 参数规模 | 量化方法 |
-|--------|--------|--------|
-| LLaMA3.1 | 8B, 70B | FP16, GPTQ-INT4, AWQ-INT4, AQLM-PV-INT2 |
-| Mistral | 7B, 24B | 同上 |
-| Qwen2.5 | 14B, 72B | 同上 |
-
-所有模型均来自 Hugging Face 公开仓库。
-
----
-
-#### （2）两种 Prompting 范式
-| 类型 | 描述 |
-|-----|------|
-| **Unconditional Prompting** | 无显式人格引导，探查模型内在倾向（default personality） |
-| **Personality-Conditional Prompting** | 明确指令模型以某 MBTI 类型作答（如 “respond as an ENFJ”），测试其可控性 |
-
----
-
-#### （3）评估指标
-| 指标 | 定义 |
-|------|------|
-| **MBTI Type Prediction** | 基于 60 题加权汇总得到最终人格类型 |
-| **Cross-Precision Agreement** | 量化模型预测结果与原始 FP16 模型的一致性 |
-| **Prompt Consistency** | 条件提示下模型是否遵循指定人格 |
-| **Layer-wise Entropy** | 各层输出分布的不确定性 |
-| **Confidence Gap** | Top-1 与 Top-2 选项的概率差距 |
-| **Hamming Distance** | 在 UALD 中衡量 personality drift 程度（最多 4 位不同） |
-
----
-
-#### （4）基线对比
-- **Baseline**：Full-precision FP16 模型作为黄金标准
-- 对比不同量化方法（GPTQ, AWQ, AQLM）在相同任务下的表现差异
+### 基线方法对比
+- **D-PSGD**：去中心化 SGD，全精度模型交换。
+- **CHOCO-SGD**：去中心化，使用压缩 gossip 通信。
+- **DSGT**：去中心化梯度追踪，提升收敛性。
+- **q-FFL**：基于服务器的公平联邦学习（作为公平性参考）。
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
-### 📊 关键性能数据与对比
+### 关键性能数据（MUSMET 数据集，Table II）
+| Method | Avg. Acc. ↑ | Worst Acc. ↑ | Bottom-10% Acc. ↑ | Jain's Index ↑ | Bits/Client ↓ |
+|--------|-------------|--------------|-------------------|----------------|---------------|
+| DSGT | 0.3132 | 0.0501 | 0.0610 | 0.7103 | 1998.3 M |
+| q-FFL | 0.4114 | 0.0716 | 0.1091 | 0.7983 | 1618.0 M |
+| D-PSGD | 0.5716 | 0.1957 | 0.2236 | 0.8713 | 1438.6 M |
+| CHOCO-SGD | 0.6928 | 0.1935 | 0.2320 | 0.9074 | 97.4 M |
+| **DMFL-SQ** | **0.8030** | **0.4810** | **0.5160** | **0.9779** | **0.6 M** |
 
-#### （1）主导人格类型高度一致
-- 在 **unconditional prompting** 下，几乎所有模型（无论大小或量化方式）都表现为 **ENFJ**。
-- ENFJ 特征：外向、直觉、情感导向、判断型 —— 符合“AI助手”的理想形象（warm, supportive, guidance-oriented）。
+### 与基线方法的对比结果
+- **准确性**：DMFL-SQ 在 **CIFAR-10** 和 **MUSMET** 上均达到最高平均准确率。
+- **公平性**：显著提升最差客户端和尾部客户端的性能，Jain’s Index 接近 1，表明极高的公平性。
+- **通信效率**：
+  - 通信量仅为 **0.6 Mbits/client**，远低于所有基线（即使是压缩的 CHOCO-SGD 的 97.4 M）。
+  - 在相同通信预算下，DMFL-SQ 准确率远超其他方法（见 Fig. 2, 8）。
 
-> 💡 推测原因：该倾向源于 RLHF、DPO 等后训练过程塑造的“AI Assistant” persona。
+### 消融实验结果（Table III）
+消融实验验证了各组件的重要性：
+| Variant | Worst Acc. ↑ | Bits/Client ↓ |
+|---------|--------------|---------------|
+| No fairness ($p=0$) | 0.3743 | 0.3 M |
+| No graph coupling ($\sigma=0$) | 0.3862 | 0.2 M |
+| No event-triggering | 0.4397 | 4.0 M |
+| No sparsification | 0.4504 | 2.2 M |
+| No quantization | 0.4405 | 5.3 M |
+| **DMFL-SQ** | **0.4810** | **0.6 M** |
 
----
-
-#### （2）4-bit 量化基本保留人格结构，2-bit 则显著退化
-| 指标 | 4-bit (GPTQ/AWQ) | 2-bit (AQLM) |
-|------|------------------|-------------|
-| Cross-precision agreement | 高（多数保持一致） | 显著下降 |
-| Prompt consistency | 较好维持 | 极不稳定，常偏离目标类型 |
-| Example: LLaMA3.1-8B | 4-bit 与 FP16 高度一致 | 2-bit 出现频繁 switch（见 Table 12） |
-
-> ❗ 极端压缩破坏了细粒度决策边界，导致人格不可控。
-
----
-
-#### （3）人格决策是逐层演化的动态过程
-- **早期层（~1–21）**：
-  - 高 entropy，低 confidence gap → 多个选项概率接近，存在显著不确定性。
-- **后期层（~22–32）**：
-  - entropy 显著下降，gap 快速上升 → 决策趋于明确，形成稳定人格判断。
-
-> 图形证据见 Figure 1–2：决策承诺（decisional commitment）出现在高层。
-
----
-
-#### （4）解码策略可诱发 personality drift
-使用 **UALD** 调节 `λ` 发现：
-
-| 设置 | 结果 |
-|------|------|
-| **Unconditional + FP16** | 随 `λ` 增大出现明显 drift（如 ENFJ → ISTP） |
-| **ENFJ-conditioned + FP16** | 即使 `λ` 很大仍保持稳定 → **人格对齐增强鲁棒性** |
-| **Quantized models** | GPTQ 更早漂移，AWQ 相对稳定；但 2-bit 模型行为不一（部分意外稳定，部分极度敏感） |
-
-> Figure 3–18 展示了不同模型在 evolution scale 下的 Hamming distance 变化。
-
----
-
-#### （5）模型规模与鲁棒性关系
-| 模型规模 | 表现 |
-|--------|------|
-| **>70B 大模型** | FP16 下极难改变人格（始终为 ENFJ），但量化后反而更容易被 prompt 控制 |
-| **<14B 小模型** | 本身对 prompt 更敏感，但 4-bit 保留较好一致性；2-bit 完全失控 |
-
-> 表格支持：Table 7（LLaMA-70B）、Table 3（LLaMA-8B）
-
----
-
-#### （6）消融实验：条件提示的有效性
-- 当 prompt 与内在偏好一致（如 ENFJ-conditioned → ENFJ）时：
-  - entropy 下降更快，gap 上升更陡 → 决策更果断。
-- 当 prompt 与内在冲突（如 ISTP-conditioned）时：
-  - entropy 持续偏高，gap 提升缓慢 → 存在内部张力。
-
-> Figure 2(e–h) 清晰展示这一现象。
+- 移除 **fairness** 或 **graph coupling** 显著降低公平性。
+- 移除 **event-triggering**, **sparsification**, 或 **quantization** 导致通信成本急剧上升（4–50 倍），且公平性下降。
+- 表明 **三者协同作用** 才能实现最优的 accuracy-fairness-communication 权衡。
 
 ---
 
 ## 4. 关键结论和发现
 
-### ✅ 主要发现
+### 主要发现
+1. **公平性、个性化与通信效率可兼得**：在去中心化学习中，通过合理设计（图耦合 + 无先验公平目标 + 压缩事件触发），可以同时实现高公平性、高性能和低通信开销。
+2. **理论收敛性不受影响**：尽管引入了压缩、延迟和事件触发，DMFL-SQ 仍能达到 **$ O(T^{-1/2}) $** 的非凸收敛速率，与标准 SGD 相当。
+3. **真实异质数据上表现优异**：在自然异质的 MUSMET EEG 数据上，DMFL-SQ 不仅准确率最高，且显著提升了模型公平性。
+4. **通信成本大幅降低**：相比基线，通信量减少 **两个数量级以上**，适用于资源受限的边缘设备。
 
-1. **LLM 的人格不是静态属性，而是一个 emergent、layer-dependent 的决策过程**。
-2. **ENFJ 是跨模型家族和量化级别的主导人格类型**，反映“AI助手”角色的普遍设计取向。
-3. **4-bit 量化基本保留人格结构**，但在极端 2-bit 压缩下，人格一致性、可控性和跨精度稳定性严重受损。
-4. **人格决策始于模糊的中间状态，在深层才逐渐固化**，符合人类自我认知发展的心理学类比。
-5. **推理解码策略（如 UALD）可以主动诱导 personality drift**，说明人格归因对实现细节敏感。
-6. **人格对齐的提示能增强模型鲁棒性**，减少解码扰动带来的波动。
+### 方法的局限性
+- **依赖图结构质量**：性能受通信图连通性影响（见 Fig. 7），稀疏图可能导致信息传播慢。
+- **公平性选择存在差距**：经验选择的公平成分与总体最优之间存在 selection gap，虽在理论中被控制，但仍可能影响初期收敛。
+- **超参数调优复杂**：需平衡 $ p $（公平权重）、$ \sigma $（图耦合强度）、触发阈值 $ \theta_t $ 等多个参数。
 
----
-
-### ⚠️ 方法的局限性
-
-1. **未涵盖所有量化技术**：缺少对 **QAT**（Quantization-Aware Training）和 **PEFT** 方法的研究。
-2. **仅限单轮对话场景**：未考虑多轮交互中人格的动态演变。
-3. **依赖概率指标，缺乏因果解释**：无法确定为何某些维度（如 E/N）更具顽固性。
-4. **局限于 MBTI 框架**：结论可能不适用于 Big Five 等其他人格体系。
-5. **未包含闭源商业模型**（如 GPT-4o, Claude, Gemini），外部有效性受限。
+### 未来工作方向
+- 将框架扩展至 **动态图拓扑** 和 **异步通信** 场景。
+- 探索更高效的 **自适应压缩与触发策略**。
+- 研究 **隐私保护**（如差分隐私）与当前框架的结合。
+- 将 PAC-Bayes 分析应用于更多类型的公平性目标。
 
 ---
 
-### 🔮 未来工作方向
-
-1. **扩展至多轮人格追踪**：研究对话历史如何影响人格表达。
-2. **结合 mechanistic interpretability**：定位具体神经元或电路负责人格相关判断。
-3. **开发人格感知的量化算法**：在压缩过程中保留关键人格特征。
-4. **探索人格与安全性的关联**：例如，是否某些人格更易产生幻觉或顺从性（sycophancy）？
-5. **构建人格可控的 agent 系统**：实现个性化聊天机器人定制。
-
----
-
-## 总结一句话
-
-> **LLM 的人格既是训练产物，也是架构、量化、提示与解码共同作用的结果 —— 它不是一个固定的标签，而是一条在层层计算中逐渐成型的行为轨迹。**
+> **总结**：DMFL-SQ 成功构建了一个在 **decentralized, non-convex, communication-constrained** 设置下，统一处理 **personalization, fairness, and efficiency** 的理论与算法框架，实验证明其在准确率、公平性和通信效率上全面超越现有方法，为实际部署提供了强有力的支持。
 
 </details>
 
 ---
 
-### 12. [Probabilistic Performance Analysis of Parallel Signature Search Strategies in Multi-Level Tree Networks](https://arxiv.org/abs/2608.25087)
+### 12. [AffectOmni: RL-Verifiable People-Centric Grounded Affective Reasoning for Social and Art-Related Scenes](https://arxiv.org/abs/2608.26193)
 
-**Authors**: Jingwei Li, Thomas G. Robertazzi  
-**Category**: cs.DC  
-**Published**: 2026-08-27  
-**Score**: 7.0  
+**Authors**: Yibo Wang, Rui Yang, Jisheng Dang, Bimei Wang, Yitao Wu, Pengfei Cao, Wencan Zhang, Hong Peng, Bin Hu, Tat-Seng Chua  
+**Category**: cs.AI  
+**Published**: 2026-08-28  
+**Score**: 6.5  
 **Type**: new  
-**ArXiv ID**: 2608.25087v1  
+**ArXiv ID**: 2608.26193v1  
 
 #### Abstract
-Hierarchical distributed search, locating a data pattern, or signature, across a tree-structured collection of files, underlies distributed index traversal, deep packet inspection and sequence alignment. A practitioner must decide how much parallelism to employ: scan each layer sequentially, fan out...
+Multimodal large language models (MLLMs) achieve strong performance on VQA and scene understanding, yet affective reasoning remains vulnerable to shortcut behavior. Models may predict correct answers while neglecting people-centric cues such as micro expressions and body language, which weakens trac...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# 论文总结：*Probabilistic Performance Analysis of Parallel Signature Search Strategies in Multi-Level Tree Networks*
+# 论文总结：AffectOmni: RL-Verifiable People-Centric Grounded Affective Reasoning for Social and Art-Related Scenes
 
 ---
 
 ## 1. 论文的主要贡献和创新点
 
 ### 解决了什么问题
-该论文研究了在**多级树网络（multi-level tree networks）**中进行**并行签名搜索（parallel signature search）**的性能预测问题。具体而言，它解决了以下挑战：
+当前的 **Multimodal Large Language Models (MLLMs)** 在视觉问答（VQA）和场景理解任务中表现优异，但在 **affective reasoning**（情感推理）方面存在严重短板。尽管模型可能给出正确答案，但其推理过程常依赖于全局上下文线索（如背景、音乐等），而忽视了关键的 **people-centric cues**（以人为中心的线索），例如微表情（micro expressions）、肢体语言（body language）和人际互动动态。
 
-- 在搜索开始前，如何**预先（a priori）预测**不同并行策略下的**完成时间（completion time）**。
-- 现有分析方法（如 [1]）存在局限：它们假设每个节点都含有签名，或依赖运行时才能获知的信息（如实际签名数量），导致预测不准确或不可用。
-- 多签名文件、容量约束、不同并行粒度（层、子树、全树）等因素使建模复杂化。
+这种“捷径行为”（shortcut behavior）导致：
+- 推理过程不可追溯（untraceable）
+- 难以进行外部验证（non-verifiable）
+- 在真实世界应用（如心理辅导、社交机器人）中缺乏可信度
+
+此外，现有的 **RLHF / GRPO** 强化学习框架在奖励设计上存在不足，尤其是 **LLM as a Judge** 机制容易出现 **score clustering** 和 **calibration drift**，导致不同质量的推理路径获得相似分数，削弱了奖励信号的区分能力。
+
+---
 
 ### 提出了什么新方法或新思路
-作者提出了一套**统一的概率性性能分析框架**，具有以下创新点：
+作者提出 **AffectOmni**，一个基于 **GRPO** 的可验证情感推理框架，核心创新如下：
 
-- **混合模型（Mixture Model）**：对单个节点的扫描时间建模为“含签名”与“不含签名”两种情况的混合分布，更真实地反映稀疏签名场景。
-- **分层条件期望（Conditional Expectation over Layer Width）**：将每层的完成时间基于其父层中含签名节点数 $M_{i-1}$ 进行条件建模，并通过期望平均得到总时间。
-- **极端值理论（Extreme-Value Theory, EVT）与中心极限定理（CLT）结合**：用于分析 S4 策略（子树内串行、子树间并行）下，多个子树最大完成时间的统计特性。
-- **生成函数法处理已知签名数（Known Counts）**：
-  - 对于已知每层签名数的情况，推导出子树间签名分布服从**多元超几何分布（multivariate hypergeometric law）**，而非简单的“星与条”均匀组合。
-  - 引入生成函数（generating function）精确计算容量受限下的放置方案数，并区分 **Bose-Einstein (BE)** 和 **Maxwell-Boltzmann (MB)** 两种放置约定。
+#### ✅ 创新点一：细粒度、以人为中心的奖励机制（Fine-Grained People-Centric Rewards）
+引入两个新的奖励项，显式引导模型关注人类情感证据：
+- **People Focus Reward (Rppl)**：鼓励模型描述面部表情、身体动作和人际互动。
+- **Temporal Order Reward (Rtmp)**：鼓励模型按时间顺序组织推理，捕捉情绪随时间的变化轨迹。
+
+#### ✅ 创新点二：组内比较评分策略（Within-Group Comparative Scoring）
+替代传统的独立绝对评分（absolute scoring），将同一输入下的多个候选输出一起提交给 **LLM as a Judge**，要求其进行相对排序。该策略显著提升了奖励信号的 **discriminability**（区分性）和稳定性。
+
+#### ✅ 创新点三：从推理到证据的可验证接口（Reasoning-to-Evidence Grounding）
+提出一个后处理验证模块，将自由形式的推理链压缩为结构化的 **Minimal Evidence Package (MEP)**，并通过 **SAM3** 将其映射为视频帧中的像素级分割区域，实现：
+- 外部可审计（externally auditable）
+- 可验证（verifiable）
+- 支持 falsifiability（证伪性）诊断
+
+---
 
 ### 相比现有方法的优势
-| 维度 | Prior Work [1] | 本文工作 |
-|------|----------------|--------|
-| **信息前提** | 部分依赖运行时信息 | 完全 a priori 可计算 |
-| **节点时间模型** | 仅用含签名文件统计量 | 使用 presence/absence 混合模型 |
-| **容量类** | 单签名 / 无限制 | 统一支持单签名 / K签名 / 无限制 |
-| **策略覆盖** | 主要层级并行 | 覆盖五种策略（S1–S5），含子树级并行 |
-| **验证方式** | 有限 | 包括 Monte Carlo 仿真、误差量化、原型实测 |
-
-此外，所有公式均附带**精确性标签（exactness label）**，明确标注为 `EXACT`、`PLUG-IN`、`ASYMPTOTIC` 或 `BOUND`，并给出适用范围和误差估计。
+| 维度 | AffectOmni | 现有方法（如 HumanOmniV2） |
+|------|-----------|-----------------------------|
+| **推理焦点** | 显式关注人本线索（微表情、姿态） | 依赖全局上下文，忽略细节 |
+| **奖励信号** | 组内比较，高区分性 | 独立评分，易出现 score clustering |
+| **可验证性** | 提供可执行的证据指令 + SAM3 分割可视化 | 仅输出文本推理，无法外部验证 |
+| **训练目标** | 不仅追求答案正确，更强调推理过程可信 | 主要优化答案准确率 |
 
 ---
 
 ## 2. 核心实验方法和设置
 
-### 数据集
-本研究未使用真实世界数据集，而是基于**合成树结构和随机过程生成的数据**：
+### 使用的数据集
+- **IntentBench**：作者构建的情感与意图理解基准，包含来自 Social-IQ 2.0、EMER、MDPE 的 633 个视频，共 2,689 个问题。
+- **Daily-Omni**：日常场景音视频问答基准，684 个视频，1,197 个问题，覆盖六类任务。
+- **WorldSense**：世界知识音视频问答基准，1,662 个视频，3,172 个问题，涵盖八大学科领域。
+- **NExT-QA**：通用视频问答基准，用于测试跨域泛化能力。
 
-- 构造符合 Assumption 1 的多级树网络（高度 $H$，每层扇出 $n_i$）。
-- 签名位置服从均匀分布 $U[0,s]$，是否含签名由概率 $p$ 决定。
-- 支持两种信息条件：
-  - **未知签名数**：通过 $p$ 隐式控制。
-  - **已知签名数**：每层签名数 $\{m_i\}$ 预先给定，签名随机分配至节点。
+---
 
 ### 实验设置和评估指标
-#### 仿真环境
-- 开发了一个**离散事件 Monte Carlo 仿真器**，直接实现论文中的模型。
-- 每组配置运行 $10^5 \sim 10^6$ 次以获得稳定统计结果。
-- 仿真器开源可获取。
+- **基础模型**：Qwen2.5-Omni-7B-Thinker
+- **训练框架**：Group Relative Policy Optimization (GRPO)
+- **采样策略**：每条样本生成 $ G=4 $ 个候选响应
+- **奖励权重**：$ \lambda_p = 0.2 $（People Focus），$ \lambda_t = 0.2 $（Temporal Order）
+- **硬件配置**：4×A100 80GB，使用 DeepSpeed ZeRO Stage 2
+- **评估指标**：Accuracy (%)，按问题类别细分（如 Emotion、How、When 等）
 
-#### 评估指标
-- **预期完成时间 $T$**：各策略下搜索任务的整体完成时间期望。
-- **相对误差**：理论预测值 vs. 仿真结果之间的百分比偏差。
-- **峰值并发度 $P_{\text{peak}}$**：执行过程中同时运行的最大节点数。
-- **预留成本 $C_{\text{res}} = P_{\text{peak}} \times T$**：衡量资源占用的规划指标。
-- **速度提升（Speedup）**：相对于 S1（完全串行）的时间减少倍数。
+---
 
 ### 基线方法对比
-- **理论基线**：与 [1] 中的方法比较，展示其在低 $p$ 下的乐观偏差。
-- **策略间互为基线**：五种策略（S1–S5）相互比较性能差异。
-- **不同近似方法对比**：
-  - 渐近公式 vs. 数值卷积（如 S4 使用 (10) vs. (13)）
-  - Plug-in 近似 vs. 全分布枚举
+#### 开源模型：
+- Qwen2.5-Omni
+- HumanOmniV2 (7B)
+- MiniCPM-o
+- Ola
+- VITA-1.5
+- VideoLLaMA2
+
+#### 商业闭源模型（proprietary）：
+- GPT-4o, GPT-o1(think)
+- Gemini系列（2.5-Pro, 1.5 Pro, Flash等）
+- Claude3.5 Sonnet
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
-### 关键性能数据（来自 Table 2 设计示例）
-设定：$H=4$, $n=10$, $p=0.5$
+### 关键性能数据
 
-| Strategy | Predicted Time ($T$) | Simulated Time | $P_{\text{peak}}$ | $C_{\text{res}}$ |
-|----------|------------------------|----------------|--------------------|------------------|
-| **S1** (Sequential) | 1170.0 | 1173.8 | 1 | 1170 |
-| **S2** (Layer-Parallel) | 4.0 | 4.0 | 1250 | 5000 |
-| **S3** (Subtree-Parallel) | 156.0 | 156.5 | 10 | 1560 |
-| **S4** (Subtrees-Parallel) | 35.2 | 35.1 | 125 | 4394 |
-| **S5** (All-Parallel) | 1.0 | 1.0 | 11110 | 11110 |
+| 数据集 | AffectOmni 性能 | 最强开源基线（HumanOmniV2） | 提升幅度 |
+|--------|------------------|-------------------------------|----------|
+| **IntentBench (Avg)** | **71.89%** | 69.23% | **+2.66 pp** |
+| **IntentBench (Emotion)** | **85.44%** | 80.78% | **+4.66 pp** |
+| **IntentBench (When)** | **71.43%** | 57.14% | **+14.29 pp** |
+| **Daily-Omni (Avg)** | **61.90%** | 58.47% | **+3.43 pp** |
+| **WorldSense (Avg)** | **48.80%** | 47.70% | **+1.10 pp** |
 
-> ✅ 所有预测误差 < 0.5%，表明理论模型高度准确。
+> 注：pp = percentage point
+
+---
 
 ### 与基线方法的对比结果
-- **相比 [1]**：当 $p \to 0$ 时，[1] 将节点时间恒设为 $X = s/2$，低估延迟最多达 **50%**；本文混合模型误差始终 < 0.1%。
-- **策略排序**：
-  - 时间维度：S5 ≪ S2 < S4 < S3 ≪ S1
-  - 成本维度：S1 最省资源，S5 最贵
-- **S3 vs. S4 排序可变**：
-  - 当 $n=10, H=4$：S4 快于 S3（35.2 vs 156.0）
-  - 当 $n=6, H=3$：S3 快于 S4（4.5 vs 3.8），说明深度和宽度影响策略优劣。
+- 在 **IntentBench** 上，AffectOmni 超越所有开源 7B 模型，并在 **Emotion** 和 **When** 类别上取得最大提升，表明其对人本线索和时序推理的有效建模。
+- 在 **Daily-Omni** 上，AffectOmni 在 Context、Reason、60s 等维度均显著优于 HumanOmniV2。
+- 在 **WorldSense** 上，AffectOmni 平均精度略超 **Gemini 1.5 Pro**，尤其在 **Music** 领域领先 3.9 pp。
+- 在 **NExT-QA** 上，AffectOmni 达到 **80.52%** 准确率，优于 HumanOmniV2（79.78%），证明其未因情感专项训练而遗忘通用视频理解能力。
 
-### 消融实验结果
-#### A. Plug-in Approximation 误差分析
-- 在 $pn \geq 2$ 时误差较小（< 2%）
-- 在亚临界区 $pn=0.6$ 时误差高达 **74%**
-- 建议：当 $pn \leq 2$ 时使用精确公式 (1)
+---
 
-#### B. S4 渐近公式的准确性（Figure 2a）
-- 使用 CLT+EVT 的渐近公式 (10)：
-  - 当 $n \geq 50, M \geq 10$ 时误差 < 1%
-  - 当 $n=4, M=5$ 时误差达 3.3%
-- 推荐自动切换机制：小参数用数值卷积 (13)，大参数用渐近公式
+### 消融实验结果（Ablation Study）
 
-#### C. 已知签名数下的分布选择影响（Figure 2b）
-- **多元超几何分布**（正确模型）完美匹配仿真。
-- “星与条”均匀组合模型高估空子树概率约 **5 倍**，导致层时间预测偏高 **4%**。
-- BE 与 MB 约定下，关键概率（如满载概率）相差可达 **31%**，说明选择至关重要。
+| 配置 | Emotion | When | Avg |
+|------|--------|------|-----|
+| Baseline (Acc-only) | 80.78 | 57.14 | 69.23 |
+| + People-Focus (Rppl) | 84.23 | 57.14 | 69.78 |
+| + Temporal-Order (Rtmp) | 83.67 | 57.14 | 69.62 |
+| **Full Model (AffectOmni)** | **85.44** | **71.43** | **71.89** |
 
-#### D. 多核原型测试结果（Table 3）
-硬件：Apple M1（8核），Python multiprocessing  
-设定：$H=3, n=6, p=0.5$
-
-| Strategy | Measured Speedup (W=8) | Analytical Prediction |
-|---------|-------------------------|------------------------|
-| S2      | 3.69                    | 19.5×                  |
-| S3      | 3.03                    | 4.5×                   |
-| S4      | 3.02                    | 3.8×                   |
-| S5      | 4.30                    | 58.5×                  |
-
-> ⚠️ 实际速度远低于理想预测，受制于：
-> - 仅 8 个物理核心
-> - 同步开销（barrier cost）
-> - S3 与 S4 实测性能几乎无法区分，尽管理论预测差 20%
+- **People-Focus Reward** 对 Emotion 类别提升显著（+3.45 pp），说明其有效引导模型关注微表情。
+- **Temporal-Order Reward** 单独作用有限，但与 Rppl 结合后使 When 类别大幅提升 **+14.29 pp**，体现协同效应。
+- 完整模型相比基线提升 **+2.66 pp**，验证了多维奖励设计的有效性。
 
 ---
 
 ## 4. 关键结论和发现
 
-### 论文的主要发现
-1. **首次实现了完全 a priori 的并行签名搜索性能预测框架**，适用于多种策略、信息条件和容量类。
-2. **混合时间模型显著提升精度**，尤其在签名稀疏场景下避免了传统方法的严重低估。
-3. **S4 策略性能介于 S2 与 S5 之间**，其加速比约为 $O(\sqrt{n \log M})$，接近但略逊于完全并行。
-4. **多元超几何分布是已知签名数下的正确子树占用模型**，“星与条”假设会导致系统性偏差。
-5. **理论预测极其高效**：Table 2 中所有计算耗时 **< 1ms**，而同等 Monte Carlo 估计需数分钟。
-6. **同步开销可能抹平理论上的微小差距**：S3 与 S4 在真实系统中可能表现相近，需结合调度结构判断。
+### 主要发现
+1. ✅ **答案正确 ≠ 推理可信**：许多模型虽能答对，但推理过程漂移至背景线索，缺乏对人本证据的关注。
+2. ✅ **细粒度奖励可引导可信推理**：通过 Rppl 和 Rtmp，可有效抑制 shortcut learning，促使模型构建基于微表情和时序变化的证据链。
+3. ✅ **比较评分优于绝对评分**：within-group comparative scoring 显著缓解 score clustering，CV（变异系数）从 0.153 提升至 0.325，奖励信号更具区分性。
+4. ✅ **可验证接口具有实用价值**：通过 MEP + SAM3 构建的 **Executable Evidence Interface (EEI)**，支持外部一致性检查。人工审计显示，当分割结果相关时，准确率达 **83.3%**；不相关时仅为 **35.3%**，说明该接口具备 falsifiability 能力。
+
+---
 
 ### 方法的局限性
-- **处理器无限假设**：理论模型忽略核心数量限制和调度开销，在真实系统中会显著降低性能。
-- **同构子树假设**：所有子树大小相同，难以推广到异构拓扑。
-- **无取消机制（No Cancellation）**：即使某子树可剪枝，仍完成全部扫描，未考虑动态撤销任务的成本节省。
-- **开放问题**：在已知签名数且 $m \geq rK$ 的情况下，S4 层时间尚无闭式解（见 Remark 9）。
+- **Temporal interval localization 粗糙**：当前方法对时间区间的定位仍较粗略，难以精确匹配短时情绪波动。
+- **误差传播未量化**：从推理 → 总结 → SAM3 分割的链条中，各阶段错误可能累积，影响最终验证可靠性。
+- **Appearance cues 利用不足**：实验发现模型较少依赖颜色、服装等外观特征，在多人拥挤场景下可能导致 grounding 模糊。
+
+---
 
 ### 未来工作方向
-1. **扩展至有限处理器池（bounded processor pool）**：引入 $W$ 个 worker 的调度模型，考虑 barrier 和 dispatch cost。
-2. **闭环优化设计**：结合本文的时间模型与资源成本，构建 joint time-cost objective，进行树形结构与策略联合优化（已在 companion paper 中展开）。
-3. **支持异构扇出 $n_i$** 和非均匀签名分布。
-4. **集成取消机制**：允许 coordinator 在发现所有签名后提前终止部分任务。
-5. **闭合开放问题**：推导容量受限下的最小计数分布，完善 S4 在高负载下的分析。
+- 提升时间定位精度（temporal grounding）
+- 引入辅助验证奖励（auxiliary verification rewards）以增强训练闭环
+- 扩展 EEI 接口支持更多验证器（如 keyframe retrieval、speaker localization）
+- 探索 reward generalizability 至其他可信推理任务（如医疗诊断、法律推理）
 
---- 
+---
 
-> 📌 **总结一句话**：  
-> 本文建立了一个**高效、精确、可解释**的 a priori 性能预测框架，为多级树网络中的并行签名搜索提供了从理论建模到实际部署的完整决策支持体系。
+> 🔗 **代码地址**：[https://github.com/eliot127825-rgb/AffectOmni_nobody](https://github.com/eliot127825-rgb/AffectOmni_nobody)
 
 </details>
 
 ---
 
-### 13. [SHSP: Structure-Aware Hierarchical Solution Prediction for Mixed-Integer Linear Programming](https://arxiv.org/abs/2608.25282)
+### 13. [Simple Actors and Deep Critics for Scalable Reinforcement Learning](https://arxiv.org/abs/2608.26659)
 
-**Authors**: Zherong Zhang, Guanlin Li, Chengrui Gao, Haopu Shang, Ke Xue, Jixiang Lu, Weiyong Yang, Chao Qian  
+**Authors**: Guhyeon Kang, Jaehwi Lee, Minhae Kwon  
 **Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 7.0  
+**Published**: 2026-08-28  
+**Score**: 6.5  
 **Type**: new  
-**ArXiv ID**: 2608.25282v1  
+**ArXiv ID**: 2608.26659v1  
 
 #### Abstract
-Mixed-Integer Linear Programming (MILP) is a fundamental optimization paradigm in combinatorial optimization and has been widely applied across real-world domains. Due to its NP-hard nature, obtaining optimal solutions for large-scale or highly constrained MILP instances remains computationally proh...
+Recent progress in offline reinforcement learning (RL) has been driven by expressive generative actors such as diffusion and flow-matching policies, which capture multimodal behavior in offline datasets. However, these actors require multiple denoising or integration steps per action and thus incur ...
 
 <details>
 <summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
 
-# 论文总结：SHSP: Structure-Aware Hierarchical Solution Prediction for Mixed-Integer Linear Programming
+# 论文总结：Simple Actors and Deep Critics for Scalable Reinforcement Learning
+
+## 1. 论文的主要贡献和创新点
+
+### 解决的问题
+当前主流的 **offline RL** 方法（如 diffusion 和 flow-matching）依赖于高表达能力的生成式 **actor** 来建模多模态行为策略，但这类模型在推理时需要多次去噪或积分步骤，导致 **inference latency 高**，不利于部署在资源受限的边缘设备上。
+
+然而，作者指出一个被忽视的事实：在 actor-critic 框架中，**critic 只用于训练，而 actor 才是部署时每一步都要运行的组件**。因此，将计算容量（capacity）投入到 actor 上会带来持续的推理开销，而投入到 critic 上则只产生一次性的训练成本。
+
+### 提出的新方法与思路
+作者提出 **LAC (Light Actor, deep Critic)**，其核心思想是：
+> **将模型容量从 actor 转移到 critic** —— 使用一个轻量级、单步前向传播的确定性 actor，配合一个深度、强表达力的 critic。
+
+这种“非对称容量分配”（asymmetric capacity allocation）的设计，使得在保持高性能的同时，显著降低推理延迟。
+
+### 相比现有方法的优势
+- **推理效率高**：相比 multi-step 生成式 actor（如 diffusion/flow），LAC 推理速度提升高达 **4×**。
+- **无需蒸馏**：达到与 one-step distilled policy 相当的低延迟，但无需额外的 distillation 训练阶段。
+- **性能不妥协**：在 OGBench 上匹配甚至超越最强的 diffusion 和 flow-matching 基线。
+- **critic 设计可迁移**：提出的 deep critic 组件可作为“即插即用”模块，提升其他方法（包括 diffusion/flow）的性能。
+
+---
+
+## 2. 核心实验方法和设置
+
+### 使用的数据集
+- **OGBench**：一个近期推出的、用于压力测试 offline RL 方法的基准套件，包含 7 个高维、长视野的连续控制任务，分为三类：
+  - **Ant navigation**（8-DoF）：`ant-large`, `ant-giant`
+  - **Humanoid navigation**（21-DoF）：`hum-medium`, `hum-large`
+  - **Manipulation**：`scene`, `puzzle-3x3`, `puzzle-4x4`
+
+每个环境有 5 个目标变体（task1–task5），共 35 个任务。
+
+### 实验设置和评估指标
+- **评估指标**：
+  - **Success Rate (%)**：二值成功率，按 OGBench 协议在最后三个评估周期取平均。
+  - **Inference Latency (ms)**：在单张 NVIDIA RTX 3090 上测量单样本动作预测的 wall-clock 时间（batch size = 1）。
+- **随机种子**：所有结果基于 4 个随机种子取平均。
+- **LAC 配置**：
+  - **Critic**：32 层 ResMLP + categorical cross-entropy loss + n-step (n=4) bootstrap
+  - **Actor**：轻量级 deterministic MLP
+    - `LAC-S`：小 actor `[256]×2` (~0.13M 参数)
+    - `LAC-L`：大 actor `[512]×4`，与 flow-based 基线 actor 大小对齐
+
+### 基线方法对比
+涵盖三类 actor parametrization：
+- **Gaussian/Deterministic**：BC, IQL, ReBRAC, TD3+BC
+- **Diffusion-based**：IDQL, SRPO, CAC
+- **Flow-matching**：FAWAC, FBRAC, IFQL, FQL
+
+---
+
+## 3. 主要实验结果和性能指标
+
+### 关键性能数据（Table 1）
+| Environment       | Best Baseline | LAC-S | LAC-L |
+|-------------------|---------------|-------|-------|
+| ant-large         | 79±3 (FQL)    | 92±5  | **96±1** |
+| ant-giant         | 9±6 (FQL)     | 35±23 | **79±13** |
+| hum-medium        | 60±14 (IFQL)  | **79±10** | 76±38 |
+| hum-large         | 11±2 (FBRAC)  | **50±18** | **69±15** |
+| scene             | 56±2 (FQL)    | 29±37 | 41±39 |
+| puzzle-3x3        | 30±1 (FQL)    | 62±17 | **95±1** |
+| puzzle-4x4        | 25±5 (FBRAC)  | 15±9  | **32±19** |
+| **Average**       | **36**        | **52**  | **70** |
+
+- **LAC-L 是整体最优方法**，在多个环境中大幅领先。
+- **LAC-S 在多数任务上优于所有生成式 actor**，尤其在 `ant` 和 `puzzle` 系列表现突出。
+
+### 与基线方法的对比结果
+- **性能方面**：
+  - LAC 匹配甚至超越最强的 **diffusion** 和 **flow-matching** 基线（如 FQL, IFQL）。
+  - 尤其在 `humanoid` 这种高维动作空间、多模态行为的任务上，LAC 表现优异，说明 **strong critic 可弥补 simple actor 的表达力不足**。
+- **推理效率方面**（Table 3）：
+  - **LAC-S 推理延迟最低（0.24 ms）**，与 IQL、ReBRAC 等单步方法相当。
+  - 相比 multi-step 生成式 actor（如 IDQL: 0.95ms, IFQL: 0.64ms），LAC 实现 **2–4× 的推理加速**。
+  - 与 one-step distilled 方法（如 FQL: 0.27ms）相比，LAC 优势微弱但存在。
+
+### 消融实验结果（Table 2, Figure 3–5）
+
+#### 组件消融（Table 2）
+| Configuration               | hum-large | ant-giant | puzzle-4x4 | Avg |
+|-----------------------------|-----------|-----------|------------|-----|
+| **LAC (full)**              | 79±6      | 86±3      | 55±6       | 73  |
+| **-n-step (1-step TD)**     | 42±3      | 38±15     | 18±2       | 33  |
+| **-Categorical (MSE)**      | 7±12      | 72±12     | 32±15      | 37  |
+| **-Both (1-step + MSE)**    | 15±5      | 1±1       | 12±3       | 9   |
+
+- 移除任一组件均导致性能严重下降，验证了三者缺一不可。
+
+#### 深度扩展分析（Figure 2–3）
+- **Plain MLP critic**：无论深度如何，都无法学习有效策略。
+- **仅加 ResMLP**：性能停滞，且高方差。
+- **完整 LAC**：随深度增加性能稳定上升，在 32 层达到峰值。
+- **n-step 是深度扩展的关键**：只有 n≥2 时，深度增加才不会导致性能退化。
+
+#### Actor 容量饱和（Figure 5）
+- 固定 deep critic 后，**actor 参数超过 ~10⁵ 后性能即饱和**。
+- 说明在 strong critic 支持下，**actor 的角色主要是 amortized inference**，进一步增大 actor 收益极小。
+
+---
+
+## 4. 关键结论和发现
+
+### 主要发现
+1. **非对称容量分配是有效的设计原则**：
+   - 将计算预算从 **inference-time**（actor）转移到 **training-time**（critic）是实现高效 offline RL 的合理路径。
+2. **deep critic 的三大失败模式必须协同解决**：
+   - **(F1) Optimization Failure** → 通过 **ResMLP + LayerNorm** 解决梯度传播问题。
+   - **(F2) Bootstrap-noise Amplification** → 通过 **n-step bootstrap** 减少自举噪声累积。
+   - **(F3) Value-range Drift** → 通过 **categorical cross-entropy loss** 限制 Q 值范围，防止 mid-training collapse。
+3. **lightweight deterministic actor 可以足够强大**：
+   - 当由一个 well-trained deep critic 指导时，简单 actor 能达到与复杂生成式 actor 相当的性能。
+4. **critic 设计具有通用性**：
+   - LAC 的 critic 组件可作为“drop-in”模块，显著提升 TD3+BC、IDQL、FQL 等各类方法的性能（Table 4，增益 +24 至 +59 分）。
+
+### 方法的局限性
+- **评估范围有限**：目前仅在 state-based 的 OGBench 环境中验证，未扩展到 pixel-based 输入或真实机器人部署。
+- **未探索 actor 的多样性**：虽然证明了 deterministic actor 的有效性，但未尝试更复杂的 actor 结构（如混合模型）与 deep critic 的组合。
+
+### 未来工作方向
+- 将 LAC 框架扩展到 **vision-based** 或 **language-conditioned** RL 任务。
+- 探索在 **real-world robotics** 场景中的部署效果。
+- 研究如何进一步优化 critic 的训练效率（因 deep critic 增加了训练成本）。
+- 探索 actor-critic 之间的容量分配比例的自动化搜索机制。
+
+---
+
+> ✅ **一句话总结**：  
+> LAC 通过“**深 critic + 浅 actor**”的非对称设计，在 OGBench 上实现了与最强生成式 actor 相当的性能，同时将推理延迟降低至其 1/4，并首次系统论证了 critic-side capacity 是可扩展、高效的 offline RL 发展方向。
+
+</details>
+
+---
+
+### 14. [A Layer Importance Metric for Quantization Accounting for the Speed-Quality Trade-off in Autoregressive Models](https://arxiv.org/abs/2608.26926)
+
+**Authors**: Artem Safronov  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 6.5  
+**Type**: new  
+**ArXiv ID**: 2608.26926v1  
+
+#### Abstract
+Small language models (sLLMs) are nowadays hosted on devices with limited memory and computational budget. In an autoregressive setup, inference is memory-bandwidth bound: uniform quantization is often detrimental to such models, since their architecture has limited redundancies and only a few layer...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# 论文总结：A Layer Importance Metric for Quantization Accounting for the Speed-Quality Trade-off in Autoregressive Models
 
 ---
 
 ## 1. 论文的主要贡献和创新点
 
-### ✅ 解决了什么问题
+### ✅ 解决的问题
+小型大语言模型（**sLLM**, small Large Language Models）在边缘设备上部署时面临严重的内存带宽瓶颈。由于其结构紧凑、冗余少，传统的**均匀量化**（uniform quantization）会显著损害生成质量。同时，不同层对精度损失的敏感度差异巨大，盲目量化会导致“高代价低收益”——即某些关键层的小幅压缩引发严重性能下降。
 
-现有的基于学习的 **Mixed-Integer Linear Programming (MILP)** 解决方案预测方法大多采用 **one-shot prediction** 范式，即通过图神经网络（GNN）一次性并行预测所有变量的边际概率。这种方法存在以下关键缺陷：
+本文旨在解决以下核心问题：  
+> **如何在不牺牲生成质量的前提下，最大化推理加速？**
 
-- **忽略变量间的条件依赖关系**：MILP 中的变量通过约束高度耦合，最优赋值具有强组合结构性质，而 one-shot 方法在解码阶段将变量视为独立，导致预测结果可能相互冲突。
-- **过度依赖 GNN 表征能力**：复杂的组合结构完全由 GNN 编码器隐式建模，难以充分捕捉长程依赖。
+具体来说，就是识别出那些既能带来显著速度提升、又对量化鲁棒的模型组件，实现**异构量化**（heterogeneous quantization）中的最优资源分配。
+
+---
 
 ### 🚀 提出的新方法与创新思路
 
-作者提出 **SHSP (Structure-Aware Hierarchical Solution Prediction)** 框架，其核心思想是：**显式建模变量间的结构依赖，并通过分层条件解码机制进行顺序预测**。
+作者提出了一种**复合重要性度量指标** `score(α)`，用于评估神经网络各组件在量化过程中的优先级。该指标融合了两个正交维度：
 
-#### 主要创新点包括：
+1. **质量保留能力（Quality Preservation）**  
+   使用 **SQNR**（Signal-to-Quantization-Noise Ratio）衡量某一层在量化后输出信号的信息损失程度。通过 **Sensitivity-Aware Post-Training Quantization (SA-PTQ)** 模拟量化并计算 SQNR，得到归一化的 `Qk` 分数。
 
-1. **Variable Coupling Graph 构造**
-   - 基于约束系数和期望违反程度构建加权无向图，量化变量对之间的耦合强度。
-   - 边权重由两个因素决定：
-     - **Expected Violation**：衡量一对变量单独作用下违反约束的程度。
-     - **Coefficient Importance**：归一化后的系数乘积，反映其在约束中的相对重要性。
+2. **速度增益潜力（Speed Gain Potential）**  
+   基于 **roofline model** 构建分析型延迟预测模型，无需实际运行模型即可估算将某层从 F16 降至 Q8 所能带来的吞吐提升，得到归一化的 `Sk` 分数。
 
-2. **Hierarchical Conditional Decoding**
-   - 定义每个变量的 **Variable Coupling Score (VCS)** 为与其相连边的权重之和。
-   - 将变量按 VCS 升序划分为多个层次 $ H_1, H_2, ..., H_K $，从弱耦合到强耦合依次预测。
-   - 每一层的预测以之前层次已固定的赋值作为上下文条件输入，实现**逐步推理**。
+最终的综合评分为：
+$$
+\text{score}(\alpha) = (1-\alpha) \sum_{k} S_k + \alpha \sum_{k} Q_k
+$$
+其中 $\alpha \in [0,1]$ 是可调参数，允许用户根据任务需求在“追求速度”或“保障质量”之间灵活权衡。
 
-3. **Confidence-aware Mask-and-Repair 机制**
-   - 在每步预测后，低置信度变量被随机掩码（mask），避免错误传播。
-   - 所有层次解码完成后，对被掩码的变量集合 $ R $ 进行一次集中修复（repair），利用完整上下文重新预测。
+#### 创新亮点：
+- **完全分析性方法**：无需训练、无需多次实测，仅需一次架构剖析即可完成评估。
+- **通用性强**：适用于任意粒度（block-level / layer-level / projection-level），如 FFN、Embedding、单个 transformer 层等。
+- **解耦设计**：将“信息保留”与“硬件加速”分离建模，再统一评分，逻辑清晰且可解释。
 
-4. **Structure-Aware Variable Fixing Strategy**
-   - 不仅考虑预测置信度，还优先固定高 VCS 的强耦合变量。
-   - 因为这些变量一旦确定，可通过共享约束显著收紧其他变量的可行域，从而更有效地缩小搜索空间。
+---
 
 ### 🔍 相比现有方法的优势
 
-| 方面 | 传统 One-Shot 方法 | SHSP |
-|------|------------------|-------|
-| 解码方式 | 并行、独立预测 | 分层、条件依赖预测 |
-| 结构建模 | 隐式（全靠 GNN） | 显式（构造 coupling graph） |
-| 错误控制 | 无机制 | Mask-and-Repair 减少累积误差 |
-| 变量选择策略 | 仅基于置信度 | 结合结构影响（VCS）与置信度 |
+| 方法 | 缺陷 | 本论文优势 |
+|------|------|------------|
+| **CARVQ** | 需引入 lookup table 和非线性变换，难以集成到通用工具链（如 llama.cpp） | 使用标准 scalar quantization，兼容性强 |
+| **HAPM** | 要求稀疏化结构和专用推理引擎 | 不改变模型结构，直接利用现有加速器 |
+| **IMPQ** | 依赖 Shapley-value 近似，计算开销极大（数十亿参数下不可行） | 仅需轻量级 probing，速度快、成本低 |
+| **QRazor** | 修改 Attention 结构，适用范围受限；基于启发式振幅排序 | 聚焦 FFN 和 Embedding；使用能量基础的 SQNR 更准确 |
 
-> ✅ **本质区别**：SHSP 将“结构感知”从编码阶段延伸至整个预测流程，形成一种全新的 **conditional hierarchical prediction paradigm**，而非简单改进模型架构。
+> ✅ 总结：相比依赖昂贵搜索、特定硬件或复杂结构修改的方法，本文提供了一个**快速、通用、直观**的量化决策框架。
 
 ---
 
 ## 2. 核心实验方法和设置
 
-### 📊 使用的数据集
+### 🧪 实验平台与模型
+- **主模型**：`Gemma 3 1B-it`（26 层）
+- **辅助验证模型**：`LLaMA 3.2 1B`, `Qwen 2.5 1.5B`
+- **硬件环境**：Google Colab 上的 NVIDIA T4 GPU（320 GB/s 内存带宽）
+- **工具链**：`llama.cpp`, `llama-bench`, `LLM-Viewer`
 
-在四个标准 MILP 基准上进行评估：
-
-| 数据集 | 应用场景 | 变量数 | 约束数 | 类型 |
-|--------|--------|--------|--------|------|
-| **CA (Combinatorial Auctions)** | 组合拍卖 | 1500 | 2592 | 二元变量为主 |
-| **WA (Workload Appointment)** | 工作负载调度 | 61000 | 64318 | 大规模混合整数 |
-| **IP (Item Placement)** | 物品放置优化 | 1083 | 195 | 实际工业问题 |
-| **SC (Set Covering)** | 集覆盖问题 | 5000 | 3000 | 经典组合优化 |
-
-此外，在 **MIPLIB 子集 IIS** 上验证泛化能力。
-
-### ⚙️ 实验设置
-
-- **训练/验证/测试划分**：240 / 60 / 100 实例
-- **下游求解器**：Gurobi 和 SCIP
-- **时间限制**：1000 秒（主实验）
-- **训练数据生成**：使用 Gurobi 在 3600 秒内收集前 50 个高质量解用于监督训练
-
-### 🎯 评估指标
-
-- **OBJ**：找到的最佳目标值
-- **Absolute Primal Gap (Gapabs)**：  
-  $$
-  \text{Gapabs} = |\text{OBJ} - \text{BKS}|
-  $$
-  其中 BKS 是单线程 Gurobi 在 3600 秒内找到的最优解（Best Known Solution）
-- **Relative Reduction in Gapabs**：相对于基线的差距缩减比例
-
-### 🆚 对比的基线方法
-
-| 类别 | 方法 |
-|------|------|
-| **传统求解器** | Gurobi, SCIP |
-| **学习引导框架** | Neural Diving (ND), Predict-and-Search (PaS), Apollo-MILP |
-| **变体对比** | 各框架 + SHSP 替换预测器（如 PaS+SHSP） |
+> ⚠️ 注意：所有实验均未进行微调（no fine-tuning），属于纯 Post-Training Quantization（PTQ）场景。
 
 ---
-
-## 3. 主要实验结果和性能指标
-
-### 📈 关键性能数据（使用 Gurobi 下游，1000s 时间限制）
-
-| 方法 | CA Gapabs ↓ | WA Gapabs ↓ | IP Gapabs ↓ | SC Gapabs ↓ | 平均 Gapabs 缩减 |
-|------|-------------|-------------|-------------|-------------|------------------|
-| Gurobi (1000s) | 1081.73 | 0.21 | 0.47 | 0.24 | — |
-| PaS | 597.50 | 0.21 | 0.37 | 0.19 | — |
-| **PaS+SHSP** | **1.52** | **0.13** | **0.28** | **0.11** | **99.7% → 38.1% → 24.3% → 42.1%** |
-| Apollo | 491.50 | 0.21 | 0.28 | 0.12 | — |
-| **Apollo+SHSP** | **0.00** | **0.15** | **0.02** | **0.07** | **100.0% → 28.6% → 92.9% → 41.7%** |
-
-> 💡 **亮点发现**：
-> - 在 **CA 数据集上，Apollo+SHSP 实现了 Gapabs = 0.00**，意味着找到了超越 3600 秒 Gurobi 的更优解！
-> - **平均绝对原始间隙减少达 54%**（文中强调）。
-> - 即使在大规模 WA 和复杂 SC 上也保持稳定提升。
-
-### 🔬 消融实验结果（Ablation Study）
-
-#### (1) **Mask-and-Repair 机制有效性**
-
-| 方法 | CA Obj | IP Obj |
-|------|--------|--------|
-| PaS+SHSP (None) | 98380.92 | 12.12 |
-| PaS+SHSP (Mask only) | 98416.55 | 12.17 |
-| **PaS+SHSP (Mask+Repair)** | **98487.72** | **11.97** |
-
-> ✅ **结论**：仅 mask 会丢失信息，必须配合 repair 才能有效纠正错误，两者相辅相成。
-
-#### (2) **Hierarchical Prediction vs 原始 GNN**
-
-| 方法 | CA Obj | IP Obj |
-|------|--------|--------|
-| PaS (原 GNN) | 97891.74 | 12.06 |
-| **PaS+SHSP (Hierarchical)** | **98487.72** | **11.97** |
-
-> ✅ **结论**：分层预测本身就能带来显著增益，说明结构感知解码优于并行预测。
-
-#### (3) **Structure-Aware Fixing 策略效果**
-
-| 方法 | CA Obj | IP Obj |
-|------|--------|--------|
-| PaS+SHSP (Original Fixing) | 98061.51 | 12.34 |
-| **PaS+SHSP (Structure-Aware Fixing)** | **98487.72** | **11.97** |
-
-> ✅ **结论**：结合结构影响力的变量固定策略能进一步释放性能潜力。
-
----
-
-## 4. 关键结论和发现
-
-### ✅ 主要发现
-
-1. **One-shot 预测范式存在根本局限**：无法有效建模变量间复杂的条件依赖关系。
-2. **SHSP 成功引入了结构感知的分层预测机制**，通过 variable coupling graph 显式指导解码顺序，显著提升了预测准确性。
-3. **Mask-and-Repair 机制有效缓解了多步推理中的误差累积问题**。
-4. **Structure-aware fixing 利用了拓扑结构信息**，使得搜索空间缩减更加高效。
-5. **SHSP 是通用插件式框架**，可无缝集成到 ND、PaS、Apollo 等多种 learning-guided search 方法中，且一致取得大幅性能提升。
-
-> 🌟 **最惊人结果**：在 Combinatorial Auctions 上，**SHSP 在远小于 3600 秒的时间预算内，找到了比完整运行 Gurobi 更好的解**，表明其不仅能加速搜索，还能引导求解器发现更高品质的局部最优。
-
-### ⚠️ 方法的局限性
-
-- **图构建开销**：虽然平均 <15 秒，但在极端大规模实例上可能成为瓶颈（如 SC 达 15.23s）。
-- **超参数敏感性**：如层次数 $ K $、mask 概率函数、VCS 阈值等需调优。
-- **当前 coupling score 为启发式设计**，未端到端学习。
-- 对非二元整数变量的支持仍需扩展（目前聚焦 binary variables）。
-
-### 🔮 未来工作方向（作者指出）
-
-1. **端到端学习 variable coupling scores**，替代手工设计的 heuristics。
-2. **扩展至更广泛的 problem classes**，如非线性规划、随机规划等。
-3. 探索 **dynamic graph updating** 机制，在迭代过程中更新 coupling graph。
-4. 结合 **large language models** 或 **diffusion models** 进一步增强生成能力。
-
----
-
-## 总结
-
-> **SHSP 提出了一种革命性的结构感知分层预测范式，打破了传统 one-shot 预测的局限，在多个标准 MILP 基准上实现了高达 100% 的 gap 缩减，甚至发现了超越商业求解器的更优解。它不仅是技术上的改进，更是对“如何利用机器学习理解组合结构”的一次深刻探索。**
-
-</details>
-
----
-
-### 14. [Beyond Scaling: Self-Evolving LLM Agents for Hardware Kernel Optimization via an Experience-Driven Workflow and Experience Graph Memory](https://arxiv.org/abs/2608.25570)
-
-**Authors**: Siyuan Chen, Runlin Hou, Shenxiu Wu, Yansong Sun, Junming Cao, Yiyu Zhang, Shudi Shao, Junhao Qiu, Zhichao Lu, Qingfu Zhang  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 7.0  
-**Type**: new  
-**ArXiv ID**: 2608.25570v1  
-
-#### Abstract
-Hardware kernel optimization requires repeated compilation, correctness testing, profiling, and revision. LLM agents can automate parts of this process, and stronger foundation models, longer context windows, and longer execution horizons have improved optimization within individual tasks. These adv...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# Beyond Scaling: Self-Evolving LLM Agents for Hardware Kernel Optimization via an Experience-Driven Workflow and Experience Graph Memory  
-**——核心结论与实验结果总结**
-
----
-
-## 1. 论文的主要贡献和创新点
-
-### ✅ 解决的问题
-硬件 kernel 优化是一个高度依赖专家经验的过程，涉及反复的编译、正确性验证、性能剖析和修改。尽管当前的 **LLM agents** 已能通过更强的 foundation model 和更长上下文窗口提升单次任务内的优化能力，但它们普遍缺乏从已完成优化运行中**持续学习并复用执行反馈**的能力。
-
-现有方法存在两大缺陷：
-- **不保留决策证据**：很少系统化地保存“某个决策 → 观察到的结果”这一因果链，导致每次优化都是“从头开始”。
-- **历史轨迹冗余且低效**：简单保留所有历史会占用大量 context 空间，反而稀释当前任务的关键信息（attention dilution）。
-
-### 🚀 提出的新方法：KOPE 框架
-本文提出 **KOPE**（Knowledge-Oriented Programming Environment），一个面向硬件 kernel 优化的**经验驱动型 LLM agent 框架**，其核心是让 agent 在探索过程中自我演化（self-evolving），即在固定 foundation model 参数的前提下，通过外部记忆机制实现知识积累与迁移。
-
-#### 主要创新点：
-1. **Experience-Driven Optimization Workflow**  
-   构建闭环 agent 工作流，每轮生成候选 kernel 后立即进行 correctness 测试与 performance profiling，并将完整轨迹记录为可复用的经验。
-
-2. **Experience Graph Memory (KOPE-Mem)**  
-   将优化过程中的决策、观测结果（如编译错误、性能增益）、替代分支等组织成有向图结构（Directed Acyclic Forest）。每个节点是一个 `Case`（JSON 结构化记录）或 `Journal`（Markdown 叙述性日志），边表示执行顺序（provenance link），支持基于下游结果的检索排序。
-
-3. **Active Context Management and Injection**  
-   在每次推理前动态构建 prompt，采用三级 context 分层策略：
-   - **Hot Context**：必需的任务状态（specification、incumbent code、最新诊断）
-   - **Warm Context**：当前状态下检索出的相关历史经验（成功动作、失败模式）
-   - **Cold Context**：通用领域知识（文档、跨类别经验）
-   
-   在固定 token budget 下智能选择并压缩最相关的内容注入 prompt，避免全量历史拖累效率。
-
-### 🔍 相比现有方法的优势
-| 维度 | 现有方法 | KOPE |
-|------|--------|-------|
-| **知识留存** | 无或仅短期记忆 | 长期结构化记忆（图谱） |
-| **经验复用** | 限于单任务内迭代 | 支持跨任务、跨 operator 复用 |
-| **上下文利用** | 被动填充历史 | 主动筛选+注入高价值片段 |
-| **资源效率** | 上下文膨胀严重 | 固定预算下高效利用 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 📊 数据集与平台
-- **基准测试集**：`CANN Bench v0.4.0`，包含 **53 个 AscendC operators**，共 **1,060 个测试案例**（每个 operator 20 cases）
-- **硬件平台**：华为 Ascend 910C NPU
-- **评估环境**：提供完整的编译、功能测试、性能测量流程，防止 reward hacking（如 CPU fallback）
-
-### ⚙️ 实验设置
-- **模型统一**：主实验使用 `GLM-5.2` 和 `Deepseek-V4-Pro`，均支持 **1M token 上下文窗口**，确保公平比较。
-- **token budget 固定**：所有配置共享相同 context 容量。
-- **输出完整性要求**：缺失 operator 按 20 个失败 case 计入总分。
-
-### 📈 评估指标
-| 指标 | 定义 |
-|------|------|
-| **Case Pass Rate** | 成功通过 final evaluator 的 case 数 / 1060 |
-| **Operator Pass** | 至少有一个 case 通过的 operator 数量 |
-| **Geometric Mean Speedup** | 对正向 speedup 字段取几何平均（排除负值/缺失） |
-| **Token Consumption** | 整体优化过程消耗的总 tokens |
-| **Exact Intersection Analysis** | 在两个配置都返回有效结果的交集上做配对性能对比 |
-
-### 🆚 基线方法对比
-| 方法 | 描述 |
-|------|------|
-| **CANNBot** | 华为官方 baseline，基于 CANN 示例库和优化实践 |
-| **CUDA-Agent** | 当前最强 GPU kernel 优化 agent（来自 Dai et al., 2026），具备强化学习与 ReAct 循环，用于检验跨硬件泛化能力 |
-
----
-
-## 3. 主要实验结果和性能指标
-
-### 📊 系统级性能对比（GLM-5.2）
-
-| Method | Case Pass | Pass Rate | Operator Pass | Speedup (GeoMean) | Score |
-|--------|-----------|------------|------------------|---------------------|--------|
-| **KOPE** | **897** | **84.6%** | **52/53** | **1.54× vs CANNBot** | **2004.49** |
-| **CANNBot** | 613 | 57.8% | 37/53 | 1.00× | 1465.93 |
-| **CUDA-Agent** | 156 | 14.7% | 13/53 | 0.100× (below parity) | 312.00 |
-
-> ✅ **KOPE 显著领先**：相比最强 baseline CANNBot，pass rate 提升 **26.8 pp**，score 提升 **+36.7%**；而 CUDA-Agent 几乎无法覆盖完整 suite。
-
-### 🔬 消融实验一：Active Context Management & Injection（GLM-5.2）
-> 对比“被动上下文构建” vs “主动管理+注入”
-
-| Context Policy | Case Pass | Pass Rate | Score | Speedup (GeoMean) | Token Usage |
-|---------------|-----------|------------|--------|--------------------|-------------|
-| Passive | 636 | 60.0% | 636.00 | 0.0382× | **15.9B** |
-| **Active** | **897** | **84.6%** | **2004.49** | **0.0661× (+1.73×)** | **1.113B (-93.0%)** |
-
-> ✅ **主动管理大幅提升效果且极度节省 token**：在相同模型下，pass rate ↑24.6%，token 消耗 ↓93%，说明并非靠堆历史取胜。
-
-### 🔬 消融实验二：Experience Graph Memory（GLM-5.2）
-> 对比启用 vs 禁用图记忆，在 412 个配对有效 timing 案例上的表现
-
-| Configuration | Case Pass | Pass Rate | GeoMean Speedup (Valid Pairs) |
-|---------------|-----------|------------|-------------------------------|
-| Without Graph | 585 | 55.2% | — |
-| **With Graph** | **897** | **84.6%** | **1.434×** |
-
-> ✅ 图记忆使 pass rate 提升 **29.4 pp**，在有效配对中带来 **1.43× 性能加速**，尤其在复杂级别 L2–L4 上优势显著（最高达 9.175×）。
-
----
-
-## 4. 关键结论和发现
-
-### ✅ 主要发现
-1. **模型能力 ≠ 优化成功**：即使使用强大的 foundation model（如 GLM-5.2 或 Deepseek-V4-Pro），若缺乏目标硬件上的经验积累，仍难以实现广泛的功能覆盖（如 CUDA-Agent 仅通过 ~14%）。
-2. **外部经验可弥补数据稀缺**：在 public training data 极少的新硬件平台上（如 Ascend），**通过 Experience Graph Memory 积累 target-side 执行反馈** 是提升优化成功率的关键。
-3. **主动上下文管理优于被动记忆**：不是“越多越好”，而是“越准越好”。**Active Context Management** 能在有限 token 内精准注入高价值经验，显著提升效率与性能。
-4. **KOPE 具备跨栈泛化潜力**：附录中在 **RISC-V + Triton** 平台上的实验表明：
-   - Ascend 上的历史经验可帮助提升 K3 上的 **pass coverage（+23 pp）**
-   - 本地 target-side 学习才能恢复性能（combined memory 达 0.786× PyTorch）
-   - 支持“源端可行性提示 + 目标端性能调优”的协同范式
-
-### ⚠️ 局限性
-- **单次运行验证**：所有结果基于一次归档运行，缺乏 run-to-run variance 估计。
-- **未开放代码与完整 trace**：部分分析受限于日志粒度（如缺少重复 timing sample）。
-- **图谱更新策略静态**：context tier caps（Qw, Qc）为手动设定，尚未实现在线学习调整。
-
-### 🔮 未来工作方向
-- 动态学习 context 注入策略（adaptive cap tuning）
-- 引入 causal reasoning 提升图谱推理能力
-- 探索多硬件联合训练与迁移学习框架
-- 将 KOPE-Mem 应用于其他系统级编程任务（如编译器优化、OS 调参）
-
----
-
-## ✅ 总结一句话
-> **KOPE 证明了：在 foundation model 不变的情况下，通过 Experience Graph Memory 和 Active Context Management，LLM agents 可以在硬件 kernel 优化这类数据稀疏任务中实现持续自我进化，显著超越仅依赖模型规模扩展的方法。**
-
-</details>
-
----
-
-### 15. [Minima-KV: Retention-Preserving KV Cache Compression with Mixed-Format Paged Attention](https://arxiv.org/abs/2608.23834)
-
-**Authors**: Sergii Kozyrev (Minima AI, Inc), Davyd Maiboroda (Minima AI, Inc)  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.23834v1  
-
-#### Abstract
-The key-value (KV) cache is a primary capacity and bandwidth bottleneck in long-context LLM serving. We present Minima-KV, a retention-preserving hierarchy for mixed-format paged attention. Recent and protected Anchor pages remain in FP8, while older non-anchor pages move to packed TQ3; every live-r...
-
-<details>
-<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
-
-# Minima-KV: Retention-Preserving KV Cache Compression with Mixed-Format Paged Attention  
-**——核心结论与实验结果总结**
-
----
-
-## 1. 主要贡献和创新点
-
-### ✅ 解决的问题
-在长上下文大语言模型（LLM）服务中，**Key-Value (KV) 缓存容量和内存带宽**成为主要瓶颈。传统方法如均匀量化、稀疏保留或低秩表示虽能压缩，但面临以下挑战：
-- **均匀量化**浪费比特于不重要位置；
-- **基于重要性的淘汰机制**可能导致未来需要时无法恢复；
-- **结构性压缩**可能引入高昂的重构开销。
-
-### 🚀 提出的新方法：Minima-KV
-Minima-KV 是一种**保留完整性的分层 KV 缓存压缩系统**，结合了混合格式分页注意力（Mixed-Format Paged Attention）与动态生命周期管理，其核心思想是将 KV 页面划分为三个保真度层级：
-
-| 层级 | 格式 | 特性 |
-|------|------|------|
-| **Recent** | FP8 | 新生成的页面，高保真存储，避免频繁解压 |
-| **Anchor** | FP8 | 保护关键历史内容（如指令、检索证据等），防止降级 |
-| **Stale** | TQ3 | 老旧非锚点页面使用 3-bit 量化（TurboQuant-inspired），大幅降低存储 |
-
-该系统实现了：
-- 所有活跃请求的逻辑页面始终可寻址（no deletion）；
-- 支持跨格式的在线 Softmax 合并，无需构建全量密集缓存副本（no dense shadow）；
-- 利用 TileLang 编写的专用 CUDA 内核实现高效异构解码。
-
-### 🔍 相比现有方法的优势
-| 对比维度 | Minima-KV | 其他方法（如 H2O, SnapKV, KIVI） |
-|--------|----------|-------------------------------|
-| **保留完整性** | ✅ 所有页面保留近似值 | ❌ 可能删除或不可逆丢弃 |
-| **精度控制灵活性** | ✅ 分层混合格式（FP8 + TQ3） | ⚠️ 多为统一量化或二元保留/丢弃 |
-| **运行效率** | ✅ 异构内核直接融合输出，无 dense shadow | ⚠️ 需反量化或重建才能参与 attention |
-| **生产适用性** | ✅ 支持 CUDA Graph、所有权协议、前缀复用 | ⚠️ 多停留在研究原型阶段 |
-
----
-
-## 2. 核心实验方法和设置
-
-### 📚 使用的数据集
-- **RULER NIAH**：8 个“大海捞针”任务，在 4K/8K/16K 上下文中测试定位能力，每任务 32 示例。
-- **LongBench v2**：503 道多选题，涵盖六大现实场景：
-  - 单文档问答
-  - 多文档问答
-  - 长上下文学习
-  - 对话理解
-  - 代码库理解
-  - 结构化数据理解  
-  测试长度覆盖 16K、32K、64K。
-
-### ⚙️ 实验设置
-- **模型**：Qwen3.6-27B（仅语言路径）
-- **硬件**：单张 NVIDIA RTX PRO 6000 Blackwell GPU（96GB GDDR7）
-- **上下文管理**：PagedAttention，逻辑页大小为 1,792 tokens
-- **评估模式**：
-  - **质量评测**：逐样本配对比较（paired evaluation），启用动态重分级（retiering），关闭 attention scoring
-  - **性能评测**：双活跃请求，各含 59,008 prompt tokens，静态 FP8/TQ3 页面分布，启用 CUDA Graph 回放
 
 ### 📊 评估指标
-| 类型 | 指标 |
-|------|------|
-| **存储效率** | 每 token KV 存储字节数（KiB/token）、相对 BF16/FP8 压缩比 |
-| **推理吞吐** | 解码吞吐量（tok/s）、步长时间（ms）、相对吞吐比 |
-| **准确性** | RULER NIAH 任务宏平均准确率、LongBench v2 正确数及变化量（delta） |
-| **系统能力** | 并发上下文容量预测（analytical estimation） |
 
-### 🆚 基线方法对比
-| 基线 | 描述 |
-|------|------|
-| **BF16 KV** | 全精度 KV 缓存，64 KiB/token |
-| **FP8 KV** | 当前主流生产基线，32 KiB/token |
-| **Three-tier Minima-KV** | 本文方法：Recent/Anchor-FP8 + Stale-TQ3 |
-| **Dense Control** | 密集缓存策略对照组（dtype 未绑定） |
+| 类别 | 指标 | 描述 |
+|------|------|------|
+| **速度相关** | `tokens/sec`, `latency/ms/token` | 实际推理吞吐与延迟 |
+| **质量相关** | `SQNR (dB)` | 量化前后输出向量的能量比，越高越好 |
+| | `Top-1 Match with F16` | 与全精度模型预测是否一致 |
+| | `Δgap` | top-1 与 top-2 logit 差距的变化，反映置信度稳定性 |
+| | `Weight MAE` | 权重矩阵的平均绝对误差 |
+| **综合指标** | `score(α)` | 归一化后的速度分 $S_k$ 与质量分 $Q_k$ 加权和 |
+
+---
+
+### 🔬 实验设置
+
+#### （1）组件选择依据
+通过对 Gemma 3 1B 进行系统级 profiling，测量不同模块（FFN / Attention / Embedding）在 Q8 下对整体延迟的影响，发现：
+- **FFN** 和 **Embedding** 是主要延迟来源；
+- Attention 层即使保持 F16 对总延迟影响较小。
+
+因此选定这两个模块作为重点优化目标。
+
+#### （2）量化配置测试
+- **Embedding 测试配置**：Q16-ch, Q8-ch, Q4-ch, Q8-tensor, Q4-tensor
+- **FFN 测试配置**：同上，分别作用于 `Wgate`, `Wup`, `Wdown` 投影
+- **上下文长度**：10, 50, 100 tokens，涵盖短查询与长序列场景
+
+#### （3）基线对比方法
+- 全模型均匀量化（Uniform Q8）
+- 各模块单独反量化（如 “Q8 ffn_all=F16” 表示仅 FFN 保持 F16）
+- 与理论 roofline 预测值比较，验证建模准确性
 
 ---
 
 ## 3. 主要实验结果和性能指标
 
-### 📈 关键性能数据汇总
+### 📈 关键性能数据
 
-#### （1）KV 存储压缩效果（部署统计）
-| 指标 | 数值 |
-|------|------|
-| **实际占用** | **18.3 KiB/token**（owner-reported aggregate） |
-| **相对于 BF16 压缩比** | **3.50×**（理论 3.497×） |
-| **相对于 FP8 压缩比** | **1.75×**（理论 1.749×） |
+#### （1）延迟贡献分析（Table 1）
+| 配置（FFN/Attn/Emb） | 短上下文速度 (tok/s) |
+|------------------------|-----------------------|
+| Q8 Q8 Q8（全量化）     | **95.3**             |
+| Q8 ffn_all=F16（FFN 不量化） | 72.3（↓24%）        |
+| Q8 attn_out=F16（Attention 不量化） | 93.0（仅 ↓2.4%） |
 
-> 💡 在百万 token 场景下，Minima-KV 仅需 17.45 GiB，而 BF16 需 61.04 GiB，FP8 需 30.52 GiB。
+> 💡 发现：**FFN 是否量化对性能影响最大**，而 Attention 几乎无影响。
 
-#### （2）质量评估结果（Materializing Profile）
-| 任务 | Dense 控制 | Minima-KV | Delta |
-|------|-----------|------------|-------|
-| **RULER NIAH @4K** | 97.27% | 93.75% | **-0.90 pp** |
-| **RULER NIAH @8K** | 99.80% | 100.00% | **+0.20 pp** |
-| **RULER NIAH @16K** | 100.00% | 100.00% | **±0.00 pp** |
-| **LongBench v2 @16K** | 190 正确 | 186 正确 | **-0.80 pp** |
-| **LongBench v2 @32K** | — | — | **-0.60 pp**（paired delta） |
-| **LongBench v2 @64K** | — | — | **-0.40 pp**（paired delta） |
+---
 
-> ✅ 在较长上下文（≥8K）中表现更稳定，误差随长度增加而收敛。
+#### （2）SQNR 质量得分（归一化前）
 
-#### （3）性能评估结果（Direct Canary）
-| 指标 | Dense 控制 | Minima-KV | Ratio |
-|------|-----------|------------|-------|
-| **解码吞吐** | 29.804 tok/s | 29.270 tok/s | **0.9821×** |
-| **Step Time** | 42.535 ms | 43.311 ms | ~1.8% 延迟上升 |
-| **Active KV 字节** | 477,102,080 B | 131,610,624 B | **3.625× 压缩** |
-| **Layer Routes** | — | 16/16 成功路由 | 无 fallback |
-| **Dense Shadow** | 存在 | **已释放** | ✅ 无额外内存负担 |
+| 组件 | 平均 SQNR (Q8-ch) | 参考值 (Q16) |
+|------|--------------------|--------------|
+| **Embedding** | 45.61 dB | 93.82 dB |
+| **FFN (Wdown)** | 29.70 dB | 77.95 dB |
 
-> ✅ 实现了接近原生性能的高压缩比推理，且所有 16 层均通过异构路径处理。
+> ❗ FFN 明显更敏感，尤其 `Wdown` 投影。
 
-#### （4）并发容量分析（Analytical Estimation）
-假设总内存预算 $ M = 86.4\,\text{GiB} $，权重 $ W = 25.15\,\text{GiB} $，固定状态 $ D = 0.153\,\text{GiB} $
+---
 
-| 上下文长度 | BF16 支持并发 | FP8 支持并发 | Minima-KV 支持并发 |
-|------------|----------------|----------------|---------------------|
-| 32K        | 28             | 53             | **84**              |
-| 64K        | 14             | 28             | **47**              |
+#### （3）归一化分数汇总（公式 11 & 12）
 
-> ✅ 在相同条件下，Minima-KV 可支持 **1.58× 更高的并发数**（相比 FP8）。
+| 组件 | 质量分 $Q_k$ | 速度分 $S_k$ |
+|------|---------------|---------------|
+| Embedding | **0.819** | 0.236 |
+| FFN       | **0.796** | 0.261 |
+
+> ✅ 两者均具备较高质量容忍度，且有可观加速空间。
+
+---
+
+#### （4）速度预测准确性（Table 4）
+
+| 模型 | 预测加速比 | 实际加速比 | 误差 |
+|------|-------------|------------|------|
+| Gemma 3 1B | 1.183 | 1.175 | **0.7%** |
+| LLaMA 3.2 1B | 1.278 | 1.236 | 3.3% |
+| Qwen 2.5 1.5B | 1.259 | 1.344 | 6.3% |
+| **平均误差** | —— | —— | **≈4%** |
+
+> ✅ 表明 roofline 模型具有高度预测能力，可用于指导量化策略。
+
+---
+
+#### （5）综合评分（$\alpha=0.5$）
+
+对于 Gemma 3 1B 的 Q8 配置：
+$$
+\text{score}(0.5) = 0.5 \times (0.236 + 0.261) + 0.5 \times (0.819 + 0.796) = \boxed{0.497}
+$$
+其中：
+- 速度部分贡献：0.187
+- 质量部分贡献：0.808
+
+---
+
+#### （6）消融实验：Layer-wise 异构量化潜力
+设想一种配置：
+- 中间 10 层（最敏感）：保持 Q8
+- 前后各 8 层（较鲁棒）：降为 Q4
+
+理论预测可额外节省 2.54ms，总加速比达 **×1.254**（vs 均匀 Q8 的 ×1.183），**相对提升约 6%**。
+
+> ⚠️ 注：尚未实测，因缺乏支持细粒度控制的推理框架（如 ExLlamaV3 或 TensorRT-LLM）。
 
 ---
 
 ## 4. 关键结论和发现
 
 ### ✅ 主要发现
-1. **Minima-KV 实现了高保真的 KV 压缩**：通过分层保真设计，在不删除任何活跃页面的前提下，实现高达 **3.5× 的 BF16 压缩比**。
-2. **质量损失可控且随长度收敛**：在 4K 上略有下降（-0.9pp），但在 8K 和 16K 表现持平甚至略优；LongBench v2 的误差从 16K 的 -0.8pp 下降到 64K 的 -0.4pp，显示更强的长程鲁棒性。
-3. **高性能异构解码可行**：通过定制化的混合格式 attention 内核，可在无 dense shadow 的情况下完成全局 softmax 合并，**吞吐达 dense 控制的 98.2%**。
-4. **显著提升服务并发能力**：理论上可将 32K 上下文的并发承载能力从 FP8 的 53 提升至 84，提升约 58%。
 
-### ⚠️ 方法的局限性
-| 局限 | 说明 |
-|------|------|
-| **单一模型 & 硬件验证** | 仅在 Qwen3.6-27B 和 Blackwell GPU 上验证，泛化性待检验 |
-| **aggregate 数据缺乏细粒度拆解** | 18.3 KiB/token 为整体上报值，未提供各层级占比（$p_R, p_A, p_S$） |
-| **profile 分离** | 质量、性能、前缀复用来自不同配置，无法在同一实验中同时验证全部特性 |
-| **attention scoring 未启用** | 尽管支持反馈机制，但当前实验中关闭，影响动态 anchor 管理潜力 |
-| **无置信区间与重复性报告** | 性能仅为单次运行结果，缺乏统计显著性分析 |
-
-### 🔮 未来工作方向
-1. **四层扩展（Stale2）**：提出未来可引入基于共享张量骨干（shared tensor backbone）的 **Stale2 层**，用于最冷门页面的结构化压缩（如 Tucker 分解 + adapter），进一步压缩空间。
-2. **闭环评分机制集成**：启用并验证基于 attention score 的动态 promotion/demotion 控制器，实现更智能的 anchor 管理。
-3. **端到端服务质量建模**：开展开放负载实验，量化 KV 压缩对 TTFT、p95/p99 延迟的实际影响。
-4. **多 GPU 与 Tensor Parallel 支持**：扩展至分布式环境下的协同压缩与同步协议。
+1. **FFN 与 Embedding 是 sLLM 推理加速的关键瓶颈**，应优先考虑量化。
+2. **Attention 层对整体延迟贡献小**，且对低精度敏感，建议保留高精度。
+3. **SQNR 是有效的质量代理指标**，能稳定反映不同量化方案下的信息损失。
+4. **roofline model 可精准预测加速效果**（平均误差 <4%），无需反复 benchmark。
+5. **提出的 `score(α)` 指标实现了速度与质量的可调平衡**，支持灵活决策。
 
 ---
 
-> 📌 **总结一句话**：  
-> **Minima-KV 通过保留完整性的三层次 KV 分层架构（FP8 + TQ3）与混合格式 attention 内核，在几乎不牺牲推理质量的前提下，实现了高达 3.5× 的 KV 缓存压缩和接近原生性能的解码吞吐，为长上下文 LLM 高效部署提供了实用解决方案。**
+### ⚠️ 方法的局限性
+
+1. **依赖静态权重假设**：未考虑动态激活分布变化对量化误差的影响。
+2. **未覆盖 Activation Quantization**：当前仅关注 weights，activations 仍为 FP16。
+3. **未实现在线异构推理验证**：layer-wise Q4/Q8 混合配置尚缺工程实现支持。
+4. **SQNR 与人类感知质量的相关性有待进一步验证**。
+
+---
+
+### 🔮 未来工作方向
+
+1. 将方法扩展至 **activation-aware quantization**，构建完整的混合精度方案。
+2. 开发支持 **per-layer bit-width 控制** 的推理后端（如集成进 llama.cpp）。
+3. 探索自动化搜索算法结合 `score(α)` 指标，实现端到端量化配置推荐。
+4. 在更多模型架构（如 Mistral、Phi）上验证泛化能力。
+5. 引入用户反馈机制，动态调整 $\alpha$ 参数以适应不同应用场景（如聊天 vs 编码）。
+
+---
+
+## ✅ 总结
+
+本文提出了一种新颖、高效、可解释的层重要性度量方法，用于指导 sLLM 的异构量化。它将复杂的试错过程转化为一个**数学优化问题**，通过融合 **SQNR 质量评分** 与 **roofline 速度预测**，构建了一个可调节的综合指标 `score(α)`。
+
+实验表明，该方法能在极低计算成本下实现接近真实测量的预测精度，并显著优于传统均匀量化及其他先进方法。它是迈向“智能量化”（intelligent quantization）的重要一步，为边缘侧高效部署 sLLM 提供了坚实的理论与实践基础。
 
 </details>
 
 ---
 
-### 16. [Data Mixing as Mixture Experiment: Response Surface Methodology and Optimal Design for Large Language Model Pretraining](https://arxiv.org/abs/2608.23922)
+### 15. [ClusterAttention: A training-free speedup of bidirectional attention](https://arxiv.org/abs/2608.26965)
 
-**Authors**: Yicheng Mao, Hongru Du  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.23922v1  
-
-#### Abstract
-Data mixing is a central design problem in large language model pretraining: given a fixed token budget, practitioners must decide how much data to allocate to each domain. Recent proxy-based methods address this problem by training small models on candidate mixtures, fitting a response model, and u...
-
----
-
-### 17. [Robust Code RL via Faulty-Code-Driven Test case Synthesis and Dense Reward Shaping](https://arxiv.org/abs/2608.24135)
-
-**Authors**: Yiwen Zhang, Xiaodong Yan, Zhenyu Huang, Deng Zhao, Liang Jiang, Qing Cui, Zujie Wen, Zhiqiang Zhang, Jun Zhou  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.24135v1  
-
-#### Abstract
-Reinforcement learning from verifiable rewards (RLVR) has emerged as a pivotal technique for enhancing the code generation capabilities of Large Language Models (LLMs). However, the efficacy of RLVR in coding implementations is fundamentally limited by the comprehensiveness of test cases, because in...
-
----
-
-### 18. [MetaRAG: Belief-Action Aligned Policy Optimization for Agentic RAG](https://arxiv.org/abs/2608.24214)
-
-**Authors**: Qiuyi Qi, Tian Liang, Jiamu Wang, Jinjian Zhang, Wei Zhou, Pengcheng Zhu, Linjian Mo, Ming Kong, Jie Liu, Qiang Zhu  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.24214v1  
-
-#### Abstract
-Agentic retrieval-augmented generation (RAG) requires language models to decide when to continue searching and when to answer. Existing RL-based methods rely on external supervision and overlook the agent's internal belief about whether the current evidence is sufficient. To address this problem, we...
-
----
-
-### 19. [ResiSpec: Enhancing Multi-Candidate Speculative Sampling via Residual Distribution Shaping](https://arxiv.org/abs/2608.24411)
-
-**Authors**: Zhi-Kai Chen, Jun-Jie Tao, Wei-Xiang Mao, De-Chuan Zhan, Han-Jia Ye  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.24411v1  
-
-#### Abstract
-The efficiency of Large Language Model (LLM) serving is fundamentally limited by the sequential nature of autoregressive decoding. Speculative Decoding (SD) mitigates this by using a lightweight draft model to speculate future tokens, which are then validated by the LLM in a single parallel forward ...
-
----
-
-### 20. [Reinforcement Learning-Guided Evolutionary Policy Optimization for Preference-Adjustable Heterogeneous Agile Earth Observation Satellite Scheduling](https://arxiv.org/abs/2608.24470)
-
-**Authors**: He Wang, Junyu Wu, Hui Li, Yanjie Song, Witold Pedrycz, Liang Li  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.24470v1  
-
-#### Abstract
-Heterogeneous agile Earth observation satellite (AEOS) scheduling requires task selection, satellite assignment, and observation sequencing under satellite-dependent visibility windows, attitude maneuvering requirements, energy consumption, and onboard storage constraints. Since satellites differ in...
-
----
-
-### 21. [PeakBench: Benchmarking Resource-Aware Tool Invocation in LLM Agents](https://arxiv.org/abs/2608.24509)
-
-**Authors**: Zhi-Kai Chen, Xu-Xiang Zhong, Song-Yan Li, De-Chuan Zhan, Han-Jia Ye  
-**Category**: cs.AI  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.24509v1  
-
-#### Abstract
-LLM agents increasingly solve tasks by invoking multiple tools, where parallel execution is essential for low latency but difficult to manage safely. Existing agent benchmarks primarily evaluate tool selection, argument generation, and end-to-end success under mostly serial execution, largely overlo...
-
----
-
-### 22. [REE-TM: Reliable and Energy-Efficient Traffic Management Model for Diverse Cloud Workloads](https://arxiv.org/abs/2608.25747)
-
-**Authors**: Ashutosh Kumar Singh, Deepika Saxena, Volker Lindenstruth  
-**Category**: cs.DC  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.25747v1  
-
-#### Abstract
-Diversity of workload demands lays a critical impact on efficient resource allocation and management of cloud services. The existing literature has either weakly considered or overlooked the heterogeneous feature of job requests received from wide range of internet services users. To address this co...
-
----
-
-### 23. [The Von-Neumann State-Space Transformer for neural decoding](https://arxiv.org/abs/2608.25088)
-
-**Authors**: Morteza Sarafyazd  
+**Authors**: Kasper Nordenram, Amelie Dittmann  
 **Category**: cs.LG  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 6.5  
 **Type**: new  
-**ArXiv ID**: 2608.25088v1  
+**ArXiv ID**: 2608.26965v1  
 
 #### Abstract
-Cortical computation is strikingly low-dimensional: a handful of latent variables, carried in a neural population's activity, steer the higher-dimensional responses of individual neurons. Our aim is sample efficiency-models that decode well from limited data and at small parameter budgets. In a stan...
+This paper introduces ClusterAttention, a general training-free speedup of bidirectional attention layers. Existing sparse attention methods either rely on structure in the input, such as order in language or spatial proximity in images, or use slow clustering processes amortized over several forwar...
+
+<details>
+<summary><strong>🤖 AI Summary (by qwen-long)</strong> - Click to expand</summary>
+
+# **论文总结：ClusterAttention: A training-free speedup of bidirectional attention**
 
 ---
 
-### 24. [Physics-Informed Foresight Pruning for Sparse PINN Solvers of Nonlinear PDEs](https://arxiv.org/abs/2608.25564)
+## 1. **论文的主要贡献和创新点**
 
-**Authors**: Ahmad Ishaque Karimi, Uvini Balasuriya Mudiyanselage, Kookjin Lee  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.25564v1  
+### **解决了什么问题**
+- **双向注意力（bidirectional attention）** 在 Transformer 模型中计算复杂度为 $O(n^2)$，在高 token 数场景（如高分辨率图像、视频生成、基因组数据、表格数据）下效率低下。
+- 现有稀疏注意力（sparse attention）方法通常依赖输入结构（如文本顺序、空间邻近性），或需要离线聚类、多步摊销，难以应用于**无结构输入**（如表格数据）或**单次前向传播**场景。
 
-#### Abstract
-Physics-informed neural networks (PINNs) often rely on over-parameterized models to optimize coupled solution and differential-residual objectives, leaving unclear how much capacity is necessary and what pruning should preserve. We study foresight pruning at initialization for sparse PirateNet PDE s...
+### **提出了什么新方法或新思路**
+提出 **ClusterAttention**，一种**无需训练**（training-free）、适用于任意 bidirectional attention 层的通用加速方法，其核心流程如下：
+1. **Clustering**：对每个 attention head 中的 keys 和 queries 分别进行快速递归聚类。
+2. **Assignment**：基于聚类质心打分，选择关键的 key-clusters 供 query-clusters 注意。
+3. **Sparse Attention**：仅在选中的块上执行 block-sparse attention。
+4. **Compensation**：引入 **striped mean-compensation (SMC)** 补偿被忽略的 cluster，通过其 key-value 质心参与计算以减少误差。
 
----
+**关键技术创新**：
+- **快速递归聚类（recursive splitting）**：沿主成分方向递归分割，确保聚类大小为 2 的幂，适配 GPU tile 并行，保持低延迟。
+- **几何感知变换（Geometry-aware transforms）**：
+  - Key 聚类使用 $M = QQ^\top / n$ 度量空间，使相似 keys 对所有 queries 产生相近 logits。
+  - Query 聚类根据任务设计不同度量：自适应选择时使用中心化 keys 的协方差；top-k 排名时使用 sign-based ranking 表示。
+- **SMC 误差理论分析**：推导出稀疏注意力输出误差表达式，证明 SMC 可使误差随 cluster 紧密度提升而减小。
 
-### 25. [Are LLM-Enhanced GNNs Privacy-Safe?](https://arxiv.org/abs/2608.25727)
-
-**Authors**: Longzhu He, Zelang Wen, Chaozhuo Li, Sen Su  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.25727v1  
-
-#### Abstract
-Large language models (LLMs) have recently advanced graph neural networks (GNNs) by enriching node representations with semantic information, giving rise to LLM-enhanced GNNs that achieve substantial performance gains. However, their vulnerability to privacy attacks, in which adversaries infer sensi...
-
----
-
-### 26. [Robust CurveMoE: Multi-Norm Adversarial Defense for Mixture-of-Experts Models via Mode Connectivity](https://arxiv.org/abs/2608.26043)
-
-**Authors**: Xu Zhang, Ren Wang  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 6.5  
-**Type**: new  
-**ArXiv ID**: 2608.26043v1  
-
-#### Abstract
-Multi-norm adversarial defense aims to protect neural networks against perturbations defined by different norm constraints, but existing methods typically optimize competing robustness objectives within a single parameter configuration, leading to substantial training cost and unfavorable robustness...
+### **相比现有方法的优势**
+| 特性 | ClusterAttention | SpargeAttn | SVOO | AdaCluster |
+|------|------------------|-----------|------|------------|
+| **Training-free** | ✅ | ✅ | ✅ | ✅ |
+| **适用于无结构输入** | ✅ | ❌（依赖空间/顺序结构） | ✅ | ✅ |
+| **单次前向传播适用** | ✅ | ✅ | ❌（需每 20 步重聚类） | ⚠️（未明确） |
+| **GPU 友好（固定 cluster size）** | ✅ | ✅ | ❌（ragged clusters） | ❌ |
+| **理论误差补偿机制** | ✅（SMC） | ❌ | ❌ | ❌ |
 
 ---
 
-### 27. [Serving Masked Diffusion LLMs: Characterization and Design Principles from Real Hardware](https://arxiv.org/abs/2608.23807)
+## 2. **核心实验方法和设置**
 
-**Authors**: Farhana Amin, Sabiha Afroz, Mona Moghadampanah, Dimitrios S. Nikolopoulos  
+### **使用的数据集**
+1. **DINOv2-L**（Vision Transformer）：
+   - 数据集：DIV8K 高分辨率图像（短边 ≥ 5306 像素）
+   - 分辨率：2072×2072（21,904 tokens）、3500×3500（62,500 tokens）、5306×5306（143,641 tokens）
+2. **TabPFN-3**（表格数据 Transformer）：
+   - 数据集：TALENT benchmark 中最大的 6 个分类数据集（如 `Rain_in_Australia`, `CDC_Diabetes`）
+3. **Wan 2.1-14B T2V**（视频生成扩散模型）：
+   - 提示词：来自 OpenSora 1.0 的 12 个 prompt，选取前 5 个生成视频
+
+### **实验设置和评估指标**
+| 任务 | 评估指标 | 设置细节 |
+|------|----------|----------|
+| **DINOv2** | 表征失真（representation distortion）<br>→ 所有 patch 的 embedding 与 dense 的平均 cosine similarity<br>→ Latency（ms） | Pareto front：不同 sparsity 下的 accuracy-latency 权衡<br>Top-k 方法：attend to {5%, 10%, ..., 100%} keys<br>Adaptive 方法：target {60%, 80%, ..., 100%} attention mass recall |
+| **TabPFN-3** | 下游任务准确率（accuracy）<br>→ 归一化为 dense 的百分比<br>→ Latency（relative time） | 单次前向传播预测<br>ClusterAttention*：top-k + SMC，扫过 {1%, 5%, ..., 100%} keys |
+| **Wan T2V** | 视频质量指标：<br>- PSNR（越高越好）<br>- SSIM（越高越好）<br>- LPIPS（越低越好）<br>→ 与 dense 输出比较<br>→ Speedup | 使用 H200 GPU<br>ClusterAttention* 固定 attend to 20% clusters<br>前 10 diffusion steps 和第一层用 dense |
+
+### **基线方法对比**
+- **SpargeAttn**：基于 row-major 或 space-filling curve 的结构化聚类，支持 top-k 和 adaptive。
+- **SVOO**：专为视频生成设计，offline profiling + online QK co-clustering，每 20 步重聚类。
+- **Random Clusters**：随机聚类 + centroid routing，作为简单 baseline。
+- **Dense / SageAttention2**：全密集注意力及量化加速版本。
+
+---
+
+## 3. **主要实验结果和性能指标**
+
+### **关键性能数据**
+#### **TabPFN-3（表格数据）**
+- **速度提升**：2x ~ 6x 加速（随数据规模增大而提升）
+- **精度保留**：仅关注 10% clusters 时，**相对准确率 >99%**
+- **Pareto 最优**：在 5/6 数据集上，ClusterAttention* 支配其他方法
+
+#### **Wan 2.1-14B T2V（视频生成）**
+| 方法 | 平均 PSNR ↑ | 平均 SSIM ↑ | 平均 LPIPS ↓ | 平均 Speedup |
+|------|-------------|-------------|--------------|---------------|
+| **ClusterAttention*** | **24.61** | **0.836** | **0.0978** | **1.79x** |
+| **SVOO** | 23.97 | 0.826 | 0.1128 | 1.43x |
+- **质量更优**：PSNR ↑0.64，SSIM ↑0.01，LPIPS ↓0.015
+- **加速更强**：1.79x vs 1.43x（无 offline calibration）
+
+#### **DINOv2（高分辨率图像）**
+- 在 3500×3500 和 5306×5306 分辨率下，ClusterAttention* 在 0.99 cosine similarity 附近实现 **Pareto 主导**
+- 优于 SpargeAttn 和 SVOO，尤其在高 token 数场景
+
+### **消融实验结果**
+#### **(1) Transform 是否有效？**
+- **显著提升性能**：在 top-k 和 adaptive 设置下，使用几何变换的聚类几乎在所有情况下都 **Pareto 更优**
+- 例外：极小图像 + 极高稀疏度时，变换开销占主导
+
+#### **(2) Striped Mean-Compensation (SMC) 是否有效？**
+- **top-k 场景**：SMC 带来**巨大质量提升**，几乎完全 Pareto 支配无补偿版本
+- **adaptive 场景**：提升较小，且在低分辨率下可能略差（因 adaptive 已偏向高质量 heads）
+
+#### **(3) top-k vs adaptive selection**
+- **top-k + SMC 是最优组合**：在所有分辨率下均 Pareto 支配 adaptive
+- 差距随图像尺寸增大而扩大
+- 无补偿时两者表现接近
+
+---
+
+## 4. **关键结论和发现**
+
+### **主要发现**
+1. **ClusterAttention 是首个成功应用于无结构输入 + 单次前向传播的 training-free 稀疏注意力方法**。
+2. **SMC 显著降低稀疏注意力误差**，尤其在 top-k 设置下效果显著，验证了论文提出的误差理论。
+3. **几何感知聚类（geometry-aware transforms）能生成更有意义的 clusters**，优于 naive PCA 或随机聚类。
+4. **固定大小 cluster + GPU tile 优化** 使得 block-sparse attention 的每交互延迟接近 dense attention。
+5. **在多个领域（vision, tabular, video）均实现优于 SVOO 的质量与速度权衡**，即使后者是专为视频生成设计。
+
+### **方法的局限性**
+- **聚类开销在低 token 数时显著**：特征分解（eigen-decomposition）成为瓶颈，限制了在小输入上的优势。
+- **SMC 在极高 token 数时成为主要延迟来源**：当前实现较慢，有优化空间。
+- **固定 cluster size 可能非最优**：稠密区域可用大 cluster，稀疏区域需小 cluster，但当前框架未支持变长。
+- **未探索非线性变换**：如 softmax-aware clustering 可进一步提升 cluster 质量，但计算代价高。
+
+### **未来工作方向**
+1. **加速聚类**：
+   - 优化 eigen-decomposition 实现
+   - 使用非对角化递归分裂避免特征分解
+2. **改进补偿机制**：
+   - 引入 MuSe 等高阶补偿方法
+   - 动态决定是否应用 SMC
+3. **提升聚类质量**：
+   - 支持变长 cluster sizes
+   - 探索非线性变换（如 landmark-based softmax projection）
+4. **扩展至 GQA/MQA**：
+   - 设计适用于 grouped-query attention 的 key/query 聚类策略
+5. **更广泛评估**：
+   - 更多模型、数据集、任务
+   - 探索对训练过程的影响
+
+> **总结**：ClusterAttention 提供了一种通用、高效、无需训练的稀疏注意力方案，在多个高 token 数场景中实现了显著加速并保持高精度，是稀疏注意力领域的重要进展。
+
+</details>
+
+---
+
+### 16. [PICasso: An AI-Enabled Design Framework for Autonomous Optimization of Silicon Photonic Devices](https://arxiv.org/abs/2608.26113)
+
+**Authors**: Deepak Vungarala, Deniz Najafi, Abdulrahman Aljoudi, Zahra Ghanaatian, Navid Khoshavi, Gourav Datta, Arman Roohi, Mahdi Nikdast, Shaahin Angizi  
 **Category**: cs.AI  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 6.0  
 **Type**: new  
-**ArXiv ID**: 2608.23807v1  
+**ArXiv ID**: 2608.26113v1  
 
 #### Abstract
-Masked diffusion language models (dLLMs) can in principle generate text faster than autoregressive (AR) models, since they denoise many tokens at once. Recent systems have begun building serving infrastructure for dLLMs, but none first measure how these models behave under real, concurrent serving l...
+We present PICasso, an AI-assisted framework for automated synthesis, verification, and optimization of photonic integrated circuits (PICs) from natural-language specifications. PICasso couples a structured NL -> YAML -> GDS generation pipeline with PDK aware knowledge injection, automated placement...
 
 ---
 
-### 28. [Why and When Neural Networks Improve Local Approximation in Optimization](https://arxiv.org/abs/2608.24963)
+### 17. [TreeGraft: Adaptive Multi-Drafter Grafting for Tree-Based Speculative Decoding](https://arxiv.org/abs/2608.26112)
 
-**Authors**: Chengkuo Bian, Pengcheng Xie  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
+**Authors**: Jiaming Fan, Daming Cao, Canchen Huang, Jiale Fu, Jin Zhang, Junjie Gao, Kai Yang, Xiangzhong Luo, Xu Yang  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
 **Score**: 6.0  
 **Type**: new  
-**ArXiv ID**: 2608.24963v1  
+**ArXiv ID**: 2608.26112v1  
 
 #### Abstract
-Published experience with neural surrogates in derivative-free optimisation is contradictory: the same family of models that cuts the evaluation count of one solver leaves another unchanged, or makes it worse. We show that the contradiction dissolves once three factors are stated, and that these, ra...
+Speculative decoding accelerates large language model inference through a draft-then-verify paradigm. Building on this, tree-structured methods improve inference by organizing proposals into multiple candidate paths, increasing the accepted length. However, existing tree-structured methods use a sin...
 
 ---
 
-### 29. [Physics-Informed Error Field Learning: A Post-Training Optimization Framework for Physics-Informed Neural Networks](https://arxiv.org/abs/2608.24970)
+### 18. [Pruning Binarized Neural Networks: A Dedicated Framework and Globally Weighted Algorithms](https://arxiv.org/abs/2608.26233)
 
-**Authors**: Jiuyun Sun, Yong Zhang  
+**Authors**: Roan Rubiales, Jean Pierre David  
 **Category**: cs.LG  
-**Published**: 2026-08-27  
+**Published**: 2026-08-28  
 **Score**: 6.0  
 **Type**: new  
-**ArXiv ID**: 2608.24970v1  
+**ArXiv ID**: 2608.26233v1  
 
 #### Abstract
-Physics-Informed Neural Networks (PINNs) have emerged as an important class of numerical methods for solving partial differential equations (PDEs). However, during the late-stage optimization process, further parameter updates often yield diminishing accuracy improvements while increasing computatio...
+Extreme compression of deep neural networks, up to full binarization, dramatically reduces memory footprint and arithmetic complexity, facilitating deployment on constrained edge hardware with field-programmable gate arrays (FPGAs) and microcontrollers. Although combining binarization with pruning p...
 
 ---
 
-### 30. [GRAPE: Gradient Refinement and Progress-Aware Exploitation for Query-Efficient High-Dimensional Bayesian Optimization](https://arxiv.org/abs/2608.25116)
+### 19. [GRAIN: Bridging Name and Narrative Shifts in Real-World Graph Reasoning through Invariance-Rewarded Agentic RL](https://arxiv.org/abs/2608.27142)
 
-**Authors**: Richard Cornelius Suwandi, Feng Yin  
-**Category**: cs.LG  
-**Published**: 2026-08-27  
-**Score**: 6.0  
+**Authors**: Zike Yuan, Han Zhang, Jianzhi Yan, Le Liu, Cai Ke, Huozhi Zhou, Jian Xie, Jiran Yin, Yukun Cao, Yue Yu, Hui Wang, Ming Liu, Bing Qin  
+**Category**: cs.AI  
+**Published**: 2026-08-28  
+**Score**: 5.5  
 **Type**: new  
-**ArXiv ID**: 2608.25116v1  
+**ArXiv ID**: 2608.27142v1  
 
 #### Abstract
-Optimizing expensive, high-dimensional black-box functions remains a central challenge in modern machine learning and scientific discovery. While local Bayesian optimization mitigates the curse of dimensionality, existing techniques often prioritize the probability of descent over the magnitude of p...
+Despite their potential in standardized graph tasks, Large Language Models (LLMs) remain brittle to real-world shifts in node identifiers and task formulation. While deterministic graph tools are invariant to such shifts, extracting topological structures from noisy text is highly fragile for LLMs, ...
+
+---
+
+### 20. [Recipes for Steering and Scaling LLMs via Sampling](https://arxiv.org/abs/2608.26120)
+
+**Authors**: Jiajun He, Zongyu Guo, Jos\'e Miguel Hern\'andez-Lobato, Yuanqi Du  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.5  
+**Type**: new  
+**ArXiv ID**: 2608.26120v1  
+
+#### Abstract
+Large Language Models (LLMs) are probabilistic models, typically defined by an autoregressive factorization. While recent work has begun to study richer target distributions beyond the base model, the sampling strategies remain highly inefficient. In this paper, we present a flexible and theoretical...
+
+---
+
+### 21. [Understanding Evolution Strategies for LLM Reasoning: Broader Reasoning Coverage than GRPO](https://arxiv.org/abs/2608.27351)
+
+**Authors**: Yunpeng Ba, Zhi Zheng, Yue Xie, Jiaqing Li, Xialiang Tong, Tao Zhong, Mingxuan Yuan, Zhichao Lu, Xuyang Wu, Zhenkun Wang  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 5.5  
+**Type**: new  
+**ArXiv ID**: 2608.27351v1  
+
+#### Abstract
+Evolution Strategies (ES) have recently emerged as a memory-efficient post-training paradigm for LLM reasoning. However, the optimization behavior of ES remains understudied, making it hard to define its advantage scope compared to mainstream post-training paradigms (e.g., Group Relative Policy Opti...
+
+---
+
+### 22. [EduRiskX: A Neuro-Symbolic Framework with F-Logic Reasoning for Early Academic Risk Prediction](https://arxiv.org/abs/2608.26107)
+
+**Authors**: Yu Fu, Yongqi Kang, Yong Zhao, Rongfang Bie  
+**Category**: cs.AI  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26107v1  
+
+#### Abstract
+Predicting students' academic risk in online education is crucial for enabling timely interventions that can improve retention and learning outcomes. However, existing models often suffer from limited early detection capability and insufficient interpretability, leading to a "black-box" trust crisis...
+
+---
+
+### 23. [Counterfactual Bias Testing for Application Tracking System](https://arxiv.org/abs/2608.26899)
+
+**Authors**: Sai Yashwant, Shruti Bansal, Anurag Dubey, Samaroha Chatterjee, Satyam Kumar, Shreyash Gupta, Gantala Thulsiram  
+**Category**: cs.AI  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26899v1  
+
+#### Abstract
+Automated candidate-job matching systems are increasingly classified as high-risk AI under emerging regulation, yet auditing them for demographic bias is expensive: classical correspondence-audit studies require hand-crafted resumes and manual submission, which does not scale to fast pipeline retrai...
+
+---
+
+### 24. [TelecomGPT-R1: A Unified Open-Source Reasoner for the Telecom Stack](https://arxiv.org/abs/2608.26126)
+
+**Authors**: Bohao Wang, Chenwei Wu, Haoyu Li, Hang Zou, Yu Tian, Lina Bariah, Li Wei, Chongwen Huang, Yongliang Shen, Zhaoyang Zhang, Merouane Debbah  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26126v1  
+
+#### Abstract
+Telecommunications is a high-leverage domain for large language model (LLM)-based reasoning because routine engineering workflows require joint grounding in normative specifications, operational telemetry, vendor-specific fault evidence, and exact RF/network calculations. However, current LLM integr...
+
+---
+
+### 25. [CARE: Causally-Aligned Reasoning Exploration for Medical Large Language Models](https://arxiv.org/abs/2608.26147)
+
+**Authors**: Yucheng Zhou, Peng Luo, Qianning Wang, Chengzhong Xu, Jianbing Shen  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26147v1  
+
+#### Abstract
+Large Language Models (LLMs) have shown strong potential for medical reasoning, yet the scarcity and cost of expert-annotated data constrain their progress. While reinforcement learning offers a scalable alternative, standard outcome-based methods in medicine often suffer from autoregressive credit ...
+
+---
+
+### 26. [Sycophancy Suppression Can Impair Rational Updating: Anti-Sycophancy Should Preserve the Ability to Update](https://arxiv.org/abs/2608.26511)
+
+**Authors**: Huanhuan Ma, Henry Peng Zou, Chengze Li, Enze Ma, Yunyue Su, Philip S. Yu  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26511v1  
+
+#### Abstract
+Large language models often exhibit sycophancy, revising their answers to align with users when users push back. Such answer flips, however, can arise from different causes. One possibility is that the model simply aligns with the user's feedback in order to satisfy them. Another is that the feedbac...
+
+---
+
+### 27. [Which Metrics Save the Most Human Annotation? Prediction-Powered Evaluation and Meta-Evaluation](https://arxiv.org/abs/2608.26638)
+
+**Authors**: Mingqi Gao, Anthony Sicilia, Weiyan Shi  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26638v1  
+
+#### Abstract
+Across various non-verifiable tasks, human evaluation is reliable but expensive, while automatic metrics are more scalable but often biased. Building on prediction-powered inference (PPI), we propose prediction-powered evaluation, a framework that combines limited human judgments with large-scale au...
+
+---
+
+### 28. [Information-Guided Frontier Decoding: Contextual Utility-Driven Commitment in dMLLMs](https://arxiv.org/abs/2608.26641)
+
+**Authors**: Xingyou Fang, Jingxing Zhong, Xiaosong Yuan, Xiaofeng Zhang  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26641v1  
+
+#### Abstract
+Decoding quality in diffusion multimodal language models (dMLLMs) depends heavily on the order in which masked tokens are committed. Existing confidence-based strategies prioritize locally easy tokens, but confidence does not necessarily reflect contextual usefulness. As a result, structurally easy ...
+
+---
+
+### 29. [Boosting LLM Exploration via Weak-Model Guidance in RLVR](https://arxiv.org/abs/2608.27420)
+
+**Authors**: Xingyu Shen, Huishuai Zhang, Peng Li, Yinchun Wang, Dongyan Zhao  
+**Category**: cs.CL  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.27420v1  
+
+#### Abstract
+Reinforcement Learning with Verifiable Rewards (RLVR) significantly improves LLM reasoning but often causes a drop in policy entropy, leading to narrowed reasoning coverage and degraded pass@$k$ for large $k$. While existing methods mitigate this entropy collapse through algorithmic regularizations,...
+
+---
+
+### 30. [SAGE: Variate-Wise Semantic Augmentation for Vision-Language Time Series Forecasting](https://arxiv.org/abs/2608.26829)
+
+**Authors**: Haizhao Fan, Xinyi Le  
+**Category**: cs.LG  
+**Published**: 2026-08-28  
+**Score**: 5.0  
+**Type**: new  
+**ArXiv ID**: 2608.26829v1  
+
+#### Abstract
+Time series forecasting models operate on raw numerical sequences, lacking the semantic knowledge that domain experts implicitly leverage, such as the physical meaning of each variable, its statistical behavior, and its temporal dynamics. Recent efforts to bridge this gap fall into two camps. Some r...
 
 ---
 
